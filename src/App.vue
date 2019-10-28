@@ -8,6 +8,7 @@
             <router-link to="/charts">Charts</router-link>
         </div>
         <router-view/>
+        <div id="snack"><div></div></div>
     </div>
 </template>
 
@@ -58,6 +59,7 @@
 
     .tt {
         font-size: 10px;
+        background-color: white;
     }
 
 
