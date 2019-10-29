@@ -5,7 +5,18 @@
 <script>
     export default {
         name: "abstract-chart",
-
+        data: () => ({
+            width: Number,
+            height: Number
+        }),
+        props: {
+            ds: Array
+        },
+        watch: {
+            ds: function(newVal, oldVal) {
+                this.createChart(this.$d3, this.ds, this.options);
+            }
+        },
         mounted: function () {
             // This double checks the setting of all $props variables
             // If the component gets initiated by
@@ -22,10 +33,94 @@
                     // console.log("Property " + this.$props[obj] + " is set.")
                 }
             }
+
+            if (this.ds.length > 0) {
+                this.createChart(this.$d3, this.ds, this.options);
+            }
         }
     }
 </script>
 
 <style scoped>
 
+</style>
+
+<style>
+    .chart-container {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        vertical-align: top;
+        overflow: hidden;
+    }
+
+    .chart {
+        padding: 0 !important;
+        height: 100%;
+        width: 100%;
+
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    /*
+     Tooltip
+    */
+    .d3-tip {
+        line-height: 1;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        border-radius: 4px;
+        pointer-events: none;
+    }
+
+    /* Creates a small triangle extender for the tooltip */
+    .d3-tip:after {
+        box-sizing: border-box;
+        display: inline;
+        font-size: 8px;
+        width: 100%;
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.75);
+        position: absolute;
+        pointer-events: none;
+    }
+
+    /* Northward tooltips */
+    .d3-tip.n:after {
+        content: "\25BC";
+        margin: -1px 0 0 0;
+        top: 100%;
+        left: 0;
+        text-align: center;
+    }
+
+    /* Eastward tooltips */
+    .d3-tip.e:after {
+        content: "\25C0";
+        margin: -4px 0 0 0;
+        top: 50%;
+        left: -8px;
+    }
+
+    /* Southward tooltips */
+    .d3-tip.s:after {
+        content: "\25B2";
+        margin: 0 0 1px 0;
+        top: -8px;
+        left: 0;
+        text-align: center;
+    }
+
+    /* Westward tooltips */
+    .d3-tip.w:after {
+        content: "\25B6";
+        margin: -4px 0 0 -1px;
+        top: 50%;
+        left: 100%;
+    }
 </style>

@@ -101,7 +101,7 @@
                 whaat
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="height: 350px">
             <div class="col-sm">
                 <bar-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
                            title="Bar Chart Example" metric="val" selector="chart1"/>
@@ -111,7 +111,7 @@
                            title="Line Chart Example" metric="val2" selector="chart2"/>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="height: 350px">
             <div class="col-sm">
                 <pie-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
                             title="Pie Chart Example" metric="val" selector="chart3"/>
@@ -164,24 +164,22 @@
         data() {
             return {
                 dataSet: [
-                    {'val': 50, 'val2': 1900, 'name': 'Jan', 'date': new Date(2019, 1)},
-                    {'val': 60, 'val2': 1730, 'name': 'Feb', 'date': new Date(2019, 2)},
-                    {'val': 65, 'val2': 1800, 'name': 'Mar', 'date': new Date(2019, 3)},
-                    {'val': 80, 'val2': 1805, 'name': 'Apr', 'date': new Date(2019, 4)},
-                    {'val': 56, 'val2': 1750, 'name': 'May', 'date': new Date(2019, 5)},
-                    {'val': 78, 'val2': 1777, 'name': 'Jun', 'date': new Date(2019, 6)},
-                    {'val': 99, 'val2': 2100, 'name': 'Jul', 'date': new Date(2019, 7)},
-                    {'val': 95, 'val2': 2089, 'name': 'Aug', 'date': new Date(2019, 8)},
-                    {'val': 76, 'val2': 1640, 'name': 'Sept', 'date': new Date(2019, 9)},
-                    {'val': 40, 'val2': 1790, 'name': 'Oct', 'date': new Date(2019, 10)},
-                    {'val': 35, 'val2': 1500, 'name': 'Nov', 'date': new Date(2019, 11)},
-                    {'val': 42, 'val2': 1800, 'name': 'Dec', 'date': new Date(2019, 12)},
+                    {'val': 50, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
+                    {'val': 60, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
+                    {'val': 65, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
+                    {'val': 80, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
+                    {'val': 56, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
+                    {'val': 78, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
+                    {'val': 99, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
+                    {'val': 95, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
+                    {'val': 76, 'val2': 1640, 'name': 'Sept', 'date': new Date("2019-09")},
+                    {'val': 40, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
+                    {'val': 35, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
+                    {'val': 42, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
                 ],
                 options: {
                     dim: 'name',
-                    dim2: 'date',
-                    height: 200,
-                    width: 250
+                    dim2: 'date'
                 }
             }
         },
@@ -191,6 +189,7 @@
         },
         methods: {
             testSnackBar: function () {
+                console.log("snack")
                 let options = {
                     message: "Snack snack",
                     position: "center",

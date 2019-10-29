@@ -19,19 +19,24 @@ export default {
                 },
 
                 initTimeScale: function(d3, ds, dim, width) {
-                    let domainArr = [];
-                    let rangeArr = [];
+                    var x = d3.scaleTime().range([0, width]);
+                    x.domain(d3.extent(ds, function(d) { return d[dim]; }));
 
-                    ds.forEach((t) => {
-                        domainArr.push(t[dim])
-                    });
-                    ds.forEach((t, i) => {
-                        rangeArr.push(width * i / ds.length)
-                    });
+                    return x;
 
-                    return d3.scaleTime()
-                        .domain(domainArr)
-                        .range(rangeArr);
+                    // let domainArr = [];
+                    // let rangeArr = [];
+                    //
+                    // ds.forEach((t) => {
+                    //     domainArr.push(t[dim])
+                    // });
+                    // ds.forEach((t, i) => {
+                    //     rangeArr.push(width * i / ds.length)
+                    // });
+                    //
+                    // return d3.scaleTime()
+                    //     .domain(domainArr)
+                    //     .range([0, width]);
                 },
 
                 drawAxis: function(height, svg, xAxis, yAxis, offset) {
@@ -42,14 +47,19 @@ export default {
 
                     svg.append('g')
                         .attr('transform', 'translate(70,' + (height + offset + 5) + ')')
-                        .call(xAxis);
+                        .call(xAxis)
+                        .selectAll("text")
+                        .style("text-anchor", "end")
+                        .attr("dx", "-.8em")
+                        .attr("dy", ".15em")
+                        .attr("transform", "rotate(-20)");
                 },
 
                 addTooltip: function(d, svg, x, y, v) {
                     svg.append('text')
                         .attr('x', x)
                         .attr('y', y)
-                        .attr('class', 'tt')
+                        .attr('class', 'tooltip')
                         .text(d.name + ': ' + d[v]);
                 },
 
@@ -67,6 +77,12 @@ export default {
 
                 getOffset(title) {
                     return title ? 35 : 0
+                },
+
+                getDimensions(svg, title) {
+                    const width = (svg.parent().width() - parseInt(svg.parent().css("padding-left")) - parseInt(svg.parent().css("padding-right"))) * 0.95;
+                    const height = (svg.parent().height() - this.getOffset(title)) * 0.85;
+                    return [width, height];
                 }
             }
         }

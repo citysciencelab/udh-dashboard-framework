@@ -3,10 +3,12 @@
 </template>
 
 <script>
+    import AbstractChart from './AbstractChart.vue';
+
     export default {
         name: "scatter-plot",
+        extends: AbstractChart,
         props: {
-            ds: Array,
             options: Object,
             title: String,
             metric: String,
@@ -15,14 +17,12 @@
         },
 
         mounted: function () {
-            this.createChart(this.$d3, this.ds, this.options);
+            const svg = $('#' + this.selector);
+            const dimensions = this.$helpers.chart.getDimensions(svg, this.title);
+            this.$data.width = dimensions[0];
+            this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
 
-        watch: {
-            ds: function(newVal, oldVal) {
-                this.createChart(this.$d3, this.ds, this.options);
-            }
-        },
 
         /**
          * $helpers.chart.barChart
@@ -40,47 +40,47 @@
 
         methods: {
             createChart(d3, ds, options) {
-                var metric = this.metric;
-                var metric2 = this.metric2;
-                var title = this.title;
-                var svg = d3.select('#' + this.selector);
-                var offset = this.$helpers.chart.getOffset(title);
-                var maxVal = Math.max.apply(Math, ds.map(function(o) {
+                let metric = this.metric;
+                let metric2 = this.metric2;
+                let title = this.title;
+                let svg = d3.select('#' + this.selector);
+                let offset = this.$helpers.chart.getOffset(title);
+                let maxVal = Math.max.apply(Math, ds.map(function(o) {
                     return o[metric];
                 }));
 
-                var minVal = Math.min.apply(Math, ds.map(function(o) {
+                let minVal = Math.min.apply(Math, ds.map(function(o) {
                     return o[metric];
                 }));
 
-                var maxVal2 = Math.max.apply(Math, ds.map(function(o) {
+                let maxVal2 = Math.max.apply(Math, ds.map(function(o) {
                     return o[metric2];
                 }));
 
-                var minVal2 = Math.min.apply(Math, ds.map(function(o) {
+                let minVal2 = Math.min.apply(Math, ds.map(function(o) {
                     return o[metric2];
                 }));
 
-                var g = svg.selectAll('circle')
+                let g = svg.selectAll('circle')
                     .data(ds);
 
-                var yScale = d3.scaleLinear()
+                let yScale = d3.scaleLinear()
                     .domain([minVal, maxVal])
-                    .range([options.height, 0]);
+                    .range([this.$data.height, 0]);
 
-                var yAxis = d3.axisLeft()
+                let yAxis = d3.axisLeft()
                     .scale(yScale);
 
-                var xScale = d3.scaleLinear()
+                let xScale = d3.scaleLinear()
                     .domain([minVal2, maxVal2])
-                    .range([0, options.width]);
+                    .range([0, this.$data.width]);
 
-                var xAxis = d3.axisBottom()
+                let xAxis = d3.axisBottom()
                     .scale(xScale);
 
                 svg.selectAll('g').remove();
 
-                if (title) this.$helpers.chart.addTitle(title, svg, options.width);
+                if (title) this.$helpers.chart.addTitle(title, svg, this.$data.width);
 
                 g.enter()
                     .append('circle')
@@ -95,7 +95,7 @@
                     })
                     .attr('transform', 'translate(0,' + offset + ')');
 
-                this.$helpers.chart.drawAxis(options.height, svg, xAxis, yAxis, offset);
+                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset);
 
                 svg.exit().remove();
             }

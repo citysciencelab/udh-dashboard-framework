@@ -1,5 +1,5 @@
-<template>
-    <svg class="chart" v-bind:id="selector" width="500" height="300"></svg>
+<template class="chart-container">
+    <svg class="chart" v-bind:id="selector"></svg>
 </template>
 
 <script>
@@ -9,7 +9,6 @@
         name: "bar-chart",
         extends: AbstractChart,
         props: {
-            ds: Array,
             options: Object,
             title: String,
             metric: String,
@@ -17,14 +16,12 @@
         },
 
         mounted: function () {
-            this.createChart(this.$d3, this.ds, this.options);
+            const svg = $('#' + this.selector);
+            const dimensions = this.$helpers.chart.getDimensions(svg, this.title);
+            this.$data.width = dimensions[0];
+            this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
 
-        watch: {
-            ds: function(newVal, oldVal) {
-                this.createChart(this.$d3, this.ds, this.options);
-            }
-        },
 
         /**
          * $helpers.chart.barChart
@@ -42,58 +39,64 @@
 
         methods: {
             createChart(d3, ds, options) {
-                var metric = this.metric;
-                var title = this.title;
-                var svg = d3.select('#' + this.selector);
-                var offset = this.$helpers.chart.getOffset(title);
-                var g = svg.selectAll('rect')
+                let metric = this.metric;
+                let title = this.title;
+                let svg = d3.select('#' + this.selector);
+                let offset = this.$helpers.chart.getOffset(title);
+                let g = svg.selectAll('rect')
                     .data(ds);
 
-                var maxVal = Math.max.apply(Math, ds.map(function (o) {
+                let maxVal = Math.max.apply(Math, ds.map(function (o) {
                     return o[metric];
                 }));
 
-                var yScale = d3.scaleLinear()
+                let yScale = d3.scaleLinear()
                     .domain([0, maxVal])
-                    .range([options.height, 0]);
+                    .range([this.$data.height, 0]);
 
-                var yAxis = d3.axisLeft()
+                let yAxis = d3.axisLeft()
                     .scale(yScale);
 
-                var xScale = this.$helpers.chart.initOrdinalScale(d3, ds, options.dim, options.width);
-                var xAxis = d3.axisBottom()
-                    .scale(xScale)
+                let xScale = this.$helpers.chart.initOrdinalScale(d3, ds, options.dim, this.$data.width);
+                let xAxis = d3.axisBottom()
+                    .scale(xScale);
 
+                const tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) { return d; });
+
+                svg.call(tip);
                 svg.selectAll('g').remove();
-                if (title) this.$helpers.chart.addTitle(title, svg, options.width);
+                if (title) this.$helpers.chart.addTitle(title, svg, this.$data.width);
 
                 g.enter()
                     .append('rect')
                     .merge(g)
                     .attr('class', 'bar')
                     .attr('width', (d, i) => {
-                        return (options.width / ds.length) - 1
+                        return (this.$data.width / ds.length) - 1
                     })
                     .attr('height', d => {
-                        return options.height - yScale(d[metric])
+                        return this.$data.height - yScale(d[metric])
                     })
                     .attr('x', (d, i) => {
-                        return (i * (options.width / ds.length)) + 60
+                        return (i * (this.$data.width / ds.length)) + 60
                     })
                     .attr('y', d => {
                         return yScale(d[metric]);
                     })
-                    .on('mouseover', d => {
-                        this.$helpers.chart.addTooltip(d, svg,
-                            d3.mouse(d3.event.currentTarget)[0],
-                            d3.mouse(d3.event.currentTarget)[1], metric)
-                    })
+                    .on('mouseover',
+                        function(d) {
+                            tip.show(d['name'] + ": " + d[metric], this);
+                        }
+                    )
                     .on('mouseout', d => {
-                        this.$helpers.chart.removeTooltip(svg);
+                        tip.hide();
                     })
                     .attr('transform', 'translate(0,' + offset + ')');
 
-                this.$helpers.chart.drawAxis(options.height, svg, xAxis, yAxis, offset);
+                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset);
                 g.exit().remove();
             }
         }
@@ -104,4 +107,8 @@
     .chart {
         padding: 20px;
     }
+
+</style>
+
+<style>
 </style>
