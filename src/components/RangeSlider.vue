@@ -1,9 +1,10 @@
 <template>
     <a-slider
             range
-            v-model:step="step"
+            :step="step"
             :max="max"
             :min="min"
+            :marks="marks"
             v-model:defaultValue="defaults"
             :tipFormatter="tipFormat"
             @change="onChange"
@@ -22,11 +23,17 @@
             defaultValue: Array,
             step: Number,
             max: Number,
-            min: Number
+            min: Number,
+            marks: Object
         },
         mounted: function () {
             if (this.defaultValue) {
                 this.$data.defaults = this.defaultValue;
+            }
+        },
+        watch: {
+            defaultValue: function(newVal, oldVal) {
+                this.$data.defaults = newVal;
             }
         },
         methods: {
@@ -34,7 +41,8 @@
                 return `${value} §$%`;
             },
             onChange(value) {
-                // console.log('change: ', value);
+                this.$emit('rangeChange', value);
+                //Or global: this.$root.$emit()
             },
             onAfterChange(value) {
                 // console.log('afterChange: ', value);
@@ -43,6 +51,12 @@
     }
 </script>
 
-<style scoped>
+<style>
+    .ant-slider-dot {
+        width: 0 !important;
+        border-radius: 0 !important;
+        border: 1px solid #e8e8e8 !important;
+        margin-left: 0 !important;
+    }
 
 </style>

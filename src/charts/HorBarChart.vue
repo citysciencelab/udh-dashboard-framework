@@ -1,12 +1,12 @@
-<template>
-    <svg class="chart" v-bind:id="selector" width="500" height="300"></svg>
+<template class="chart-container">
+    <svg class="chart" v-bind:id="selector"></svg>
 </template>
 
 <script>
     import AbstractChart from './AbstractChart.vue';
 
     export default {
-        name: "pie-chart",
+        name: "hor-bar-chart",
         extends: AbstractChart,
         props: {
             options: Object,
@@ -22,8 +22,9 @@
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
 
+
         /**
-         * bind data to a pie chart.
+         * bind data to a bar graph.
          * @param {string} d3 - reference to d3 object.
          * @param {string} ds - dataset for the graph.
          * @param {Object} options - options for bar graph.
@@ -40,49 +41,51 @@
                 let metric = this.metric;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
-                let radius = this.$data.height > this.$data.width ? (this.$data.width - this.$data.width * 0.1) / 2 : (this.$data.height - this.$data.height * 0.1) / 2;
                 let offset = this.$helpers.chart.getOffset(title);
+                let g = svg.selectAll('rect')
+                    .data(ds);
 
-                let pie = d3.pie()
-                    .sort(null)
-                    .value(function(ds) {
-                        return ds[metric];
-                    });
+                let maxVal = Math.max.apply(Math, ds.map(function (o) {
+                    return o[metric];
+                }));
 
-                let path = d3.arc()
-                    .outerRadius(radius - 10)
-                    .innerRadius(25);
+                let xScale = d3.scaleLinear()
+                    .domain([maxVal, 0])
+                    .range([0, this.$data.width]);
 
-                let arc = svg.selectAll('.arc')
-                    .data(pie(ds));
+                let xAxis = d3.axisBottom()
+                    .scale(xScale);
 
-                // let color = d3.scaleOrdinal()
-                //     .range(['#4D4D4D', '#5DA5DA', '#FAA43A', '#60BD68', '#F17CB0',
-                //         '#B2912F', '#B276B2', '#DECF3F', '#F15854'
-                //     ]);
+                let yScale = this.$helpers.chart.initOrdinalScale(d3, ds, options.dim, this.$data.height);
+                let yAxis = d3.axisLeft()
+                    .scale(yScale);
 
                 const tip = d3.tip()
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
                     .html(function(d) { return d; });
-                svg.call(tip);
 
-                let color = d3.scaleSequential(d3.interpolateRdBu);
+                svg.call(tip);
+                svg.selectAll('g').remove();
                 if (title) this.$helpers.chart.addTitle(title, svg, this.$data.width);
 
-                arc.enter()
-                    .append('g')
-                    .attr('transform', 'translate(' + this.$data.width / 2 + ',' + this.$data.height / 2 + ')')
-                    .append('path')
-                    .merge(arc)
-                    .attr('class', 'arc')
-                    .attr('d', path)
-                    .attr('fill', function(d, i) {
-                        return color(i * 0.1);
+                g.enter()
+                    .append('rect')
+                    .merge(g)
+                    .attr('class', 'bar')
+                    .attr('height', (d, i) => {
+                        return (this.$data.height / ds.length) - 1
                     })
+                    .attr('width', d => {
+                        return this.$data.width - xScale(d[metric])
+                    })
+                    .attr('y', (d, i) => {
+                        return (i * (this.$data.height / ds.length))
+                    })
+                    .attr('x', 60)
                     .on('mouseover',
                         function(d) {
-                            tip.show(d.data['name'] + ": " + d.data[metric], this);
+                            tip.show(d['name'] + ": " + d[metric], this);
                         }
                     )
                     .on('mouseout', d => {
@@ -90,7 +93,8 @@
                     })
                     .attr('transform', 'translate(0,' + offset + ')');
 
-                arc.exit().remove();
+                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset);
+                g.exit().remove();
             }
         }
     }
@@ -100,4 +104,7 @@
     .chart {
         padding: 20px;
     }
+</style>
+
+<style>
 </style>

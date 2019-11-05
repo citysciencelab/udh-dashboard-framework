@@ -94,11 +94,50 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <range-slider v-bind:defaultValue="[40,80]"
-                              v-bind:step="5" v-bind:max="140" v-bind:min="10" />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <md-button type="submit" class="md-primary md-raised filter-button"
+                                   @click="changeFilterRange('range-id', 'day')">
+                            Tag
+                        </md-button>
+                    </div>
+                    <div class="col-sm-4">
+                        <md-button type="submit" class="md-primary md-raised filter-button"
+                                   @click="changeFilterRange('range-id', 'month')">
+                            Monat
+                        </md-button>
+                    </div>
+                    <div class="col-sm-4">
+                        <md-button type="submit" class="md-primary md-raised filter-button"
+                                   @click="changeFilterRange('range-id', 'year')">
+                            Jahr
+                        </md-button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <range-slider id="range-id"
+                                      v-bind:defaultValue="this.dateRangeValues['range-id']['defaultValue']"
+                                      v-bind:step="this.dateRangeValues['range-id']['step']"
+                                      v-bind:max="this.dateRangeValues['range-id']['max']"
+                                      v-bind:min="this.dateRangeValues['range-id']['min']"
+                                      v-bind:marks="this.dateRangeValues['range-id']['marks']"
+                                      @rangeChange="rangeForChartChanged"/>
+                    </div>
+                </div>
             </div>
             <div class="col-sm">
-                whaat
+                <transition-group name="list" tag="p">
+                    <span v-for="(didYou, index) in this.didYouKnow"
+                          v-bind:key="didYou"
+                          v-if="index === didYouKnowIndex"
+                          class="list-item">
+                        {{didYou}}
+                    </span>
+                </transition-group>
+            </div>
+            <div class="col-sm">
+                whaat: {{this.didYouKnowIndex}}
             </div>
         </div>
         <div class="row" style="height: 350px">
@@ -119,6 +158,15 @@
             <div class="col-sm">
                 <scatter-plot v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
                            title="Scatter Plot Example" metric="val2"  metric2="val" selector="chart4"/>
+            </div>
+        </div>
+        <div class="row" style="height: 350px">
+            <div class="col-sm">
+                <h-bar-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
+                            title="Hor Bar Chart Example" metric="val" selector="chart5"/>
+            </div>
+            <div class="col-sm">
+                hj
             </div>
         </div>
         <div class="row">
@@ -147,6 +195,7 @@
     import PieChart from "../charts/PieChart.vue";
     import ScatterPlot from "../charts/ScatterPlot.vue";
     import BarChart from "../charts/BarChart.vue";
+    import HBarChart from "../charts/HorBarChart.vue";
 
     export default {
         components: {
@@ -158,7 +207,8 @@
             BarChart,
             LineChart,
             PieChart,
-            ScatterPlot
+            ScatterPlot,
+            HBarChart
         },
         name: 'Charts',
         data() {
@@ -177,19 +227,37 @@
                     {'val': 35, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
                     {'val': 42, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
                 ],
+                dateRangeValues: {
+                    'range-id' : {
+                            'defaultValue' : [40,90],
+                            'step' : 5,
+                            'max' : 140,
+                            'min' : 0,
+                            'marks' : {0: 0, 140: 140}
+                    }
+                },
                 options: {
                     dim: 'name',
                     dim2: 'date'
-                }
+                },
+                didYouKnow: [
+                    'Wussten Sie schon -- <sdsdsdfvasdasdf',
+                    'Wussten Sie schon -- <sdfsfjtjuzkgzkgkfghndghnfghdfgh',
+                    'Wussten Sie schon -- <sdfgsdfholiopölui',
+                    'Wussten Sie schon -- sdfbfgh',
+                    'Wussten Sie schon -- 7825327hjkgjk8'
+                ],
+                didYouKnowIndex: 0
             }
         },
         mounted: function () {
             // Lets set the initial dashboard data
             this.$store.commit('SET_ORIGINAL_DATA', {originalData: this.dataSet});
+            // Initialize the 'Did you know' interval
+            this.didYouKnowInterval()
         },
         methods: {
             testSnackBar: function () {
-                console.log("snack")
                 let options = {
                     message: "Snack snack",
                     position: "center",
@@ -201,13 +269,55 @@
                     render: h => h(SnackBar, { attrs: options })
                 });
             },
+            changeFilterRange: function (sliderId, silderRange) {
+                let values = {};
+                if (silderRange === 'day') {
+                    values = {
+                        'defaultValue' : [40,90],
+                        'step' : 5,
+                        'max' : 140,
+                        'min' : 0,
+                        'marks' : {0: 0, 140: 140}
+                    };
+                } else if (silderRange === 'month') {
+                    values = {
+                        'defaultValue' : [1000,4000],
+                        'step' : 100,
+                        'max' : 5000,
+                        'min' : 100,
+                        'marks' : {100: 100, 5000: 5000}
+                    };
+                } else if (silderRange === 'year') {
+                    values = {
+                        'defaultValue' : [100,200],
+                        'step' : 50,
+                        'max' : 500,
+                        'min' : 10,
+                        'marks' : {10: 10, 500: 500}
+                    };
+                }
+
+                this.dateRangeValues[sliderId] = values;
+            },
+            rangeForChartChanged: function (rangeValue) {
+              console.log(rangeValue);
+            },
             addDataPoint: function () {
                 let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
                 this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
             },
-            handleMouseOut(evt) {
+            handleMouseOut() {
                 let changedObject = this.dataSet[this.dataSet.length-1];
                 Vue.set(this.dataSet, this.dataSet.length-1, changedObject);
+            },
+            didYouKnowInterval () {
+                this.didYouKnowIndex = setInterval(() => {
+                    if (this.didYouKnowIndex < this.didYouKnow.length-1) {
+                        this.didYouKnowIndex++;
+                    } else {
+                        this.didYouKnowIndex = 0;
+                    }
+                }, 5000)
             }
         }
     }
@@ -230,5 +340,33 @@
 
     a {
         color: #42b983;
+    }
+
+    .filter-button {
+        background-color: transparent !important;
+        color: black !important;
+        height: 28px !important;
+        min-width: 80px !important;
+        padding-top: 4px !important;
+    }
+
+
+    /*
+        Transition
+    */
+
+    .list {
+        position: relative;
+    }
+    .list-item {
+        position: absolute;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .list-enter-active, .list-leave-active {
+        transition: opacity .8s ease;
+    }
+    .list-enter, .list-leave-to {
+        opacity: 0;
     }
 </style>

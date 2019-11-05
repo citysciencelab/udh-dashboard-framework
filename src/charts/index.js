@@ -19,24 +19,9 @@ export default {
                 },
 
                 initTimeScale: function(d3, ds, dim, width) {
-                    var x = d3.scaleTime().range([0, width]);
+                    const x = d3.scaleTime().range([0, width]);
                     x.domain(d3.extent(ds, function(d) { return d[dim]; }));
-
                     return x;
-
-                    // let domainArr = [];
-                    // let rangeArr = [];
-                    //
-                    // ds.forEach((t) => {
-                    //     domainArr.push(t[dim])
-                    // });
-                    // ds.forEach((t, i) => {
-                    //     rangeArr.push(width * i / ds.length)
-                    // });
-                    //
-                    // return d3.scaleTime()
-                    //     .domain(domainArr)
-                    //     .range([0, width]);
                 },
 
                 drawAxis: function(height, svg, xAxis, yAxis, offset) {
@@ -59,7 +44,7 @@ export default {
                     svg.append('text')
                         .attr('x', x)
                         .attr('y', y)
-                        .attr('class', 'tooltip')
+                        .attr('class', 'tt')
                         .text(d.name + ': ' + d[v]);
                 },
 

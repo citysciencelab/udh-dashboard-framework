@@ -38,9 +38,6 @@
          */
 
         methods: {
-            callout(x, d) {
-                // console.log("dd")
-            },
             createChart(d3, ds, options) {
                 let metric = this.metric;
                 let title = this.title;
@@ -95,10 +92,15 @@
                         const index = bisect(data, date, 1);
                         const a = data[index - 1];
                         const b = data[index];
-                        const info = date - a.date > b.date - date ? b : a;
-                        // tip.show(info['name'] + ": " + info[metric], this);
+                        let info = {};
+                        if (b) {
+                            info = date - a.date > b.date - date ? b : a;
+                        } else {
+                            info = a;
+                        }
+                        //TODO: Tooltip position - also trigger on close areas
                         this.$helpers.chart.addTooltip(info, svg,
-                            d3.event['offsetX'], d3.event['offsetY'], metric)
+                            x(info['date']), y(info['val2']), metric)
                     })
                     .on('mouseout', d => {
                         this.$helpers.chart.removeTooltip(svg);

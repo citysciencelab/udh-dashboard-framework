@@ -24,7 +24,6 @@
 
 
         /**
-         * $helpers.chart.barChart
          * bind data to a bar graph.
          * @param {string} d3 - reference to d3 object.
          * @param {string} ds - dataset for the graph.
