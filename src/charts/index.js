@@ -24,14 +24,14 @@ export default {
                     return x;
                 },
 
-                drawAxis: function(height, svg, xAxis, yAxis, offset) {
-                    offset = offset || 0;
+                drawAxis: function(height, svg, xAxis, yAxis, offsetTop, offsetLeft) {
+                    offsetTop = offsetTop || 0;
                     svg.append('g')
-                        .attr('transform', 'translate(50,' + offset + ')')
+                        .attr('transform', 'translate(50,' + offsetTop + ')')
                         .call(yAxis);
 
                     svg.append('g')
-                        .attr('transform', 'translate(70,' + (height + offset + 5) + ')')
+                        .attr('transform', 'translate('+ offsetLeft +',' + (height + offsetTop + 5) + ')')
                         .call(xAxis)
                         .selectAll("text")
                         .style("text-anchor", "end")
@@ -53,10 +53,13 @@ export default {
                 },
 
                 addTitle: function(t, svg, w) {
+                    svg.selectAll('.chart-title').remove();
+
                     svg.append('text')
                         .attr('x', w / 2)
                         .attr('text-anchor', 'middle')
                         .attr('y', 20)
+                        .attr('class', 'chart-title')
                         .text(t);
                 },
 

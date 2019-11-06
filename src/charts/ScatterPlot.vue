@@ -39,6 +39,8 @@
 
         methods: {
             createChart(d3, ds, options) {
+                const chartElementOffset = 60;
+
                 let metric = this.metric;
                 let metric2 = this.metric2;
                 let title = this.title;
@@ -87,14 +89,14 @@
                     .attr('class', 'point')
                     .merge(g)
                     .attr('cx', (d, i) => {
-                        return (xScale(d[metric2])) + 60
+                        return (xScale(d[metric2])) + chartElementOffset
                     })
                     .attr('cy', d => {
                         return yScale(d[metric]);
                     })
                     .attr('transform', 'translate(0,' + offset + ')');
 
-                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset);
+                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset, chartElementOffset);
 
                 svg.exit().remove();
             }

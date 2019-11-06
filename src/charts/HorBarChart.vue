@@ -38,6 +38,8 @@
 
         methods: {
             createChart(d3, ds, options) {
+                const chartElementOffset = 60;
+
                 let metric = this.metric;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
@@ -82,7 +84,7 @@
                     .attr('y', (d, i) => {
                         return (i * (this.$data.height / ds.length))
                     })
-                    .attr('x', 60)
+                    .attr('x', chartElementOffset)
                     .on('mouseover',
                         function(d) {
                             tip.show(d['name'] + ": " + d[metric], this);
@@ -93,7 +95,7 @@
                     })
                     .attr('transform', 'translate(0,' + offset + ')');
 
-                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset);
+                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset, chartElementOffset);
                 g.exit().remove();
             }
         }

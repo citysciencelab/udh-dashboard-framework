@@ -14,7 +14,7 @@
 
 <style lang="less">
     #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        font-family: 'HamburgSans-Regular';
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
@@ -61,6 +61,6 @@
         font-size: 10px;
         background-color: white;
     }
-
-
+    .md-tooltip {
+    }
 </style>

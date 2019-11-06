@@ -59,7 +59,6 @@
         padding: 0 !important;
         height: 100%;
         width: 100%;
-
         display: inline-block;
         position: absolute;
         top: 0;
@@ -69,13 +68,16 @@
     /*
      Tooltip
     */
-    .d3-tip {
-        line-height: 1;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.75);
-        color: #fff;
-        border-radius: 4px;
-        pointer-events: none;
+    .d3-tip, .md-tooltip, .md-snackbar {
+        font-family: 'HamburgSans-Regular' !important;
+        line-height: 1 !important;
+        padding: 10px !important;
+        background: rgba(0, 0, 0, 0.55) !important;
+        color: #fff !important;
+        border-radius: 4px !important;
+        pointer-events: none !important;
+        font-size: 1rem !important;
+        height: initial !important;
     }
 
     /* Creates a small triangle extender for the tooltip */
@@ -85,7 +87,7 @@
         font-size: 8px;
         width: 100%;
         line-height: 1;
-        color: rgba(0, 0, 0, 0.75);
+        color: rgba(0, 0, 0, 0.55);
         position: absolute;
         pointer-events: none;
     }
@@ -93,7 +95,8 @@
     /* Northward tooltips */
     .d3-tip.n:after {
         content: "\25BC";
-        margin: -1px 0 0 0;
+        /*margin: -1px 0 0 0;*/
+        margin: 0 0 0 0;
         top: 100%;
         left: 0;
         text-align: center;

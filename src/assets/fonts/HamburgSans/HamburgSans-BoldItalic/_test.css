@@ -1,0 +1,13 @@
+/* Webfont: HamburgSans-BoldItalic */
+
+@font-face {
+    font-family: 'webfont';
+    src: url('HamburgSans-BoldItalic.eot'); /* IE9 Compat Modes */
+    src: url('HamburgSans-BoldItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('HamburgSans-BoldItalic.woff2') format('woff2'), /* Modern Browsers */
+         url('HamburgSans-BoldItalic.woff') format('woff'), /* Modern Browsers */
+         url('HamburgSans-BoldItalic.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('HamburgSans-BoldItalic.svg#HamburgSans-BoldItalic') format('svg'); /* Legacy iOS */
+    text-rendering: optimizeLegibility;
+}
+

@@ -88,8 +88,10 @@
             <div class="col-sm">
                 <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
                     Open Snackbar
-                    <md-tooltip md-direction="right">Test tooltip</md-tooltip>
+                    <md-tooltip md-direction="top" :md-active.sync="tooltipActive">Test tooltip: In einem solchen Tooltip werden alle Infos angezeigt</md-tooltip>
                 </md-button>
+                <br />
+                <md-button class="md-raised md-primary" @click="tooltipActive = !tooltipActive">Toggle Tooltip</md-button>
             </div>
         </div>
         <div class="row">
@@ -147,7 +149,8 @@
             </div>
             <div class="col-sm">
                 <line-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
-                           title="Line Chart Example" metric="val2" selector="chart2"/>
+                            title="Line Chart Example" metric="val2" selector="chart2"
+                            drawLinesBy="origin" v-bind:origins="['val1', 'val2']"/>
             </div>
         </div>
         <div class="row" style="height: 350px">
@@ -213,19 +216,21 @@
         name: 'Charts',
         data() {
             return {
+
+                tooltipActive: false,
                 dataSet: [
-                    {'val': 50, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
-                    {'val': 60, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
-                    {'val': 65, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
-                    {'val': 80, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
-                    {'val': 56, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
-                    {'val': 78, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
-                    {'val': 99, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
-                    {'val': 95, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
-                    {'val': 76, 'val2': 1640, 'name': 'Sept', 'date': new Date("2019-09")},
-                    {'val': 40, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
-                    {'val': 35, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
-                    {'val': 42, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
+                    {'val': 50,'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
+                    {'val': 60,'val1': 1900, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
+                    {'val': 65,'val1': 1000, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
+                    {'val': 80,'val1': 1250, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
+                    {'val': 56,'val1': 1050, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
+                    {'val': 78,'val1': 1090, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
+                    {'val': 99,'val1': 1700, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
+                    {'val': 95,'val1': 1400, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
+                    {'val': 76,'val1': 1400, 'val2': 1640, 'name': 'Sept', 'date': new Date("2019-09")},
+                    {'val': 40,'val1': 1100, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
+                    {'val': 35,'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
+                    {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
                 ],
                 dateRangeValues: {
                     'range-id' : {
@@ -259,9 +264,9 @@
         methods: {
             testSnackBar: function () {
                 let options = {
-                    message: "Snack snack",
+                    message: "Important bottom message",
                     position: "center",
-                    duration: 4000,
+                    duration: 10000,
                     showSnackbar: true
                 };
                 new Vue({
@@ -324,6 +329,7 @@
 </script>
 
 <style scoped>
+
     h1, h2 {
         font-weight: normal;
     }

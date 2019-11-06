@@ -27,6 +27,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import './assets/scss/material-dashboard.scss';
+import './assets/scss/_fonts.scss';
 
 //d1st-uisystem-base
 import 'd1st-uisystem-base/public/dist/bundled.min.css'
