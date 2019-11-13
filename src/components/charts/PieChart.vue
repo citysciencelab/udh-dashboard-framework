@@ -17,7 +17,7 @@
 
         mounted: function () {
             const svg = $('#' + this.selector);
-            const dimensions = this.$helpers.chart.getDimensions(svg, this.title);
+            const dimensions = this.$utils.chart.getDimensions(svg, this.title);
             this.$data.width = dimensions[0];
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
@@ -41,7 +41,7 @@
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
                 let radius = this.$data.height > this.$data.width ? (this.$data.width - this.$data.width * 0.1) / 2 : (this.$data.height - this.$data.height * 0.1) / 2;
-                let offset = this.$helpers.chart.getOffset(title);
+                let offset = this.$utils.chart.getOffset(title);
 
                 let pie = d3.pie()
                     .sort(null)
@@ -68,7 +68,7 @@
                 svg.call(tip);
 
                 let color = d3.scaleSequential(d3.interpolateRdBu);
-                if (title) this.$helpers.chart.addTitle(title, svg, this.$data.width);
+                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
 
                 arc.enter()
                     .append('g')

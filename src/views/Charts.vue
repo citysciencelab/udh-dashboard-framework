@@ -83,7 +83,8 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('name')" v-bind:label="'Month'" v-bind:identity="'name'" />
+                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('name')" v-bind:label="'Month'"
+                              identifier="'mts-month'"/>
             </div>
             <div class="col-sm">
                 <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
@@ -194,11 +195,11 @@
     import SnackBar from "../components/SnackBar";
     import RangeSlider from "../components/RangeSlider";
 
-    import LineChart from "../charts/LineChart.vue";
-    import PieChart from "../charts/PieChart.vue";
-    import ScatterPlot from "../charts/ScatterPlot.vue";
-    import BarChart from "../charts/BarChart.vue";
-    import HBarChart from "../charts/HorBarChart.vue";
+    import LineChart from "../components/charts/LineChart.vue";
+    import PieChart from "../components/charts/PieChart.vue";
+    import ScatterPlot from "../components/charts/ScatterPlot.vue";
+    import BarChart from "../components/charts/BarChart.vue";
+    import HBarChart from "../components/charts/HorBarChart.vue";
 
     export default {
         components: {

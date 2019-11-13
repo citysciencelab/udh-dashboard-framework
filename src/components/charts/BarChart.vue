@@ -17,7 +17,7 @@
 
         mounted: function () {
             const svg = $('#' + this.selector);
-            const dimensions = this.$helpers.chart.getDimensions(svg, this.title);
+            const dimensions = this.$utils.chart.getDimensions(svg, this.title);
             this.$data.width = dimensions[0];
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
@@ -42,7 +42,7 @@
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
 
-                let vOffset = this.$helpers.chart.getOffset(title);
+                let vOffset = this.$utils.chart.getOffset(title);
                 let hOffset = (this.$data.width - (this.$data.width * (ds.length-1) / ds.length)) / 2;
 
                 let g = svg.selectAll('rect')
@@ -59,7 +59,7 @@
                 let yAxis = d3.axisLeft()
                     .scale(yScale);
 
-                let xScale = this.$helpers.chart.initOrdinalScale(d3, ds, options.dim, this.$data.width);
+                let xScale = this.$utils.chart.initOrdinalScale(d3, ds, options.dim, this.$data.width);
                 let xAxis = d3.axisBottom()
                     .scale(xScale);
 
@@ -70,7 +70,7 @@
 
                 svg.call(tip);
                 svg.selectAll('g').remove();
-                if (title) this.$helpers.chart.addTitle(title, svg, this.$data.width);
+                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
 
                 g.enter()
                     .append('rect')
@@ -98,7 +98,7 @@
                     })
                     .attr('transform', 'translate(0,' + vOffset + ')');
 
-                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset + this.horizontalOffset);
+                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset + this.horizontalOffset);
                 g.exit().remove();
             }
         }

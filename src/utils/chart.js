@@ -1,6 +1,6 @@
 export default {
     install: function(Vue) {
-        Vue.prototype.$helpers = {
+        Vue.prototype.$utils = {
             chart: {
                 initOrdinalScale: function(d3, ds, dim, width) {
                     let domainArr = [];

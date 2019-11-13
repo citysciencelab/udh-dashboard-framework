@@ -18,14 +18,14 @@
 
         mounted: function () {
             const svg = $('#' + this.selector);
-            const dimensions = this.$helpers.chart.getDimensions(svg, this.title);
+            const dimensions = this.$utils.chart.getDimensions(svg, this.title);
             this.$data.width = dimensions[0];
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
 
 
         /**
-         * $helpers.chart.lineChart
+         * $utils.chart.lineChart
          * bind data to a line graph.
          * @param {string} d3 - reference to d3 object.
          * @param {string} ds - dataset for the graph.
@@ -47,7 +47,7 @@
                 let svg = d3.select('#' + this.selector)
                     .attr("height", this.$data.height);
 
-                let vOffset = this.$helpers.chart.getOffset(title);
+                let vOffset = this.$utils.chart.getOffset(title);
                 let hOffset = this.horizontalOffset;
 
                 let maxVal = Math.max.apply(Math, ds.map(function (o) {
@@ -73,14 +73,14 @@
                 let yAxis = d3.axisLeft()
                     .scale(y);
 
-                let x = this.$helpers.chart.initTimeScale(d3, ds, options.dim2, this.$data.width);
+                let x = this.$utils.chart.initTimeScale(d3, ds, options.dim2, this.$data.width);
                 let xAxis = d3.axisBottom(x)
                     .tickFormat(d3.timeFormat("%y-%b")).tickValues(ds.map(d => d.date));
 
                 svg.selectAll('path').remove();
                 svg.selectAll('g').remove();
 
-                if (title) this.$helpers.chart.addTitle(title, svg, this.$data.width);
+                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
 
                 let color = d3.scaleSequential(d3.interpolateRdBu);
 
@@ -119,17 +119,17 @@
                                 info = a;
                             }
                             //TODO: Tooltip position - also trigger on close areas
-                            this.$helpers.chart.addTooltip(info, svg,
+                            this.$utils.chart.addTooltip(info, svg,
                                 x(info['date']), y(info['val2']), origin)
                         })
                         .on('mouseout', d => {
-                            this.$helpers.chart.removeTooltip(svg);
+                            this.$utils.chart.removeTooltip(svg);
                         });
                     index++;
                 }
 
 
-                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset);
+                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset);
                 svg.exit().remove();
             }
         }

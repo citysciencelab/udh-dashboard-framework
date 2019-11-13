@@ -18,7 +18,7 @@
 
         mounted: function () {
             const svg = $('#' + this.selector);
-            const dimensions = this.$helpers.chart.getDimensions(svg, this.title);
+            const dimensions = this.$utils.chart.getDimensions(svg, this.title);
             this.$data.width = dimensions[0];
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
@@ -43,7 +43,7 @@
                 let metric2 = this.metric2;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
-                let offset = this.$helpers.chart.getOffset(title);
+                let offset = this.$utils.chart.getOffset(title);
                 let maxVal = Math.max.apply(Math, ds.map(function(o) {
                     return o[metric];
                 }));
@@ -79,7 +79,7 @@
 
                 svg.selectAll('g').remove();
 
-                if (title) this.$helpers.chart.addTitle(title, svg, this.$data.width);
+                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
 
                 g.enter()
                     .append('circle')
@@ -94,7 +94,7 @@
                     })
                     .attr('transform', 'translate(0,' + offset + ')');
 
-                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset, this.horizontalOffset);
+                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset, this.horizontalOffset);
 
                 svg.exit().remove();
             }

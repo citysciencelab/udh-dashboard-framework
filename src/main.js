@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import BootstrapVue from 'bootstrap-vue'
-import charts from './charts'
 import CountryFlag from 'vue-country-flag'
 
 import * as d3 from 'd3'
@@ -48,7 +47,10 @@ import VueMaterial from 'vue-material'
 Vue.use(VueMaterial);
 
 Vue.config.productionTip = false;
-Vue.use(charts);
+
+import chartUtils from './utils/chart'
+Vue.use(chartUtils);
+
 Vue.use(BootstrapVue);
 
 Object.defineProperty(Vue.prototype, '$d3', {value: d3});

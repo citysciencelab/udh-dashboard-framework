@@ -2,8 +2,8 @@
     <div class="md-layout md-gutter">
         <div class="md-layout-item">
             <md-field>
-                <label for="movies">{{label}}</label>
-                <md-select v-model="selectedData" name="movies" id="movies" multiple @md-closed="closed">
+                <label v-bind:for="identifier">{{label}}</label>
+                <md-select v-model="selectedData" name="multiselect" v-bind:id="identifier" multiple @md-closed="closed">
                     <md-option v-for="item in selectData"  v-bind:value="item"  >
                         {{ item }}
                     </md-option>
@@ -17,16 +17,19 @@
     export default {
         name: 'multi-select',
         props: {
-            identity: String,
+            identifier: String,
             selectData: Array,
             label: String
         },
         data: () => ({
             selectedData: []
         }),
+        mounted: function () {
+
+        },
         methods: {
             closed() {
-                this.$store.commit('SET_FILTER_VALUES', {ident: this.identity, values: this.selectedData});
+                this.$store.commit('SET_FILTER_VALUES', {ident: this.identifier, values: this.selectedData});
             }
         }
     }
