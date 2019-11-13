@@ -139,7 +139,7 @@
                 </transition-group>
             </div>
             <div class="col-sm">
-                whaat: {{this.didYouKnowIndex}}
+                <p>{{ $t("message.hello") }}</p>
             </div>
         </div>
         <div class="row" style="height: 350px">

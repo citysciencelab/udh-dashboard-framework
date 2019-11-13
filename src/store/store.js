@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import charts from "./charts.module";
+import messages from "./messages.module";
 import watcher from "../plugins/watcher";
 Vue.use(Vuex);
 
