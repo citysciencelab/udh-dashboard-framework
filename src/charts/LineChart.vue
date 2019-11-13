@@ -40,14 +40,16 @@
 
         methods: {
             createChart(d3, ds, options) {
-                const chartElementOffset = 60;
-
                 let metric = this.metric;
+
                 let origins = this.origins;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector)
                     .attr("height", this.$data.height);
-                let offset = this.$helpers.chart.getOffset(title);
+
+                let vOffset = this.$helpers.chart.getOffset(title);
+                let hOffset = this.horizontalOffset;
+
                 let maxVal = Math.max.apply(Math, ds.map(function (o) {
                     let values = [];
                     for (let origin of origins) {
@@ -82,11 +84,12 @@
 
                 let color = d3.scaleSequential(d3.interpolateRdBu);
 
+
                 let index = 0;
                 for (let origin of origins) {
                     let lineFunction = d3.line()
                         .x(function (d, i) {
-                            return x(d[options.dim2]) + chartElementOffset;
+                            return x(d[options.dim2]) + hOffset;
 
                         })
                         .y(function (d) {
@@ -100,7 +103,7 @@
                         .attr('stroke', color(index))
                         .attr('stroke-width', 3)
                         .attr('d', lineFunction)
-                        .attr('transform', 'translate(0,' + offset + ')')
+                        .attr('transform', 'translate(0,' + vOffset + ')')
                         .on('mouseover', d => {
                             let data = d;
                             let mouse = d3.mouse(d3.event.currentTarget)[0];
@@ -126,7 +129,7 @@
                 }
 
 
-                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset, chartElementOffset);
+                this.$helpers.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset);
                 svg.exit().remove();
             }
         }

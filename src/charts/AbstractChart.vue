@@ -7,7 +7,8 @@
         name: "abstract-chart",
         data: () => ({
             width: Number,
-            height: Number
+            height: Number,
+            horizontalOffset : 60
         }),
         props: {
             ds: Array
