@@ -1,12 +1,14 @@
 export const messages = {
         de: {
             message: {
-                hello: 'hallo welt'
+                hello: 'hallo welt',
+                month: 'Monat'
             }
         },
         en: {
             message: {
-                hello: 'hello world'
+                hello: 'hello world',
+                month: 'Month'
             }
         }
 

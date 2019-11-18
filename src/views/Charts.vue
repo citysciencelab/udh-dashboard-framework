@@ -83,7 +83,7 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('name')" v-bind:label="'Month'"
+                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('name')" v-bind:label="$t('message.month')"
                               identifier="'mts-month'"/>
             </div>
             <div class="col-sm">
@@ -119,13 +119,13 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <range-slider id="range-id"
+                        <range-slider id="range-id" v-bind:identity="this.dateRange"
                                       v-bind:defaultValue="this.dateRangeValues['range-id']['defaultValue']"
                                       v-bind:step="this.dateRangeValues['range-id']['step']"
                                       v-bind:max="this.dateRangeValues['range-id']['max']"
                                       v-bind:min="this.dateRangeValues['range-id']['min']"
                                       v-bind:marks="this.dateRangeValues['range-id']['marks']"
-                                      @rangeChange="rangeForChartChanged"/>
+                                      @rangeChange="rangeForChartChanged" isDateRange="true"/>
                     </div>
                 </div>
             </div>
@@ -217,7 +217,6 @@
         name: 'Charts',
         data() {
             return {
-
                 tooltipActive: false,
                 dataSet: [
                     {'val': 50,'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
@@ -233,25 +232,19 @@
                     {'val': 35,'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
                     {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
                 ],
+                dateRange: 'month',
                 dateRangeValues: {
-                    'range-id' : {
-                            'defaultValue' : [40,90],
-                            'step' : 5,
-                            'max' : 140,
-                            'min' : 0,
-                            'marks' : {0: 0, 140: 140}
-                    }
                 },
                 options: {
                     dim: 'name',
                     dim2: 'date'
                 },
                 didYouKnow: [
-                    'Wussten Sie schon -- <sdsdsdfvasdasdf',
-                    'Wussten Sie schon -- <sdfsfjtjuzkgzkgkfghndghnfghdfgh',
-                    'Wussten Sie schon -- <sdfgsdfholiopölui',
-                    'Wussten Sie schon -- sdfbfgh',
-                    'Wussten Sie schon -- 7825327hjkgjk8'
+                    'Wussten Sie schon: Fact 1',
+                    'Wussten Sie schon: Fact 2',
+                    'Wussten Sie schon: Fact 3',
+                    'Wussten Sie schon: Fact 4',
+                    'Wussten Sie schon: Fact 5'
                 ],
                 didYouKnowIndex: 0
             }
@@ -260,7 +253,9 @@
             // Lets set the initial dashboard data
             this.$store.commit('SET_ORIGINAL_DATA', {originalData: this.dataSet});
             // Initialize the 'Did you know' interval
-            this.didYouKnowInterval()
+            this.didYouKnowInterval();
+            // Set initial date range
+            this.changeFilterRange('range-id', 'month');
         },
         methods: {
             testSnackBar: function () {
@@ -277,29 +272,58 @@
             },
             changeFilterRange: function (sliderId, silderRange) {
                 let values = {};
+                this.dateRange = silderRange;
+                let today = new Date();
+
                 if (silderRange === 'day') {
+                    today = today.getTime();
+                    let startDate = new Date();
+                    startDate.setFullYear(startDate.getFullYear() - 1);
+                    let oneMonthAgo = new Date();
+                    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+                    const marks =  {};
+                    marks[startDate.getTime()] =  this.$utils.date.getDateStringFromDate(startDate);
+                    marks[today] = this.$utils.date.getDateStringFromMillis(today);
+
                     values = {
-                        'defaultValue' : [40,90],
-                        'step' : 5,
-                        'max' : 140,
-                        'min' : 0,
-                        'marks' : {0: 0, 140: 140}
+                        'defaultValue' : [oneMonthAgo.getTime(), today],
+                        'step' : 1 ,
+                        'max' : today,
+                        'min' : startDate.getTime(),
+                        'marks' : marks
                     };
                 } else if (silderRange === 'month') {
+                    let startDate = new Date();
+                    startDate.setFullYear(startDate.getFullYear() - 3);
+                    let sixMonthAgo = new Date();
+                    sixMonthAgo.setMonth(sixMonthAgo.getMonth() - 6);
+                    const marks =  {};
+                    marks[startDate.getTime()] =  startDate.getMonth() + `.` + startDate.getFullYear();
+                    marks[today.getTime()] = today.getMonth() + `.` + today.getFullYear();
+
                     values = {
-                        'defaultValue' : [1000,4000],
-                        'step' : 100,
-                        'max' : 5000,
-                        'min' : 100,
-                        'marks' : {100: 100, 5000: 5000}
+                        'defaultValue' : [sixMonthAgo.getTime(), today.getTime()],
+                        'step' : 1,
+                        'max' : today.getTime(),
+                        'min' : startDate.getTime(),
+                        'marks' : marks
                     };
                 } else if (silderRange === 'year') {
+                    let startDate = new Date();
+                    startDate.setFullYear(startDate.getFullYear() - 12);
+                    let twoYearsAgo = new Date();
+                    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+
+                    const marks =  {};
+                    marks[startDate.getTime()] =  startDate.getFullYear();
+                    marks[today.getTime()] = today.getFullYear();
+
                     values = {
-                        'defaultValue' : [100,200],
-                        'step' : 50,
-                        'max' : 500,
-                        'min' : 10,
-                        'marks' : {10: 10, 500: 500}
+                        'defaultValue' : [twoYearsAgo.getTime(), today.getTime()],
+                        'step' : 1,
+                        'max' : today.getTime(),
+                        'min' : startDate.getTime(),
+                        'marks' : marks
                     };
                 }
 

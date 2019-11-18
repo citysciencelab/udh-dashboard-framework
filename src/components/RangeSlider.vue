@@ -13,6 +13,12 @@
 </template>
 
 <script>
+
+    /*
+    *   Documentation found here:
+    *   https://www.antdv.com/components/slider/
+    */
+
     export default {
         name: "range-slider",
         data: () => ({
@@ -24,7 +30,9 @@
             step: Number,
             max: Number,
             min: Number,
-            marks: Object
+            marks: Object,
+            isDateRange: false,
+            identity: String
         },
         mounted: function () {
             if (this.defaultValue) {
@@ -38,14 +46,24 @@
         },
         methods: {
             tipFormat(value) {
-                return `${value} §$%`;
+                if (this.isDateRange) {
+                    let date = new Date(value);
+                    if (this.identity === 'day') {
+                        return this.$utils.date.getDateStringFromDate(date);
+                    } else if (this.identity === 'month') {
+                        return  date.getMonth() + `.` + date.getFullYear();
+                    } else if (this.identity === 'year') {
+                        return  date.getFullYear();
+                    }
+                } else {
+                    return `${value}`;
+                }
             },
             onChange(value) {
-                this.$emit('rangeChange', value);
                 //Or global: this.$root.$emit()
             },
             onAfterChange(value) {
-                // console.log('afterChange: ', value);
+                this.$emit('rangeChange', value);
             },
         }
     }
@@ -59,4 +77,7 @@
         margin-left: 0 !important;
     }
 
+    .ant-slider-mark {
+        font-size: 11px !important;
+    }
 </style>

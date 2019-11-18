@@ -72,6 +72,15 @@ export default {
                     const height = (svg.parent().height() - this.getOffset(title)) * 0.85;
                     return [width, height];
                 }
+            },
+            date: {
+                getDateStringFromDate(date) {
+                    return date.getDate() + `.` + date.getMonth() + `.` + date.getFullYear();
+                },
+                getDateStringFromMillis(dateMillis) {
+                    let date = new Date(dateMillis);
+                    return this.getDateStringFromDate(date);
+                }
             }
         }
     }

@@ -29,14 +29,12 @@ Vue.use(VueI18n);
 //Bootstrap & Material Dashboard elements
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue);
+
 import './assets/scss/material-dashboard.scss';
 import './assets/scss/_fonts.scss';
 
-
 //d1st-uisystem-base - HH styles import
-import 'd1st-uisystem-base/public/dist/bundled.min.css'
-
-//d1st-uisystem-base
 import 'd1st-uisystem-base/public/dist/bundled.min.css'
 import * as d1hh from'd1st-uisystem-base/public/dist/bundle.js'
 
@@ -48,16 +46,13 @@ Vue.use(VueMaterial);
 
 Vue.config.productionTip = false;
 
-import chartUtils from './utils/chart'
-Vue.use(chartUtils);
-
-Vue.use(BootstrapVue);
+import utils from './utils/utils'
+Vue.use(utils);
 
 Object.defineProperty(Vue.prototype, '$d3', {value: d3});
 Object.defineProperty(Vue.prototype, '$d1hh', {value: d1hh});
 
 Vue.component('country-flag', CountryFlag);
-
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({
@@ -65,7 +60,6 @@ const i18n = new VueI18n({
     fallbackLocale: 'de',
     messages, // set locale messages
 });
-
 
 new Vue({
     router,
