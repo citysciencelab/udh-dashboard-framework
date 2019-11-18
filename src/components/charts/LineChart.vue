@@ -47,8 +47,8 @@
                 let svg = d3.select('#' + this.selector)
                     .attr("height", this.$data.height);
 
-                let vOffset = this.$utils.chart.getOffset(title);
-                let hOffset = this.horizontalOffset;
+                let vOffset = this.$utils.chart.getOffset(title) || 0;
+                let hOffset = this.horizontalOffset || 0;
 
                 let maxVal = Math.max.apply(Math, ds.map(function (o) {
                     let values = [];
@@ -84,17 +84,14 @@
 
                 let color = d3.scaleSequential(d3.interpolateRdBu);
 
-
                 let index = 0;
                 for (let origin of origins) {
                     let lineFunction = d3.line()
                         .x(function (d, i) {
-                            return x(d[options.dim2]) + hOffset;
-
+                            return x(d[options.dim2]) + hOffset || 0;
                         })
                         .y(function (d) {
-                            return y(d[origin]);
-
+                            return y(d[origin]) || 0;
                         });
 
                     svg.append('path')
@@ -127,7 +124,6 @@
                         });
                     index++;
                 }
-
 
                 this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset);
                 svg.exit().remove();

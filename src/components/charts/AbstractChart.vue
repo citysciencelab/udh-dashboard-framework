@@ -1,14 +1,14 @@
 <template>
-    
+
 </template>
 
 <script>
     export default {
         name: "abstract-chart",
         data: () => ({
-            width: Number,
-            height: Number,
-            horizontalOffset : 60
+            width: 300,
+            height: 300,
+            horizontalOffset: 60
         }),
         props: {
             ds: Array

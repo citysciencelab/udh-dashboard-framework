@@ -26,6 +26,8 @@ export default {
 
                 drawAxis: function(height, svg, xAxis, yAxis, offsetTop, offsetLeft) {
                     offsetTop = offsetTop || 0;
+                    offsetLeft = offsetLeft || 0;
+
                     svg.append('g')
                         .attr('transform', 'translate(50,' + offsetTop + ')')
                         .call(yAxis);
@@ -42,8 +44,8 @@ export default {
 
                 addTooltip: function(d, svg, x, y, v) {
                     svg.append('text')
-                        .attr('x', x)
-                        .attr('y', y)
+                        .attr('x', x || 0)
+                        .attr('y', y || 0)
                         .attr('class', 'tt')
                         .text(d.name + ': ' + d[v]);
                 },
@@ -56,7 +58,7 @@ export default {
                     svg.selectAll('.chart-title').remove();
 
                     svg.append('text')
-                        .attr('x', w / 2)
+                        .attr('x', w / 2 || 0)
                         .attr('text-anchor', 'middle')
                         .attr('y', 20)
                         .attr('class', 'chart-title')

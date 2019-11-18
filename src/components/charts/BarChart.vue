@@ -42,8 +42,8 @@
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
 
-                let vOffset = this.$utils.chart.getOffset(title);
-                let hOffset = (this.$data.width - (this.$data.width * (ds.length-1) / ds.length)) / 2;
+                let vOffset = this.$utils.chart.getOffset(title) || 0;
+                let hOffset = (this.$data.width - this.$data.width * (ds.length-1) / ds.length) / 2 || 0;
 
                 let g = svg.selectAll('rect')
                     .data(ds);
@@ -77,16 +77,16 @@
                     .merge(g)
                     .attr('class', 'bar')
                     .attr('width', (d, i) => {
-                        return (this.$data.width / ds.length) - 1
+                        return this.$data.width / ds.length - 1 || 0;
                     })
                     .attr('height', d => {
-                        return this.$data.height - yScale(d[metric])
+                        return this.$data.height - yScale(d[metric]) || 0;
                     })
                     .attr('x', (d, i) => {
-                        return (i * (this.$data.width / ds.length)) + this.horizontalOffset;
+                        return i * (this.$data.width / ds.length) + this.horizontalOffset || 0;
                     })
                     .attr('y', d => {
-                        return yScale(d[metric]);
+                        return yScale(d[metric]) || 0;
                     })
                     .on('mouseover',
                         function(d) {

@@ -120,6 +120,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <range-slider id="range-id" v-bind:identity="this.dateRange"
+                                      v-if="this.dateRangeValues['range-id']"
                                       v-bind:defaultValue="this.dateRangeValues['range-id']['defaultValue']"
                                       v-bind:step="this.dateRangeValues['range-id']['step']"
                                       v-bind:max="this.dateRangeValues['range-id']['max']"
