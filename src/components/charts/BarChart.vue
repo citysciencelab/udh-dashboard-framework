@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
@@ -76,7 +77,7 @@
                     .append('rect')
                     .merge(g)
                     .attr('class', 'bar')
-                    .attr('width', (d, i) => {
+                    .attr('width', () => {
                         return this.$data.width / ds.length - 1 || 0;
                     })
                     .attr('height', d => {
@@ -93,7 +94,7 @@
                             tip.show(d['name'] + ": " + d[metric], this);
                         }
                     )
-                    .on('mouseout', d => {
+                    .on('mouseout', () => {
                         tip.hide();
                     })
                     .attr('transform', 'translate(0,' + vOffset + ')');

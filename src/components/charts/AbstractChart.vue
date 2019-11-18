@@ -1,7 +1,3 @@
-<template>
-
-</template>
-
 <script>
     export default {
         name: "abstract-chart",
@@ -14,7 +10,7 @@
             ds: Array
         },
         watch: {
-            ds: function(newVal, oldVal) {
+            ds: function() {
                 this.createChart(this.$d3, this.ds, this.options);
             }
         },
@@ -86,7 +82,6 @@
         box-sizing: border-box;
         display: inline;
         font-size: 8px;
-        width: 100%;
         line-height: 1;
         color: rgba(0, 0, 0, 0.55);
         position: absolute;

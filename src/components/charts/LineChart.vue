@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
@@ -40,8 +41,6 @@
 
         methods: {
             createChart(d3, ds, options) {
-                let metric = this.metric;
-
                 let origins = this.origins;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector)
@@ -87,7 +86,7 @@
                 let index = 0;
                 for (let origin of origins) {
                     let lineFunction = d3.line()
-                        .x(function (d, i) {
+                        .x(function (d) {
                             return x(d[options.dim2]) + hOffset || 0;
                         })
                         .y(function (d) {
@@ -119,7 +118,7 @@
                             this.$utils.chart.addTooltip(info, svg,
                                 x(info['date']), y(info['val2']), origin)
                         })
-                        .on('mouseout', d => {
+                        .on('mouseout', () => {
                             this.$utils.chart.removeTooltip(svg);
                         });
                     index++;

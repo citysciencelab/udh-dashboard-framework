@@ -36,7 +36,7 @@ import './assets/scss/_fonts.scss';
 
 //d1st-uisystem-base - HH styles import
 import 'd1st-uisystem-base/public/dist/bundled.min.css'
-import * as d1hh from'd1st-uisystem-base/public/dist/bundle.js'
+import * as d1hh from 'd1st-uisystem-base/public/dist/bundle.js'
 
 // Not recommended - import what you need to not hurt performance (https://vuematerial.io/getting-started)
 import 'vue-material/dist/vue-material.min.css'

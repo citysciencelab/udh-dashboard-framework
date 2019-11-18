@@ -4,7 +4,7 @@
             <md-field>
                 <label v-bind:for="identifier">{{label}}</label>
                 <md-select v-model="selectedData" name="multiselect" v-bind:id="identifier" multiple @md-closed="closed">
-                    <md-option v-for="item in selectData"  v-bind:value="item"  >
+                    <md-option v-for="(item, index) in selectData" v-bind:key="index" v-bind:value="item">
                         {{ item }}
                     </md-option>
                 </md-select>

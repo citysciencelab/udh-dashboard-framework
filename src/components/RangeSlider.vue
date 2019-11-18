@@ -5,7 +5,7 @@
             :max="max"
             :min="min"
             :marks="marks"
-            v-model:defaultValue="defaults"
+            v-model="defaults"
             :tipFormatter="tipFormat"
             @change="onChange"
             @afterChange="onAfterChange"
@@ -31,7 +31,7 @@
             max: Number,
             min: Number,
             marks: Object,
-            isDateRange: false,
+            isDateRange: Boolean,
             identity: String
         },
         mounted: function () {
@@ -40,7 +40,7 @@
             }
         },
         watch: {
-            defaultValue: function(newVal, oldVal) {
+            defaultValue: function(newVal) {
                 this.$data.defaults = newVal;
             }
         },
@@ -59,7 +59,7 @@
                     return `${value}`;
                 }
             },
-            onChange(value) {
+            onChange() {
                 //Or global: this.$root.$emit()
             },
             onAfterChange(value) {

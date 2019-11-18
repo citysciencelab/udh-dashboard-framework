@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
@@ -36,7 +37,7 @@
          */
 
         methods: {
-            createChart(d3, ds, options) {
+            createChart(d3, ds) {
                 let metric = this.metric;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
@@ -85,7 +86,7 @@
                             tip.show(d.data['name'] + ": " + d.data[metric], this);
                         }
                     )
-                    .on('mouseout', d => {
+                    .on('mouseout', () => {
                         tip.hide();
                     })
                     .attr('transform', 'translate(0,' + offset + ')');

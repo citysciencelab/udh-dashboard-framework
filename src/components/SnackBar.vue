@@ -16,7 +16,7 @@
             message: String,
             position: String,
             duration: Number,
-            showSnackbar: false
+            showSnackbar: Boolean
         },
         mounted: function () {
             if (this.showSnackbar) {

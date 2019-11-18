@@ -126,15 +126,15 @@
                                       v-bind:max="this.dateRangeValues['range-id']['max']"
                                       v-bind:min="this.dateRangeValues['range-id']['min']"
                                       v-bind:marks="this.dateRangeValues['range-id']['marks']"
-                                      @rangeChange="rangeForChartChanged" isDateRange="true"/>
+                                      v-bind:isDateRange="true"
+                                      @rangeChange="rangeForChartChanged"/>
                     </div>
                 </div>
             </div>
             <div class="col-sm">
                 <transition-group name="list" tag="p">
-                    <span v-for="(didYou, index) in this.didYouKnow"
-                          v-bind:key="didYou"
-                          v-if="index === didYouKnowIndex"
+                    <span v-for="(didYou, index) in [this.didYouKnow[didYouKnowIndex]]"
+                          v-bind:key="index"
                           class="list-item">
                         {{didYou}}
                     </span>
@@ -176,7 +176,8 @@
         </div>
         <div class="row">
             <div class="data-grid">
-                <div v-for="(t, index) in this.$store.getters.dashData">
+                <div v-for="(t, index) in this.$store.getters.dashData"
+                     v-bind:key="index">
                     <input v-model="t.name" @blur="handleMouseOut">
                     <input v-model.number="t.val" type="number" @blur="handleMouseOut">
                     <input v-model.number="t.val2" type="number" @blur="handleMouseOut">
@@ -206,7 +207,6 @@
         components: {
             StatsCard,
             MultiSelect,
-            SnackBar,
             RangeSlider,
 
             BarChart,
@@ -330,8 +330,8 @@
 
                 this.dateRangeValues[sliderId] = values;
             },
-            rangeForChartChanged: function (rangeValue) {
-              console.log(rangeValue);
+            rangeForChartChanged: function (/*rangeValue*/) {
+            //   console.log(rangeValue);
             },
             addDataPoint: function () {
                 let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
