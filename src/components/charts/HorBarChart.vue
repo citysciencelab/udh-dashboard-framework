@@ -95,9 +95,9 @@
                     })
                     .attr('transform', 'translate(0,' + vOffset + ')');
 
-                // let additionalOffsetTry  = (this.$data.height - ((((this.$data.height / ds.length) - 1)*ds.length) -vOffset))/2
-                // console.log(additionalOffsetTry)
-                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, this.horizontalOffset);
+                // Half an element size plus offset
+                const yAxisOffset = ((this.$data.height / ds.length)/2) + vOffset;
+                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, this.horizontalOffset, yAxisOffset);
                 g.exit().remove();
             }
         }

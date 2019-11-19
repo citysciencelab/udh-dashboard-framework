@@ -128,8 +128,7 @@
                     index++;
                 }
 
-
-                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset);
+                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset, null);
                 svg.exit().remove();
             }
         }

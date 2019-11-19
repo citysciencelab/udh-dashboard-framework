@@ -24,10 +24,10 @@ export default {
                     return x;
                 },
 
-                drawAxis: function(height, svg, xAxis, yAxis, offsetTop, offsetLeft) {
+                drawAxis: function(height, svg, xAxis, yAxis, offsetTop, offsetLeft, yAxisOffset) {
                     offsetTop = offsetTop || 0;
                     svg.append('g')
-                        .attr('transform', 'translate(50,' + offsetTop + ')')
+                        .attr('transform', 'translate(50,' + (yAxisOffset ? yAxisOffset : offsetTop) + ')')
                         .call(yAxis);
 
                     svg.append('g')
