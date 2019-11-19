@@ -1,4 +1,3 @@
-
 const initialState = {
     originalData: [],
     dashData: [],
@@ -19,7 +18,7 @@ export const mutations = {
     SET_ORIGINAL_DATA: (state, { originalData }) => {
         state.originalData = originalData;
     },
-    SET_DASH_DATA: (state, { dashData }) => {
+    SET_DASH_DATA: (state, dashData) => {
         state.dashData = dashData;
     },
     ADD_DASH_ELEMENT: (state, { dataElement }) => {
@@ -31,16 +30,25 @@ export const mutations = {
 };
 
 export const actions = {
-    //Example actions
-    // async [FAVORITE_REMOVE](context, slug) {
-    //     const { data } = await FavoriteService.remove(slug);
-    //     // Update list as well. This allows us to favorite an article in the Home view.
-    //     context.commit(UPDATE_ARTICLE_IN_LIST, data.article, { root: true });
-    //     context.commit(SET_ARTICLE, data.article);
-    // },
-    // [ARTICLE_PUBLISH]({ state }) {
-    //     return ArticlesService.create(state.article);
-    // },
+    fetchData(context) {
+        // Replace this by an actual API call later
+        const mockData = [
+            {'val': 50,'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
+            {'val': 60,'val1': 1900, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
+            {'val': 65,'val1': 1000, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
+            {'val': 80,'val1': 1250, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
+            {'val': 56,'val1': 1050, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
+            {'val': 78,'val1': 1090, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
+            {'val': 99,'val1': 1700, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
+            {'val': 95,'val1': 1400, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
+            {'val': 76,'val1': 1400, 'val2': 1640, 'name': 'Sep', 'date': new Date("2019-09")},
+            {'val': 40,'val1': 1100, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
+            {'val': 35,'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
+            {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
+        ];
+        context.commit('SET_DASH_DATA', mockData);
+        return Promise.resolve();
+    }
 };
 
 const getters = {

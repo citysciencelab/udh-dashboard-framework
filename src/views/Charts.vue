@@ -49,8 +49,8 @@
                     </template>
 
                     <template slot="content">
-                        <p class="category">Fixed Issues</p>
-                        <h3 class="title">75</h3>
+                        <p class="category">Size of dataset</p>
+                        <h3 class="title">{{ this.dataSet.length }}</h3>
                     </template>
 
                     <template slot="footer">
@@ -146,11 +146,11 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <bar-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
+                <bar-chart v-bind:ds="this.dataSet" v-bind:options="options"
                            title="Bar Chart Example" metric="val" selector="chart1"/>
             </div>
             <div class="col-sm">
-                <line-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
+                <line-chart v-bind:ds="this.dataSet" v-bind:options="options"
                             title="Line Chart Example" metric="val2" selector="chart2"
                             drawLinesBy="origin" v-bind:origins="['val1', 'val2']"/>
             </div>
@@ -192,11 +192,11 @@
 
 <script>
     import Vue from 'vue'
+    import { mapActions } from 'vuex'
     import StatsCard from "../components/StatsCard";
     import MultiSelect from "../components/MultiSelect";
     import SnackBar from "../components/SnackBar";
     import RangeSlider from "../components/RangeSlider";
-
     import LineChart from "../components/charts/LineChart.vue";
     import PieChart from "../components/charts/PieChart.vue";
     import ScatterPlot from "../components/charts/ScatterPlot.vue";
@@ -208,7 +208,6 @@
             StatsCard,
             MultiSelect,
             RangeSlider,
-
             BarChart,
             LineChart,
             PieChart,
@@ -219,20 +218,7 @@
         data() {
             return {
                 tooltipActive: false,
-                dataSet: [
-                    {'val': 50,'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
-                    {'val': 60,'val1': 1900, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
-                    {'val': 65,'val1': 1000, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
-                    {'val': 80,'val1': 1250, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
-                    {'val': 56,'val1': 1050, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
-                    {'val': 78,'val1': 1090, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
-                    {'val': 99,'val1': 1700, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
-                    {'val': 95,'val1': 1400, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
-                    {'val': 76,'val1': 1400, 'val2': 1640, 'name': 'Sept', 'date': new Date("2019-09")},
-                    {'val': 40,'val1': 1100, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
-                    {'val': 35,'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
-                    {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
-                ],
+                dataSet: [],
                 dateRange: 'month',
                 dateRangeValues: {
                 },
@@ -250,15 +236,21 @@
                 didYouKnowIndex: 0
             }
         },
-        mounted: function () {
+        async mounted() {
             // Lets set the initial dashboard data
-            this.$store.commit('SET_ORIGINAL_DATA', {originalData: this.dataSet});
+            await this.fetchData();
+            this.dataSet = this.$store.getters.dashData;
+
             // Initialize the 'Did you know' interval
             this.didYouKnowInterval();
+
             // Set initial date range
             this.changeFilterRange('range-id', 'month');
         },
         methods: {
+            ...mapActions([
+                'fetchData', // map `this.fetchData()` to `this.$store.dispatch('fetchData')`
+            ]),
             testSnackBar: function () {
                 let options = {
                     message: "Important bottom message",
