@@ -10,11 +10,13 @@
             ds: Array
         },
         watch: {
-            ds: function() {
-                this.createChart(this.$d3, this.ds, this.options);
+            ds() {
+                if (this.ds.length > 0) {
+                    this.createChart(this.$d3, this.ds, this.options);
+                }
             }
         },
-        mounted: function () {
+        mounted() {
             // This double checks the setting of all $props variables
             // If the component gets initiated by
 
@@ -29,10 +31,6 @@
                 } else {
                     // console.log("Property " + this.$props[obj] + " is set.")
                 }
-            }
-
-            if (this.ds.length > 0) {
-                this.createChart(this.$d3, this.ds, this.options);
             }
         }
     }

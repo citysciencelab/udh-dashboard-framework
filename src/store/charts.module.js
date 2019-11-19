@@ -2,7 +2,7 @@ const initialState = {
     originalData: [],
     dashData: [],
     filterValues: {},
-    test: false
+    loading: false
 };
 
 export const state = { ...initialState };
@@ -24,8 +24,8 @@ export const mutations = {
     ADD_DASH_ELEMENT: (state, { dataElement }) => {
         state.dashData.push(dataElement);
     },
-    SET_TEST: (state, { test }) => {
-        state.test = test;
+    SET_LOADING: (state, loading) => {
+        state.loading = loading;
     }
 };
 
@@ -46,8 +46,12 @@ export const actions = {
             {'val': 35,'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
             {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
         ];
-        context.commit('SET_DASH_DATA', mockData);
-        return Promise.resolve();
+        context.commit('SET_LOADING', true);
+        setTimeout(() => {
+            context.commit('SET_DASH_DATA', mockData);
+            context.commit('SET_LOADING', false);
+            return Promise.resolve();
+        }, 1000);
     }
 };
 
@@ -72,8 +76,8 @@ const getters = {
         }
         return valuesForProperty;
     },
-    test: state => {
-        return state.test
+    loading: state => {
+        return state.loading
     }
 };
 

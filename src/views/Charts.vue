@@ -50,7 +50,7 @@
 
                     <template slot="content">
                         <p class="category">Size of dataset</p>
-                        <h3 class="title">{{ this.dataSet.length }}</h3>
+                        <h3 class="title">{{ this.dashData.length }}</h3>
                     </template>
 
                     <template slot="footer">
@@ -130,6 +130,9 @@
                                       @rangeChange="rangeForChartChanged"/>
                     </div>
                 </div>
+                <div class="row">
+                    <div v-if="this.loading">LOADING ...</div>
+                </div>
             </div>
             <div class="col-sm">
                 <transition-group name="list" tag="p">
@@ -146,28 +149,28 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <bar-chart v-bind:ds="this.dataSet" v-bind:options="options"
+                <bar-chart v-bind:ds="this.dashData" v-bind:options="options"
                            title="Bar Chart Example" metric="val" selector="chart1"/>
             </div>
             <div class="col-sm">
-                <line-chart v-bind:ds="this.dataSet" v-bind:options="options"
+                <line-chart v-bind:ds="this.dashData" v-bind:options="options"
                             title="Line Chart Example" metric="val2" selector="chart2"
                             drawLinesBy="origin" v-bind:origins="['val1', 'val2']"/>
             </div>
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <pie-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
+                <pie-chart v-bind:ds="this.dashData" v-bind:options="options"
                             title="Pie Chart Example" metric="val" selector="chart3"/>
             </div>
             <div class="col-sm">
-                <scatter-plot v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
+                <scatter-plot v-bind:ds="this.dashData" v-bind:options="options"
                            title="Scatter Plot Example" metric="val2"  metric2="val" selector="chart4"/>
             </div>
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <h-bar-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
+                <h-bar-chart v-bind:ds="this.dashData" v-bind:options="options"
                             title="Hor Bar Chart Example" metric="val" selector="chart5"/>
             </div>
             <div class="col-sm">
@@ -176,7 +179,7 @@
         </div>
         <div class="row">
             <div class="data-grid">
-                <div v-for="(t, index) in this.$store.getters.dashData"
+                <div v-for="(t, index) in this.dashData"
                      v-bind:key="index">
                     <input v-model="t.name" @blur="handleMouseOut">
                     <input v-model.number="t.val" type="number" @blur="handleMouseOut">
@@ -192,7 +195,7 @@
 
 <script>
     import Vue from 'vue'
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     import StatsCard from "../components/StatsCard";
     import MultiSelect from "../components/MultiSelect";
     import SnackBar from "../components/SnackBar";
@@ -218,7 +221,6 @@
         data() {
             return {
                 tooltipActive: false,
-                dataSet: [],
                 dateRange: 'month',
                 dateRangeValues: {
                 },
@@ -239,13 +241,18 @@
         async mounted() {
             // Lets set the initial dashboard data
             await this.fetchData();
-            this.dataSet = this.$store.getters.dashData;
 
             // Initialize the 'Did you know' interval
             this.didYouKnowInterval();
 
             // Set initial date range
             this.changeFilterRange('range-id', 'month');
+        },
+        computed: {
+            ...mapGetters([
+                'dashData',
+                'loading',
+            ])
         },
         methods: {
             ...mapActions([
@@ -330,8 +337,8 @@
                 this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
             },
             handleMouseOut() {
-                let changedObject = this.dataSet[this.dataSet.length-1];
-                Vue.set(this.dataSet, this.dataSet.length-1, changedObject);
+                let changedObject = this.dashData[this.dashData.length-1];
+                Vue.set(this.dashData, this.dashData.length-1, changedObject);
             },
             didYouKnowInterval () {
                 this.didYouKnowIndex = setInterval(() => {
