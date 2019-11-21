@@ -13,6 +13,7 @@
             options: Object,
             title: String,
             metric: String,
+            descriptor: String,
             selector: String
         },
 
@@ -29,7 +30,8 @@
          * @param {string} ds - dataset for the graph.
          * @param {Object} options - options for bar graph.
          * @param {string} options.selector - selector name to place the graph.
-         * @param {string} options.metric - value you are measuring.
+         * @param {string} options.metric - data attribute by which to access values.
+         * @param {string} options.descriptor - data attribute by which to access descriptors.
          * @param {string} options.dim - value you will be categorizing the data by.
          * @param {string} options.width - width of the chart.
          * @param {string} options.height - height of the chart.
@@ -39,6 +41,7 @@
         methods: {
             createChart(d3, ds) {
                 let metric = this.metric;
+                let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
                 let radius = this.$data.height > this.$data.width ? (this.$data.width - this.$data.width * 0.1) / 2 : (this.$data.height - this.$data.height * 0.1) / 2;
@@ -83,7 +86,7 @@
                     })
                     .on('mouseover',
                         function(d) {
-                            tip.show(d.data['name'] + ": " + d.data[metric], this);
+                            tip.show(d.data[descriptor] + ": " + d.data[metric], this);
                         }
                     )
                     .on('mouseout', () => {

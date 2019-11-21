@@ -160,21 +160,18 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <pie-chart v-bind:ds="this.dashData" v-bind:options="options"
-                            title="Pie Chart Example" metric="val" selector="chart3"/>
+                <pie-chart v-bind:ds="this.testData" v-bind:options="options" selector="chart3"
+                           title="Distribution of operating systems" metric="anzahl_os" descriptor="os" />
             </div>
             <div class="col-sm">
                 <scatter-plot v-bind:ds="this.dashData" v-bind:options="options"
-                           title="Scatter Plot Example" metric="val2"  metric2="val" selector="chart4"/>
+                              title="Scatter Plot Example" metric="val2"  metric2="val" selector="chart4"/>
             </div>
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
                 <h-bar-chart v-bind:ds="this.dashData" v-bind:options="options"
-                            title="Hor Bar Chart Example" metric="val" selector="chart5"/>
-            </div>
-            <div class="col-sm">
-                hj
+                             title="Hor Bar Chart Example" metric="val" selector="chart5"/>
             </div>
         </div>
         <div class="row">
@@ -241,6 +238,7 @@
         async mounted() {
             // Lets set the initial dashboard data
             await this.fetchData();
+            await this.fetchTestData({ month: 7, year: 2019, source: 'services_internet' });
 
             // Initialize the 'Did you know' interval
             this.didYouKnowInterval();
@@ -251,12 +249,14 @@
         computed: {
             ...mapGetters([
                 'dashData',
+                'testData',
                 'loading',
             ])
         },
         methods: {
             ...mapActions([
                 'fetchData', // map `this.fetchData()` to `this.$store.dispatch('fetchData')`
+                'fetchTestData'
             ]),
             testSnackBar: function () {
                 let options = {

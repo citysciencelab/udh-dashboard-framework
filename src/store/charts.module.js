@@ -1,9 +1,14 @@
+import Axios from "axios";
+
 const initialState = {
     originalData: [],
     dashData: [],
+    testData: [],
     filterValues: {},
     loading: false
 };
+
+const searchBaseUrl = 'https://test-geodienste.hamburg.de/layers-mrh/_doc/_search';
 
 export const state = { ...initialState };
 
@@ -20,6 +25,9 @@ export const mutations = {
     },
     SET_DASH_DATA: (state, dashData) => {
         state.dashData = dashData;
+    },
+    SET_TEST_DATA: (state, data) => {
+        state.testData = data;
     },
     ADD_DASH_ELEMENT: (state, { dataElement }) => {
         state.dashData.push(dataElement);
@@ -52,15 +60,31 @@ export const actions = {
             context.commit('SET_LOADING', false);
             return Promise.resolve();
         }, 1000);
+    },
+    fetchTestData(context, { month, year, source }) {
+        const url = `${searchBaseUrl}?q=month:${month} AND year:${year} AND quelle:${source}`;
+
+        context.commit('SET_LOADING', true);
+
+        Axios.get(url).then(response => {
+            const results = response.data.hits.hits.map(hit => hit._source);
+            // console.log(results);
+            context.commit('SET_TEST_DATA', results);
+        }).finally(() =>{
+            context.commit('SET_LOADING', false);
+        });
     }
 };
 
 const getters = {
+    originalData: state => {
+        return state.originalData
+    },
     dashData: state => {
         return state.dashData
     },
-    originalData: state => {
-        return state.originalData
+    testData: state => {
+        return state.testData
     },
     filterValues: state => {
         return state.filterValues
