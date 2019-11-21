@@ -30,7 +30,7 @@
             step: Number,
             max: Number,
             min: Number,
-            marks: Object,
+            marks: {},
             isDateRange: false,
             identity: String
         },

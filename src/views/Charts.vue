@@ -100,31 +100,34 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <md-button type="submit" class="md-primary md-raised filter-button"
-                                   @click="changeFilterRange('range-id', 'day')">
+                                   v-bind:class="{'active' : dateRange === 'day'}"
+                                   @click="changeFilterRange('dateRangeSlider', 'day')">
                             Tag
                         </md-button>
                     </div>
                     <div class="col-sm-4">
                         <md-button type="submit" class="md-primary md-raised filter-button"
-                                   @click="changeFilterRange('range-id', 'month')">
+                                   v-bind:class="{'active' : dateRange === 'month'}"
+                                   @click="changeFilterRange('dateRangeSlider', 'month')">
                             Monat
                         </md-button>
                     </div>
                     <div class="col-sm-4">
                         <md-button type="submit" class="md-primary md-raised filter-button"
-                                   @click="changeFilterRange('range-id', 'year')">
+                                   v-bind:class="{'active' : dateRange === 'year'}"
+                                   @click="changeFilterRange('dateRangeSlider', 'year')">
                             Jahr
                         </md-button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <range-slider id="range-id" v-bind:identity="this.dateRange"
-                                      v-bind:defaultValue="this.dateRangeValues['range-id']['defaultValue']"
-                                      v-bind:step="this.dateRangeValues['range-id']['step']"
-                                      v-bind:max="this.dateRangeValues['range-id']['max']"
-                                      v-bind:min="this.dateRangeValues['range-id']['min']"
-                                      v-bind:marks="this.dateRangeValues['range-id']['marks']"
+                        <range-slider id="dateRangeSlider" v-bind:identity="dateRange"
+                                      v-bind:defaultValue="rangeMap['dateRangeSlider']['defaultValue']"
+                                      v-bind:step="rangeMap['dateRangeSlider']['step']"
+                                      v-bind:max="rangeMap['dateRangeSlider']['max']"
+                                      v-bind:min="rangeMap['dateRangeSlider']['min']"
+                                      v-bind:marks="rangeMap['dateRangeSlider']['marks']"
                                       @rangeChange="rangeForChartChanged" isDateRange="true"/>
                     </div>
                 </div>
@@ -233,7 +236,14 @@
                     {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
                 ],
                 dateRange: 'month',
-                dateRangeValues: {
+                rangeMap: {
+                    dateRangeSlider: {
+                        'defaultValue' : [],
+                        'step' : null,
+                        'max' : null,
+                        'min' : null,
+                        'marks' : {}
+                    }
                 },
                 options: {
                     dim: 'name',
@@ -255,7 +265,7 @@
             // Initialize the 'Did you know' interval
             this.didYouKnowInterval();
             // Set initial date range
-            this.changeFilterRange('range-id', 'month');
+            this.changeFilterRange('dateRangeSlider', this.dateRange);
         },
         methods: {
             testSnackBar: function () {
@@ -270,12 +280,12 @@
                     render: h => h(SnackBar, { attrs: options })
                 });
             },
-            changeFilterRange: function (sliderId, silderRange) {
+            changeFilterRange: function (sliderId, sliderRange) {
                 let values = {};
-                this.dateRange = silderRange;
+                this.dateRange = sliderRange;
                 let today = new Date();
 
-                if (silderRange === 'day') {
+                if (sliderRange === 'day') {
                     today = today.getTime();
                     let startDate = new Date();
                     startDate.setFullYear(startDate.getFullYear() - 1);
@@ -292,7 +302,7 @@
                         'min' : startDate.getTime(),
                         'marks' : marks
                     };
-                } else if (silderRange === 'month') {
+                } else if (sliderRange === 'month') {
                     let startDate = new Date();
                     startDate.setFullYear(startDate.getFullYear() - 3);
                     let sixMonthAgo = new Date();
@@ -308,7 +318,7 @@
                         'min' : startDate.getTime(),
                         'marks' : marks
                     };
-                } else if (silderRange === 'year') {
+                } else if (sliderRange === 'year') {
                     let startDate = new Date();
                     startDate.setFullYear(startDate.getFullYear() - 12);
                     let twoYearsAgo = new Date();
@@ -327,7 +337,7 @@
                     };
                 }
 
-                this.dateRangeValues[sliderId] = values;
+                this.rangeMap[sliderId] = values;
             },
             rangeForChartChanged: function (rangeValue) {
               console.log(rangeValue);

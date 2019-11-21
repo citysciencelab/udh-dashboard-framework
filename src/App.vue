@@ -109,4 +109,8 @@
         cursor: pointer;
     }
 
+    .md-button.md-primary.md-raised.active {
+        background-color: rgba(211,211,211 ,.5 ) !important;
+    }
+
 </style>
