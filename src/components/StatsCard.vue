@@ -25,3 +25,9 @@
         }
     };
 </script>
+
+<style scoped>
+    .md-card-header+.md-card-content {
+        padding-top: 10px !important;
+    }
+</style>

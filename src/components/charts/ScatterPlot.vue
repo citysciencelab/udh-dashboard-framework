@@ -95,8 +95,7 @@
                     })
                     .attr('transform', 'translate(0,' + offset + ')');
 
-                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset, this.horizontalOffset);
-
+                this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, offset, this.horizontalOffset, null);
                 svg.exit().remove();
             }
         }
