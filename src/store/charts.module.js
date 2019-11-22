@@ -1,4 +1,4 @@
-import Axios from "axios";
+import elastic from '../utils/elastic';
 
 const initialState = {
     originalData: [],
@@ -8,11 +8,9 @@ const initialState = {
     loading: false
 };
 
-const searchBaseUrl = 'https://test-geodienste.hamburg.de/layers-mrh/_doc/_search';
+const state = { ...initialState };
 
-export const state = { ...initialState };
-
-export const mutations = {
+const mutations = {
     SET_FILTER_VALUES: (state, { ident, values }) => {
         if (state.filterValues.hasOwnProperty(ident)) {
             state.filterValues[ident] = values;
@@ -37,42 +35,52 @@ export const mutations = {
     }
 };
 
-export const actions = {
-    fetchData(context) {
-        // Replace this by an actual API call later
-        const mockData = [
-            {'val': 50,'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
-            {'val': 60,'val1': 1900, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
-            {'val': 65,'val1': 1000, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
-            {'val': 80,'val1': 1250, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
-            {'val': 56,'val1': 1050, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
-            {'val': 78,'val1': 1090, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
-            {'val': 99,'val1': 1700, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
-            {'val': 95,'val1': 1400, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
-            {'val': 76,'val1': 1400, 'val2': 1640, 'name': 'Sep', 'date': new Date("2019-09")},
-            {'val': 40,'val1': 1100, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
-            {'val': 35,'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
-            {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
-        ];
-        context.commit('SET_LOADING', true);
-        setTimeout(() => {
-            context.commit('SET_DASH_DATA', mockData);
-            context.commit('SET_LOADING', false);
-            return Promise.resolve();
-        }, 1000);
-    },
-    fetchTestData(context, { month, year, source }) {
-        const url = `${searchBaseUrl}?q=month:${month} AND year:${year} AND quelle:${source}`;
+const makeMockActions = () => {
+    return {
+        fetchData(context) {
+            const mockData = [
+                {'val': 50, 'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
+                {'val': 60, 'val1': 1900, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
+                {'val': 65, 'val1': 1000, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
+                {'val': 80, 'val1': 1250, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
+                {'val': 56, 'val1': 1050, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
+                {'val': 78, 'val1': 1090, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
+                {'val': 99, 'val1': 1700, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
+                {'val': 95, 'val1': 1400, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
+                {'val': 76, 'val1': 1400, 'val2': 1640, 'name': 'Sep', 'date': new Date("2019-09")},
+                {'val': 40, 'val1': 1100, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
+                {'val': 35, 'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
+                {'val': 42, 'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
+            ];
+            context.commit('SET_LOADING', true);
+            setTimeout(() => {
+                context.commit('SET_DASH_DATA', mockData);
+                context.commit('SET_LOADING', false);
+                return Promise.resolve();
+            }, 1000);
+        },
+    }
+};
 
-        context.commit('SET_LOADING', true);
+const makeActions = (elastic) => {
+    return {
+        fetchOsStats(context, { month, year, source }) {
+            context.commit('SET_LOADING', true);
 
-        Axios.get(url).then(response => {
-            const results = response.data.hits.hits.map(hit => hit._source);
-            // console.log(results);
-            context.commit('SET_TEST_DATA', results);
-        }).finally(() =>{
-            context.commit('SET_LOADING', false);
-        });
+            const params = {
+                month: month,
+                year: year,
+                quelle: source
+            };
+            elastic.get(params).then(results => {
+                if (!results) {
+                    return;
+                }
+                context.commit('SET_TEST_DATA', results);
+            }).finally(() =>{
+                context.commit('SET_LOADING', false);
+            });
+        }
     }
 };
 
@@ -107,7 +115,7 @@ const getters = {
 
 export default {
     state,
-    actions,
+    actions: makeActions(elastic),
     mutations,
     getters
 };

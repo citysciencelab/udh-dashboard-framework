@@ -1,38 +1,19 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router/router'
-import store from './store/store'
 import BootstrapVue from 'bootstrap-vue'
 import CountryFlag from 'vue-country-flag'
-
 import * as d3 from 'd3'
 import d3tip from 'd3-tip'
-d3.tip = d3tip;
 
 //We import ant-design because vue-material does not have a slider - maybe generally?
 import 'ant-design-vue/dist/antd.css';
 import { Slider, message } from 'ant-design-vue';
-Vue.component(Slider.name, Slider);
-Vue.use(Slider);
-Vue.prototype.$message = message;
-
 
 //internationalization
 import VueI18n from 'vue-i18n'
-import {messages} from './store/messages.module'
-Vue.use(VueI18n);
-
-
-// import FilterWatcher from './plugins/watcher'
-// Vue.use(FilterWatcher, {store});
 
 //Bootstrap & Material Dashboard elements
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-Vue.use(BootstrapVue);
-
-import './assets/scss/material-dashboard.scss';
-import './assets/scss/_fonts.scss';
 
 //d1st-uisystem-base - HH styles import
 import 'd1st-uisystem-base/public/dist/bundled.min.css'
@@ -42,17 +23,31 @@ import * as d1hh from 'd1st-uisystem-base/public/dist/bundle.js'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import VueMaterial from 'vue-material'
-Vue.use(VueMaterial);
 
-Vue.config.productionTip = false;
-
+import App from './App.vue'
+import router from './router/router'
+import store from './store/store'
+import { messages } from './store/messages.module'
+import './assets/scss/material-dashboard.scss';
+import './assets/scss/_fonts.scss';
 import utils from './utils/utils'
+
+d3.tip = d3tip;
+
+Vue.component(Slider.name, Slider);
+Vue.use(Slider);
+Vue.use(VueI18n);
+Vue.use(BootstrapVue);
+Vue.use(VueMaterial);
 Vue.use(utils);
 
-Object.defineProperty(Vue.prototype, '$d3', {value: d3});
-Object.defineProperty(Vue.prototype, '$d1hh', {value: d1hh});
+Vue.prototype.$message = message;
+Vue.prototype.$d3 = d3;
+Vue.prototype.$d1hh = d1hh;
 
 Vue.component('country-flag', CountryFlag);
+
+Vue.config.productionTip = false;
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({

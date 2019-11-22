@@ -246,8 +246,7 @@
         },
         async mounted() {
             // Lets set the initial dashboard data
-            await this.fetchData();
-            await this.fetchTestData({ month: 7, year: 2019, source: 'services_internet' });
+            await this.fetchOsStats({ month: 7, year: 2019, source: 'services_internet' });
 
             // Initialize the 'Did you know' interval
             this.didYouKnowInterval();
@@ -264,8 +263,7 @@
         },
         methods: {
             ...mapActions([
-                'fetchData', // map `this.fetchData()` to `this.$store.dispatch('fetchData')`
-                'fetchTestData'
+                'fetchOsStats'
             ]),
             testSnackBar: function () {
                 let options = {
