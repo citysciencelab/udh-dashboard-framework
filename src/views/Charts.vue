@@ -122,12 +122,13 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <range-slider id="dateRangeSlider" v-bind:identity="dateRange"
-                                      v-bind:defaultValue="rangeMap['dateRangeSlider']['defaultValue']"
-                                      v-bind:step="rangeMap['dateRangeSlider']['step']"
-                                      v-bind:max="rangeMap['dateRangeSlider']['max']"
-                                      v-bind:min="rangeMap['dateRangeSlider']['min']"
-                                      v-bind:marks="rangeMap['dateRangeSlider']['marks']"
+                        <range-slider id="dateRangeSlider"
+                                      v-bind:identity="dateRange"
+                                      v-bind:defaultValue="rangeMap.dateRangeSlider.defaultValue"
+                                      v-bind:step="rangeMap.dateRangeSlider.step"
+                                      v-bind:max="rangeMap.dateRangeSlider.max"
+                                      v-bind:min="rangeMap.dateRangeSlider.min"
+                                      v-bind:marks="rangeMap.dateRangeSlider.marks"
                                       v-bind:isDateRange="true"
                                       @rangeChange="rangeForChartChanged" />
                     </div>
@@ -220,7 +221,7 @@
         data() {
             return {
                 tooltipActive: false,
-                dateRange: 'month',
+                dateRange: 'year',
                 rangeMap: {
                     dateRangeSlider: {
                         'defaultValue' : [],
@@ -246,7 +247,10 @@
         },
         async mounted() {
             // Lets set the initial dashboard data
-            await this.fetchOsStats({ month: 7, year: 2019, source: 'services_internet' });
+            await this.setServiceFilter('services_internet');
+            await this.setYearFilter([2017, 2019]);
+            await this.setMonthFilter([1, 12]);
+            await this.fetchOsStats();
 
             // Initialize the 'Did you know' interval
             this.didYouKnowInterval();
@@ -263,9 +267,12 @@
         },
         methods: {
             ...mapActions([
+                'setServiceFilter',
+                'setYearFilter',
+                'setMonthFilter',
                 'fetchOsStats'
             ]),
-            testSnackBar: function () {
+            testSnackBar() {
                 let options = {
                     message: "Important bottom message",
                     position: "center",
@@ -277,69 +284,47 @@
                     render: h => h(SnackBar, { attrs: options })
                 });
             },
-            changeFilterRange: function (sliderId, sliderRange) {
-                let values = {};
+            changeFilterRange(sliderId, sliderRange) {
                 this.dateRange = sliderRange;
-                let today = new Date();
+
+                const today = new Date();
+                let start, end;
+                let values = {
+                    step: 1,
+                    marks: {}
+                };
 
                 if (sliderRange === 'day') {
-                    today = today.getTime();
-                    let startDate = new Date();
-                    startDate.setFullYear(startDate.getFullYear() - 1);
-                    let oneMonthAgo = new Date();
-                    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-                    const marks =  {};
-                    marks[startDate.getTime()] =  this.$utils.date.getDateStringFromDate(startDate);
-                    marks[today] = this.$utils.date.getDateStringFromMillis(today);
-
-                    values = {
-                        'defaultValue' : [oneMonthAgo.getTime(), today],
-                        'step' : 1 ,
-                        'max' : today,
-                        'min' : startDate.getTime(),
-                        'marks' : marks
-                    };
+                    start = 1;
+                    end = 31;
                 } else if (sliderRange === 'month') {
-                    let startDate = new Date();
-                    startDate.setFullYear(startDate.getFullYear() - 3);
-                    let sixMonthAgo = new Date();
-                    sixMonthAgo.setMonth(sixMonthAgo.getMonth() - 6);
-                    const marks =  {};
-                    marks[startDate.getTime()] =  startDate.getMonth() + `.` + startDate.getFullYear();
-                    marks[today.getTime()] = today.getMonth() + `.` + today.getFullYear();
-
-                    values = {
-                        'defaultValue' : [sixMonthAgo.getTime(), today.getTime()],
-                        'step' : 1,
-                        'max' : today.getTime(),
-                        'min' : startDate.getTime(),
-                        'marks' : marks
-                    };
+                    start = 1;
+                    end = 12;
                 } else if (sliderRange === 'year') {
-                    let startDate = new Date();
-                    startDate.setFullYear(startDate.getFullYear() - 12);
-                    let twoYearsAgo = new Date();
-                    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-
-                    const marks =  {};
-                    marks[startDate.getTime()] =  startDate.getFullYear();
-                    marks[today.getTime()] = today.getFullYear();
-
-                    values = {
-                        'defaultValue' : [twoYearsAgo.getTime(), today.getTime()],
-                        'step' : 1,
-                        'max' : today.getTime(),
-                        'min' : startDate.getTime(),
-                        'marks' : marks
-                    };
+                    start = today.getFullYear() - 2;
+                    end = today.getFullYear();
+                }
+                values.defaultValue = [start, end];
+                values.max = end;
+                values.min = start;
+                for (start; start <= end; start++) {
+                    values.marks[start] = start;
                 }
 
                 this.rangeMap[sliderId] = values;
             },
-            rangeForChartChanged: function (/*rangeValue*/) {
-            //   console.log(rangeValue);
+            rangeForChartChanged([min, max]) {
+                switch(this.dateRange) {
+                    case 'year':
+                        this.setYearFilter([min, max]);
+                        break;
+                    case 'month':
+                        this.setMonthFilter([min, max]);
+                        break;
+                }
+                this.fetchOsStats();
             },
-            addDataPoint: function () {
+            addDataPoint() {
                 let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
                 this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
             },

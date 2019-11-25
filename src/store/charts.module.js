@@ -5,6 +5,11 @@ const initialState = {
     dashData: [],
     testData: [],
     filterValues: {},
+    filters: {
+        source: '',
+        year: [], // interpreted as: [year[0] TO year[1]]
+        month: [] // interpreted as: [month[0] TO month[1]]
+    },
     loading: false
 };
 
@@ -17,6 +22,15 @@ const mutations = {
         } else {
             state.filterValues[ident] = values;
         }
+    },
+    SET_FILTER_SOURCE: (state, source) => {
+        state.filters.source = source;
+    },
+    SET_FILTER_YEAR: (state, year) => {
+        state.filters.year = year;
+    },
+    SET_FILTER_MONTH: (state, month) => {
+        state.filters.month = month;
     },
     SET_ORIGINAL_DATA: (state, { originalData }) => {
         state.originalData = originalData;
@@ -64,14 +78,27 @@ const makeMockActions = () => {
 
 const makeActions = (elastic) => {
     return {
-        fetchOsStats(context, { month, year, source }) {
+        setServiceFilter: (context, source) => {
+            context.commit('SET_FILTER_SOURCE', source);
+        },
+        setYearFilter: (context, year) => {
+            context.commit('SET_FILTER_YEAR', year);
+        },
+        setMonthFilter: (context, month) => {
+            context.commit('SET_FILTER_MONTH', month);
+        },
+        fetchOsStats: (context) => {
             context.commit('SET_LOADING', true);
 
             const params = {
-                month: month,
-                year: year,
-                quelle: source
+                month: context.state.filters.month,
+                year: context.state.filters.year,
+                quelle: context.state.filters.source
             };
+            // Convert range filters
+            params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;
+            params.month = `[${params.month[0]} TO ${params.month[1] || params.month[0]}]`;
+
             elastic.get(params).then(results => {
                 if (!results) {
                     return;
