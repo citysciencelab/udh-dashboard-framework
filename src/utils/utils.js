@@ -87,3 +87,18 @@ export default {
         }
     }
 }
+
+export function aggregateData(ds, descriptor, metric) {
+    const aggregated = ds.reduce((results, item) => {
+        const key = item[descriptor];
+        if (results.hasOwnProperty(key)) {
+            results[key][metric] += item[metric];
+        } else {
+            results[key] = {};
+            results[key][descriptor] = key;
+            results[key][metric] = item[metric];
+        }
+        return results;
+    }, {});
+    return Object.values(aggregated);
+}

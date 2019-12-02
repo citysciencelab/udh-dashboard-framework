@@ -40,8 +40,6 @@
 
         methods: {
             createChart(d3, ds) {
-                ds = this.aggregateResults(ds);
-
                 let metric = this.metric;
                 let descriptor = this.descriptor;
                 let title = this.title;
@@ -97,20 +95,6 @@
                     .attr('transform', 'translate(0,' + offset + ')');
 
                 arc.exit().remove();
-            },
-            aggregateResults(ds) {
-                const aggregated = ds.reduce((results, item) => {
-                    const key = item[this.descriptor];
-                    if (results.hasOwnProperty(key)) {
-                        results[key][this.metric] += item[this.metric];
-                    } else {
-                        results[key] = {};
-                        results[key][this.descriptor] = key;
-                        results[key][this.metric] = item[this.metric];
-                    }
-                    return results;
-                }, {});
-                return Object.values(aggregated);
             }
         }
     }

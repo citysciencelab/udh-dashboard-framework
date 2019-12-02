@@ -163,7 +163,7 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <pie-chart v-bind:ds="this.testData" v-bind:options="options" selector="chart3"
+                <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options" selector="chart3"
                            title="Distribution of operating systems" metric="anzahl_os" descriptor="os" />
             </div>
             <div class="col-sm">

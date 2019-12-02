@@ -1,9 +1,12 @@
 import elastic from '../utils/elastic';
+import { aggregateData } from '../utils/utils';
 
 const initialState = {
     originalData: [],
     dashData: [],
-    testData: [],
+    testData: {
+        osStats: []
+    },
     filterValues: {},
     filters: {
         source: '',
@@ -38,8 +41,8 @@ const mutations = {
     SET_DASH_DATA: (state, dashData) => {
         state.dashData = dashData;
     },
-    SET_TEST_DATA: (state, data) => {
-        state.testData = data;
+    SET_OS_STATS: (state, data) => {
+        state.testData.osStats = data;
     },
     ADD_DASH_ELEMENT: (state, { dataElement }) => {
         state.dashData.push(dataElement);
@@ -49,65 +52,37 @@ const mutations = {
     }
 };
 
-const makeMockActions = () => {
-    return {
-        fetchData(context) {
-            const mockData = [
-                {'val': 50, 'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
-                {'val': 60, 'val1': 1900, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
-                {'val': 65, 'val1': 1000, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
-                {'val': 80, 'val1': 1250, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
-                {'val': 56, 'val1': 1050, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
-                {'val': 78, 'val1': 1090, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
-                {'val': 99, 'val1': 1700, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
-                {'val': 95, 'val1': 1400, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
-                {'val': 76, 'val1': 1400, 'val2': 1640, 'name': 'Sep', 'date': new Date("2019-09")},
-                {'val': 40, 'val1': 1100, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
-                {'val': 35, 'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
-                {'val': 42, 'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
-            ];
-            context.commit('SET_LOADING', true);
-            setTimeout(() => {
-                context.commit('SET_DASH_DATA', mockData);
-                context.commit('SET_LOADING', false);
-                return Promise.resolve();
-            }, 1000);
-        },
-    }
-};
+const actions = {
+    setServiceFilter: (context, source) => {
+        context.commit('SET_FILTER_SOURCE', source);
+    },
+    setYearFilter: (context, year) => {
+        context.commit('SET_FILTER_YEAR', year);
+    },
+    setMonthFilter: (context, month) => {
+        context.commit('SET_FILTER_MONTH', month);
+    },
+    fetchOsStats: async (context) => {
+        context.commit('SET_LOADING', true);
 
-const makeActions = (elastic) => {
-    return {
-        setServiceFilter: (context, source) => {
-            context.commit('SET_FILTER_SOURCE', source);
-        },
-        setYearFilter: (context, year) => {
-            context.commit('SET_FILTER_YEAR', year);
-        },
-        setMonthFilter: (context, month) => {
-            context.commit('SET_FILTER_MONTH', month);
-        },
-        fetchOsStats: (context) => {
-            context.commit('SET_LOADING', true);
+        const params = {
+            month: context.state.filters.month,
+            year: context.state.filters.year,
+            quelle: context.state.filters.source
+        };
+        // Convert range filters
+        params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;
+        params.month = `[${params.month[0]} TO ${params.month[1] || params.month[0]}]`;
 
-            const params = {
-                month: context.state.filters.month,
-                year: context.state.filters.year,
-                quelle: context.state.filters.source
-            };
-            // Convert range filters
-            params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;
-            params.month = `[${params.month[0]} TO ${params.month[1] || params.month[0]}]`;
+        const results = await elastic.get(params);
 
-            elastic.get(params).then(results => {
-                if (!results) {
-                    return;
-                }
-                context.commit('SET_TEST_DATA', results);
-            }).finally(() =>{
-                context.commit('SET_LOADING', false);
-            });
-        }
+        // Aggregating and sorting is expected to be done by the backend,
+        // but for the sake of testing it is hardcoded here ...
+        const aggregated = aggregateData(results, 'os', 'anzahl_os');
+        const top10 = aggregated.sort((a, b) => b.anzahl_os - a.anzahl_os).slice(0, 10);
+
+        context.commit('SET_OS_STATS', top10);
+        context.commit('SET_LOADING', false);
     }
 };
 
@@ -125,7 +100,6 @@ const getters = {
         return state.filterValues
     },
     getDataByFilter: (state) => (property, value) => {
-        //this.$store.getters.getDataByFilter('name', 'Apr')
         return state.dashData.filter(element => element[property] === value)
     },
     getPropertyData: (state) => (property) => {
@@ -142,7 +116,7 @@ const getters = {
 
 export default {
     state,
-    actions: makeActions(elastic),
+    actions,
     mutations,
     getters
 };
