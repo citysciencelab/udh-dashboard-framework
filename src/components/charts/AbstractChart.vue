@@ -1,5 +1,5 @@
 <template>
-    
+
 </template>
 
 <script>
@@ -8,13 +8,13 @@
         data: () => ({
             width: Number,
             height: Number,
-            horizontalOffset : 60
+            horizontalOffset: 60
         }),
         props: {
             ds: Array
         },
         watch: {
-            ds: function(newVal, oldVal) {
+            ds: function (newVal, oldVal) {
                 this.createChart(this.$d3, this.ds, this.options);
             }
         },
@@ -37,6 +37,16 @@
 
             if (this.ds.length > 0) {
                 this.createChart(this.$d3, this.ds, this.options);
+            }
+        },
+        methods: {
+            redrawOnDimensionsChange: function (svg) {
+                const dimensions = this.$utils.chart.getDimensions(svg, this.title);
+                if (this.$data.width !== dimensions[0] || this.$data.height !== dimensions[1]) {
+                    this.$data.width = dimensions[0];
+                    this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
+                    this.createChart(this.$d3, this.ds, this.options);
+                }
             }
         }
     }
