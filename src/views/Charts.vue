@@ -152,33 +152,42 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <bar-chart v-bind:ds="this.dashData" v-bind:options="options"
-                           title="Bar Chart Example" metric="val" selector="chart1"/>
+                <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                           title="Distribution of operating systems"
+                           metric="anzahl_os" descriptor="os"
+                           selector="chart1" />
             </div>
             <div class="col-sm">
-                <line-chart v-bind:ds="this.dashData" v-bind:options="options"
-                            title="Line Chart Example" metric="val2" selector="chart2"
-                            drawLinesBy="origin" v-bind:origins="['val1', 'val2']"/>
-            </div>
-        </div>
-        <div class="row" style="height: 350px">
-            <div class="col-sm">
-                <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options" selector="chart3"
-                           title="Distribution of operating systems" metric="anzahl_os" descriptor="os" />
-            </div>
-            <div class="col-sm">
-                <scatter-plot v-bind:ds="this.dashData" v-bind:options="options"
-                              title="Scatter Plot Example" metric="val2"  metric2="val" selector="chart4"/>
+                <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                            title="Distribution of operating systems"
+                            metric="anzahl_os" descriptor="os"
+                            selector="chart2" v-bind:origins="['anzahl_os']" />
             </div>
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <h-bar-chart v-bind:ds="this.dashData" v-bind:options="options"
-                             title="Hor Bar Chart Example" metric="val" selector="chart5"/>
+                <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                           title="Distribution of operating systems"
+                           metric="anzahl_os" descriptor="os"
+                           selector="chart3" />
+            </div>
+            <div class="col-sm">
+                <scatter-plot v-bind:ds="this.testData.osStats" v-bind:options="options"
+                              title="Distribution of operating systems"
+                              metric="anzahl_os" descriptor="os"
+                              selector="chart4" />
+            </div>
+        </div>
+        <div class="row" style="height: 350px">
+            <div class="col-sm">
+                <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                             title="Distribution of operating systems"
+                             metric="anzahl_os" descriptor="os"
+                             selector="chart5"/>
             </div>
         </div>
         <div class="row">
-            <div class="data-grid">
+            <!-- <div class="data-grid">
                 <div v-for="(t, index) in this.dashData"
                      v-bind:key="index">
                     <input v-model="t.name" @blur="handleMouseOut">
@@ -188,7 +197,7 @@
                 <button @click="addDataPoint">
                     New Data Point
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

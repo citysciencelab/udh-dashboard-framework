@@ -16,30 +16,26 @@
             selector: String,
             origins: {},
         },
-
-        mounted: function () {
+        mounted() {
             const svg = $('#' + this.selector);
             const dimensions = this.$utils.chart.getDimensions(svg, this.title);
             this.$data.width = dimensions[0];
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
-
-
-        /**
-         * $utils.chart.lineChart
-         * bind data to a line graph.
-         * @param {string} d3 - reference to d3 object.
-         * @param {string} ds - dataset for the graph.
-         * @param {Object} options - options for bar graph.
-         * @param {string} options.selector - selector name to place the graph.
-         * @param {string} options.metric - value you are measuring.
-         * @param {string} options.dim2 - value you will be categorizing the data by.
-         * @param {string} options.width - width of the chart.
-         * @param {string} options.height - height of the chart.
-         * @param {string} options.title - title of the chart.
-         */
-
         methods: {
+            /**
+             * $utils.chart.lineChart
+             * bind data to a line graph.
+             * @param {string} d3 - reference to d3 object.
+             * @param {string} ds - dataset for the graph.
+             * @param {Object} options - options for bar graph.
+             * @param {string} options.selector - selector name to place the graph.
+             * @param {string} options.metric - data attribute by which to access values.
+             * @param {string} options.dim2 - value you will be categorizing the data by.
+             * @param {string} options.width - width of the chart.
+             * @param {string} options.height - height of the chart.
+             * @param {string} options.title - title of the chart.
+             */
             createChart(d3, ds, options) {
                 let origins = this.origins;
                 let title = this.title;
@@ -79,7 +75,9 @@
                 svg.selectAll('path').remove();
                 svg.selectAll('g').remove();
 
-                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
+                if (title) {
+                    this.$utils.chart.addTitle(title, svg, this.$data.width);
+                }
 
                 let color = d3.scaleSequential(d3.interpolateRdBu);
 

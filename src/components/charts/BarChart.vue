@@ -13,33 +13,32 @@
             options: Object,
             title: String,
             metric: String,
+            descriptor: String,
             selector: String
         },
-
-        mounted: function () {
+        mounted() {
             const svg = $('#' + this.selector);
             const dimensions = this.$utils.chart.getDimensions(svg, this.title);
             this.$data.width = dimensions[0];
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
         },
-
-
-        /**
-         * bind data to a bar graph.
-         * @param {string} d3 - reference to d3 object.
-         * @param {string} ds - dataset for the graph.
-         * @param {Object} options - options for bar graph.
-         * @param {string} options.selector - selector name to place the graph.
-         * @param {string} options.metric - value you are measuring.
-         * @param {string} options.dim - value you will be categorizing the data by.
-         * @param {string} options.width - width of the chart.
-         * @param {string} options.height - height of the chart.
-         * @param {string} options.title - title of the chart.
-         */
-
         methods: {
+            /**
+             * bind data to a bar graph.
+             * @param {string} d3 - reference to d3 object.
+             * @param {string} ds - dataset for the graph.
+             * @param {Object} options - options for bar graph.
+             * @param {string} options.selector - selector name to place the graph.
+             * @param {string} options.metric - data attribute by which to access values.
+             * @param {string} options.descriptor - data attribute by which to access descriptors.
+             * @param {string} options.dim - value you will be categorizing the data by.
+             * @param {string} options.width - width of the chart.
+             * @param {string} options.height - height of the chart.
+             * @param {string} options.title - title of the chart.
+             */
             createChart(d3, ds, options) {
                 let metric = this.metric;
+                let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
 
@@ -53,9 +52,7 @@
                 let g = svg.selectAll('rect')
                     .data(ds);
 
-                let maxVal = Math.max.apply(Math, ds.map(function (o) {
-                    return o[metric];
-                }));
+                let maxVal = Math.max.apply(Math, ds.map((o) => o[metric]));
 
                 let yScale = d3.scaleLinear()
                     .domain([0, maxVal])
@@ -71,36 +68,27 @@
                 const tip = d3.tip()
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
-                    .html(function(d) { return d; });
+                    .html(d => d);
 
                 svg.call(tip);
                 svg.selectAll('g').remove();
-                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
+
+                if (title) {
+                    this.$utils.chart.addTitle(title, svg, this.$data.width);
+                }
 
                 g.enter()
                     .append('rect')
                     .merge(g)
                     .attr('class', 'bar')
-                    .attr('width', () => {
-                        return this.$data.width / ds.length - 1 || 0;
+                    .attr('width', () => this.$data.width / ds.length - 1 || 0)
+                    .attr('height', d => this.$data.height - yScale(d[metric]) || 0)
+                    .attr('x', (d, i) => i * this.$data.width / ds.length + this.horizontalOffset || 0)
+                    .attr('y', d => yScale(d[metric]) || 0)
+                    .on('mouseover', function(d) {
+                        tip.show(d[descriptor] + ": " + d[metric], this);
                     })
-                    .attr('height', d => {
-                        return this.$data.height - yScale(d[metric]) || 0;
-                    })
-                    .attr('x', (d, i) => {
-                        return i * (this.$data.width / ds.length) + this.horizontalOffset || 0;
-                    })
-                    .attr('y', d => {
-                        return yScale(d[metric]) || 0;
-                    })
-                    .on('mouseover',
-                        function(d) {
-                            tip.show(d['name'] + ": " + d[metric], this);
-                        }
-                    )
-                    .on('mouseout', () => {
-                        tip.hide();
-                    })
+                    .on('mouseout', tip.hide)
                     .attr('transform', 'translate(0,' + vOffset + ')');
 
                 this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset + this.horizontalOffset, null);
