@@ -42,18 +42,18 @@
         },
         methods: {
             tipFormat(value) {
-                // if (this.isDateRange) {
-                //     let date = new Date(value);
-                //     if (this.identity === 'day') {
-                //         return this.$utils.date.getDateStringFromDate(date);
-                //     } else if (this.identity === 'month') {
-                //         return date.getMonth() + `.` + date.getFullYear();
-                //     } else if (this.identity === 'year') {
-                //         return date.getFullYear();
-                //     }
-                // } else {
+                if (this.isDateRange) {
+                    let date = new Date(value);
+                    if (this.identity === 'day') {
+                        return this.$utils.date.getDateStringFromDate(date);
+                    } else if (this.identity === 'month') {
+                        return date.getMonth() + `.` + date.getFullYear();
+                    } else if (this.identity === 'year') {
+                        return date.getFullYear();
+                    }
+                } else {
                     return `${value}`;
-                // }
+                }
             },
             onChange() {
                 //Or global: this.$root.$emit()
