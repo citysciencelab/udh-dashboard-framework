@@ -57,6 +57,7 @@
                     .scale(y);
 
                 let x = this.$utils.chart.initTimeScale(d3, ds, options.dim2, this.$data.width);
+                // FIXME: breaks when d.date is undefined
                 let xAxis = d3.axisBottom(x)
                     .tickFormat(d3.timeFormat("%y-%b")).tickValues(ds.map(d => d.date));
 

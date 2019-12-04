@@ -39,6 +39,7 @@
                 if (this.$data.width !== dimensions[0] || this.$data.height !== dimensions[1]) {
                     this.$data.width = dimensions[0];
                     this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
+                    // FIXME: produces lots of errors when ds is empty
                     this.createChart(this.$d3, this.ds, this.options);
                 }
             }

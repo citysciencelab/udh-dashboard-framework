@@ -74,6 +74,7 @@
                     .attr('class', 'point')
                     .merge(g)
                     .attr('cx', (d) => {
+                        // FIXME: breaks when metric2 is undefined
                         return (xScale(d[metric2])) + this.horizontalOffset
                     })
                     .attr('cy', d => {

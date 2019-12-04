@@ -32,10 +32,6 @@
                 let svg = d3.select('#' + this.selector);
 
                 let vOffset = this.$utils.chart.getOffset(title) || 0;
-
-                if (ds.length === 0) {
-                    throw new Error('Dataset is empty');
-                }
                 let hOffset = (this.$data.width - this.$data.width * (ds.length-1) / ds.length) / 2 || 0;
 
                 let g = svg.selectAll('rect')
