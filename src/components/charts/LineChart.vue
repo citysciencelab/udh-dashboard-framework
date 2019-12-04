@@ -25,19 +25,6 @@
                 const svg = $('#' + this.selector);
                 this.redrawOnDimensionsChange(svg);
             },
-            /**
-             * $utils.chart.lineChart
-             * bind data to a line graph.
-             * @param {string} d3 - reference to d3 object.
-             * @param {string} ds - dataset for the graph.
-             * @param {Object} options - options for bar graph.
-             * @param {string} options.selector - selector name to place the graph.
-             * @param {string} options.metric - data attribute by which to access values.
-             * @param {string} options.dim2 - value you will be categorizing the data by.
-             * @param {string} options.width - width of the chart.
-             * @param {string} options.height - height of the chart.
-             * @param {string} options.title - title of the chart.
-             */
             createChart(d3, ds, options) {
                 let origins = this.origins;
                 let title = this.title;
