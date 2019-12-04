@@ -1,25 +1,27 @@
 <template>
-    <div id="app">
-        <md-app md-waterfall md-mode="fixed">
+    <div id="page" class="page-container">
+        <md-app class="md-app-scroll-fix" md-waterfall md-mode="fixed">
             <md-app-toolbar class="md-primary">
-                <span class="md-title">My Title</span>
-                <div class="md-toolbar-section-end">
-                    <md-menu md-direction="bottom-start">
-                        <md-button md-menu-trigger>
-                            <country-flag v-if="$i18n.locale === 'de'" @click="changeLanguage('de')"
-                                          country='de' size='normal' />
-                            <country-flag v-if="$i18n.locale === 'en'" @click="changeLanguage('en')"
-                                          country='gb' size='normal' />
-                        </md-button>
-                        <md-menu-content>
-                            <md-menu-item @click="changeLanguage('de')">
-                                <country-flag country='de' size='normal' />
-                            </md-menu-item>
-                            <md-menu-item @click="changeLanguage('en')">
-                                <country-flag country='gb' size='normal' />
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                <div class="md-toolbar-row">
+                    <span class="md-title">My Title</span>
+                    <div class="md-toolbar-section-end">
+                        <md-menu md-direction="bottom-start">
+                            <md-button md-menu-trigger>
+                                <country-flag v-if="$i18n.locale === 'de'" @click="changeLanguage('de')"
+                                              country='de' size='normal' />
+                                <country-flag v-if="$i18n.locale === 'en'" @click="changeLanguage('en')"
+                                              country='gb' size='normal' />
+                            </md-button>
+                            <md-menu-content>
+                                <md-menu-item @click="changeLanguage('de')">
+                                    <country-flag country='de' size='normal' />
+                                </md-menu-item>
+                                <md-menu-item @click="changeLanguage('en')">
+                                    <country-flag country='gb' size='normal' />
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
                 </div>
             </md-app-toolbar>
             <md-app-content>
@@ -33,7 +35,7 @@
                 <router-view/>
             </md-app-content>
         </md-app>
-        <div id="snack"><div></div></div>
+        <!--<div id="snack"><div></div></div>-->
     </div>
 </template>
 
@@ -56,61 +58,65 @@
 <style lang="scss">
     @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons");
 
-    #app {
+    #page {
         font-family: 'HamburgSans-Regular';
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
         /*margin-top: 10px;*/
-    }
 
-    #nav {
-        padding: 30px;
-        a {
-            font-weight: bold;
-            color: #2c3e50;
-            &.router-link-exact-active {
-                color: #42b983;
+        .md-app-scroll-fix {
+            height: 100vh;
+        }
+
+        #nav {
+            padding: 30px;
+            a {
+                font-weight: bold;
+                color: #2c3e50;
+                &.router-link-exact-active {
+                    color: #42b983;
+                }
             }
         }
-    }
 
-    .content {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-    }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        }
 
-    .segment {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        text-align: center;
-    }
+        .segment {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+        }
 
-    .chart {
-        /*justify-self: center;*/
-        padding: 10px;
-    }
+        .chart {
+            /*justify-self: center;*/
+            padding: 10px;
+        }
 
-    rect.bar {
-        fill: #004e79;
-    }
+        rect.bar {
+            fill: #004e79;
+        }
 
-    circle.point {
-        fill: #9B59B6;
-    }
+        circle.point {
+            fill: #9B59B6;
+        }
 
-    .tt {
-        font-size: 10px;
-        background-color: white;
-    }
+        .tt {
+            font-size: 10px;
+            background-color: white;
+        }
 
-    .flag {
-        cursor: pointer;
-    }
+        .flag {
+            cursor: pointer;
+        }
 
-    .md-button.md-primary.md-raised.active {
-        background-color: rgba(211,211,211 ,.5 ) !important;
+        .md-button.md-primary.md-raised.active {
+            background-color: rgba(211,211,211 ,.5 ) !important;
+        }
     }
 
 </style>

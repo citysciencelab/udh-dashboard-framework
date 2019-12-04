@@ -1,5 +1,5 @@
 <template>
-    <svg class="chart" v-bind:id="selector" width="500" height="300"></svg>
+    <svg class="chart" v-bind:id="selector"></svg>
 </template>
 
 <script>
@@ -17,12 +17,14 @@
             selector: String
         },
         mounted() {
-            const svg = $('#' + this.selector);
-            const dimensions = this.$utils.chart.getDimensions(svg, this.title);
-            this.$data.width = dimensions[0];
-            this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
+            this.redraw();
+            window.addEventListener("resize", this.redraw);
         },
         methods: {
+            redraw: function () {
+                const svg = $('#' + this.selector);
+                this.redrawOnDimensionsChange(svg);
+            },
             /**
              * bind data to a pie chart.
              * @param {string} d3 - reference to d3 object.

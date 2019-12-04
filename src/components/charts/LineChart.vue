@@ -17,12 +17,14 @@
             origins: {},
         },
         mounted() {
-            const svg = $('#' + this.selector);
-            const dimensions = this.$utils.chart.getDimensions(svg, this.title);
-            this.$data.width = dimensions[0];
-            this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
+            this.redraw();
+            window.addEventListener("resize", this.redraw);
         },
         methods: {
+            redraw: function () {
+                const svg = $('#' + this.selector);
+                this.redrawOnDimensionsChange(svg);
+            },
             /**
              * $utils.chart.lineChart
              * bind data to a line graph.
@@ -39,8 +41,7 @@
             createChart(d3, ds, options) {
                 let origins = this.origins;
                 let title = this.title;
-                let svg = d3.select('#' + this.selector)
-                    .attr("height", this.$data.height);
+                let svg = d3.select('#' + this.selector);
 
                 let vOffset = this.$utils.chart.getOffset(title) || 0;
                 let hOffset = this.horizontalOffset || 0;
