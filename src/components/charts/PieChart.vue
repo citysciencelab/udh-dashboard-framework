@@ -33,9 +33,7 @@
                 let radius = this.$data.height > this.$data.width ? this.$data.width * 0.9 / 2 : this.$data.height * 0.9 / 2;
                 let offset = this.$utils.chart.getOffset(title);
 
-                let pie = d3.pie()
-                    .sort((a, b) => a[metric] < b[metric] ? 1 : -1)
-                    .value((ds) => ds[metric]);
+                let pie = d3.pie().value((ds) => ds[metric]);
 
                 let path = d3.arc()
                     .outerRadius(radius - 10)
