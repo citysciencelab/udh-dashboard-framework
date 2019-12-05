@@ -256,9 +256,10 @@
         },
         async mounted() {
             // Lets set the initial dashboard data
-            await this.setServiceFilter('services_internet');
-            await this.setYearFilter([2017, 2019]);
-            await this.setMonthFilter([1, 12]);
+            await  this.setFilters(['SOURCE', 'services_internet']);
+            await  this.setFilters(['YEAR', [2017, 2019]]);
+            await  this.setFilters(['MONTH', [1, 12]]);
+
             await this.fetchOsStats();
 
             // Initialize the 'Did you know' interval
@@ -276,9 +277,7 @@
         },
         methods: {
             ...mapActions([
-                'setServiceFilter',
-                'setYearFilter',
-                'setMonthFilter',
+                'setFilters',
                 'fetchOsStats'
             ]),
             testSnackBar() {

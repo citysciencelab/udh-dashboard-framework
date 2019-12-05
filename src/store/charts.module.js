@@ -8,32 +8,15 @@ const initialState = {
         osStats: []
     },
     filterValues: {},
-    filters: {
-        source: '',
-        year: [], // interpreted as: [year[0] TO year[1]]
-        month: [] // interpreted as: [month[0] TO month[1]]
-    },
+    filters: {},
     loading: false
 };
 
 const state = { ...initialState };
 
 const mutations = {
-    SET_FILTER_VALUES: (state, { ident, values }) => {
-        if (state.filterValues.hasOwnProperty(ident)) {
-            state.filterValues[ident] = values;
-        } else {
-            state.filterValues[ident] = values;
-        }
-    },
-    SET_FILTER_SOURCE: (state, source) => {
-        state.filters.source = source;
-    },
-    SET_FILTER_YEAR: (state, year) => {
-        state.filters.year = year;
-    },
-    SET_FILTER_MONTH: (state, month) => {
-        state.filters.month = month;
+    SET_FILTERS: (state, [ident, values]) => {
+        state.filters[ident] = values;
     },
     SET_ORIGINAL_DATA: (state, { originalData }) => {
         state.originalData = originalData;
@@ -53,22 +36,16 @@ const mutations = {
 };
 
 const actions = {
-    setServiceFilter: (context, source) => {
-        context.commit('SET_FILTER_SOURCE', source);
-    },
-    setYearFilter: (context, year) => {
-        context.commit('SET_FILTER_YEAR', year);
-    },
-    setMonthFilter: (context, month) => {
-        context.commit('SET_FILTER_MONTH', month);
+    setFilters: (context, [ident, values]) => {
+        context.commit('SET_FILTERS', [ident, values]);
     },
     fetchOsStats: async (context) => {
         context.commit('SET_LOADING', true);
 
         const params = {
-            month: context.state.filters.month,
-            year: context.state.filters.year,
-            quelle: context.state.filters.source
+            month: context.state.filters['MONTH'],
+            year: context.state.filters['YEAR'],
+            quelle: context.state.filters['SOURCE']
         };
         // Convert range filters
         params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;
