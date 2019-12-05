@@ -152,7 +152,7 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
                            title="Distribution of operating systems"
                            metric="anzahl_os" descriptor="os"
                            selector="chart1" />
@@ -240,6 +240,12 @@
                         'marks' : {}
                     }
                 },
+                chartOptions: {
+                    osStats: {
+                        dim: 'os'
+                    }
+                },
+                // soon to be deprecated
                 options: {
                     dim: 'name',
                     dim2: 'date'
