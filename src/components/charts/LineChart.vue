@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
@@ -15,7 +16,7 @@
             selector: String,
             origins: {},
         },
-        mounted: function () {
+        mounted() {
             this.redraw();
             window.addEventListener("resize", this.redraw);
         },
@@ -25,14 +26,12 @@
                 this.redrawOnDimensionsChange(svg);
             },
             createChart(d3, ds, options) {
-                let metric = this.metric;
-
                 let origins = this.origins;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
 
-                let vOffset = this.$utils.chart.getOffset(title);
-                let hOffset = this.horizontalOffset;
+                let vOffset = this.$utils.chart.getOffset(title) || 0;
+                let hOffset = this.horizontalOffset || 0;
 
                 let maxVal = Math.max.apply(Math, ds.map(function (o) {
                     let values = [];
@@ -58,27 +57,27 @@
                     .scale(y);
 
                 let x = this.$utils.chart.initTimeScale(d3, ds, options.dim2, this.$data.width);
+                // FIXME: breaks when d.date is undefined
                 let xAxis = d3.axisBottom(x)
                     .tickFormat(d3.timeFormat("%y-%b")).tickValues(ds.map(d => d.date));
 
                 svg.selectAll('path').remove();
                 svg.selectAll('g').remove();
 
-                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
+                if (title) {
+                    this.$utils.chart.addTitle(title, svg, this.$data.width);
+                }
 
                 let color = d3.scaleSequential(d3.interpolateRdBu);
-
 
                 let index = 0;
                 for (let origin of origins) {
                     let lineFunction = d3.line()
-                        .x(function (d, i) {
-                            return x(d[options.dim2]) + hOffset;
-
+                        .x(function (d) {
+                            return x(d[options.dim2]) + hOffset || 0;
                         })
                         .y(function (d) {
-                            return y(d[origin]);
-
+                            return y(d[origin]) || 0;
                         });
 
                     svg.append('path')
@@ -106,7 +105,7 @@
                             this.$utils.chart.addTooltip(info, svg,
                                 x(info['date']), y(info['val2']), origin)
                         })
-                        .on('mouseout', d => {
+                        .on('mouseout', () => {
                             this.$utils.chart.removeTooltip(svg);
                         });
                     index++;

@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
@@ -12,9 +13,10 @@
             options: Object,
             title: String,
             metric: String,
+            descriptor: String,
             selector: String
         },
-        mounted: function () {
+        mounted() {
             this.redraw();
             window.addEventListener("resize", this.redraw);
         },
@@ -25,18 +27,17 @@
             },
             createChart(d3, ds, options) {
                 let metric = this.metric;
+                let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
 
-                let vOffset = this.$utils.chart.getOffset(title);
-                let hOffset = (this.$data.width - (this.$data.width * (ds.length-1) / ds.length)) / 2;
+                let vOffset = this.$utils.chart.getOffset(title) || 0;
+                let hOffset = (this.$data.width - this.$data.width * (ds.length-1) / ds.length) / 2 || 0;
 
                 let g = svg.selectAll('rect')
                     .data(ds);
 
-                let maxVal = Math.max.apply(Math, ds.map(function (o) {
-                    return o[metric];
-                }));
+                let maxVal = Math.max.apply(Math, ds.map((o) => o[metric]));
 
                 let yScale = d3.scaleLinear()
                     .domain([0, maxVal])
@@ -52,36 +53,27 @@
                 const tip = d3.tip()
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
-                    .html(function(d) { return d; });
+                    .html(d => d);
 
                 svg.call(tip);
                 svg.selectAll('g').remove();
-                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
+
+                if (title) {
+                    this.$utils.chart.addTitle(title, svg, this.$data.width);
+                }
 
                 g.enter()
                     .append('rect')
                     .merge(g)
                     .attr('class', 'bar')
-                    .attr('width', (d, i) => {
-                        return (this.$data.width / ds.length) - 1
+                    .attr('width', () => this.$data.width / ds.length - 1 || 0)
+                    .attr('height', d => this.$data.height - yScale(d[metric]) || 0)
+                    .attr('x', (d, i) => i * this.$data.width / ds.length + this.horizontalOffset || 0)
+                    .attr('y', d => yScale(d[metric]) || 0)
+                    .on('mouseover', function(d) {
+                        tip.show(d[descriptor] + ": " + d[metric], this);
                     })
-                    .attr('height', d => {
-                        return this.$data.height - yScale(d[metric])
-                    })
-                    .attr('x', (d, i) => {
-                        return (i * (this.$data.width / ds.length)) + this.horizontalOffset;
-                    })
-                    .attr('y', d => {
-                        return yScale(d[metric]);
-                    })
-                    .on('mouseover',
-                        function(d) {
-                            tip.show(d['name'] + ": " + d[metric], this);
-                        }
-                    )
-                    .on('mouseout', d => {
-                        tip.hide();
-                    })
+                    .on('mouseout', tip.hide)
                     .attr('transform', 'translate(0,' + vOffset + ')');
 
                 this.$utils.chart.drawAxis(this.$data.height, svg, xAxis, yAxis, vOffset, hOffset + this.horizontalOffset, null);

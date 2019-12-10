@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
@@ -15,7 +16,7 @@
             metric2: String,
             selector: String
         },
-        mounted: function () {
+        mounted() {
             this.redraw();
             window.addEventListener("resize", this.redraw);
         },
@@ -24,7 +25,7 @@
                 const svg = $('#' + this.selector);
                 this.redrawOnDimensionsChange(svg);
             },
-            createChart(d3, ds, options) {
+            createChart(d3, ds) {
                 let metric = this.metric;
                 let metric2 = this.metric2;
                 let title = this.title;
@@ -72,7 +73,8 @@
                     .attr('r', '4')
                     .attr('class', 'point')
                     .merge(g)
-                    .attr('cx', (d, i) => {
+                    .attr('cx', (d) => {
+                        // FIXME: breaks when metric2 is undefined
                         return (xScale(d[metric2])) + this.horizontalOffset
                     })
                     .attr('cy', d => {

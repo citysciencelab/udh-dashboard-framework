@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
@@ -12,9 +13,10 @@
             options: Object,
             title: String,
             metric: String,
+            descriptor: String,
             selector: String
         },
-        mounted: function () {
+        mounted() {
             this.redraw();
             window.addEventListener("resize", this.redraw);
         },
@@ -25,6 +27,7 @@
             },
             createChart(d3, ds, options) {
                 let metric = this.metric;
+                let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
 
@@ -33,9 +36,7 @@
                 let g = svg.selectAll('rect')
                     .data(ds);
 
-                let maxVal = Math.max.apply(Math, ds.map(function (o) {
-                    return o[metric];
-                }));
+                let maxVal = Math.max.apply(Math, ds.map((o) => o[metric]));
 
                 let xScale = d3.scaleLinear()
                     .domain([maxVal, 0])
@@ -51,34 +52,27 @@
                 const tip = d3.tip()
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
-                    .html(function(d) { return d; });
+                    .html(d => d);
 
                 svg.call(tip);
                 svg.selectAll('g').remove();
-                if (title) this.$utils.chart.addTitle(title, svg, this.$data.width);
+
+                if (title) {
+                    this.$utils.chart.addTitle(title, svg, this.$data.width);
+                }
 
                 g.enter()
                     .append('rect')
                     .merge(g)
                     .attr('class', 'bar')
-                    .attr('height', (d, i) => {
-                        return (this.$data.height / ds.length) - 1
-                    })
-                    .attr('width', d => {
-                        return this.$data.width - xScale(d[metric])
-                    })
-                    .attr('y', (d, i) => {
-                        return (i * (this.$data.height / ds.length))
-                    })
+                    .attr('height', () => this.$data.height / ds.length - 1)
+                    .attr('width', d => this.$data.width - xScale(d[metric]))
+                    .attr('y', (d, i) => i * this.$data.height / ds.length)
                     .attr('x', this.horizontalOffset)
-                    .on('mouseover',
-                        function(d) {
-                            tip.show(d['name'] + ": " + d[metric], this);
-                        }
-                    )
-                    .on('mouseout', d => {
-                        tip.hide();
+                    .on('mouseover', function(d) {
+                        tip.show(d[descriptor] + ": " + d[metric], this);
                     })
+                    .on('mouseout', tip.hide)
                     .attr('transform', 'translate(0,' + vOffset + ')');
 
                 // Half an element size plus offset

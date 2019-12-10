@@ -16,15 +16,10 @@ Vue.component(Slider.name, Slider);
 Vue.use(Slider);
 Vue.prototype.$message = message;
 
-
 // Internationalization
 import VueI18n from 'vue-i18n'
-import {messages} from './store/messages.module'
+import { messages } from './store/messages.module'
 Vue.use(VueI18n);
-
-
-// import FilterWatcher from './plugins/watcher'
-// Vue.use(FilterWatcher, {store});
 
 //Bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
@@ -37,7 +32,7 @@ import './assets/scss/_fonts.scss';
 
 //d1st-uisystem-base - HH styles import
 import 'd1st-uisystem-base/public/dist/bundled.min.css'
-import * as d1hh from'd1st-uisystem-base/public/dist/bundle.js'
+import * as d1hh from 'd1st-uisystem-base/public/dist/bundle.js'
 
 // Vue-Material
 // Not recommended - import what you need to not hurt performance (https://vuematerial.io/getting-started)
@@ -51,8 +46,8 @@ Vue.config.productionTip = false;
 import utils from './utils/utils'
 Vue.use(utils);
 
-Object.defineProperty(Vue.prototype, '$d3', {value: d3});
-Object.defineProperty(Vue.prototype, '$d1hh', {value: d1hh});
+Vue.prototype.$d3 = d3;
+Vue.prototype.$d1hh = d1hh;
 
 Vue.component('country-flag', CountryFlag);
 

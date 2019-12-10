@@ -49,8 +49,8 @@
                     </template>
 
                     <template slot="content">
-                        <p class="category">Fixed Issues</p>
-                        <h3 class="title">75</h3>
+                        <p class="category">Size of dataset</p>
+                        <h3 class="title">{{ this.dashData.length }}</h3>
                     </template>
 
                     <template slot="footer">
@@ -122,21 +122,25 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <range-slider id="dateRangeSlider" v-bind:identity="dateRange"
-                                      v-bind:defaultValue="rangeMap['dateRangeSlider']['defaultValue']"
-                                      v-bind:step="rangeMap['dateRangeSlider']['step']"
-                                      v-bind:max="rangeMap['dateRangeSlider']['max']"
-                                      v-bind:min="rangeMap['dateRangeSlider']['min']"
-                                      v-bind:marks="rangeMap['dateRangeSlider']['marks']"
-                                      @rangeChange="rangeForChartChanged" isDateRange="true"/>
+                        <range-slider id="dateRangeSlider"
+                                      v-bind:identity="dateRange"
+                                      v-bind:defaultValue="rangeMap.dateRangeSlider.defaultValue"
+                                      v-bind:step="rangeMap.dateRangeSlider.step"
+                                      v-bind:max="rangeMap.dateRangeSlider.max"
+                                      v-bind:min="rangeMap.dateRangeSlider.min"
+                                      v-bind:marks="rangeMap.dateRangeSlider.marks"
+                                      v-bind:isDateRange="true"
+                                      @rangeChange="rangeForChartChanged" />
                     </div>
+                </div>
+                <div class="row">
+                    <div v-if="this.loading">LOADING ...</div>
                 </div>
             </div>
             <div class="col-sm">
                 <transition-group name="list" tag="p">
-                    <span v-for="(didYou, index) in this.didYouKnow"
-                          v-bind:key="didYou"
-                          v-if="index === didYouKnowIndex"
+                    <span v-for="(didYou, index) in [this.didYouKnow[didYouKnowIndex]]"
+                          v-bind:key="index"
                           class="list-item">
                         {{didYou}}
                     </span>
@@ -148,37 +152,44 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <bar-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
-                           title="Bar Chart Example" metric="val" selector="chart1"/>
+                <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                           title="Distribution of operating systems"
+                           metric="anzahl_os" descriptor="os"
+                           selector="chart1" />
             </div>
             <div class="col-sm">
-                <line-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
-                            title="Line Chart Example" metric="val2" selector="chart2"
-                            drawLinesBy="origin" v-bind:origins="['val1', 'val2']"/>
-            </div>
-        </div>
-        <div class="row" style="height: 350px">
-            <div class="col-sm">
-                <pie-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
-                            title="Pie Chart Example" metric="val" selector="chart3"/>
-            </div>
-            <div class="col-sm">
-                <scatter-plot v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
-                           title="Scatter Plot Example" metric="val2"  metric2="val" selector="chart4"/>
+                <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                            title="Distribution of operating systems"
+                            metric="anzahl_os" descriptor="os"
+                            selector="chart2" v-bind:origins="['anzahl_os']" />
             </div>
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <h-bar-chart v-bind:ds="this.$store.getters.dashData" v-bind:options="options"
-                            title="Hor Bar Chart Example" metric="val" selector="chart5"/>
+                <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                           title="Distribution of operating systems"
+                           metric="anzahl_os" descriptor="os"
+                           selector="chart3" />
             </div>
             <div class="col-sm">
-                hj
+                <scatter-plot v-bind:ds="this.testData.osStats" v-bind:options="options"
+                              title="Distribution of operating systems"
+                              metric="anzahl_os" descriptor="os"
+                              selector="chart4" />
+            </div>
+        </div>
+        <div class="row" style="height: 350px">
+            <div class="col-sm">
+                <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                             title="Distribution of operating systems"
+                             metric="anzahl_os" descriptor="os"
+                             selector="chart5"/>
             </div>
         </div>
         <div class="row">
-            <div class="data-grid">
-                <div v-for="(t, index) in this.$store.getters.dashData">
+            <!-- <div class="data-grid">
+                <div v-for="(t, index) in this.dashData"
+                     v-bind:key="index">
                     <input v-model="t.name" @blur="handleMouseOut">
                     <input v-model.number="t.val" type="number" @blur="handleMouseOut">
                     <input v-model.number="t.val2" type="number" @blur="handleMouseOut">
@@ -186,18 +197,18 @@
                 <button @click="addDataPoint">
                     New Data Point
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script>
     import Vue from 'vue'
+    import { mapActions, mapGetters } from 'vuex'
     import StatsCard from "../components/StatsCard";
     import MultiSelect from "../components/MultiSelect";
     import SnackBar from "../components/SnackBar";
     import RangeSlider from "../components/RangeSlider";
-
     import LineChart from "../components/charts/LineChart.vue";
     import PieChart from "../components/charts/PieChart.vue";
     import ScatterPlot from "../components/charts/ScatterPlot.vue";
@@ -208,9 +219,7 @@
         components: {
             StatsCard,
             MultiSelect,
-            SnackBar,
             RangeSlider,
-
             BarChart,
             LineChart,
             PieChart,
@@ -221,21 +230,7 @@
         data() {
             return {
                 tooltipActive: false,
-                dataSet: [
-                    {'val': 50,'val1': 1400, 'val2': 1900, 'name': 'Jan', 'date': new Date("2019-01")},
-                    {'val': 60,'val1': 1900, 'val2': 1730, 'name': 'Feb', 'date': new Date("2019-02")},
-                    {'val': 65,'val1': 1000, 'val2': 1800, 'name': 'Mar', 'date': new Date("2019-03")},
-                    {'val': 80,'val1': 1250, 'val2': 1805, 'name': 'Apr', 'date': new Date("2019-04")},
-                    {'val': 56,'val1': 1050, 'val2': 1750, 'name': 'May', 'date': new Date("2019-05")},
-                    {'val': 78,'val1': 1090, 'val2': 1777, 'name': 'Jun', 'date': new Date("2019-06")},
-                    {'val': 99,'val1': 1700, 'val2': 2100, 'name': 'Jul', 'date': new Date("2019-07")},
-                    {'val': 95,'val1': 1400, 'val2': 2089, 'name': 'Aug', 'date': new Date("2019-08")},
-                    {'val': 76,'val1': 1400, 'val2': 1640, 'name': 'Sept', 'date': new Date("2019-09")},
-                    {'val': 40,'val1': 1100, 'val2': 1790, 'name': 'Oct', 'date': new Date("2019-10")},
-                    {'val': 35,'val1': 1155, 'val2': 1500, 'name': 'Nov', 'date': new Date("2019-11")},
-                    {'val': 42,'val1': 1333, 'val2': 1800, 'name': 'Dec', 'date': new Date("2019-12")},
-                ],
-                dateRange: 'month',
+                dateRange: 'year',
                 rangeMap: {
                     dateRangeSlider: {
                         'defaultValue' : [],
@@ -245,6 +240,12 @@
                         'marks' : {}
                     }
                 },
+                chartOptions: {
+                    osStats: {
+                        dim: 'os'
+                    }
+                },
+                // soon to be deprecated
                 options: {
                     dim: 'name',
                     dim2: 'date'
@@ -259,16 +260,33 @@
                 didYouKnowIndex: 0
             }
         },
-        mounted: function () {
+        async mounted() {
             // Lets set the initial dashboard data
-            this.$store.commit('SET_ORIGINAL_DATA', {originalData: this.dataSet});
+            await  this.setFilters(['SOURCE', 'services_internet']);
+            await  this.setFilters(['YEAR', [2017, 2019]]);
+            await  this.setFilters(['MONTH', [1, 12]]);
+
+            await this.fetchOsStats();
+
             // Initialize the 'Did you know' interval
             this.didYouKnowInterval();
+
             // Set initial date range
             this.changeFilterRange('dateRangeSlider', this.dateRange);
         },
+        computed: {
+            ...mapGetters([
+                'dashData',
+                'testData',
+                'loading',
+            ])
+        },
         methods: {
-            testSnackBar: function () {
+            ...mapActions([
+                'setFilters',
+                'fetchOsStats'
+            ]),
+            testSnackBar() {
                 let options = {
                     message: "Important bottom message",
                     position: "center",
@@ -280,75 +298,53 @@
                     render: h => h(SnackBar, { attrs: options })
                 });
             },
-            changeFilterRange: function (sliderId, sliderRange) {
-                let values = {};
+            changeFilterRange(sliderId, sliderRange) {
                 this.dateRange = sliderRange;
-                let today = new Date();
+
+                const today = new Date();
+                let start, end;
+                let values = {
+                    step: 1,
+                    marks: {}
+                };
 
                 if (sliderRange === 'day') {
-                    today = today.getTime();
-                    let startDate = new Date();
-                    startDate.setFullYear(startDate.getFullYear() - 1);
-                    let oneMonthAgo = new Date();
-                    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-                    const marks =  {};
-                    marks[startDate.getTime()] =  this.$utils.date.getDateStringFromDate(startDate);
-                    marks[today] = this.$utils.date.getDateStringFromMillis(today);
-
-                    values = {
-                        'defaultValue' : [oneMonthAgo.getTime(), today],
-                        'step' : 1 ,
-                        'max' : today,
-                        'min' : startDate.getTime(),
-                        'marks' : marks
-                    };
+                    start = 1;
+                    end = 31;
                 } else if (sliderRange === 'month') {
-                    let startDate = new Date();
-                    startDate.setFullYear(startDate.getFullYear() - 3);
-                    let sixMonthAgo = new Date();
-                    sixMonthAgo.setMonth(sixMonthAgo.getMonth() - 6);
-                    const marks =  {};
-                    marks[startDate.getTime()] =  startDate.getMonth() + `.` + startDate.getFullYear();
-                    marks[today.getTime()] = today.getMonth() + `.` + today.getFullYear();
-
-                    values = {
-                        'defaultValue' : [sixMonthAgo.getTime(), today.getTime()],
-                        'step' : 1,
-                        'max' : today.getTime(),
-                        'min' : startDate.getTime(),
-                        'marks' : marks
-                    };
+                    start = 1;
+                    end = 12;
                 } else if (sliderRange === 'year') {
-                    let startDate = new Date();
-                    startDate.setFullYear(startDate.getFullYear() - 12);
-                    let twoYearsAgo = new Date();
-                    twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-
-                    const marks =  {};
-                    marks[startDate.getTime()] =  startDate.getFullYear();
-                    marks[today.getTime()] = today.getFullYear();
-
-                    values = {
-                        'defaultValue' : [twoYearsAgo.getTime(), today.getTime()],
-                        'step' : 1,
-                        'max' : today.getTime(),
-                        'min' : startDate.getTime(),
-                        'marks' : marks
-                    };
+                    start = today.getFullYear() - 2;
+                    end = today.getFullYear();
+                }
+                values.defaultValue = [start, end];
+                values.max = end;
+                values.min = start;
+                for (start; start <= end; start++) {
+                    values.marks[start] = start;
                 }
 
                 this.rangeMap[sliderId] = values;
             },
-            rangeForChartChanged: function (rangeValue) {
-              console.log(rangeValue);
+            rangeForChartChanged([min, max]) {
+                switch(this.dateRange) {
+                    case 'year':
+                        this.setYearFilter([min, max]);
+                        break;
+                    case 'month':
+                        this.setMonthFilter([min, max]);
+                        break;
+                }
+                this.fetchOsStats();
             },
-            addDataPoint: function () {
+            addDataPoint() {
                 let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
                 this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
             },
             handleMouseOut() {
-                let changedObject = this.dataSet[this.dataSet.length-1];
-                Vue.set(this.dataSet, this.dataSet.length-1, changedObject);
+                let changedObject = this.dashData[this.dashData.length-1];
+                Vue.set(this.dashData, this.dashData.length-1, changedObject);
             },
             didYouKnowInterval () {
                 this.didYouKnowIndex = setInterval(() => {

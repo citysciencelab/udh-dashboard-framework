@@ -1,24 +1,20 @@
 <template>
-    <a-slider
-            range
-            :step="step"
-            :max="max"
-            :min="min"
-            :marks="marks"
-            v-model:defaultValue="defaults"
-            :tipFormatter="tipFormat"
-            @change="onChange"
-            @afterChange="onAfterChange"
-    />
+    <a-slider range
+              :step="step"
+              :max="max"
+              :min="min"
+              :marks="marks"
+              v-model="defaults"
+              :tipFormatter="tipFormat"
+              @change="onChange"
+              @afterChange="onAfterChange" />
 </template>
 
 <script>
-
     /*
     *   Documentation found here:
     *   https://www.antdv.com/components/slider/
     */
-
     export default {
         name: "range-slider",
         data: () => ({
@@ -30,8 +26,8 @@
             step: Number,
             max: Number,
             min: Number,
-            marks: {},
-            isDateRange: false,
+            marks: Object,
+            isDateRange: Boolean,
             identity: String
         },
         mounted: function () {
@@ -40,7 +36,7 @@
             }
         },
         watch: {
-            defaultValue: function(newVal, oldVal) {
+            defaultValue: function(newVal) {
                 this.$data.defaults = newVal;
             }
         },
@@ -51,15 +47,15 @@
                     if (this.identity === 'day') {
                         return this.$utils.date.getDateStringFromDate(date);
                     } else if (this.identity === 'month') {
-                        return  date.getMonth() + `.` + date.getFullYear();
+                        return date.getMonth() + `.` + date.getFullYear();
                     } else if (this.identity === 'year') {
-                        return  date.getFullYear();
+                        return date.getFullYear();
                     }
                 } else {
                     return `${value}`;
                 }
             },
-            onChange(value) {
+            onChange() {
                 //Or global: this.$root.$emit()
             },
             onAfterChange(value) {

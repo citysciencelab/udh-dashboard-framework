@@ -1,24 +1,22 @@
-<template>
-
-</template>
-
 <script>
     export default {
         name: "abstract-chart",
         data: () => ({
-            width: Number,
-            height: Number,
+            width: 300,
+            height: 300,
             horizontalOffset: 60
         }),
         props: {
             ds: Array
         },
         watch: {
-            ds: function (newVal, oldVal) {
-                this.createChart(this.$d3, this.ds, this.options);
+            ds() {
+                if (this.ds.length > 0) {
+                    this.createChart(this.$d3, this.ds, this.options);
+                }
             }
         },
-        mounted: function () {
+        mounted() {
             // This double checks the setting of all $props variables
             // If the component gets initiated by
 
@@ -34,10 +32,6 @@
                     // console.log("Property " + this.$props[obj] + " is set.")
                 }
             }
-
-            if (this.ds.length > 0) {
-                this.createChart(this.$d3, this.ds, this.options);
-            }
         },
         methods: {
             redrawOnDimensionsChange: function (svg) {
@@ -45,6 +39,7 @@
                 if (this.$data.width !== dimensions[0] || this.$data.height !== dimensions[1]) {
                     this.$data.width = dimensions[0];
                     this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
+                    // FIXME: produces lots of errors when ds is empty
                     this.createChart(this.$d3, this.ds, this.options);
                 }
             }
@@ -96,7 +91,6 @@
         box-sizing: border-box;
         display: inline;
         font-size: 8px;
-        width: 100%;
         line-height: 1;
         color: rgba(0, 0, 0, 0.55);
         position: absolute;
@@ -109,7 +103,7 @@
         /*margin: -1px 0 0 0;*/
         margin: 0 0 0 0;
         top: 100%;
-        left: 0;
+        left: 50%;
         text-align: center;
     }
 

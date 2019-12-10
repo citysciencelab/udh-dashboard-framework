@@ -1,5 +1,5 @@
 export default store => {
-    store.subscribe((mutation, state) => {
+    store.subscribe((mutation) => {
         if (mutation.type === "SET_FILTER_VALUES") {
             if (mutation.payload.values.length > 0) {
                 let filters = store.getters.filterValues;
@@ -25,8 +25,8 @@ export default store => {
     });
 
     store.subscribeAction({
-        after: (action, state) => {
-            console.log("watch2")
+        after: (action) => {
+            // console.log("watch2")
             if (action.type === "load") {
                 alert("loading data");
             }

@@ -1,60 +1,82 @@
+import elastic from '../utils/elastic';
+import { aggregateData } from '../utils/utils';
 
 const initialState = {
     originalData: [],
     dashData: [],
+    testData: {
+        osStats: []
+    },
     filterValues: {},
-    test: false
+    filters: {},
+    loading: false
 };
 
-export const state = { ...initialState };
+const state = { ...initialState };
 
-export const mutations = {
-    SET_FILTER_VALUES: (state, { ident, values }) => {
-        if (state.filterValues.hasOwnProperty(ident)) {
-            state.filterValues[ident] = values;
-        } else {
-            state.filterValues[ident] = values;
-        }
+const mutations = {
+    SET_FILTERS: (state, [ident, values]) => {
+        state.filters[ident] = values;
     },
     SET_ORIGINAL_DATA: (state, { originalData }) => {
         state.originalData = originalData;
     },
-    SET_DASH_DATA: (state, { dashData }) => {
+    SET_DASH_DATA: (state, dashData) => {
         state.dashData = dashData;
+    },
+    SET_OS_STATS: (state, data) => {
+        state.testData.osStats = data;
     },
     ADD_DASH_ELEMENT: (state, { dataElement }) => {
         state.dashData.push(dataElement);
     },
-    SET_TEST: (state, { test }) => {
-        state.test = test;
+    SET_LOADING: (state, loading) => {
+        state.loading = loading;
     }
 };
 
-export const actions = {
-    //Example actions
-    // async [FAVORITE_REMOVE](context, slug) {
-    //     const { data } = await FavoriteService.remove(slug);
-    //     // Update list as well. This allows us to favorite an article in the Home view.
-    //     context.commit(UPDATE_ARTICLE_IN_LIST, data.article, { root: true });
-    //     context.commit(SET_ARTICLE, data.article);
-    // },
-    // [ARTICLE_PUBLISH]({ state }) {
-    //     return ArticlesService.create(state.article);
-    // },
+const actions = {
+    setFilters: (context, [ident, values]) => {
+        context.commit('SET_FILTERS', [ident, values]);
+    },
+    fetchOsStats: async (context) => {
+        context.commit('SET_LOADING', true);
+
+        const params = {
+            month: context.state.filters['MONTH'],
+            year: context.state.filters['YEAR'],
+            quelle: context.state.filters['SOURCE']
+        };
+        // Convert range filters
+        params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;
+        params.month = `[${params.month[0]} TO ${params.month[1] || params.month[0]}]`;
+
+        const results = await elastic.get(params);
+
+        // Aggregating and sorting is expected to be done by the backend,
+        // but for the sake of testing it is hardcoded here ...
+        const aggregated = aggregateData(results, 'os', 'anzahl_os');
+        const top10 = aggregated.sort((a, b) => b.anzahl_os - a.anzahl_os).slice(0, 10);
+
+        context.commit('SET_OS_STATS', top10);
+        context.commit('SET_LOADING', false);
+    }
 };
 
 const getters = {
+    originalData: state => {
+        return state.originalData
+    },
     dashData: state => {
         return state.dashData
     },
-    originalData: state => {
-        return state.originalData
+    testData: state => {
+        return state.testData
     },
     filterValues: state => {
         return state.filterValues
     },
     getDataByFilter: (state) => (property, value) => {
-        //this.$store.getters.getDataByFilter('name', 'Apr')
         return state.dashData.filter(element => element[property] === value)
     },
     getPropertyData: (state) => (property) => {
@@ -64,8 +86,8 @@ const getters = {
         }
         return valuesForProperty;
     },
-    test: state => {
-        return state.test
+    loading: state => {
+        return state.loading
     }
 };
 
