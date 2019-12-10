@@ -103,7 +103,7 @@
         /*margin: -1px 0 0 0;*/
         margin: 0 0 0 0;
         top: 100%;
-        left: 0;
+        left: 50%;
         text-align: center;
     }
 

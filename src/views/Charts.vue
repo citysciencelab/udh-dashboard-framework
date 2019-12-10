@@ -180,7 +180,7 @@
         </div>
         <div class="row" style="height: 350px">
             <div class="col-sm">
-                <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
                              title="Distribution of operating systems"
                              metric="anzahl_os" descriptor="os"
                              selector="chart5"/>
