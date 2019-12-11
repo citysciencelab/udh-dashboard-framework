@@ -261,11 +261,12 @@
             }
         },
         async mounted() {
-            // Lets set the initial dashboard data
+            // Lets set the initial filters
             await  this.setFilters(['SOURCE', 'services_internet']);
             await  this.setFilters(['YEAR', [2017, 2019]]);
             await  this.setFilters(['MONTH', [1, 12]]);
 
+            // Lets fetch the initial dashboard data
             await this.fetchOsStats();
 
             // Initialize the 'Did you know' interval
@@ -330,10 +331,10 @@
             rangeForChartChanged([min, max]) {
                 switch(this.dateRange) {
                     case 'year':
-                        this.setYearFilter([min, max]);
+                        this.setFilters(['YEAR', [min, max]]);
                         break;
                     case 'month':
-                        this.setMonthFilter([min, max]);
+                        this.setFilters(['MONTH', [min, max]]);
                         break;
                 }
                 this.fetchOsStats();
