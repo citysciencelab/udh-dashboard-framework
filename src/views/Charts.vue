@@ -88,12 +88,13 @@
                               identifier="os"/>
             </div>
             <div class="col-sm">
-                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
+                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar" id="tooltip-target-1">
                     Open Snackbar
-                    <md-tooltip md-direction="top" :md-active.sync="tooltipActive">Test tooltip: In einem solchen Tooltip werden alle Infos angezeigt</md-tooltip>
                 </md-button>
                 <br />
-                <md-button class="md-raised md-primary" @click="tooltipActive = !tooltipActive">Toggle Tooltip</md-button>
+                <b-tooltip target="tooltip-target-1" triggers="hover" custom-class="udpc-tooltip">
+                    I am tooltip <a href="javascript:void(0)" onclick="window.open('http://www.swoosh.com')">component</a> content!
+                </b-tooltip>
             </div>
         </div>
         <div class="row">
