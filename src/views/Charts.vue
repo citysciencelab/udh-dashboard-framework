@@ -83,8 +83,9 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('name')" v-bind:label="$t('message.month')"
-                              identifier="'mts-month'"/>
+                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('os', this.testData.osStats )"
+                              v-bind:label="$t('message.os')" @new_selection="filterChanged"
+                              identifier="os"/>
             </div>
             <div class="col-sm">
                 <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
@@ -285,7 +286,8 @@
         methods: {
             ...mapActions([
                 'setFilters',
-                'fetchOsStats'
+                'fetchOsStats',
+                'filterOsStats'
             ]),
             testSnackBar() {
                 let options = {
@@ -327,6 +329,11 @@
                 }
 
                 this.rangeMap[sliderId] = values;
+            },
+            filterChanged(newFilterSelection) {
+                // The new filters could be set here - so far the filter already does that itself
+                // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
+                this.filterOsStats();
             },
             rangeForChartChanged([min, max]) {
                 switch(this.dateRange) {

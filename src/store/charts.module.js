@@ -45,12 +45,16 @@ const getters = {
     filterValues: state => {
         return state.filterValues
     },
-    getDataByFilter: (state) => (property, value) => {
-        return state.dashData.filter(element => element[property] === value)
+    getDataByFilters: (state) => (dataSource, property, value) => {
+        let newData = [];
+        for (const filterElement of value) {
+            newData = newData.concat(dataSource.filter(element => element[property] === filterElement));
+        }
+        return newData;
     },
-    getPropertyData: (state) => (property) => {
+    getPropertyData: (state) => (property, dataSource) => {
         let valuesForProperty = [];
-        for (let obj of state.originalData) {
+        for (let obj of dataSource) {
             valuesForProperty.push(obj[property])
         }
         return valuesForProperty;

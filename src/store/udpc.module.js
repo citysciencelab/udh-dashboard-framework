@@ -37,6 +37,20 @@ const actions = {
 
         context.commit('SET_OS_STATS', top10);
         context.commit('SET_LOADING', false);
+    },
+    filterOsStats(context) {
+        context.commit('SET_LOADING', true);
+
+        // Static - we could just get all possible filters here - no hard coded names
+        const osFilter = context.getters.filters['os'];
+        // EXAMPLE setting of filters for a datasource that is complete with first request (Partizipations-Dashboard)
+        const newOsData = context.getters.getDataByFilters(context.getters.getOsStats, 'os', osFilter);
+
+        // We obviously need a concept of original data and filtered data (dashData)
+        // BUT - is this generally a concept that we can work with?
+        context.commit('SET_OS_STATS', newOsData);
+        context.commit('SET_LOADING', false);
+
     }
 };
 
