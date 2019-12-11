@@ -152,40 +152,110 @@
                 <p>{{ $t("message.hello") }}</p>
             </div>
         </div>
-        <div class="row" style="height: 350px">
+        <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
-                           title="Distribution of operating systems"
-                           metric="anzahl_os" descriptor="os"
-                           selector="chart1" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        OS Data
+                    </template>
+
+                    <template slot="content">
+                        <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                                   title="Distribution of operating systems"
+                                   metric="anzahl_os" descriptor="os"
+                                   selector="chart1" />
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
             <div class="col-sm">
-                <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
-                            title="Distribution of operating systems"
-                            metric="anzahl_os" descriptor="os"
-                            selector="chart2" v-bind:origins="['anzahl_os']" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                                    title="Distribution of operating systems"
+                                    metric="anzahl_os" descriptor="os"
+                                    selector="chart2" v-bind:origins="['anzahl_os']" />
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
         </div>
-        <div class="row" style="height: 350px">
+        <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
-                           title="Distribution of operating systems"
-                           metric="anzahl_os" descriptor="os"
-                           selector="chart3" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                                   title="Distribution of operating systems"
+                                   metric="anzahl_os" descriptor="os"
+                                   selector="chart3" />
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
             <div class="col-sm">
-                <scatter-plot v-bind:ds="this.testData.osStats" v-bind:options="options"
-                              title="Distribution of operating systems"
-                              metric="anzahl_os" descriptor="os"
-                              selector="chart4" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <scatter-plot v-bind:ds="this.testData.osStats" v-bind:options="options"
+                                      title="Distribution of operating systems"
+                                      metric="anzahl_os" descriptor="os"
+                                      selector="chart4" />
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
         </div>
-        <div class="row" style="height: 350px">
+        <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
-                             title="Distribution of operating systems"
-                             metric="anzahl_os" descriptor="os"
-                             selector="chart5"/>
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                                     title="Distribution of operating systems"
+                                     metric="anzahl_os" descriptor="os"
+                                     selector="chart5"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
         </div>
         <div class="row">
@@ -368,7 +438,48 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss">
+
+    /*
+        Charts
+    */
+
+    .chart-row {
+        margin-top: 40px;
+
+        .chart-holder {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+
+            .md-card-content {
+                .chart {
+                    padding-left: 15px !important;
+                    padding-top: 10px !important;
+                }
+            }
+
+            .md-card-actions {
+                margin: 0;
+                position: absolute;
+                bottom: 0;
+                float: right;
+                right: 0;
+                padding-right: 5px;
+                padding-top: 0;
+
+                .notice {
+                    font-style: italic;
+                    font-size: 7pt;
+                }
+            }
+        }
+    }
+
+
+</style>
+
+<style scoped lang="scss">
 
     h1, h2 {
         font-weight: normal;
@@ -395,6 +506,7 @@
         min-width: 80px !important;
         padding-top: 4px !important;
     }
+
 
 
     /*
