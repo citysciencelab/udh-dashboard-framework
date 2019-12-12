@@ -1,5 +1,6 @@
 <template>
-    <div id="page" class="page-container">
+    <div id="page" class="page-container"
+         v-bind:style="{'background-image': 'url(' + this.imageUrl + ')'}">
         <md-app class="md-app-scroll-fix" md-waterfall md-mode="fixed">
             <md-app-toolbar class="md-primary">
                 <div class="md-toolbar-row">
@@ -8,16 +9,16 @@
                         <md-menu md-direction="bottom-start">
                             <md-button md-menu-trigger>
                                 <country-flag v-if="$i18n.locale === 'de'" @click="changeLanguage('de')"
-                                              country='de' size='normal' />
+                                              country='de' size='normal'/>
                                 <country-flag v-if="$i18n.locale === 'en'" @click="changeLanguage('en')"
-                                              country='gb' size='normal' />
+                                              country='gb' size='normal'/>
                             </md-button>
                             <md-menu-content>
                                 <md-menu-item @click="changeLanguage('de')">
-                                    <country-flag country='de' size='normal' />
+                                    <country-flag country='de' size='normal'/>
                                 </md-menu-item>
                                 <md-menu-item @click="changeLanguage('en')">
-                                    <country-flag country='gb' size='normal' />
+                                    <country-flag country='gb' size='normal'/>
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
@@ -41,10 +42,40 @@
 
 <script>
     import CountryFlag from 'vue-country-flag'
+    // TODO: How to bulk load these images?
+    import image0 from './assets/images/background/0.jpg'
+    import image1 from './assets/images/background/1.jpg'
+    import image2 from './assets/images/background/2.jpg'
+    import image3 from './assets/images/background/3.jpg'
+    import image4 from './assets/images/background/4.jpg'
 
     export default {
         components: {
             CountryFlag
+        },
+        data() {
+            return {
+                images: [
+                    image0,
+                    image1,
+                    image2,
+                    image3,
+                    image4,
+                ],
+                imageIndex: 0,
+                imageUrl: ''
+            }
+        },
+        mounted() {
+            this.imageUrl = this.images[this.imageIndex];
+            // this.imageIndex = setInterval(() => {
+            //     if (this.imageIndex < 5) {
+            //         this.imageIndex++;
+            //     } else {
+            //         this.imageIndex = 0;
+            //     }
+            //     this.imageUrl = this.images[this.imageIndex];
+            // }, 12000)
         },
         methods: {
             changeLanguage: function (lang) {
@@ -64,17 +95,37 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        /*margin-top: 10px;*/
+        background-size: cover;
+        -webkit-transition: background-image 0.5s ease-in-out;
+        transition: background-image 0.5s ease-in-out;
+
+        .md-card.chart-holder, .md-card.md-theme-default,
+        .filter-button, .md-menu.md-select,
+        .facts-holder span {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .md-toolbar {
+        background-color: rgba(68, 138, 255, .7);
+        }
+
+        .md-app, .md-app-container, .md-app-content {
+            background: none;
+        }
 
         .md-app-scroll-fix {
             height: 100vh;
         }
 
         #nav {
+
+            background-color: rgba(255,255,255,0.5);
             padding: 30px;
+
             a {
                 font-weight: bold;
                 color: #2c3e50;
+
                 &.router-link-exact-active {
                     color: #42b983;
                 }
@@ -114,11 +165,7 @@
             cursor: pointer;
         }
 
-        .md-button.md-primary.md-raised.active {
-            background-color: rgba(211,211,211 ,.5 ) !important;
-        }
     }
-
 
 
     /*
@@ -126,6 +173,7 @@
     */
     .d3-tip, .md-tooltip, .md-snackbar, .udpc-tooltip .tooltip-inner {
         background: rgba(0, 0, 0, 0.65) !important;
+
         a:link, a:hover, a:visited, a:active {
             color: white;
             text-decoration: underline;

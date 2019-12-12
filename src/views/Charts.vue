@@ -140,13 +140,15 @@
                 </div>
             </div>
             <div class="col-sm">
-                <transition-group name="list" tag="p">
+                <div class="facts-holder">
+                    <transition-group name="list" tag="p">
                     <span v-for="(didYou, index) in [this.didYouKnow[didYouKnowIndex]]"
                           v-bind:key="index"
                           class="list-item">
                         {{didYou}}
                     </span>
-                </transition-group>
+                    </transition-group>
+                </div>
             </div>
             <div class="col-sm">
                 <p>{{ $t("message.hello") }}</p>
@@ -508,6 +510,9 @@
     }
 
 
+    .facts-holder span {
+        padding: 10px;
+    }
 
     /*
         Transition
@@ -527,4 +532,5 @@
     .list-enter, .list-leave-to {
         opacity: 0;
     }
+
 </style>
