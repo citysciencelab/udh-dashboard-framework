@@ -91,9 +91,10 @@
                 <md-button type="submit" class="md-primary md-raised" @click="testSnackBar" id="tooltip-target-1">
                     Open Snackbar
                 </md-button>
-                <br />
+                <br/>
                 <b-tooltip target="tooltip-target-1" triggers="hover" custom-class="udpc-tooltip">
-                    I am tooltip <a href="javascript:void(0)" onclick="window.open('http://www.swoosh.com')">component</a> content!
+                    I am tooltip <a href="javascript:void(0)"
+                                    onclick="window.open('http://www.swoosh.com')">component</a> content!
                 </b-tooltip>
             </div>
         </div>
@@ -132,7 +133,7 @@
                                       v-bind:min="rangeMap.dateRangeSlider.min"
                                       v-bind:marks="rangeMap.dateRangeSlider.marks"
                                       v-bind:isDateRange="true"
-                                      @rangeChange="rangeForChartChanged" />
+                                      @rangeChange="rangeForChartChanged"/>
                     </div>
                 </div>
                 <div class="row">
@@ -165,7 +166,7 @@
                         <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart1" />
+                                   selector="chart1"/>
                     </template>
 
                     <template slot="footer">
@@ -185,7 +186,7 @@
                         <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
-                                    selector="chart2" v-bind:origins="['anzahl_os']" />
+                                    selector="chart2" v-bind:origins="['anzahl_os']"/>
                     </template>
 
                     <template slot="footer">
@@ -207,7 +208,7 @@
                         <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart3" />
+                                   selector="chart3"/>
                     </template>
 
                     <template slot="footer">
@@ -224,10 +225,10 @@
                     </template>
 
                     <template slot="content">
-                        <scatter-plot v-bind:ds="this.testData.osStats" v-bind:options="options"
-                                      title="Distribution of operating systems"
-                                      metric="anzahl_os" descriptor="os"
-                                      selector="chart4" />
+                        <tree-map-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                                   title="Distribution of operating systems"
+                                   metric="anzahl_os" descriptor="os"
+                                   selector="chart4"/>
                     </template>
 
                     <template slot="footer">
@@ -278,7 +279,7 @@
 
 <script>
     import Vue from 'vue'
-    import { mapActions, mapGetters } from 'vuex'
+    import {mapActions, mapGetters} from 'vuex'
     import StatsCard from "../components/StatsCard";
     import MultiSelect from "../components/MultiSelect";
     import SnackBar from "../components/SnackBar";
@@ -288,6 +289,7 @@
     import ScatterPlot from "../components/charts/ScatterPlot.vue";
     import BarChart from "../components/charts/BarChart.vue";
     import HBarChart from "../components/charts/HorBarChart.vue";
+    import TreeMapChart from "../components/charts/TreeMapChart.vue";
 
     export default {
         components: {
@@ -298,7 +300,8 @@
             LineChart,
             PieChart,
             ScatterPlot,
-            HBarChart
+            HBarChart,
+            TreeMapChart
         },
         name: 'Charts',
         data() {
@@ -307,11 +310,11 @@
                 dateRange: 'year',
                 rangeMap: {
                     dateRangeSlider: {
-                        'defaultValue' : [],
-                        'step' : null,
-                        'max' : null,
-                        'min' : null,
-                        'marks' : {}
+                        'defaultValue': [],
+                        'step': null,
+                        'max': null,
+                        'min': null,
+                        'marks': {}
                     }
                 },
                 chartOptions: {
@@ -336,9 +339,9 @@
         },
         async mounted() {
             // Lets set the initial filters
-            await  this.setFilters(['SOURCE', 'services_internet']);
-            await  this.setFilters(['YEAR', [2017, 2019]]);
-            await  this.setFilters(['MONTH', [1, 12]]);
+            await this.setFilters(['SOURCE', 'services_internet']);
+            await this.setFilters(['YEAR', [2017, 2019]]);
+            await this.setFilters(['MONTH', [1, 12]]);
 
             // Lets fetch the initial dashboard data
             await this.fetchOsStats();
@@ -371,7 +374,7 @@
                 };
                 new Vue({
                     el: document.getElementById("snack").querySelector("div"),
-                    render: h => h(SnackBar, { attrs: options })
+                    render: h => h(SnackBar, {attrs: options})
                 });
             },
             changeFilterRange(sliderId, sliderRange) {
@@ -409,7 +412,7 @@
                 this.filterOsStats();
             },
             rangeForChartChanged([min, max]) {
-                switch(this.dateRange) {
+                switch (this.dateRange) {
                     case 'year':
                         this.setFilters(['YEAR', [min, max]]);
                         break;
@@ -424,12 +427,12 @@
                 this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
             },
             handleMouseOut() {
-                let changedObject = this.dashData[this.dashData.length-1];
-                Vue.set(this.dashData, this.dashData.length-1, changedObject);
+                let changedObject = this.dashData[this.dashData.length - 1];
+                Vue.set(this.dashData, this.dashData.length - 1, changedObject);
             },
-            didYouKnowInterval () {
+            didYouKnowInterval() {
                 this.didYouKnowIndex = setInterval(() => {
-                    if (this.didYouKnowIndex < this.didYouKnow.length-1) {
+                    if (this.didYouKnowIndex < this.didYouKnow.length - 1) {
                         this.didYouKnowIndex++;
                     } else {
                         this.didYouKnowIndex = 0;
@@ -521,14 +524,17 @@
     .list {
         position: relative;
     }
+
     .list-item {
         position: absolute;
         display: inline-block;
         margin-right: 10px;
     }
+
     .list-enter-active, .list-leave-active {
         transition: opacity .8s ease;
     }
+
     .list-enter, .list-leave-to {
         opacity: 0;
     }
