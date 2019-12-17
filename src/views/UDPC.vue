@@ -285,7 +285,6 @@
 
 <script>
     import Vue from 'vue'
-    import {mapActions, mapGetters} from 'vuex'
     import StatsCard from "../components/StatsCard";
     import MultiSelect from "../components/MultiSelect";
     import SnackBar from "../components/SnackBar";
@@ -297,6 +296,9 @@
     import BarChart from "../components/charts/BarChart.vue";
     import HBarChart from "../components/charts/HorBarChart.vue";
     import TreeMapChart from "../components/charts/TreeMapChart.vue";
+
+    import udpcStore from "../store/udpc.module";
+    import {mapActions, mapGetters} from 'vuex'
 
     export default {
         components: {
@@ -345,6 +347,9 @@
                 ],
                 didYouKnowIndex: 0
             }
+        },
+        created() {
+            this.$store.registerModule("udpc", udpcStore);
         },
         async mounted() {
             // Lets set the initial filters
