@@ -1,6 +1,9 @@
 <template>
     <div id="page" class="page-container"
          v-bind:style="{'background-image': 'url(' + this.imageUrl + ')'}">
+        <div id="loading-overlay" v-if="this.loading">
+            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+        </div>
         <md-app class="md-app-scroll-fix" md-waterfall md-mode="fixed">
             <md-app-toolbar class="md-primary">
                 <div class="md-toolbar-row">
@@ -48,6 +51,7 @@
     import image2 from './assets/images/background/2.jpg'
     import image3 from './assets/images/background/3.jpg'
     import image4 from './assets/images/background/4.jpg'
+    import {mapGetters} from "vuex";
 
     export default {
         components: {
@@ -77,6 +81,11 @@
             //     this.imageUrl = this.images[this.imageIndex];
             // }, 12000)
         },
+        computed: {
+            ...mapGetters([
+                'loading',
+            ])
+        },
         methods: {
             changeLanguage: function (lang) {
                 this.$i18n.locale = lang
@@ -85,6 +94,24 @@
     }
 
 </script>
+
+<style lang="scss" scoped>
+    #loading-overlay {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.4);
+        position: absolute;
+        z-index: 1000;
+
+        div {
+            top: 45%;
+
+            circle {
+                stroke: green;
+            }
+        }
+    }
+</style>
 
 <style lang="scss">
     @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons");
