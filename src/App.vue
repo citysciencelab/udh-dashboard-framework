@@ -36,7 +36,7 @@
                 <router-view/>
             </md-app-content>
         </md-app>
-        <!--<div id="snack"><div></div></div>-->
+        <div id="snack"><div></div></div>
     </div>
 </template>
 
