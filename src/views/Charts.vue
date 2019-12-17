@@ -92,6 +92,12 @@
                     Open Snackbar
                 </md-button>
                 <br/>
+                <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">
+                    Open Confirm Dialog
+                </md-button>
+                <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
+                               @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
+                <br/>
                 <b-tooltip target="tooltip-target-1" triggers="hover" custom-class="udpc-tooltip">
                     I am tooltip <a href="javascript:void(0)"
                                     onclick="window.open('http://www.swoosh.com')">component</a> content!
@@ -283,6 +289,7 @@
     import StatsCard from "../components/StatsCard";
     import MultiSelect from "../components/MultiSelect";
     import SnackBar from "../components/SnackBar";
+    import ConfirmDialog from "../components/ConfimDialog";
     import RangeSlider from "../components/RangeSlider";
     import LineChart from "../components/charts/LineChart.vue";
     import PieChart from "../components/charts/PieChart.vue";
@@ -301,12 +308,14 @@
             PieChart,
             ScatterPlot,
             HBarChart,
-            TreeMapChart
+            TreeMapChart,
+            ConfirmDialog
         },
         name: 'Charts',
         data() {
             return {
                 tooltipActive: false,
+                agreeDialogActive: false,
                 dateRange: 'year',
                 rangeMap: {
                     dateRangeSlider: {
@@ -410,6 +419,10 @@
                 // The new filters could be set here - so far the filter already does that itself
                 // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
                 this.filterOsStats();
+            },
+            dialogResult(isPositive) {
+                this.agreeDialogActive = false;
+                console.log(isPositive)
             },
             rangeForChartChanged([min, max]) {
                 switch (this.dateRange) {
