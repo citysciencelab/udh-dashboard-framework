@@ -1,13 +1,8 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router/router'
-import store from './store/store'
-import CountryFlag from 'vue-country-flag'
-
-// D3
-import * as d3 from 'd3'
-import d3tip from 'd3-tip'
-d3.tip = d3tip;
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router/router';
+import store from './store/store';
+import CountryFlag from 'vue-country-flag';
 
 //We import ant-design because vue-material does not have a slider - maybe generally?
 import 'ant-design-vue/dist/antd.css';
@@ -17,37 +12,30 @@ Vue.use(Slider);
 Vue.prototype.$message = message;
 
 // Internationalization
-import VueI18n from 'vue-i18n'
-import { messages } from './store/messages.module'
+import VueI18n from 'vue-i18n';
+import { messages } from './store/messages.module';
 Vue.use(VueI18n);
 
 //Bootstrap
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import BootstrapVue from 'bootstrap-vue';
 Vue.use(BootstrapVue);
 
 import './assets/scss/material-dashboard.scss';
 import './assets/scss/_fonts.scss';
 
-//d1st-uisystem-base - HH styles import
-import 'd1st-uisystem-base/public/dist/bundled.min.css'
-import * as d1hh from 'd1st-uisystem-base/public/dist/bundle.js'
-
 // Vue-Material
 // Not recommended - import what you need to not hurt performance (https://vuematerial.io/getting-started)
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
-import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/default.css';
+import VueMaterial from 'vue-material';
 Vue.use(VueMaterial);
 
 Vue.config.productionTip = false;
 
-import utils from './utils/utils'
-Vue.use(utils);
-
-Vue.prototype.$d3 = d3;
-Vue.prototype.$d1hh = d1hh;
+import utils from './utils/utils';
+Vue.use(new utils);
 
 Vue.component('country-flag', CountryFlag);
 

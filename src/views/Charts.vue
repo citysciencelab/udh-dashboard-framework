@@ -202,161 +202,184 @@
     </div>
 </template>
 
-<script>
-    import Vue from 'vue'
-    import { mapActions, mapGetters } from 'vuex'
-    import StatsCard from "../components/StatsCard";
-    import MultiSelect from "../components/MultiSelect";
-    import SnackBar from "../components/SnackBar";
-    import RangeSlider from "../components/RangeSlider";
-    import LineChart from "../components/charts/LineChart.vue";
-    import PieChart from "../components/charts/PieChart.vue";
-    import ScatterPlot from "../components/charts/ScatterPlot.vue";
-    import BarChart from "../components/charts/BarChart.vue";
-    import HBarChart from "../components/charts/HorBarChart.vue";
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import StatsCard from "../components/StatsCard.vue";
+import MultiSelect from "../components/MultiSelect.vue";
+import SnackBar from "../components/SnackBar.vue";
+import RangeSlider from "../components/RangeSlider.vue";
+import LineChart from "../components/charts/LineChart.vue";
+import PieChart from "../components/charts/PieChart.vue";
+import ScatterPlot from "../components/charts/ScatterPlot.vue";
+import BarChart from "../components/charts/BarChart.vue";
+import HBarChart from "../components/charts/HorBarChart.vue";
 
-    export default {
-        components: {
-            StatsCard,
-            MultiSelect,
-            RangeSlider,
-            BarChart,
-            LineChart,
-            PieChart,
-            ScatterPlot,
-            HBarChart
-        },
-        name: 'Charts',
-        data() {
-            return {
-                tooltipActive: false,
-                dateRange: 'year',
-                rangeMap: {
-                    dateRangeSlider: {
-                        'defaultValue' : [],
-                        'step' : null,
-                        'max' : null,
-                        'min' : null,
-                        'marks' : {}
-                    }
-                },
-                chartOptions: {
-                    osStats: {
-                        dim: 'os'
-                    }
-                },
-                // soon to be deprecated
-                options: {
-                    dim: 'name',
-                    dim2: 'date'
-                },
-                didYouKnow: [
-                    'Wussten Sie schon: Fact 1',
-                    'Wussten Sie schon: Fact 2',
-                    'Wussten Sie schon: Fact 3',
-                    'Wussten Sie schon: Fact 4',
-                    'Wussten Sie schon: Fact 5'
-                ],
-                didYouKnowIndex: 0
-            }
-        },
-        async mounted() {
-            // Lets set the initial dashboard data
-            await  this.setFilters(['SOURCE', 'services_internet']);
-            await  this.setFilters(['YEAR', [2017, 2019]]);
-            await  this.setFilters(['MONTH', [1, 12]]);
-
-            await this.fetchOsStats();
-
-            // Initialize the 'Did you know' interval
-            this.didYouKnowInterval();
-
-            // Set initial date range
-            this.changeFilterRange('dateRangeSlider', this.dateRange);
-        },
-        computed: {
-            ...mapGetters([
-                'dashData',
-                'testData',
-                'loading',
-            ])
-        },
-        methods: {
-            ...mapActions([
-                'setFilters',
-                'fetchOsStats'
-            ]),
-            testSnackBar() {
-                let options = {
-                    message: "Important bottom message",
-                    position: "center",
-                    duration: 10000,
-                    showSnackbar: true
-                };
-                new Vue({
-                    el: document.getElementById("snack").querySelector("div"),
-                    render: h => h(SnackBar, { attrs: options })
-                });
-            },
-            changeFilterRange(sliderId, sliderRange) {
-                this.dateRange = sliderRange;
-
-                const today = new Date();
-                let start, end;
-                let values = {
-                    step: 1,
-                    marks: {}
-                };
-
-                if (sliderRange === 'day') {
-                    start = 1;
-                    end = 31;
-                } else if (sliderRange === 'month') {
-                    start = 1;
-                    end = 12;
-                } else if (sliderRange === 'year') {
-                    start = today.getFullYear() - 2;
-                    end = today.getFullYear();
-                }
-                values.defaultValue = [start, end];
-                values.max = end;
-                values.min = start;
-                for (start; start <= end; start++) {
-                    values.marks[start] = start;
-                }
-
-                this.rangeMap[sliderId] = values;
-            },
-            rangeForChartChanged([min, max]) {
-                switch(this.dateRange) {
-                    case 'year':
-                        this.setYearFilter([min, max]);
-                        break;
-                    case 'month':
-                        this.setMonthFilter([min, max]);
-                        break;
-                }
-                this.fetchOsStats();
-            },
-            addDataPoint() {
-                let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
-                this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
-            },
-            handleMouseOut() {
-                let changedObject = this.dashData[this.dashData.length-1];
-                Vue.set(this.dashData, this.dashData.length-1, changedObject);
-            },
-            didYouKnowInterval () {
-                this.didYouKnowIndex = setInterval(() => {
-                    if (this.didYouKnowIndex < this.didYouKnow.length-1) {
-                        this.didYouKnowIndex++;
-                    } else {
-                        this.didYouKnowIndex = 0;
-                    }
-                }, 5000)
-            }
-        }
+@Component({
+    components: {
+        StatsCard,
+        MultiSelect,
+        RangeSlider,
+        BarChart,
+        LineChart,
+        PieChart,
+        ScatterPlot,
+        HBarChart
     }
+})
+export default class Charts extends Vue {
+    tooltipActive = false;
+    dateRange = 'year';
+    rangeMap: { [key: string]: DateRangeSlider } = {
+        dateRangeSlider: {
+            defaultValue: [],
+            step: 0,
+            max: 0,
+            min: 0,
+            marks: {}
+        }
+    };
+    chartOptions = {
+        osStats: {
+            dim: 'os'
+        }
+    };
+    // soon to be deprecated
+    options = {
+        dim: 'name',
+        dim2: 'date'
+    };
+    didYouKnow = [
+        'Wussten Sie schon: Fact 1',
+        'Wussten Sie schon: Fact 2',
+        'Wussten Sie schon: Fact 3',
+        'Wussten Sie schon: Fact 4',
+        'Wussten Sie schon: Fact 5'
+    ];
+    didYouKnowIndex = 0;
+
+    async mounted() {
+        // Lets set the initial dashboard data
+        await this.setFilters(['SOURCE', 'services_internet']);
+        await this.setFilters(['YEAR', [2017, 2019]]);
+        await this.setFilters(['MONTH', [1, 12]]);
+        await this.fetchOsStats();
+
+        // Initialize the 'Did you know' interval
+        this.didYouKnowInterval();
+
+        // Set initial date range
+        this.changeFilterRange('dateRangeSlider', this.dateRange);
+    }
+
+    get dashData(): Dataset {
+        return this.$store.getters.dashData;
+    }
+
+    get testData(): Dataset {
+        return this.$store.getters.testData;
+    }
+
+    get loading(): boolean {
+        return this.$store.getters.loading;
+    }
+
+    setFilters(options: [string, string | number[]]) {
+        this.$store.dispatch('setFilters', options);
+    }
+
+    fetchOsStats() {
+        this.$store.dispatch('fetchOsStats');
+    }
+
+    testSnackBar() {
+        let options = {
+            message: "Important bottom message",
+            position: 'center',
+            duration: 10000,
+            showSnackbar: true
+        };
+
+        const snack = document.getElementById('snack');
+        if (!snack) {
+            return;
+        }
+        new Vue({
+            el: snack.querySelector('div') || undefined,
+            render: h => h(SnackBar, { attrs: options })
+        });
+    }
+
+    changeFilterRange(sliderId: string, sliderRange: string) {
+        this.dateRange = sliderRange;
+
+        const today = new Date();
+        let start = 0, end = 0;
+        let values: DateRangeSlider = {
+            defaultValue: [],
+            step: 1,
+            max: 0,
+            min: 0,
+            marks: {}
+        };
+
+        if (sliderRange === 'day') {
+            start = 1;
+            end = 31;
+        } else if (sliderRange === 'month') {
+            start = 1;
+            end = 12;
+        } else if (sliderRange === 'year') {
+            start = today.getFullYear() - 2;
+            end = today.getFullYear();
+        }
+        values.defaultValue = [start, end];
+        values.max = end;
+        values.min = start;
+
+        for (start; start <= end; start++) {
+            values.marks[start] = start;
+        }
+
+        this.rangeMap[sliderId] = values;
+    }
+
+    rangeForChartChanged([min, max]: [number, number]) {
+        switch(this.dateRange) {
+            case 'year':
+                this.setFilters(['YEAR', [min, max]]);
+                break;
+            case 'month':
+                this.setFilters(['MONTH', [min, max]]);
+                break;
+        }
+
+        this.fetchOsStats();
+    }
+
+    addDataPoint() {
+        let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
+        this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
+    }
+
+    handleMouseOut() {
+        if (!this.dashData) {
+            return;
+        }
+        let changedObject = this.dashData[this.dashData.length - 1];
+        Vue.set(this.dashData, this.dashData.length - 1, changedObject);
+    }
+
+    didYouKnowInterval () {
+        this.didYouKnowIndex = setInterval(() => {
+            if (this.didYouKnowIndex < this.didYouKnow.length-1) {
+                this.didYouKnowIndex++;
+            } else {
+                this.didYouKnowIndex = 0;
+            }
+        }, 5000);
+    }
+}
 </script>
 
 <style scoped>

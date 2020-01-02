@@ -2,82 +2,76 @@
     <svg class="chart" v-bind:id="selector"></svg>
 </template>
 
-<script>
-    import $ from 'jquery';
-    import AbstractChart from './AbstractChart.vue';
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import * as d3 from 'd3';
+import _d3tip from 'd3-tip';
+import { Tooltip } from 'd3/types/d3';
+import AbstractChart from './AbstractChart.vue';
 
-    export default {
-        name: "pie-chart",
-        extends: AbstractChart,
-        props: {
-            options: Object,
-            title: String,
-            metric: String,
-            descriptor: String,
-            selector: String
-        },
-        mounted() {
-            this.redraw();
-            window.addEventListener("resize", this.redraw);
-        },
-        methods: {
-            redraw: function () {
-                const svg = $('#' + this.selector);
-                this.redrawOnDimensionsChange(svg);
-            },
-            createChart(d3, ds) {
-                let metric = this.metric;
-                let descriptor = this.descriptor;
-                let title = this.title;
-                let svg = d3.select('#' + this.selector);
-                let radius = this.$data.height > this.$data.width ? this.$data.width * 0.9 / 2 : this.$data.height * 0.9 / 2;
-                let offset = this.$utils.chart.getOffset(title);
+const d3tip = _d3tip as () => Tooltip;
 
-                let pie = d3.pie().value((ds) => ds[metric]);
+@Component({})
+export default class PieChart extends AbstractChart {
+    @Prop() ds!: Dataset;
+    @Prop() options!: { dim: string };
+    @Prop() title!: string;
+    @Prop() metric!: string;
+    @Prop() descriptor!: string;
+    @Prop() selector!: string;
 
-                let path = d3.arc()
-                    .outerRadius(radius - 10)
-                    .innerRadius(25);
-
-                let arc = svg.selectAll('.arc')
-                    .data(pie(ds));
-
-                // let color = d3.scaleOrdinal()
-                //     .range(['#4D4D4D', '#5DA5DA', '#FAA43A', '#60BD68', '#F17CB0',
-                //         '#B2912F', '#B276B2', '#DECF3F', '#F15854'
-                //     ]);
-
-                const tip = d3.tip()
-                    .attr('class', 'd3-tip')
-                    .offset([-10, 0])
-                    .html(d => d);
-
-                svg.call(tip);
-
-                let color = d3.scaleSequential(d3.interpolateRdBu);
-
-                if (title) {
-                    this.$utils.chart.addTitle(title, svg, this.$data.width);
-                }
-
-                arc.enter()
-                    .append('g')
-                    .attr('transform', 'translate(' + this.$data.width / 2 + ',' + this.$data.height / 2 + ')')
-                    .append('path')
-                    .merge(arc)
-                    .attr('class', 'arc')
-                    .attr('d', path)
-                    .attr('fill', (d, i) => color(i * 0.1))
-                    .on('mouseover', function(d) {
-                        tip.show(d.data[descriptor] + ": " + d.data[metric], this);
-                    })
-                    .on('mouseout', tip.hide)
-                    .attr('transform', 'translate(0,' + offset + ')');
-
-                arc.exit().remove();
-            }
-        }
+    mounted() {
+        this.redraw();
+        window.addEventListener('resize', this.redraw);
     }
+
+    redraw() {
+        const svg = <SVG>d3.select('#' + this.selector);;
+        this.redrawOnDimensionsChange(svg);
+    }
+
+    createChart() {
+        let svg = <SVG>d3.select('#' + this.selector);
+        let radius = this.height > this.width ? this.width * 0.9 / 2 : this.height * 0.9 / 2;
+        let offset = this.$utils.chart.getOffset(this.title);
+
+        let pie = d3.pie<Datum>().value(d => d[this.metric]);
+
+        let path = d3.arc<Datum>()
+            .outerRadius(radius - 10)
+            .innerRadius(25);
+
+        let arc = (<d3.Selection<SVGPathElement, any, SVGSVGElement, any>>svg.selectAll('.arc'))
+            .data(pie(this.ds));
+
+        const tip = d3tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html((d: string[]) => d[0]);
+
+        svg.call(tip);
+
+        let color = d3.scaleSequential(d3.interpolateRdBu);
+
+        if (this.title) {
+            this.$utils.chart.addTitle(this.title, svg, this.width);
+        }
+
+        arc.enter()
+            .append('g')
+            .attr('transform', 'translate(' + this.width / 2 + ',' + this.height / 2 + ')')
+            .append('path')
+            .merge(arc)
+            .attr('class', 'arc')
+            .attr('d', path)
+            .attr('fill', (d, i) => color(i * 0.1))
+            .on('mouseover', d => tip.show([d.data[this.descriptor] + ': ' + d.data[this.metric]], d3.event.target))
+            .on('mouseout', tip.hide)
+            .attr('transform', 'translate(0,' + offset + ')');
+
+        arc.exit().remove();
+    }
+}
 </script>
 
 <style scoped>
