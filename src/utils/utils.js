@@ -70,7 +70,7 @@ export default {
                 },
 
                 getDimensions(svg, title) {
-                    const width = (svg.parent().width() - parseInt(svg.parent().css("padding-left")) - parseInt(svg.parent().css("padding-right"))) * 0.95;
+                    const width = (svg.parent().width() - parseInt(svg.parent().css("padding-left")) - parseInt(svg.parent().css("padding-right")));
                     const height = (svg.parent().height() - this.getOffset(title)) * 0.85;
                     return [width, height];
                 }

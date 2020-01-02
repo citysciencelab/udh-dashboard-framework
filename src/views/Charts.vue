@@ -83,16 +83,25 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('name')" v-bind:label="$t('message.month')"
-                              identifier="'mts-month'"/>
+                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('os', this.testData.osStats )"
+                              v-bind:label="$t('message.os')" @new_selection="filterChanged"
+                              identifier="os"/>
             </div>
             <div class="col-sm">
-                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
+                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar" id="tooltip-target-1">
                     Open Snackbar
-                    <md-tooltip md-direction="top" :md-active.sync="tooltipActive">Test tooltip: In einem solchen Tooltip werden alle Infos angezeigt</md-tooltip>
                 </md-button>
-                <br />
-                <md-button class="md-raised md-primary" @click="tooltipActive = !tooltipActive">Toggle Tooltip</md-button>
+                <br/>
+                <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">
+                    Open Confirm Dialog
+                </md-button>
+                <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
+                               @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
+                <br/>
+                <b-tooltip target="tooltip-target-1" triggers="hover" custom-class="udpc-tooltip">
+                    I am tooltip <a href="javascript:void(0)"
+                                    onclick="window.open('http://www.swoosh.com')">component</a> content!
+                </b-tooltip>
             </div>
         </div>
         <div class="row">
@@ -130,7 +139,7 @@
                                       v-bind:min="rangeMap.dateRangeSlider.min"
                                       v-bind:marks="rangeMap.dateRangeSlider.marks"
                                       v-bind:isDateRange="true"
-                                      @rangeChange="rangeForChartChanged" />
+                                      @rangeChange="rangeForChartChanged"/>
                     </div>
                 </div>
                 <div class="row">
@@ -138,52 +147,124 @@
                 </div>
             </div>
             <div class="col-sm">
-                <transition-group name="list" tag="p">
+                <div class="facts-holder">
+                    <transition-group name="list" tag="p">
                     <span v-for="(didYou, index) in [this.didYouKnow[didYouKnowIndex]]"
                           v-bind:key="index"
                           class="list-item">
                         {{didYou}}
                     </span>
-                </transition-group>
+                    </transition-group>
+                </div>
             </div>
             <div class="col-sm">
                 <p>{{ $t("message.hello") }}</p>
             </div>
         </div>
-        <div class="row" style="height: 350px">
+        <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
-                           title="Distribution of operating systems"
-                           metric="anzahl_os" descriptor="os"
-                           selector="chart1" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        OS Data
+                    </template>
+
+                    <template slot="content">
+                        <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                                   title="Distribution of operating systems"
+                                   metric="anzahl_os" descriptor="os"
+                                   selector="chart1"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
             <div class="col-sm">
-                <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
-                            title="Distribution of operating systems"
-                            metric="anzahl_os" descriptor="os"
-                            selector="chart2" v-bind:origins="['anzahl_os']" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                                    title="Distribution of operating systems"
+                                    metric="anzahl_os" descriptor="os"
+                                    selector="chart2" v-bind:origins="['anzahl_os']"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
         </div>
-        <div class="row" style="height: 350px">
+        <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
-                           title="Distribution of operating systems"
-                           metric="anzahl_os" descriptor="os"
-                           selector="chart3" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                                   title="Distribution of operating systems"
+                                   metric="anzahl_os" descriptor="os"
+                                   selector="chart3"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
             <div class="col-sm">
-                <scatter-plot v-bind:ds="this.testData.osStats" v-bind:options="options"
-                              title="Distribution of operating systems"
-                              metric="anzahl_os" descriptor="os"
-                              selector="chart4" />
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <tree-map-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                                   title="Distribution of operating systems"
+                                   metric="anzahl_os" descriptor="os"
+                                   selector="chart4"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
         </div>
-        <div class="row" style="height: 350px">
+        <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
-                             title="Distribution of operating systems"
-                             metric="anzahl_os" descriptor="os"
-                             selector="chart5"/>
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        Other chart
+                    </template>
+
+                    <template slot="content">
+                        <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                                     title="Distribution of operating systems"
+                                     metric="anzahl_os" descriptor="os"
+                                     selector="chart5"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
             </div>
         </div>
         <div class="row">
@@ -204,16 +285,18 @@
 
 <script>
     import Vue from 'vue'
-    import { mapActions, mapGetters } from 'vuex'
+    import {mapActions, mapGetters} from 'vuex'
     import StatsCard from "../components/StatsCard";
     import MultiSelect from "../components/MultiSelect";
     import SnackBar from "../components/SnackBar";
+    import ConfirmDialog from "../components/ConfimDialog";
     import RangeSlider from "../components/RangeSlider";
     import LineChart from "../components/charts/LineChart.vue";
     import PieChart from "../components/charts/PieChart.vue";
     import ScatterPlot from "../components/charts/ScatterPlot.vue";
     import BarChart from "../components/charts/BarChart.vue";
     import HBarChart from "../components/charts/HorBarChart.vue";
+    import TreeMapChart from "../components/charts/TreeMapChart.vue";
 
     export default {
         components: {
@@ -224,20 +307,23 @@
             LineChart,
             PieChart,
             ScatterPlot,
-            HBarChart
+            HBarChart,
+            TreeMapChart,
+            ConfirmDialog
         },
         name: 'Charts',
         data() {
             return {
                 tooltipActive: false,
+                agreeDialogActive: false,
                 dateRange: 'year',
                 rangeMap: {
                     dateRangeSlider: {
-                        'defaultValue' : [],
-                        'step' : null,
-                        'max' : null,
-                        'min' : null,
-                        'marks' : {}
+                        'defaultValue': [],
+                        'step': null,
+                        'max': null,
+                        'min': null,
+                        'marks': {}
                     }
                 },
                 chartOptions: {
@@ -261,11 +347,12 @@
             }
         },
         async mounted() {
-            // Lets set the initial dashboard data
-            await  this.setFilters(['SOURCE', 'services_internet']);
-            await  this.setFilters(['YEAR', [2017, 2019]]);
-            await  this.setFilters(['MONTH', [1, 12]]);
+            // Lets set the initial filters
+            await this.setFilters(['SOURCE', 'services_internet']);
+            await this.setFilters(['YEAR', [2017, 2019]]);
+            await this.setFilters(['MONTH', [1, 12]]);
 
+            // Lets fetch the initial dashboard data
             await this.fetchOsStats();
 
             // Initialize the 'Did you know' interval
@@ -284,7 +371,8 @@
         methods: {
             ...mapActions([
                 'setFilters',
-                'fetchOsStats'
+                'fetchOsStats',
+                'filterOsStats'
             ]),
             testSnackBar() {
                 let options = {
@@ -295,7 +383,7 @@
                 };
                 new Vue({
                     el: document.getElementById("snack").querySelector("div"),
-                    render: h => h(SnackBar, { attrs: options })
+                    render: h => h(SnackBar, {attrs: options})
                 });
             },
             changeFilterRange(sliderId, sliderRange) {
@@ -327,13 +415,22 @@
 
                 this.rangeMap[sliderId] = values;
             },
+            filterChanged(newFilterSelection) {
+                // The new filters could be set here - so far the filter already does that itself
+                // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
+                this.filterOsStats();
+            },
+            dialogResult(isPositive) {
+                this.agreeDialogActive = false;
+                console.log(isPositive)
+            },
             rangeForChartChanged([min, max]) {
-                switch(this.dateRange) {
+                switch (this.dateRange) {
                     case 'year':
-                        this.setYearFilter([min, max]);
+                        this.setFilters(['YEAR', [min, max]]);
                         break;
                     case 'month':
-                        this.setMonthFilter([min, max]);
+                        this.setFilters(['MONTH', [min, max]]);
                         break;
                 }
                 this.fetchOsStats();
@@ -343,12 +440,12 @@
                 this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
             },
             handleMouseOut() {
-                let changedObject = this.dashData[this.dashData.length-1];
-                Vue.set(this.dashData, this.dashData.length-1, changedObject);
+                let changedObject = this.dashData[this.dashData.length - 1];
+                Vue.set(this.dashData, this.dashData.length - 1, changedObject);
             },
-            didYouKnowInterval () {
+            didYouKnowInterval() {
                 this.didYouKnowIndex = setInterval(() => {
-                    if (this.didYouKnowIndex < this.didYouKnow.length-1) {
+                    if (this.didYouKnowIndex < this.didYouKnow.length - 1) {
                         this.didYouKnowIndex++;
                     } else {
                         this.didYouKnowIndex = 0;
@@ -359,7 +456,48 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss">
+
+    /*
+        Charts
+    */
+
+    .chart-row {
+        margin-top: 40px;
+
+        .chart-holder {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+
+            .md-card-content {
+                .chart {
+                    padding-left: 15px !important;
+                    padding-top: 10px !important;
+                }
+            }
+
+            .md-card-actions {
+                margin: 0;
+                position: absolute;
+                bottom: 0;
+                float: right;
+                right: 0;
+                padding-right: 5px;
+                padding-top: 0;
+
+                .notice {
+                    font-style: italic;
+                    font-size: 7pt;
+                }
+            }
+        }
+    }
+
+
+</style>
+
+<style scoped lang="scss">
 
     h1, h2 {
         font-weight: normal;
@@ -388,6 +526,10 @@
     }
 
 
+    .facts-holder span {
+        padding: 10px;
+    }
+
     /*
         Transition
     */
@@ -395,15 +537,19 @@
     .list {
         position: relative;
     }
+
     .list-item {
         position: absolute;
         display: inline-block;
         margin-right: 10px;
     }
+
     .list-enter-active, .list-leave-active {
         transition: opacity .8s ease;
     }
+
     .list-enter, .list-leave-to {
         opacity: 0;
     }
+
 </style>

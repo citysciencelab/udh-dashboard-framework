@@ -7,7 +7,7 @@
     import AbstractChart from './AbstractChart.vue';
 
     export default {
-        name: "hor-bar-chart",
+        name: "h-bar-chart",
         extends: AbstractChart,
         props: {
             options: Object,
@@ -30,21 +30,16 @@
                 let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
-
                 let vOffset = this.$utils.chart.getOffset(title);
-
                 let g = svg.selectAll('rect')
                     .data(ds);
 
                 let maxVal = Math.max.apply(Math, ds.map((o) => o[metric]));
-
                 let xScale = d3.scaleLinear()
                     .domain([maxVal, 0])
                     .range([0, this.$data.width]);
-
                 let xAxis = d3.axisBottom()
                     .scale(xScale);
-
                 let yScale = this.$utils.chart.initOrdinalScale(d3, ds, options.dim, this.$data.height);
                 let yAxis = d3.axisLeft()
                     .scale(yScale);
@@ -53,7 +48,6 @@
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
                     .html(d => d);
-
                 svg.call(tip);
                 svg.selectAll('g').remove();
 
@@ -88,7 +82,4 @@
     .chart {
         padding: 20px;
     }
-</style>
-
-<style>
 </style>

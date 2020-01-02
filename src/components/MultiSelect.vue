@@ -29,7 +29,10 @@
         },
         methods: {
             closed() {
-                this.$store.commit('SET_FILTER_VALUES', {ident: this.identifier, values: this.selectedData});
+                if (this.selectedData.length > 0) {
+                    this.$store.commit('SET_FILTERS',[this.identifier, this.selectedData]);
+                    this.$emit('new_selection', this.selectedData);
+                }
             }
         }
     }

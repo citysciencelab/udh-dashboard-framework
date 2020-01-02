@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import charts from "./charts.module";
+import urbanDataPlatformCockpit from "./udpc.module";
 // import watcher from "../plugins/watcher";
 
 Vue.use(Vuex);
@@ -11,7 +12,8 @@ export default new Vuex.Store({
      *   Good example for organising the vuex: https://github.com/gothinkster/vue-realworld-example-app/tree/master/src/store
      */
     modules: {
-        charts
+        charts,
+        urbanDataPlatformCockpit
     },
     plugins: [
         // watcher

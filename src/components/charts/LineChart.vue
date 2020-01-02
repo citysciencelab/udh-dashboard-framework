@@ -29,7 +29,6 @@
                 let origins = this.origins;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
-
                 let vOffset = this.$utils.chart.getOffset(title) || 0;
                 let hOffset = this.horizontalOffset || 0;
 
@@ -40,7 +39,6 @@
                     }
                     return Math.max.apply(Math, values);
                 }));
-
                 let minVal = Math.min.apply(Math, ds.map(function (o) {
                     let values = [];
                     for (let origin of origins) {
@@ -52,10 +50,8 @@
                 let y = d3.scaleLinear()
                     .domain([minVal, maxVal])
                     .range([this.$data.height, 0]);
-
                 let yAxis = d3.axisLeft()
                     .scale(y);
-
                 let x = this.$utils.chart.initTimeScale(d3, ds, options.dim2, this.$data.width);
                 // FIXME: breaks when d.date is undefined
                 let xAxis = d3.axisBottom(x)
@@ -117,7 +113,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

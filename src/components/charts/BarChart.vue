@@ -33,19 +33,15 @@
 
                 let vOffset = this.$utils.chart.getOffset(title) || 0;
                 let hOffset = (this.$data.width - this.$data.width * (ds.length-1) / ds.length) / 2 || 0;
-
                 let g = svg.selectAll('rect')
                     .data(ds);
 
                 let maxVal = Math.max.apply(Math, ds.map((o) => o[metric]));
-
                 let yScale = d3.scaleLinear()
                     .domain([0, maxVal])
                     .range([this.$data.height, 0]);
-
                 let yAxis = d3.axisLeft()
                     .scale(yScale);
-
                 let xScale = this.$utils.chart.initOrdinalScale(d3, ds, options.dim, this.$data.width);
                 let xAxis = d3.axisBottom()
                     .scale(xScale);
@@ -54,7 +50,6 @@
                     .attr('class', 'd3-tip')
                     .offset([-10, 0])
                     .html(d => d);
-
                 svg.call(tip);
                 svg.selectAll('g').remove();
 
@@ -88,7 +83,4 @@
         padding: 20px;
     }
 
-</style>
-
-<style>
 </style>

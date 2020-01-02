@@ -30,6 +30,8 @@
                 let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
+                svg.html(null);
+
                 let radius = this.$data.height > this.$data.width ? this.$data.width * 0.9 / 2 : this.$data.height * 0.9 / 2;
                 let offset = this.$utils.chart.getOffset(title);
 
