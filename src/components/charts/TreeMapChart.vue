@@ -69,15 +69,18 @@
                     (root);
 
                 svg
-                    .selectAll("rect")
+                    .selectAll('rect')
                     .data(root.leaves())
                     .enter()
-                    .append("rect")
+                    .append('rect')
                     .attr('x', function (d) {
                         return d.x0;
                     })
                     .attr('y', function (d) {
                         return d.y0;
+                    })
+                    .attr('label', function (d) {
+                        return d.id;
                     })
                     .attr('width', function (d) {
                         return d.x1 - d.x0;
@@ -85,27 +88,48 @@
                     .attr('height', function (d) {
                         return d.y1 - d.y0;
                     })
-                    .style("stroke", "black")
-                    .style("fill", "slateblue")
+                    .style('stroke', 'black')
+                    .style('fill', 'slateblue')
                     .attr('transform', 'translate(0,' + vOffset + ')');
 
-                svg
-                    .selectAll("text")
-                    .data(root.leaves())
-                    .enter()
-                    .append("text")
-                    .attr("x", function (d) {
-                        return d.x0 + 5
-                    })
-                    .attr("y", function (d) {
-                        return d.y0 + 20
-                    })
-                    .text(function (d) {
-                        return d.data[descriptor]
-                    })
-                    .attr("font-size", "11px")
-                    .attr("fill", "white")
-                    .attr('transform', 'translate(0,' + vOffset + ')');
+                const labelPaddingY = 17;
+
+                svg.selectAll('rect').each(function () {
+                    let content,
+                        foreignObject,
+                        element,
+                        div;
+
+                    element = d3.select(this);
+
+                    // extract our desired content from the single text element
+                    content =  element.attr('label');
+                    // add foreign object and set dimensions, position, etc
+                    foreignObject = svg.append('foreignObject');
+                    foreignObject
+                        .attr('class', 'treeMapLabel');
+
+                    foreignObject
+                        .attr('width', element.attr('width'))
+                        .attr('height', element.attr('height'))
+                        .attr('transform', 'translate(0,'+labelPaddingY+')');
+
+                    foreignObject
+                        .attr('x', element.attr('x'))
+                        .attr('y', parseInt(element.attr('y')) + labelPaddingY);
+
+                    // insert an HTML div
+                    div = foreignObject
+                        .append('xhtml:div');
+
+                    // set div to same dimensions as foreign object
+                    div
+                        .style('height', element.attr('height'))
+                        .style('width', element.attr('width'))
+                        // insert text content
+                        .html(content);
+                    return div;
+                });
 
                 if (title) {
                     //this.$utils.chart.addTitle(title, svg, this.$data.width);
@@ -115,9 +139,15 @@
     }
 </script>
 
-<style scoped>
-    .chart {
-        padding: 20px;
+<style lang='scss'>
+    .treeMapLabel {
+        font-size: 11px;
+        text-overflow: ellipsis;
+        text-align: left;
+        word-wrap: break-word;
+        color: white;
+        div {
+            padding-left: 5px;
+        }
     }
-
 </style>

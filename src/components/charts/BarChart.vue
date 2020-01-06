@@ -79,8 +79,4 @@
 </script>
 
 <style scoped>
-    .chart {
-        padding: 20px;
-    }
-
 </style>
