@@ -23,11 +23,9 @@ export default class MultiSelect extends Vue {
     @Prop() label!: string;
     selectedData = [];
 
-    mounted() {
-    }
-
     closed() {
-        this.$store.commit('SET_FILTER_VALUES', {ident: this.identifier, values: this.selectedData});
+        this.$store.commit('SET_FILTERS', [this.identifier, this.selectedData]);
+        this.$emit('new_selection', this.selectedData);
     }
 }
 </script>

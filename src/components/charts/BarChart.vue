@@ -35,18 +35,13 @@ export default class BarChart extends AbstractChart {
 
         let vOffset = this.$utils.chart.getOffset(this.title) || 0;
         let hOffset = (this.width - this.width * (this.ds.length - 1) / this.ds.length) / 2 || 0;
-
         let g = (<d3.Selection<SVGRectElement, any, SVGSVGElement, any>>svg.selectAll('rect'))
             .data(this.ds);
-
         let maxVal = Math.max.apply(Math, this.ds.map(o => o[this.metric]));
-
         let yScale = d3.scaleLinear()
             .domain([0, maxVal])
             .range([this.height, 0]);
-
         let yAxis = d3.axisLeft(yScale);
-
         let xScale = this.$utils.chart.initOrdinalScale(this.ds, this.options.dim, this.width);
         let xAxis = d3.axisBottom(xScale);
 
@@ -54,7 +49,6 @@ export default class BarChart extends AbstractChart {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html((d: string[]) => d[0]);
-
         svg.call(tip);
         svg.selectAll('g').remove();
 
@@ -74,6 +68,7 @@ export default class BarChart extends AbstractChart {
             .on('mouseout', tip.hide)
             .attr('transform', 'translate(0,' + vOffset + ')');
 
+        console.log(this.height, vOffset, hOffset + this.horizontalOffset, 0)
         this.$utils.chart.drawAxis(this.height, svg, xAxis, yAxis, vOffset, hOffset + this.horizontalOffset, 0);
         g.exit().remove();
     }
@@ -85,7 +80,4 @@ export default class BarChart extends AbstractChart {
         padding: 20px;
     }
 
-</style>
-
-<style>
 </style>

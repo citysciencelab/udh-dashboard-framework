@@ -32,20 +32,15 @@ export default class HBarChart extends AbstractChart {
 
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
-
         let vOffset = this.$utils.chart.getOffset(this.title);
-
         let g = (<d3.Selection<SVGRectElement, any, SVGSVGElement, any>>svg.selectAll('rect'))
             .data(this.ds);
 
         let maxVal = Math.max.apply(Math, this.ds.map(o => o[this.metric]));
-
         let xScale = d3.scaleLinear()
             .domain([maxVal, 0])
             .range([0, this.width]);
-
         let xAxis = d3.axisBottom(xScale);
-
         let yScale = this.$utils.chart.initOrdinalScale(this.ds, this.options.dim, this.height);
         let yAxis = d3.axisLeft(yScale);
 
@@ -53,7 +48,6 @@ export default class HBarChart extends AbstractChart {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html((d: string[]) => d[0]);
-
         svg.call(tip);
         svg.selectAll('g').remove();
 
@@ -74,7 +68,7 @@ export default class HBarChart extends AbstractChart {
             .attr('transform', 'translate(0,' + vOffset + ')');
 
         // Half an element size plus offset
-        const yAxisOffset = ((this.height / this.ds.length)/2) + vOffset;
+        const yAxisOffset = this.height / this.ds.length / 2 + vOffset;
         this.$utils.chart.drawAxis(this.height, svg, xAxis, yAxis, vOffset, this.horizontalOffset, yAxisOffset);
         g.exit().remove();
     }
@@ -85,7 +79,4 @@ export default class HBarChart extends AbstractChart {
     .chart {
         padding: 20px;
     }
-</style>
-
-<style>
 </style>

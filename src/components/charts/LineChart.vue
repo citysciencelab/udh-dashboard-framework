@@ -30,7 +30,6 @@ export default class LineChart extends AbstractChart {
 
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
-
         let vOffset = this.$utils.chart.getOffset(this.title) || 0;
         let hOffset = this.horizontalOffset || 0;
 
@@ -41,7 +40,6 @@ export default class LineChart extends AbstractChart {
             }
             return Math.max.apply(Math, values);
         }));
-
         let minVal = Math.min.apply(Math, this.ds.map(o => {
             let values = [];
             for (let origin of this.origins) {
@@ -53,9 +51,7 @@ export default class LineChart extends AbstractChart {
         let y = d3.scaleLinear()
             .domain([minVal, maxVal])
             .range([this.height, 0]);
-
         let yAxis = d3.axisLeft(y);
-
         let x = this.$utils.chart.initTimeScale(this.ds, this.options.dim2, this.width);
         let xAxis = d3.axisBottom<Date>(x)
             .tickFormat(d3.timeFormat('%y-%b')).tickValues(this.ds.map(d => d.date));
@@ -99,9 +95,7 @@ export default class LineChart extends AbstractChart {
                     this.$utils.chart.addTooltip(info, svg,
                         x(info['date']), y(info['val2']), <any>origin)
                 })
-                .on('mouseout', () => {
-                    this.$utils.chart.removeTooltip(svg);
-                });
+                .on('mouseout', () => this.$utils.chart.removeTooltip(svg));
             index++;
         }
 
@@ -110,7 +104,3 @@ export default class LineChart extends AbstractChart {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

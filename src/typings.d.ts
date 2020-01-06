@@ -1,4 +1,5 @@
-// derived from @types/d3-tip/index.d.ts
+/* Compatibility definitions */
+
 declare module "d3/types/d3" {
   type TooltipDirection = ("n" | "s" | "e" | "w" | "nw" | "ne" | "sw" | "se");
   interface Tooltip {
@@ -40,7 +41,15 @@ declare module 'vue-material' {
 declare module 'd1st-uisystem-base/public/dist/bundle.js' {
 }
 
+declare module '*.jpg' {
+  const value: any;
+  export = value;
+}
+
+/* Custom types */
+
 type Datum = { [key: string]: any };
+
 type Dataset = Datum[];
 
 type ChartOptions = { dim: string, dim2?: string };

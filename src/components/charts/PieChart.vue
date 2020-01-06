@@ -26,12 +26,14 @@ export default class PieChart extends AbstractChart {
     }
 
     redraw() {
-        const svg = <SVG>d3.select('#' + this.selector);;
+        const svg = <SVG>d3.select('#' + this.selector);
         this.redrawOnDimensionsChange(svg);
     }
 
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
+        svg.html(null);
+
         let radius = this.height > this.width ? this.width * 0.9 / 2 : this.height * 0.9 / 2;
         let offset = this.$utils.chart.getOffset(this.title);
 

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import * as d3 from 'd3';
 import $ from 'jquery';
+import { range } from 'd3';
 
 // Augmenting module so TypeScript knows about the new property on Vue
 declare module 'vue/types/vue' {
@@ -47,7 +48,7 @@ export default class Utils implements IUtils {
 
         initTimeScale(ds: Dataset, dim: string, width: number) {
             const x = d3.scaleTime().range([0, width]);
-            x.domain(<number[]>d3.extent(ds, (d) => d[dim]));
+            x.domain(<number[]>d3.extent(ds, d => d[dim]));
             return x;
         },
 
@@ -108,9 +109,9 @@ export default class Utils implements IUtils {
             const parentWidth = parent.width();
             const parentHeight = parent.height();
             if (!parentWidth || !parentHeight) {
-                return [0 ,0];
+                return [0, 0];
             }
-            const width = (parentWidth - parseInt(parent.css("padding-left")) - parseInt(parent.css("padding-right"))) * 0.95;
+            const width = (parentWidth - parseInt(parent.css('padding-left')) - parseInt(parent.css('padding-right'))) * 0.95;
             const height = (parentHeight - this.getOffset(title)) * 0.85;
             return [width, height];
         }

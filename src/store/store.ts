@@ -1,17 +1,24 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
-import charts from "./charts.module";
-// import watcher from "../plugins/watcher";
+import charts, { ChartsState } from './charts.module';
+import udcp, { UDPCState } from './udpc.module';
+// import watcher from '../plugins/watcher';
 
 Vue.use(Vuex);
 
-export default new Store<{}>({ // type of root state is '{}'
+export interface RootState {
+    charts: ChartsState;
+    udpc: UDPCState;
+}
+
+export default new Store<RootState>({ // type of root state is 'RootState'
     /*
      *   More modules to follow. E.g. auth, gfi ...
      *   Good example for organising the vuex: https://github.com/gothinkster/vue-realworld-example-app/tree/master/src/store
      */
     modules: {
-        charts
+        charts,
+        udcp
     },
     plugins: [
         // watcher
