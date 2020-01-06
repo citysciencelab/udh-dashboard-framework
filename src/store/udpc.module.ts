@@ -30,9 +30,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', true);
 
             const params = {
-                month: context.rootState.charts.filters['MONTH'],
-                year: context.rootState.charts.filters['YEAR'],
-                quelle: context.rootState.charts.filters['SOURCE']
+                month: context.rootState.dashboard.filters['MONTH'],
+                year: context.rootState.dashboard.filters['YEAR'],
+                quelle: context.rootState.dashboard.filters['SOURCE']
             };
             // Convert range filters
             params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;

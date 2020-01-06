@@ -1,21 +1,21 @@
 import { Module } from 'vuex';
 import { RootState } from './store';
 
-export interface ChartsState {
+export interface DashboardState {
     originalData: Dataset;
     dashData: Dataset;
     filterValues: { [key: string]: any };
     filters: { [key: string]: any };
 }
 
-const initialState: ChartsState = {
+const initialState: DashboardState = {
     originalData: [],
     dashData: [],
     filterValues: {},
     filters: {}
 };
 
-const chartsModule: Module<ChartsState, RootState> = { // type of local state is 'ChartsState'
+const chartsModule: Module<DashboardState, RootState> = { // type of local state is 'ChartsState'
     state: { ...initialState },
     mutations: {
         SET_FILTERS: (state, [ident, values]) => {
