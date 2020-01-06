@@ -12,16 +12,16 @@
                         <md-menu md-direction="bottom-start">
                             <md-button md-menu-trigger>
                                 <country-flag v-if="$i18n.locale === 'de'" @click="changeLanguage('de')"
-                                              country='de' size='normal'/>
+                                              country="de" size="normal"/>
                                 <country-flag v-if="$i18n.locale === 'en'" @click="changeLanguage('en')"
-                                              country='gb' size='normal'/>
+                                              country="gb" size="normal"/>
                             </md-button>
                             <md-menu-content>
                                 <md-menu-item @click="changeLanguage('de')">
-                                    <country-flag country='de' size='normal'/>
+                                    <country-flag country="de" size="normal"/>
                                 </md-menu-item>
                                 <md-menu-item @click="changeLanguage('en')">
-                                    <country-flag country='gb' size='normal'/>
+                                    <country-flag country="gb" size="normal"/>
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
@@ -43,56 +43,45 @@
     </div>
 </template>
 
-<script>
-    import CountryFlag from 'vue-country-flag'
-    // TODO: How to bulk load these images?
-    import image0 from './assets/images/background/0.jpg'
-    import image1 from './assets/images/background/1.jpg'
-    import image2 from './assets/images/background/2.jpg'
-    import image3 from './assets/images/background/3.jpg'
-    import image4 from './assets/images/background/4.jpg'
-    import {mapGetters} from "vuex";
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import CountryFlag from 'vue-country-flag';
+// TODO: How to bulk load these images?
+import image0 from './assets/images/background/0.jpg';
+import image1 from './assets/images/background/1.jpg';
+import image2 from './assets/images/background/2.jpg';
+import image3 from './assets/images/background/3.jpg';
+import image4 from './assets/images/background/4.jpg';
 
-    export default {
-        components: {
-            CountryFlag
-        },
-        data() {
-            return {
-                images: [
-                    image0,
-                    image1,
-                    image2,
-                    image3,
-                    image4,
-                ],
-                imageIndex: 0,
-                imageUrl: ''
-            }
-        },
-        mounted() {
-            this.imageUrl = this.images[this.imageIndex];
-            // this.imageIndex = setInterval(() => {
-            //     if (this.imageIndex < 5) {
-            //         this.imageIndex++;
-            //     } else {
-            //         this.imageIndex = 0;
-            //     }
-            //     this.imageUrl = this.images[this.imageIndex];
-            // }, 12000)
-        },
-        computed: {
-            ...mapGetters([
-                'loading',
-            ])
-        },
-        methods: {
-            changeLanguage: function (lang) {
-                this.$i18n.locale = lang
-            }
-        }
+@Component({
+    components: {
+        CountryFlag
+    }
+})
+export default class App extends Vue {
+    images = [
+        image0,
+        image1,
+        image2,
+        image3,
+        image4,
+    ];
+    imageIndex = 0;
+    imageUrl = '';
+
+    mounted() {
+        this.imageUrl = this.images[this.imageIndex];
     }
 
+    get loading(): boolean {
+        return this.$store.getters.loading;
+    }
+
+    changeLanguage(lang: string) {
+        this.$i18n.locale = lang
+    }
+}
 </script>
 
 <style lang="scss" scoped>

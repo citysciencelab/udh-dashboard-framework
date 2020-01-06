@@ -6,25 +6,23 @@
     </div>
 </template>
 
-<script>
-    export default {
-        name: "snack-bar",
-        data: () => ({
-            snackBar: false,
-        }),
-        props: {
-            message: String,
-            position: String,
-            duration: Number,
-            showSnackbar: Boolean
-        },
-        mounted: function () {
-            if (this.showSnackbar) {
-                this.$data.snackBar = true;
-            }
-        }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
+@Component({})
+export default class SnackBar extends Vue {
+    @Prop() message = '';
+    @Prop() position = '';
+    @Prop() duration = 0;
+    @Prop() showSnackbar = false;
+    snackBar = false;
+
+    mounted() {
+        if (this.showSnackbar) {
+            this.snackBar = true;
+        }
     }
+}
 </script>
 
 <style scoped>

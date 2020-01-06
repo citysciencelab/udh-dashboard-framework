@@ -13,29 +13,21 @@
     </div>
 </template>
 
-<script>
-    export default {
-        name: 'multi-select',
-        props: {
-            identifier: String,
-            selectData: Array,
-            label: String
-        },
-        data: () => ({
-            selectedData: []
-        }),
-        mounted: function () {
+<script lang="ts">
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
-        },
-        methods: {
-            closed() {
-                if (this.selectedData.length > 0) {
-                    this.$store.commit('SET_FILTERS',[this.identifier, this.selectedData]);
-                    this.$emit('new_selection', this.selectedData);
-                }
-            }
-        }
+@Component({})
+export default class MultiSelect extends Vue {
+    @Prop() identifier!: string;
+    @Prop() selectData!: Dataset;
+    @Prop() label!: string;
+    selectedData = [];
+
+    closed() {
+        this.$store.commit('SET_FILTERS', [this.identifier, this.selectedData]);
+        this.$emit('new_selection', this.selectedData);
     }
+}
 </script>
 
 <style lang="scss" scoped>

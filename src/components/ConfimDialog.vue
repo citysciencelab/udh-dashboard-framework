@@ -9,29 +9,26 @@
         @md-confirm="onConfirm"/>
 </template>
 
-<script>
-    export default {
-        name: 'confirm-dialog',
-        props: {
-            active: Boolean,
-            title: String,
-            content: String,
-            confirmText: String,
-            cancelText: String
-        },
-        data: function() {
-            return {
-                dConfirmText: this.confirmText == null ? 'ok' : this.confirmText,
-                dCancelText: this.cancelText == null ? 'ok' : this.cancelText
-            }
-        },
-        methods: {
-            onConfirm() {
-                this.$emit('dialogResult', true);
-            },
-            onCancel() {
-                this.$emit('dialogResult', false);
-            }
-        }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component({})
+export default class ConfirmDialog extends Vue {
+    @Prop() active!: boolean;
+    @Prop() title!: string;
+    @Prop() content!: string;
+    @Prop() confirmText!: string;
+    @Prop() cancelText!: string;
+
+    dConfirmText = this.confirmText == null ? 'ok' : this.confirmText;
+    dCancelText = this.cancelText == null ? 'ok' : this.cancelText;
+
+    onConfirm() {
+        this.$emit('dialogResult', true);
     }
+
+    onCancel() {
+        this.$emit('dialogResult', false);
+    }
+}
 </script>

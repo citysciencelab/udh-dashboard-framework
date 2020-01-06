@@ -10,59 +10,58 @@
               @afterChange="onAfterChange" />
 </template>
 
-<script>
-    /*
-    *   Documentation found here:
-    *   https://www.antdv.com/components/slider/
-    */
-    export default {
-        name: "range-slider",
-        data: () => ({
-            range: Number,
-            defaults: [],
-        }),
-        props: {
-            defaultValue: Array,
-            step: Number,
-            max: Number,
-            min: Number,
-            marks: Object,
-            isDateRange: Boolean,
-            identity: String
-        },
-        mounted: function () {
-            if (this.defaultValue) {
-                this.$data.defaults = this.defaultValue;
-            }
-        },
-        watch: {
-            defaultValue: function(newVal) {
-                this.$data.defaults = newVal;
-            }
-        },
-        methods: {
-            tipFormat(value) {
-                if (this.isDateRange) {
-                    let date = new Date(value);
-                    if (this.identity === 'day') {
-                        return this.$utils.date.getDateStringFromDate(date);
-                    } else if (this.identity === 'month') {
-                        return date.getMonth() + `.` + date.getFullYear();
-                    } else if (this.identity === 'year') {
-                        return date.getFullYear();
-                    }
-                } else {
-                    return `${value}`;
-                }
-            },
-            onChange() {
-                //Or global: this.$root.$emit()
-            },
-            onAfterChange(value) {
-                this.$emit('rangeChange', value);
-            },
+<script lang="ts">
+/*
+*   Documentation found here:
+*   https://www.antdv.com/components/slider/
+*/
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+
+@Component({})
+export default class RangeSlider extends Vue {
+    @Prop() defaultValue!: number[];
+    @Prop() step!: number;
+    @Prop() max!: number;
+    @Prop() min!: number;
+    @Prop() marks!: {};
+    @Prop() isDateRange!: boolean;
+    @Prop() identity!: string;
+    range = 0;
+    defaults: number[] = [];
+
+    mounted() {
+        if (this.defaultValue) {
+            this.defaults = this.defaultValue;
         }
     }
+
+    @Watch('defaultValue') onDefaultValueChanged(newVal: number[]) {
+        this.defaults = newVal;
+    }
+
+    tipFormat(value: number) {
+        if (this.isDateRange) {
+            let date = new Date(value);
+            if (this.identity === 'day') {
+                return this.$utils.date.getDateStringFromDate(date);
+            } else if (this.identity === 'month') {
+                return date.getMonth() + `.` + date.getFullYear();
+            } else if (this.identity === 'year') {
+                return date.getFullYear();
+            }
+        } else {
+            return `${value}`;
+        }
+    }
+
+    onChange() {
+        //Or global: this.$root.$emit()
+    }
+
+    onAfterChange(value: number) {
+        this.$emit('rangeChange', value);
+    }
+}
 </script>
 
 <style>
