@@ -1,9 +1,25 @@
 # vue-dashboard
 
+## Including a Vue component in the Masterportal Backbone environment
+
+The vue dashboard framework has been designed so that single components can be included in a backbone environment.
+Further details for the integration process can also be found in the following tutorial:
+[Vue based scale switcher](https://bitbucket.org/illD/masterportal-vue/src/dev/doc/03_tutorial_vue_module_scale_switcher.md).
+The BackBoneVueRenderer should be used in the same way as shown in the example.
+
 ## Project setup
 ```
 npm install
 ```
+
+## Create a new dashboad
+
+Try to reuse existing components as much as possible.
+Create a new view in the views folder and add a path to the routing.js file.
+Create a new vuex storage module in the store folder.
+The storage module should handle your view specific data request and processing.
+The storage module should be lazy loaded in the corresponding view - this way it will only be loaded when used.
+
 
 ### Compiles and hot-reloads for development
 ```
