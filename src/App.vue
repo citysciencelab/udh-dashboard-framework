@@ -34,7 +34,7 @@
                     |
                     <router-link to="/about">About</router-link>
                     |
-                    <router-link to="/udpc">Charts</router-link>
+                    <router-link to="/udpc">UDPC</router-link>
                 </div>
                 <router-view/>
             </md-app-content>
