@@ -68,7 +68,6 @@ export default class BarChart extends AbstractChart {
             .on('mouseout', tip.hide)
             .attr('transform', 'translate(0,' + vOffset + ')');
 
-        console.log(this.height, vOffset, hOffset + this.horizontalOffset, 0)
         this.$utils.chart.drawAxis(this.height, svg, xAxis, yAxis, vOffset, hOffset + this.horizontalOffset, 0);
         g.exit().remove();
     }

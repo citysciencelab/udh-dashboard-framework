@@ -24,7 +24,7 @@ export default class MultiSelect extends Vue {
     selectedData = [];
 
     closed() {
-        this.$store.commit('SET_FILTERS', [this.identifier, this.selectedData]);
+        this.$store.dispatch('setFilters', [this.identifier, this.selectedData]);
         this.$emit('new_selection', this.selectedData);
     }
 }

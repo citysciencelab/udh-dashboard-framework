@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
-import dashboard, { DashboardState } from './dashboard.module';
+// import dashboard, { DashboardState } from './dashboard.module';
 import { UDPCState } from './udpc.module';
-// import watcher from '../plugins/watcher';
 
 Vue.use(Vuex);
 
 export interface RootState {
-    dashboard: DashboardState;
+    // dashboard: DashboardState;
     udpc: UDPCState;
 }
 
@@ -17,9 +16,6 @@ export default new Store<RootState>({ // type of root state is 'RootState'
      *   Good example for organising the vuex: https://github.com/gothinkster/vue-realworld-example-app/tree/master/src/store
      */
     modules: {
-        dashboard
-    },
-    plugins: [
-        // watcher
-    ]
+        // dashboard
+    }
 })

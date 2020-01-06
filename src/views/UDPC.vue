@@ -50,7 +50,7 @@
 
                     <template slot="content">
                         <p class="category">Size of dataset</p>
-                        <h3 class="title">{{ this.dashData.length }}</h3>
+                        <h3 class="title">{{ this.dashboardData.osStats.length }}</h3>
                     </template>
 
                     <template slot="footer">
@@ -83,9 +83,9 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('os', this.testData.osStats )"
+                <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
                               v-bind:label="$t('message.os')" @new_selection="filterChanged"
-                              identifier="os"/>
+                              identifier="osStats"/>
             </div>
             <div class="col-sm">
                 <md-button type="submit" class="md-primary md-raised" @click="testSnackBar" id="tooltip-target-1">
@@ -169,7 +169,7 @@
                     </template>
 
                     <template slot="content">
-                        <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                        <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart1"/>
@@ -189,7 +189,7 @@
                     </template>
 
                     <template slot="content">
-                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="options"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
                                     selector="chart2" v-bind:origins="['anzahl_os']"/>
@@ -211,7 +211,7 @@
                     </template>
 
                     <template slot="content">
-                        <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                        <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="options"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart3"/>
@@ -231,7 +231,7 @@
                     </template>
 
                     <template slot="content">
-                        <tree-map-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                        <tree-map-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart4"/>
@@ -253,7 +253,7 @@
                     </template>
 
                     <template slot="content">
-                        <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                        <h-bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                      title="Distribution of operating systems"
                                      metric="anzahl_os" descriptor="os"
                                      selector="chart5"/>
@@ -344,9 +344,28 @@ export default class Charts extends Vue {
         'Wussten Sie schon: Fact 5'
     ];
     didYouKnowIndex = 0;
+    meta: { [key: string]: any } = {
+        osStats: {
+            title: 'Distribution of operating systems',
+            dataSeries: {
+                valueAccessor: 'anzahl_os',
+                valueType: 'number',
+                categoryAccessor: 'os',
+                categoryType: 'string'
+            }
+        }
+    };
 
     created() {
         this.$store.registerModule('udpc', udpcStore);
+    }
+
+    getFilterOptions(dataset: string) {
+        if (!this.dashboardData[dataset]) {
+            return [];
+        }
+        const accessor = this.meta[dataset].dataSeries.categoryAccessor;
+        return this.dashboardData[dataset].map(value => value[accessor]);
     }
 
     async mounted() {
@@ -365,12 +384,12 @@ export default class Charts extends Vue {
         this.changeFilterRange('dateRangeSlider', this.dateRange);
     }
 
-    get dashData(): Dataset {
-        return this.$store.getters.dashData;
+    get dashboardData(): { [key: string]: Dataset } {
+        return this.$store.getters.dashboardData;
     }
 
-    get testData(): Dataset {
-        return this.$store.getters.testData;
+    get filteredData(): Dataset {
+        return this.$store.getters.filteredData;
     }
 
     get loading(): boolean {
@@ -386,7 +405,7 @@ export default class Charts extends Vue {
     }
 
     filterOsStats() {
-        this.$store.dispatch('filterOsStats');
+        this.$store.dispatch('applyFilter', ['osStats', this.meta.osStats.dataSeries.categoryAccessor]);
     }
 
     testSnackBar() {
@@ -441,7 +460,7 @@ export default class Charts extends Vue {
         this.rangeMap[sliderId] = values;
     }
 
-    filterChanged(newFilterSelection: { [key: string]: any }) {
+    filterChanged() {
         // The new filters could be set here - so far the filter already does that itself
         // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
         this.filterOsStats();
@@ -468,13 +487,13 @@ export default class Charts extends Vue {
         this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
     }
 
-    handleMouseOut() {
-        if (!this.dashData) {
-            return;
-        }
-        let changedObject = this.dashData[this.dashData.length - 1];
-        Vue.set(this.dashData, this.dashData.length - 1, changedObject);
-    }
+    // handleMouseOut() {
+    //     if (!this.dashData) {
+    //         return;
+    //     }
+    //     let changedObject = this.dashData[this.dashData.length - 1];
+    //     Vue.set(this.dashData, this.dashData.length - 1, changedObject);
+    // }
 
     didYouKnowInterval () {
         this.didYouKnowIndex = setInterval(() => {

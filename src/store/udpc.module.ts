@@ -4,35 +4,50 @@ import { aggregateData } from '../utils/utils';
 import { RootState } from './store';
 
 export interface UDPCState {
-    testData: { [key: string]: Dataset };
+    dashboardData: { [key: string]: Dataset };
+    filteredData: { [key: string]: Dataset };
+    filters: { [key: string]: any };
     loading: boolean;
 }
 
 const initialState: UDPCState = {
-    testData: {
+    dashboardData: {
         osStats: []
     },
+    filteredData: {
+        osStats: []
+    },
+    filters: {},
     loading: false
 };
 
 const udpcModule: Module<UDPCState, RootState> = {
     state: { ...initialState },
     mutations: {
-        SET_OS_STATS: (state, data) => {
-            state.testData.osStats = data;
+        SET_INITIAL_DATA: (state, [id, data]: [string, Dataset]) => {
+            state.dashboardData[id] = data;
         },
-        SET_LOADING: (state, loading) => {
+        SET_FILTERED_DATA: (state, [id, data]: [string, Dataset]) => {
+            state.filteredData[id] = data;
+        },
+        SET_FILTERS: (state, [id, values]) => {
+            state.filters[id] = values;
+        },
+        SET_LOADING: (state, loading: boolean) => {
             state.loading = loading;
         }
     },
     actions: {
+        setFilters: (context, [id, values]) => {
+            context.commit('SET_FILTERS', [id, values]);
+        },
         fetchOsStats: async (context) => {
             context.commit('SET_LOADING', true);
 
             const params = {
-                month: context.rootState.dashboard.filters['MONTH'],
-                year: context.rootState.dashboard.filters['YEAR'],
-                quelle: context.rootState.dashboard.filters['SOURCE']
+                month: context.state.filters['MONTH'],
+                year: context.state.filters['YEAR'],
+                quelle: context.state.filters['SOURCE']
             };
             // Convert range filters
             params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;
@@ -45,29 +60,26 @@ const udpcModule: Module<UDPCState, RootState> = {
             const aggregated = aggregateData(results, 'os', 'anzahl_os');
             const top10 = aggregated.sort((a, b) => b.anzahl_os - a.anzahl_os).slice(0, 10);
 
-            context.commit('SET_OS_STATS', top10);
+            context.commit('SET_INITIAL_DATA', ['osStats', top10]);
+            context.commit('SET_FILTERED_DATA', ['osStats', top10]);
             context.commit('SET_LOADING', false);
         },
-        filterOsStats(context) {
-            context.commit('SET_LOADING', true);
+        applyFilter: (context, [id, accessor]) => {
+            const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
+            const filteredData = context.state.dashboardData[id].filter(filterFunction);
 
-            // Static - we could just get all possible filters here - no hard coded names
-            const osFilter = context.rootGetters.filters['os'];
-            // EXAMPLE setting of filters for a datasource that is complete with first request (Partizipations-Dashboard)
-            const newOsData = context.rootGetters.getDataByFilters(context.getters.getOsStats, 'os', osFilter);
-
-            // We obviously need a concept of original data and filtered data (dashData)
-            // BUT - is this generally a concept that we can work with?
-            context.commit('SET_OS_STATS', newOsData);
-            context.commit('SET_LOADING', false);
+            context.commit('SET_FILTERED_DATA', [id, filteredData]);
         }
     },
     getters: {
-        getOsStats: state => {
-            return state.testData.osStats
+        dashboardData: state => {
+            return state.dashboardData
         },
-        testData: state => {
-            return state.testData
+        filteredData: state => {
+            return state.filteredData
+        },
+        filters: state => {
+            return state.filters
         },
         loading: state => {
             return state.loading
