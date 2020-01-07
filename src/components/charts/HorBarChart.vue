@@ -3,7 +3,6 @@
 </template>
 
 <script>
-    import $ from 'jquery';
     import AbstractChart from './AbstractChart.vue';
 
     export default {
