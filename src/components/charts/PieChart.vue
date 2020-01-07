@@ -18,8 +18,7 @@
         },
         methods: {
             redraw: function () {
-                const svg = $('#' + this.selector);
-                this.redrawOnDimensionsChange(svg);
+                this.redrawOnDimensionsChange(this.getSVGElement());
             },
             createChart(d3, ds) {
                 let metric = this.metric;
@@ -29,7 +28,7 @@
                 svg.html(null);
 
                 let radius = this.$data.height > this.$data.width ? this.$data.width / 2 : this.$data.height / 2;
-                let offset = this.$utils.chart.getOffset(title);
+                let offset = this.$utils.chart.getYOffset(title);
                 let pie = d3.pie().value((ds) => ds[metric]);
                 let path = d3.arc()
                     .outerRadius(radius - 10)

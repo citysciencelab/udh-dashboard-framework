@@ -18,14 +18,13 @@
         },
         methods: {
             redraw: function () {
-                const svg = $('#' + this.selector);
-                this.redrawOnDimensionsChange(svg);
+                this.redrawOnDimensionsChange(this.getSVGElement());
             },
             createChart(d3, ds, options) {
                 let origins = this.origins;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
-                let vOffset = this.$utils.chart.getOffset(title) || 0;
+                let vOffset = this.$utils.chart.getYOffset(title) || 0;
                 let hOffset = this.horizontalOffset || 0;
 
                 let maxVal = Math.max.apply(Math, ds.map(function (o) {

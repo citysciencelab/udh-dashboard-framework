@@ -18,15 +18,14 @@
         },
         methods: {
             redraw: function () {
-                const svg = $('#' + this.selector);
-                this.redrawOnDimensionsChange(svg);
+                this.redrawOnDimensionsChange(this.getSVGElement());
             },
             createChart(d3, ds, options) {
                 let metric = this.metric;
                 let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
-                let vOffset = this.$utils.chart.getOffset(title);
+                let vOffset = this.$utils.chart.getYOffset(title);
                 let g = svg.selectAll('rect')
                     .data(ds);
 

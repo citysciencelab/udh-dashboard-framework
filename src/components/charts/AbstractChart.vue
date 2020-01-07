@@ -48,6 +48,9 @@
                         this.createChart(this.$d3, this.ds, this.options);
                     }
                 }
+            },
+            getSVGElement() {
+                return $('#' + this.selector);
             }
         }
     }

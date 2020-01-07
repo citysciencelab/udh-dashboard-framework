@@ -65,8 +65,14 @@ export default {
                         .text(t);
                 },
 
-                getOffset(title) {
+                getYOffset(title) {
+                    // Possible calculations here: measure title height, measure paddings
                     return title ? 35 : 0
+                },
+
+                getXOffset(svg, chartHolderClass) {
+                    let holderElement = this.getHolderElement(svg, chartHolderClass);
+                    return (parseInt(holderElement.css("padding-left")) + parseInt(holderElement.css("padding-right")))/2;
                 },
 
                 /**
@@ -77,6 +83,13 @@ export default {
                  * @returns [number]
                  */
                 getDimensions(svg, title, chartHolderClass) {
+                    let holderElement = this.getHolderElement(svg, chartHolderClass);
+                    const width = holderElement.width();
+                    const height = holderElement.height() - this.getYOffset(title);
+                    return [width, height];
+                },
+
+                getHolderElement(svg, chartHolderClass) {
                     let holderElement = null;
                     let nextParent = svg.parent();
 
@@ -90,12 +103,8 @@ export default {
                         }
                         exitIndex++;
                     }
-                    // Fallback
-                    holderElement = !holderElement ? svg.parent() : holderElement;
-
-                    const width = holderElement.width() - (parseInt(holderElement.css("padding-left")) + parseInt(holderElement.css("padding-right")));
-                    const height = holderElement.height() - (this.getOffset(title) + parseInt(holderElement.css("padding-top")) + parseInt(holderElement.css("padding-bottom")));
-                    return [width, height];
+                    // Possible fallback
+                    return  !holderElement ? svg.parent() : holderElement;
                 }
             },
             date: {

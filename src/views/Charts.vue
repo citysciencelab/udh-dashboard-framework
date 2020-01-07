@@ -469,10 +469,9 @@
             height: 100%;
             width: 100%;
             margin: 0;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            //TODO: to test - should be around 35px
-            padding-bottom: 0px !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            padding-bottom: 20px !important;
 
             .md-card-actions {
                 margin: 0;

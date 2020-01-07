@@ -18,8 +18,7 @@
         },
         methods: {
             redraw: function () {
-                const svg = $('#' + this.selector);
-                this.redrawOnDimensionsChange(svg);
+                this.redrawOnDimensionsChange(this.getSVGElement());
             },
             createChart(d3, ds, options) {
                 let metric = this.metric;
@@ -28,8 +27,8 @@
                 let svg = d3.select('#' + this.selector);
                 svg.html(null);
 
-                let vOffset = this.$utils.chart.getOffset(title) || 0;
-                let hOffset = (this.$data.width - this.$data.width * (ds.length - 1) / ds.length) / 2 || 0;
+                let yOffset = this.$utils.chart.getYOffset(title) || 0;
+                let xOffset = this.$utils.chart.getXOffset(this.getSVGElement(), this.holderElement);
 
                 // If no hierarchy exists - we need to artificially create one
                 const parentName = 'parent';
@@ -57,7 +56,7 @@
                     return +d[metric]
                 });
 
-                console.log("tree" + this.$data.height)
+                console.log(this.$data.width)
 
                 d3.treemap()
                     .size([this.$data.width, this.$data.height])
@@ -87,7 +86,7 @@
                     })
                     .style('stroke', 'black')
                     .style('fill', 'slateblue')
-                    .attr('transform', 'translate(0,' + vOffset + ')');
+                    .attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
 
                 const labelPaddingY = 17;
 
@@ -104,14 +103,10 @@
                     // add foreign object and set dimensions, position, etc
                     foreignObject = svg.append('foreignObject');
                     foreignObject
-                        .attr('class', 'treeMapLabel');
-
-                    foreignObject
+                        .attr('class', 'treeMapLabel')
                         .attr('width', element.attr('width'))
                         .attr('height', element.attr('height'))
-                        .attr('transform', 'translate(0,'+labelPaddingY+')');
-
-                    foreignObject
+                        .attr('transform', 'translate('+xOffset+','+labelPaddingY+')')
                         .attr('x', element.attr('x'))
                         .attr('y', parseInt(element.attr('y')) + labelPaddingY);
 

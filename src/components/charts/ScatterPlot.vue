@@ -18,15 +18,14 @@
         },
         methods: {
             redraw: function () {
-                const svg = $('#' + this.selector);
-                this.redrawOnDimensionsChange(svg);
+                this.redrawOnDimensionsChange(this.getSVGElement());
             },
             createChart(d3, ds) {
                 let metric = this.metric;
                 let metric2 = this.metric2;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
-                let offset = this.$utils.chart.getOffset(title);
+                let offset = this.$utils.chart.getYOffset(title);
                 let maxVal = Math.max.apply(Math, ds.map(function(o) {
                     return o[metric];
                 }));

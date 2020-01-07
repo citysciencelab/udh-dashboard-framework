@@ -18,8 +18,7 @@
         },
         methods: {
             redraw: function () {
-                const svg = $('#' + this.selector);
-                this.redrawOnDimensionsChange(svg);
+                this.redrawOnDimensionsChange(this.getSVGElement());
             },
             createChart(d3, ds, options) {
                 console.log("bar" + this.$data.width)
@@ -29,7 +28,7 @@
                 let svg = d3.select('#' + this.selector);
 
                 let barAreaWidth = this.$data.width - this.horizontalOffset;
-                let vOffset = this.$utils.chart.getOffset(title) || 0;
+                let vOffset = this.$utils.chart.getYOffset(title) || 0;
                 let hOffset = (this.$data.width - this.$data.width * (ds.length-1) / ds.length) / 2 || 0;
                 let g = svg.selectAll('rect')
                     .data(ds);
