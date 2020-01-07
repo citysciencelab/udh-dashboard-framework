@@ -10,10 +10,6 @@
         name: "line-chart",
         extends: AbstractChart,
         props: {
-            options: Object,
-            title: String,
-            metric: String,
-            selector: String,
             origins: {},
         },
         mounted() {
@@ -39,6 +35,7 @@
                     }
                     return Math.max.apply(Math, values);
                 }));
+
                 let minVal = Math.min.apply(Math, ds.map(function (o) {
                     let values = [];
                     for (let origin of origins) {
@@ -53,6 +50,7 @@
                 let yAxis = d3.axisLeft()
                     .scale(y);
                 let x = this.$utils.chart.initTimeScale(d3, ds, options.dim2, this.$data.width);
+
                 // FIXME: breaks when d.date is undefined
                 let xAxis = d3.axisBottom(x)
                     .tickFormat(d3.timeFormat("%y-%b")).tickValues(ds.map(d => d.date));

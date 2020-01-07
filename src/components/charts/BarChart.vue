@@ -10,11 +10,7 @@
         name: "bar-chart",
         extends: AbstractChart,
         props: {
-            options: Object,
-            title: String,
-            metric: String,
-            descriptor: String,
-            selector: String
+            descriptor: String
         },
         mounted() {
             this.redraw();
@@ -26,11 +22,13 @@
                 this.redrawOnDimensionsChange(svg);
             },
             createChart(d3, ds, options) {
+                console.log("bar" + this.$data.width)
                 let metric = this.metric;
                 let descriptor = this.descriptor;
                 let title = this.title;
                 let svg = d3.select('#' + this.selector);
 
+                let barAreaWidth = this.$data.width - this.horizontalOffset;
                 let vOffset = this.$utils.chart.getOffset(title) || 0;
                 let hOffset = (this.$data.width - this.$data.width * (ds.length-1) / ds.length) / 2 || 0;
                 let g = svg.selectAll('rect')
@@ -42,7 +40,7 @@
                     .range([this.$data.height, 0]);
                 let yAxis = d3.axisLeft()
                     .scale(yScale);
-                let xScale = this.$utils.chart.initOrdinalScale(d3, ds, options.dim, this.$data.width);
+                let xScale = this.$utils.chart.initOrdinalScale(d3, ds, options.dim, barAreaWidth);
                 let xAxis = d3.axisBottom()
                     .scale(xScale);
 
@@ -61,9 +59,9 @@
                     .append('rect')
                     .merge(g)
                     .attr('class', 'bar')
-                    .attr('width', () => this.$data.width / ds.length - 1 || 0)
+                    .attr('width', () => barAreaWidth / ds.length - 1 || 0)
                     .attr('height', d => this.$data.height - yScale(d[metric]) || 0)
-                    .attr('x', (d, i) => i * this.$data.width / ds.length + this.horizontalOffset || 0)
+                    .attr('x', (d, i) => i * barAreaWidth / ds.length + this.horizontalOffset || 0)
                     .attr('y', d => yScale(d[metric]) || 0)
                     .on('mouseover', function(d) {
                         tip.show(d[descriptor] + ": " + d[metric], this);

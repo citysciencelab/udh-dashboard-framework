@@ -10,11 +10,7 @@
         name: "scatter-plot",
         extends: AbstractChart,
         props: {
-            options: Object,
-            title: String,
-            metric: String,
-            metric2: String,
-            selector: String
+            metric2: String
         },
         mounted() {
             this.redraw();

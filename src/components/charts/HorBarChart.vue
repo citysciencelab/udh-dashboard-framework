@@ -10,11 +10,7 @@
         name: "h-bar-chart",
         extends: AbstractChart,
         props: {
-            options: Object,
-            title: String,
-            metric: String,
-            descriptor: String,
-            selector: String
+            descriptor: String
         },
         mounted() {
             this.redraw();

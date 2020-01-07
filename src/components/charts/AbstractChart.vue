@@ -7,7 +7,12 @@
             horizontalOffset: 60
         }),
         props: {
-            ds: Array
+            ds: Array,
+            title: String,
+            options: Object,
+            metric: String,
+            selector: String,
+            holderElement: String
         },
         watch: {
             ds() {
@@ -35,7 +40,7 @@
         },
         methods: {
             redrawOnDimensionsChange: function (svg) {
-                const dimensions = this.$utils.chart.getDimensions(svg, this.title);
+                const dimensions = this.$utils.chart.getDimensions(svg, this.title, this.holderElement);
                 if (this.$data.width !== dimensions[0] || this.$data.height !== dimensions[1]) {
                     this.$data.width = dimensions[0];
                     this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];

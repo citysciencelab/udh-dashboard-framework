@@ -10,11 +10,7 @@
         name: "pie-chart",
         extends: AbstractChart,
         props: {
-            options: Object,
-            title: String,
-            metric: String,
-            descriptor: String,
-            selector: String
+            descriptor: String
         },
         mounted() {
             this.redraw();
@@ -32,15 +28,12 @@
                 let svg = d3.select('#' + this.selector);
                 svg.html(null);
 
-                let radius = this.$data.height > this.$data.width ? this.$data.width * 0.9 / 2 : this.$data.height * 0.9 / 2;
+                let radius = this.$data.height > this.$data.width ? this.$data.width / 2 : this.$data.height / 2;
                 let offset = this.$utils.chart.getOffset(title);
-
                 let pie = d3.pie().value((ds) => ds[metric]);
-
                 let path = d3.arc()
                     .outerRadius(radius - 10)
                     .innerRadius(25);
-
                 let arc = svg.selectAll('.arc')
                     .data(pie(ds));
 

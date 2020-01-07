@@ -10,11 +10,7 @@
         name: "tree-map-chart",
         extends: AbstractChart,
         props: {
-            options: Object,
-            title: String,
-            metric: String,
-            descriptor: String,
-            selector: String
+            descriptor: String
         },
         mounted() {
             this.redraw();
@@ -61,6 +57,7 @@
                     return +d[metric]
                 });
 
+                console.log("tree" + this.$data.height)
 
                 d3.treemap()
                     .size([this.$data.width, this.$data.height])

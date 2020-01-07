@@ -172,7 +172,7 @@
                         <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart1"/>
+                                   selector="chart1" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -189,10 +189,10 @@
                     </template>
 
                     <template slot="content">
-                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options" v-bind:origins="['anzahl_os']"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
-                                    selector="chart2" v-bind:origins="['anzahl_os']"/>
+                                    selector="chart2" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -214,7 +214,7 @@
                         <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart3"/>
+                                   selector="chart3" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -234,7 +234,7 @@
                         <tree-map-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart4"/>
+                                   selector="chart4" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -256,7 +256,7 @@
                         <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
                                      title="Distribution of operating systems"
                                      metric="anzahl_os" descriptor="os"
-                                     selector="chart5"/>
+                                     selector="chart5" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -469,13 +469,10 @@
             height: 100%;
             width: 100%;
             margin: 0;
-
-            .md-card-content {
-                .chart {
-                    padding-left: 15px !important;
-                    padding-top: 10px !important;
-                }
-            }
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            //TODO: to test - should be around 35px
+            padding-bottom: 0px !important;
 
             .md-card-actions {
                 margin: 0;

@@ -132,6 +132,10 @@
             background-color: rgba(255, 255, 255, 0.9) !important;
         }
 
+        .md-card .md-card-header {
+            margin: -28px 15px 0 !important;
+        }
+
         .md-toolbar {
         background-color: rgba(68, 138, 255, .7);
         }

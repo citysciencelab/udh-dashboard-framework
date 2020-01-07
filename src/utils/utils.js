@@ -69,9 +69,32 @@ export default {
                     return title ? 35 : 0
                 },
 
-                getDimensions(svg, title) {
-                    const width = (svg.parent().width() - parseInt(svg.parent().css("padding-left")) - parseInt(svg.parent().css("padding-right")));
-                    const height = (svg.parent().height() - this.getOffset(title)) * 0.85;
+                /**
+                 * This returns the calculated width and height that the chart should adjust to
+                 * @param svg the D3 chart element
+                 * @param title the possible chart title
+                 * @param chartHolderClass the element class that determines the height and width of the chart
+                 * @returns [number]
+                 */
+                getDimensions(svg, title, chartHolderClass) {
+                    let holderElement = null;
+                    let nextParent = svg.parent();
+
+                    // To not let the loop get stuck in case of wrong information we have the exitInex
+                    let exitIndex = 0;
+                    while (!holderElement && exitIndex < 20) {
+                        if (nextParent[0].classList.contains(chartHolderClass)) {
+                            holderElement = nextParent;
+                        } else {
+                            nextParent = nextParent.parent();
+                        }
+                        exitIndex++;
+                    }
+                    // Fallback
+                    holderElement = !holderElement ? svg.parent() : holderElement;
+
+                    const width = holderElement.width() - (parseInt(holderElement.css("padding-left")) + parseInt(holderElement.css("padding-right")));
+                    const height = holderElement.height() - (this.getOffset(title) + parseInt(holderElement.css("padding-top")) + parseInt(holderElement.css("padding-bottom")));
                     return [width, height];
                 }
             },
