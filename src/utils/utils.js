@@ -24,12 +24,32 @@ export default {
                     return x;
                 },
 
+                drawXAxis: function(svg, xAxis, xTransLate, yTransLate) {
+                    svg.append('g')
+                        .attr('transform', 'translate('+ xTransLate +',' + yTransLate + ')')
+                        .call(xAxis)
+                        .selectAll("text")
+                        .style("text-anchor", "end")
+                        .attr("dx", "-.8em")
+                        .attr("dy", ".15em")
+                        .attr("transform", "rotate(-20)");
+                },
+
+                drawYAxis: function(svg, yAxis, xTransLate, yTransLate) {
+                    svg.append('g')
+                        .attr('transform', 'translate('+ xTransLate +',' + yTransLate + ')')
+                        .attr('class', 'yAxis')
+                        .call(yAxis);
+                },
+
+                // TODO: delete when the linechart has been adjusted
                 drawAxis: function(height, svg, xAxis, yAxis, offsetTop, offsetLeft, yAxisOffset) {
                     offsetTop = offsetTop || 0;
                     offsetLeft = offsetLeft || 0;
 
                     svg.append('g')
                         .attr('transform', 'translate(50,' + (yAxisOffset ? yAxisOffset : offsetTop) + ')')
+                        .attr('class', 'yAxis')
                         .call(yAxis);
 
                     svg.append('g')
@@ -40,6 +60,30 @@ export default {
                         .attr("dx", "-.8em")
                         .attr("dy", ".15em")
                         .attr("transform", "rotate(-20)");
+                },
+
+                /**
+                 * Calculates the extend of the axis to take it into account while drawing other chart components
+                 * @param svg the D3 chart element
+                 * @param axis the prepared axis to be drawn
+                 * @param axisName has to be 'xAxis' or 'yAxis' to determine if to measure width or height
+                 * @returns [number]
+                 */
+                drawAxisMeasureExtend(svg, axis, axisName) {
+                    svg.append('g')
+                        .attr('class', axisName)
+                        .call(axis);
+
+                    let maxDimension = 0;
+                    svg.call(axis).selectAll(".tick").each(function() {
+                        if (axisName === 'yAxis') {
+                            maxDimension = this.getBBox().width > maxDimension ? this.getBBox().width : maxDimension;
+                        } else {
+                            maxDimension = this.getBBox().height > maxDimension ? this.getBBox().height : maxDimension;
+                        }
+                    });
+
+                    return maxDimension;
                 },
 
                 addTooltip: function(d, svg, x, y, v) {

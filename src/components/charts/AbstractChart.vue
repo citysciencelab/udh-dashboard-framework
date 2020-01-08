@@ -6,7 +6,8 @@
         data: () => ({
             width: 300,
             height: 300,
-            horizontalOffset: 60
+            horizontalOffset: 60,
+            barAxisSpace: 10
         }),
         props: {
             ds: Array,
