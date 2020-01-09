@@ -5,6 +5,9 @@ export default abstract class AbstractChart extends Vue {
     @Prop() abstract ds: Dataset;
     @Prop() abstract options: ChartOptions;
     @Prop() abstract title: string;
+    @Prop() abstract metric: string;
+    @Prop() abstract descriptor: string;
+    @Prop() abstract selector: string;
     width = 300;
     height = 300;
     horizontalOffset = 60;
@@ -33,6 +36,9 @@ export default abstract class AbstractChart extends Vue {
 
     redrawOnDimensionsChange(svg: SVG) {
         const dimensions = this.$utils.chart.getDimensions(svg, this.title);
+        if (!dimensions.length) {
+            return;
+        }
         if (this.$data.width !== dimensions[0] || this.$data.height !== dimensions[1]) {
             this.$data.width = dimensions[0];
             this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
