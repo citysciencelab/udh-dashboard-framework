@@ -133,7 +133,25 @@
         }
 
         .md-card .md-card-header {
-            margin: -28px 15px 0 !important;
+            margin: -28px 5px 0 !important;
+            position: relative;
+            padding: 0 !important;
+            z-index: 2;
+
+            .tool-tip-header {
+                cursor: pointer;
+                padding: 15px 20px;
+            }
+        }
+
+        .md-card .md-card-header .info-icon {
+            font-size: 15px !important;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            min-width: 15px;
         }
 
         .md-toolbar {

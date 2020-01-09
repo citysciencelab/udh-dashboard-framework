@@ -88,7 +88,7 @@
                               identifier="os"/>
             </div>
             <div class="col-sm">
-                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar" id="tooltip-target-1">
+                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
                     Open Snackbar
                 </md-button>
                 <br/>
@@ -98,10 +98,6 @@
                 <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
                                @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
                 <br/>
-                <b-tooltip target="tooltip-target-1" triggers="hover" custom-class="udpc-tooltip">
-                    I am tooltip <a href="javascript:void(0)"
-                                    onclick="window.open('http://www.swoosh.com')">component</a> content!
-                </b-tooltip>
             </div>
         </div>
         <div class="row">
@@ -165,7 +161,12 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        OS Data
+                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
+                            OS Data
+                        </div>
+                        <md-icon class="info-icon" id="tooltip-os-data">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
@@ -185,7 +186,13 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+<!--                        <md-icon class="info-icon" id="">-->
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
@@ -207,7 +214,13 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+<!--                        <md-icon class="info-icon" id="">-->
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
@@ -227,7 +240,13 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+<!--                        <md-icon class="info-icon" id="">-->
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
@@ -249,7 +268,12 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+                        <md-icon class="info-icon" id="">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
@@ -280,6 +304,15 @@
                 </button>
             </div> -->
         </div>
+
+
+        <!--Tooltips-->
+
+        <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
+            I am tooltip <a href="javascript:void(0)"
+                            onclick="window.open('http://www.swoosh.com')">component</a> content!
+        </b-tooltip>
+
     </div>
 </template>
 
@@ -385,6 +418,9 @@
                     el: document.getElementById("snack").querySelector("div"),
                     render: h => h(SnackBar, {attrs: options})
                 });
+            },
+            openToolTip(toolTipRef) {
+                this.$refs[toolTipRef].$emit('open')
             },
             changeFilterRange(sliderId, sliderRange) {
                 this.dateRange = sliderRange;
