@@ -36,15 +36,21 @@ export default abstract class AbstractChart extends Vue {
 
     redrawOnDimensionsChange(svg: SVG) {
         const dimensions = this.$utils.chart.getDimensions(svg, this.title);
+        let changed = false;
+
         if (!dimensions.length) {
             return;
         }
-        if (this.$data.width !== dimensions[0] || this.$data.height !== dimensions[1]) {
-            this.$data.width = dimensions[0];
-            this.$data.height = dimensions[1] < 1 ? 300 : dimensions[1];
-            if (this.ds.length > 0) {
-                this.createChart();
-            }
+        if (this.width !== dimensions[0] && dimensions[0] > 0) {
+            this.width = dimensions[0];
+            changed = true;
+        }
+        if (this.height !== dimensions[1] && dimensions[1] > 0) {
+            this.height = dimensions[1];
+            changed = true;
+        }
+        if (changed && this.ds.length > 0) {
+            this.createChart();
         }
     }
 }

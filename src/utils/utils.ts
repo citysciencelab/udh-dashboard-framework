@@ -102,16 +102,15 @@ export default class Utils implements IUtils {
         getDimensions(svg: SVG, title: string) {
             const node = svg.node();
             if (!node) {
-                return [0, 0];
+                return [];
             }
-            const parent = $(node).parent();
-            const parentWidth = parent.width();
-            const parentHeight = parent.height();
-            if (!parentWidth || !parentHeight) {
-                return [0, 0];
+            const parent = node.parentElement;
+            if (!parent) {
+                return [];
             }
-            const width = (parentWidth - parseInt(parent.css('padding-left')) - parseInt(parent.css('padding-right')));
-            const height = (parentHeight - this.getOffset(title)) * 0.85;
+            var parentStyle = window.getComputedStyle(parent);
+            const width = parseFloat(parentStyle.getPropertyValue('width')) * 0.95;
+            const height = (parseFloat(parentStyle.getPropertyValue('height')) - this.getOffset(title)) * 0.85;
             return [width, height];
         }
     };
