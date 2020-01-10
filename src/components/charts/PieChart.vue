@@ -19,6 +19,7 @@ export default class PieChart extends AbstractChart {
     @Prop() metric!: string;
     @Prop() descriptor!: string;
     @Prop() selector!: string;
+    @Prop() holderElement!: string;
 
     mounted() {
         this.redraw();
@@ -26,16 +27,15 @@ export default class PieChart extends AbstractChart {
     }
 
     redraw() {
-        const svg = <SVG>d3.select('#' + this.selector);
-        this.redrawOnDimensionsChange(svg);
+        this.redrawOnDimensionsChange(this.getSVGElement());
     }
 
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
         svg.html(null);
 
-        let radius = this.height > this.width ? this.width * 0.9 / 2 : this.height * 0.9 / 2;
-        let offset = this.$utils.chart.getOffset(this.title);
+        let radius = this.height > this.width ? this.width / 2 : this.height / 2;
+        let offset = this.$utils.chart.getYOffset(this.title);
 
         let pie = d3.pie<Datum>().value(d => d[this.metric]);
 
@@ -77,7 +77,4 @@ export default class PieChart extends AbstractChart {
 </script>
 
 <style scoped>
-    .chart {
-        padding: 20px;
-    }
 </style>

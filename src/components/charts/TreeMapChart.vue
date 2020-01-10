@@ -23,6 +23,7 @@ export default class TreeMapChart extends AbstractChart {
     @Prop() metric!: string;
     @Prop() descriptor!: string;
     @Prop() selector!: string;
+    @Prop() holderElement!: string;
 
     mounted() {
         this.redraw();
@@ -30,16 +31,15 @@ export default class TreeMapChart extends AbstractChart {
     }
 
     redraw() {
-        const svg = <SVG>d3.select('#' + this.selector);
-        this.redrawOnDimensionsChange(svg);
+        this.redrawOnDimensionsChange(this.getSVGElement());
     }
 
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
         svg.html(null);
 
-        let vOffset = this.$utils.chart.getOffset(this.title) || 0;
-        let hOffset = (this.width - this.width * (this.ds.length - 1) / this.ds.length) / 2 || 0;
+        let yOffset = this.$utils.chart.getYOffset(this.title) || 0;
+        let xOffset = this.$utils.chart.getXOffset(this.getSVGElement(), this.holderElement);
 
         // If no hierarchy exists - we need to artificially create one
         const parentName = 'parent';
@@ -71,31 +71,59 @@ export default class TreeMapChart extends AbstractChart {
             .data(root.leaves())
             .enter()
             .append('rect')
-            .attr('x', (d) => d.x0)
+            .attr('x', d => d.x0)
             .attr('y', d => d.y0)
+            .attr('label', d => d.id || '')
             .attr('width', d => d.x1 - d.x0)
             .attr('height', d => d.y1 - d.y0)
             .style('stroke', 'black')
             .style('fill', 'slateblue')
-            .attr('transform', 'translate(0,' + vOffset + ')');
+            .attr('transform', 'translate(0,' + xOffset + ',' + yOffset + ')');
 
-        svg.selectAll('text')
-            .data(root.leaves())
-            .enter()
-            .append('text')
-            .attr('x', d => d.x0 + 5)
-            .attr('y', d => d.y0 + 20)
-            .text(d => d.data[this.descriptor])
-            .attr('font-size', '11px')
-            .attr('fill', 'white')
-            .attr('transform', 'translate(0,' + vOffset + ')');
+        const labelPaddingY = 17;
+
+        svg.selectAll('rect').each(function () {
+            let content,
+                foreignObject,
+                element,
+                div;
+
+            element = d3.select(this);
+
+            // extract our desired content from the single text element
+            content =  element.attr('label');
+            // add foreign object and set dimensions, position, etc
+            foreignObject = svg.append('foreignObject');
+            foreignObject.attr('class', 'treeMapLabel')
+                .attr('width', element.attr('width'))
+                .attr('height', element.attr('height'))
+                .attr('transform', 'translate(' + xOffset + ',' + labelPaddingY + ')')
+                .attr('x', element.attr('x'))
+                .attr('y', parseInt(element.attr('y')) + labelPaddingY);
+
+            // insert an HTML div
+            div = foreignObject.append('xhtml:div');
+
+            // set div to same dimensions as foreign object
+            div.style('height', element.attr('height'))
+                .style('width', element.attr('width'))
+                // insert text content
+                .html(content);
+            return div;
+        });
     }
 }
 </script>
 
-<style scoped>
-    .chart {
-        padding: 20px;
+<style lang='scss'>
+    .treeMapLabel {
+        font-size: 11px;
+        text-overflow: ellipsis;
+        text-align: left;
+        word-wrap: break-word;
+        color: white;
+        div {
+            padding-left: 5px;
+        }
     }
-
 </style>

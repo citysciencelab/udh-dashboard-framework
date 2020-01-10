@@ -17,6 +17,7 @@ export default class ScatterPlot extends AbstractChart {
     @Prop() metric2!: string;
     @Prop() descriptor!: string;
     @Prop() selector!: string;
+    @Prop() holderElement!: string;
 
     mounted() {
         this.redraw();
@@ -24,13 +25,12 @@ export default class ScatterPlot extends AbstractChart {
     }
 
     redraw() {
-        const svg = <SVG>d3.select('#' + this.selector);
-        this.redrawOnDimensionsChange(svg);
+        this.redrawOnDimensionsChange(this.getSVGElement());
     }
 
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
-        let offset = this.$utils.chart.getOffset(this.title);
+        let offset = this.$utils.chart.getYOffset(this.title);
         let maxVal = Math.max.apply(Math, this.ds.map(o => o[this.metric]));
 
         let minVal = Math.min.apply(Math, this.ds.map(o => o[this.metric]));
@@ -76,7 +76,4 @@ export default class ScatterPlot extends AbstractChart {
 </script>
 
 <style scoped>
-    .chart {
-        padding: 20px;
-    }
 </style>

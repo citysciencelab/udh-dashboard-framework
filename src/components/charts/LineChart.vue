@@ -17,6 +17,7 @@ export default class LineChart extends AbstractChart {
     @Prop() metric2!: string;
     @Prop() descriptor!: string;
     @Prop() selector!: string;
+    @Prop() holderElement!: string;
 
     mounted() {
         this.redraw();
@@ -24,13 +25,13 @@ export default class LineChart extends AbstractChart {
     }
 
     redraw() {
-        const svg = <SVG>d3.select('#' + this.selector);
-        this.redrawOnDimensionsChange(svg);
+        this.redrawOnDimensionsChange(this.getSVGElement());
     }
 
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
-        let vOffset = this.$utils.chart.getOffset(this.title) || 0;
+
+        let vOffset = this.$utils.chart.getYOffset(this.title) || 0;
         let hOffset = this.horizontalOffset || 0;
 
         let maxVal = Math.max.apply(Math, this.ds.map(o => {

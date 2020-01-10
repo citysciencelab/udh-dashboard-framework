@@ -88,7 +88,7 @@
                               identifier="osStats"/>
             </div>
             <div class="col-sm">
-                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar" id="tooltip-target-1">
+                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
                     Open Snackbar
                 </md-button>
                 <br/>
@@ -98,10 +98,6 @@
                 <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
                                @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
                 <br/>
-                <b-tooltip target="tooltip-target-1" triggers="hover" custom-class="udpc-tooltip">
-                    I am tooltip <a href="javascript:void(0)"
-                                    onclick="window.open('http://www.swoosh.com')">component</a> content!
-                </b-tooltip>
             </div>
         </div>
         <div class="row">
@@ -165,14 +161,19 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        OS Data
+                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
+                            OS Data
+                        </div>
+                        <md-icon class="info-icon" id="tooltip-os-data">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
                         <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart1"/>
+                                   selector="chart1" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -185,14 +186,19 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
-                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="options"
+                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="options" v-bind:origins="['anzahl_os']"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
-                                    selector="chart2" v-bind:origins="['anzahl_os']"/>
+                                    selector="chart2" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -207,14 +213,19 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
                         <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="options"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart3"/>
+                                   selector="chart3" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -227,14 +238,19 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
                         <tree-map-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart4"/>
+                                   selector="chart4" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -249,14 +265,19 @@
             <div class="col-sm">
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
-                        Other chart
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+                        <md-icon class="info-icon" id="">
+                            info_outline
+                        </md-icon>
                     </template>
 
                     <template slot="content">
                         <h-bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                      title="Distribution of operating systems"
                                      metric="anzahl_os" descriptor="os"
-                                     selector="chart5"/>
+                                     selector="chart5" holder-element="chart-holder"/>
                     </template>
 
                     <template slot="footer">
@@ -280,6 +301,12 @@
                 </button>
             </div> -->
         </div>
+
+        <!--Tooltips-->
+        <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
+            I am tooltip <a href="javascript:void(0)"
+                            onclick="window.open('http://www.swoosh.com')">component</a> content!
+        </b-tooltip>
     </div>
 </template>
 
@@ -426,6 +453,14 @@ export default class Charts extends Vue {
         });
     }
 
+    openToolTip(toolTipRef: string) {
+        const component = <Vue>this.$refs[toolTipRef];
+        if (!component) {
+            return;
+        }
+        component.$emit('open');
+    }
+
     changeFilterRange(sliderId: string, sliderRange: string) {
         this.dateRange = sliderRange;
 
@@ -520,13 +555,9 @@ export default class Charts extends Vue {
             height: 100%;
             width: 100%;
             margin: 0;
-
-            .md-card-content {
-                .chart {
-                    padding-left: 15px !important;
-                    padding-top: 10px !important;
-                }
-            }
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            padding-bottom: 20px !important;
 
             .md-card-actions {
                 margin: 0;

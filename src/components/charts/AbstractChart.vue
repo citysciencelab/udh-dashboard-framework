@@ -1,5 +1,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import * as d3 from 'd3';
+import $ from 'jquery';
 
 export default abstract class AbstractChart extends Vue {
     @Prop() abstract ds: Dataset;
@@ -8,9 +10,11 @@ export default abstract class AbstractChart extends Vue {
     @Prop() abstract metric: string;
     @Prop() abstract descriptor: string;
     @Prop() abstract selector: string;
+    @Prop() abstract holderElement: string;
     width = 300;
     height = 300;
     horizontalOffset = 60;
+    barAxisSpace = 10;
 
     @Watch('ds') onDsChanged() {
         if (this.ds.length > 0) {
@@ -34,8 +38,8 @@ export default abstract class AbstractChart extends Vue {
 
     abstract createChart(): void;
 
-    redrawOnDimensionsChange(svg: SVG) {
-        const dimensions = this.$utils.chart.getDimensions(svg, this.title);
+    redrawOnDimensionsChange(svg: SVGSVGElement) {
+        const dimensions = this.$utils.chart.getDimensions(svg, this.title, this.holderElement);
         let changed = false;
 
         if (!dimensions.length) {
@@ -52,6 +56,11 @@ export default abstract class AbstractChart extends Vue {
         if (changed && this.ds.length > 0) {
             this.createChart();
         }
+    }
+
+    getSVGElement() {
+        // We assume it's an <svg>, so we can typecast from JQuery world to DOM world
+        return <SVGSVGElement>($('#' + this.selector).get(0) as any);
     }
 }
 </script>

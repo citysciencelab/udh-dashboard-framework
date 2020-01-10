@@ -121,6 +121,28 @@ export default class App extends Vue {
             background-color: rgba(255, 255, 255, 0.9) !important;
         }
 
+        .md-card .md-card-header {
+            margin: -28px 5px 0 !important;
+            position: relative;
+            padding: 0 !important;
+            z-index: 2;
+
+            .tool-tip-header {
+                cursor: pointer;
+                padding: 15px 20px;
+            }
+        }
+
+        .md-card .md-card-header .info-icon {
+            font-size: 15px !important;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            min-width: 15px;
+        }
+
         .md-toolbar {
         background-color: rgba(68, 138, 255, .7);
         }
