@@ -41,6 +41,27 @@ const udpcModule: Module<UDPCState, RootState> = {
         setFilters: (context, [id, values]) => {
             context.commit('SET_FILTERS', [id, values]);
         },
+        fetchAppStats: async (context) => {
+            context.commit('SET_LOADING', true);
+
+            const params = {
+                ressourceType: 'apps',
+                start_date: context.state.filters['YEAR'][0],
+                end_date: context.state.filters['YEAR'][1],
+                intervall: 'year'
+            };
+
+            const results = await elastic.getFromTemplate('dbquery', params);
+
+            // Aggregating and sorting is expected to be done by the backend,
+            // but for the sake of testing it is hardcoded here ...
+            const aggregated = aggregateData(results, 'os', 'anzahl_os');
+            const top10 = aggregated.sort((a, b) => b.anzahl_os - a.anzahl_os).slice(0, 10);
+
+            context.commit('SET_INITIAL_DATA', ['apps', top10]);
+            context.commit('SET_FILTERED_DATA', ['apps', top10]);
+            context.commit('SET_LOADING', false);
+        },
         fetchOsStats: async (context) => {
             context.commit('SET_LOADING', true);
 
