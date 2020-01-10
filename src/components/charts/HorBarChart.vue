@@ -101,6 +101,3 @@ export default class HBarChart extends AbstractChart {
     }
 }
 </script>
-
-<style scoped>
-</style>

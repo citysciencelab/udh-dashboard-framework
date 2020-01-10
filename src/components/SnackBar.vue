@@ -24,7 +24,3 @@ export default class SnackBar extends Vue {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -75,6 +75,3 @@ export default class PieChart extends AbstractChart {
     }
 }
 </script>
-
-<style scoped>
-</style>

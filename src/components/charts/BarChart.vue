@@ -99,6 +99,3 @@ export default class BarChart extends AbstractChart {
     }
 }
 </script>
-
-<style scoped>
-</style>

@@ -195,7 +195,7 @@
                     </template>
 
                     <template slot="content">
-                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="options" v-bind:origins="['anzahl_os']"
+                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
                                     selector="chart2" holder-element="chart-holder"/>
@@ -222,7 +222,7 @@
                     </template>
 
                     <template slot="content">
-                        <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="options"
+                        <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart3" holder-element="chart-holder"/>
@@ -288,19 +288,6 @@
                 </stats-card>
             </div>
         </div>
-        <div class="row">
-            <!-- <div class="data-grid">
-                <div v-for="(t, index) in this.dashData"
-                     v-bind:key="index">
-                    <input v-model="t.name" @blur="handleMouseOut">
-                    <input v-model.number="t.val" type="number" @blur="handleMouseOut">
-                    <input v-model.number="t.val2" type="number" @blur="handleMouseOut">
-                </div>
-                <button @click="addDataPoint">
-                    New Data Point
-                </button>
-            </div> -->
-        </div>
 
         <!--Tooltips-->
         <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
@@ -357,11 +344,6 @@ export default class Charts extends Vue {
         osStats: {
             dim: 'os'
         }
-    };
-    // soon to be deprecated
-    options = {
-        dim: 'name',
-        dim2: 'date'
     };
     didYouKnow = [
         'Wussten Sie schon: Fact 1',
@@ -522,14 +504,6 @@ export default class Charts extends Vue {
         this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
     }
 
-    // handleMouseOut() {
-    //     if (!this.dashData) {
-    //         return;
-    //     }
-    //     let changedObject = this.dashData[this.dashData.length - 1];
-    //     Vue.set(this.dashData, this.dashData.length - 1, changedObject);
-    // }
-
     didYouKnowInterval () {
         this.didYouKnowIndex = setInterval(() => {
             if (this.didYouKnowIndex < this.didYouKnow.length-1) {
@@ -543,11 +517,9 @@ export default class Charts extends Vue {
 </script>
 
 <style lang="scss">
-
     /*
         Charts
     */
-
     .chart-row {
         margin-top: 40px;
 
@@ -575,12 +547,9 @@ export default class Charts extends Vue {
             }
         }
     }
-
-
 </style>
 
 <style scoped lang="scss">
-
     h1, h2 {
         font-weight: normal;
     }
@@ -607,7 +576,6 @@ export default class Charts extends Vue {
         padding-top: 4px !important;
     }
 
-
     .facts-holder span {
         padding: 10px;
     }
@@ -615,7 +583,6 @@ export default class Charts extends Vue {
     /*
         Transition
     */
-
     .list {
         position: relative;
     }
@@ -633,5 +600,4 @@ export default class Charts extends Vue {
     .list-enter, .list-leave-to {
         opacity: 0;
     }
-
 </style>

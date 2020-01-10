@@ -74,6 +74,3 @@ export default class ScatterPlot extends AbstractChart {
     }
 }
 </script>
-
-<style scoped>
-</style>

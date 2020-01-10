@@ -144,7 +144,7 @@ export default class App extends Vue {
         }
 
         .md-toolbar {
-        background-color: rgba(68, 138, 255, .7);
+            background-color: rgba(68, 138, 255, .7);
         }
 
         .md-app, .md-app-container, .md-app-content {
@@ -156,7 +156,6 @@ export default class App extends Vue {
         }
 
         #nav {
-
             background-color: rgba(255,255,255,0.5);
             padding: 30px;
 
@@ -182,7 +181,6 @@ export default class App extends Vue {
         }
 
         .chart {
-            /*justify-self: center;*/
             padding: 10px;
         }
 
@@ -202,9 +200,7 @@ export default class App extends Vue {
         .flag {
             cursor: pointer;
         }
-
     }
-
 
     /*
      Tooltip
@@ -247,7 +243,6 @@ export default class App extends Vue {
     /* Northward tooltips */
     .d3-tip.n:after {
         content: "\25BC";
-        /*margin: -1px 0 0 0;*/
         margin: 0 0 0 0;
         top: 100%;
         left: 50%;
@@ -278,5 +273,4 @@ export default class App extends Vue {
         top: 50%;
         left: 100%;
     }
-
 </style>
