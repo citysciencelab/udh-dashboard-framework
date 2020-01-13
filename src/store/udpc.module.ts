@@ -1,12 +1,10 @@
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
-import { aggregateData } from '../utils/utils';
+import { aggregateData } from '@/utils/utils';
 import { RootState } from './store';
+import {DashboardState} from "@/store/dashboard.module";
 
-export interface UDPCState {
-    dashboardData: { [key: string]: Dataset };
-    filteredData: { [key: string]: Dataset };
-    filters: { [key: string]: any };
+export interface UDPCState extends DashboardState {
     loading: boolean;
 }
 
@@ -24,15 +22,6 @@ const initialState: UDPCState = {
 const udpcModule: Module<UDPCState, RootState> = {
     state: { ...initialState },
     mutations: {
-        SET_INITIAL_DATA: (state, [id, data]: [string, Dataset]) => {
-            state.dashboardData[id] = data;
-        },
-        SET_FILTERED_DATA: (state, [id, data]: [string, Dataset]) => {
-            state.filteredData[id] = data;
-        },
-        SET_FILTERS: (state, [id, values]) => {
-            state.filters[id] = values;
-        },
         SET_LOADING: (state, loading: boolean) => {
             state.loading = loading;
         }
@@ -93,15 +82,6 @@ const udpcModule: Module<UDPCState, RootState> = {
         }
     },
     getters: {
-        dashboardData: state => {
-            return state.dashboardData
-        },
-        filteredData: state => {
-            return state.filteredData
-        },
-        filters: state => {
-            return state.filters
-        },
         loading: state => {
             return state.loading
         }

@@ -2,33 +2,32 @@ import { Module } from 'vuex';
 import { RootState } from './store';
 
 export interface DashboardState {
-    originalData: Dataset;
-    dashData: Dataset;
-    filterValues: { [key: string]: any };
+    dashboardData: { [key: string]: Dataset };
+    filteredData: { [key: string]: Dataset };
     filters: { [key: string]: any };
 }
 
 const initialState: DashboardState = {
-    originalData: [],
-    dashData: [],
-    filterValues: {},
-    filters: {}
+    dashboardData: {
+        osStats: []
+    },
+    filteredData: {
+        osStats: []
+    },
+    filters: {},
 };
 
 const chartsModule: Module<DashboardState, RootState> = { // type of local state is 'ChartsState'
     state: { ...initialState },
     mutations: {
-        SET_FILTERS: (state, [ident, values]) => {
-            state.filters[ident] = values;
+        SET_INITIAL_DATA: (state, [id, data]: [string, Dataset]) => {
+            state.dashboardData[id] = data;
         },
-        SET_ORIGINAL_DATA: (state, originalData: Dataset) => {
-            state.originalData = originalData;
+        SET_FILTERED_DATA: (state, [id, data]: [string, Dataset]) => {
+            state.filteredData[id] = data;
         },
-        SET_DASH_DATA: (state, dashData: Dataset) => {
-            state.dashData = dashData;
-        },
-        ADD_DASH_ELEMENT: (state, dataElement: Datum) => {
-            state.dashData.push(dataElement);
+        SET_FILTERS: (state, [id, values]) => {
+            state.filters[id] = values;
         }
     },
     actions: {
@@ -37,31 +36,14 @@ const chartsModule: Module<DashboardState, RootState> = { // type of local state
         }
     },
     getters: {
-        originalData: state => {
-            return state.originalData
+        dashboardData: state => {
+            return state.dashboardData
         },
-        dashData: state => {
-            return state.dashData
+        filteredData: state => {
+            return state.filteredData
         },
         filters: state => {
             return state.filters
-        },
-        filterValues: state => {
-            return state.filterValues
-        },
-        getDataByFilters: state => (dataSource: Dataset, property: string, value: any) => {
-            let newData: Dataset = [];
-            for (const filterElement of value) {
-                newData = newData.concat(dataSource.filter(element => element[property] === filterElement));
-            }
-            return newData;
-        },
-        getPropertyData: state => (property: string, dataSource: Dataset) => {
-            let valuesForProperty = [];
-            for (let obj of dataSource) {
-                valuesForProperty.push(obj[property])
-            }
-            return valuesForProperty;
         }
     }
 };
