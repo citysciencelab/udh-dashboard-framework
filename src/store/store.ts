@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
-// import dashboard, { DashboardState } from './dashboard.module';
+import dashboard, { DashboardState } from './dashboard.module';
 import { UDPCState } from './udpc.module';
 
 Vue.use(Vuex);
@@ -16,6 +16,6 @@ export default new Store<RootState>({ // type of root state is 'RootState'
      *   Good example for organising the vuex: https://github.com/gothinkster/vue-realworld-example-app/tree/master/src/store
      */
     modules: {
-        // dashboard
+        dashboard
     }
 })

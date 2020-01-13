@@ -17,7 +17,7 @@ const initialState: DashboardState = {
     filters: {},
 };
 
-const chartsModule: Module<DashboardState, RootState> = { // type of local state is 'ChartsState'
+const chartsModule: Module<DashboardState, RootState> = {
     state: { ...initialState },
     mutations: {
         SET_INITIAL_DATA: (state, [id, data]: [string, Dataset]) => {

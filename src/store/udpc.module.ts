@@ -27,9 +27,6 @@ const udpcModule: Module<UDPCState, RootState> = {
         }
     },
     actions: {
-        setFilters: (context, [id, values]) => {
-            context.commit('SET_FILTERS', [id, values]);
-        },
         fetchAppStats: async (context) => {
             context.commit('SET_LOADING', true);
 
@@ -55,9 +52,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', true);
 
             const params = {
-                month: context.state.filters['MONTH'],
-                year: context.state.filters['YEAR'],
-                quelle: context.state.filters['SOURCE']
+                month:  context.getters.filters['MONTH'],
+                year: context.getters.filters['YEAR'],
+                quelle: context.getters.filters['SOURCE']
             };
             // Convert range filters
             params.year = `[${params.year[0]} TO ${params.year[1] || params.year[0]}]`;
