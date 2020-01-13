@@ -14,16 +14,13 @@
     </md-card>
 </template>
 
-<script>
-    export default {
-        name: "stats-card",
-        props: {
-            dataBackgroundColor: {
-                type: String,
-                default: ""
-            }
-        }
-    };
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component({})
+export default class StatsCard extends Vue {
+    @Prop() dataBackgroundColor!: { type: string, default: string };
+}
 </script>
 
 <style scoped>

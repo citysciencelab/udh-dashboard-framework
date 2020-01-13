@@ -50,7 +50,7 @@
 
                     <template slot="content">
                         <p class="category">Size of dataset</p>
-                        <h3 class="title">{{ this.dashData.length }}</h3>
+                        <h3 class="title">{{ this.dashboardData.osStats.length }}</h3>
                     </template>
 
                     <template slot="footer">
@@ -83,9 +83,9 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.$store.getters.getPropertyData('os', this.testData.osStats )"
+                <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
                               v-bind:label="$t('message.os')" @new_selection="filterChanged"
-                              identifier="os"/>
+                              identifier="osStats"/>
             </div>
             <div class="col-sm">
                 <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
@@ -170,7 +170,7 @@
                     </template>
 
                     <template slot="content">
-                        <bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                        <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart1" holder-element="chart-holder"/>
@@ -189,14 +189,13 @@
                         <div class="tool-tip-header" @click="openToolTip('')">
                             Other chart
                         </div>
-<!--                        <md-icon class="info-icon" id="">-->
                         <md-icon class="info-icon">
                             info_outline
                         </md-icon>
                     </template>
 
                     <template slot="content">
-                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options" v-bind:origins="['anzahl_os']"
+                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
                                     selector="chart2" holder-element="chart-holder"/>
@@ -217,14 +216,13 @@
                         <div class="tool-tip-header" @click="openToolTip('')">
                             Other chart
                         </div>
-<!--                        <md-icon class="info-icon" id="">-->
                         <md-icon class="info-icon">
                             info_outline
                         </md-icon>
                     </template>
 
                     <template slot="content">
-                        <pie-chart v-bind:ds="this.testData.osStats" v-bind:options="options"
+                        <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart3" holder-element="chart-holder"/>
@@ -243,14 +241,13 @@
                         <div class="tool-tip-header" @click="openToolTip('')">
                             Other chart
                         </div>
-<!--                        <md-icon class="info-icon" id="">-->
                         <md-icon class="info-icon">
                             info_outline
                         </md-icon>
                     </template>
 
                     <template slot="content">
-                        <tree-map-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                        <tree-map-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart4" holder-element="chart-holder"/>
@@ -277,7 +274,7 @@
                     </template>
 
                     <template slot="content">
-                        <h-bar-chart v-bind:ds="this.testData.osStats" v-bind:options="chartOptions.osStats"
+                        <h-bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                      title="Distribution of operating systems"
                                      metric="anzahl_os" descriptor="os"
                                      selector="chart5" holder-element="chart-holder"/>
@@ -291,213 +288,238 @@
                 </stats-card>
             </div>
         </div>
-        <div class="row">
-            <!-- <div class="data-grid">
-                <div v-for="(t, index) in this.dashData"
-                     v-bind:key="index">
-                    <input v-model="t.name" @blur="handleMouseOut">
-                    <input v-model.number="t.val" type="number" @blur="handleMouseOut">
-                    <input v-model.number="t.val2" type="number" @blur="handleMouseOut">
-                </div>
-                <button @click="addDataPoint">
-                    New Data Point
-                </button>
-            </div> -->
-        </div>
-
 
         <!--Tooltips-->
-
         <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
             I am tooltip <a href="javascript:void(0)"
                             onclick="window.open('http://www.swoosh.com')">component</a> content!
         </b-tooltip>
-
     </div>
 </template>
 
-<script>
-    import Vue from 'vue'
-    import {mapActions, mapGetters} from 'vuex'
-    import StatsCard from "../components/StatsCard";
-    import MultiSelect from "../components/MultiSelect";
-    import SnackBar from "../components/SnackBar";
-    import ConfirmDialog from "../components/ConfimDialog";
-    import RangeSlider from "../components/RangeSlider";
-    import LineChart from "../components/charts/LineChart.vue";
-    import PieChart from "../components/charts/PieChart.vue";
-    import ScatterPlot from "../components/charts/ScatterPlot.vue";
-    import BarChart from "../components/charts/BarChart.vue";
-    import HBarChart from "../components/charts/HorBarChart.vue";
-    import TreeMapChart from "../components/charts/TreeMapChart.vue";
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import StatsCard from '../components/StatsCard.vue';
+import MultiSelect from '../components/MultiSelect.vue';
+import SnackBar from '../components/SnackBar.vue';
+import ConfirmDialog from '../components/ConfimDialog.vue';
+import RangeSlider from '../components/RangeSlider.vue';
+import LineChart from '../components/charts/LineChart.vue';
+import PieChart from '../components/charts/PieChart.vue';
+import ScatterPlot from '../components/charts/ScatterPlot.vue';
+import BarChart from '../components/charts/BarChart.vue';
+import HBarChart from '../components/charts/HorBarChart.vue';
+import TreeMapChart from '../components/charts/TreeMapChart.vue';
+import udpcStore from '../store/udpc.module';
 
-    export default {
-        components: {
-            StatsCard,
-            MultiSelect,
-            RangeSlider,
-            BarChart,
-            LineChart,
-            PieChart,
-            ScatterPlot,
-            HBarChart,
-            TreeMapChart,
-            ConfirmDialog
-        },
-        name: 'Charts',
-        data() {
-            return {
-                tooltipActive: false,
-                agreeDialogActive: false,
-                dateRange: 'year',
-                rangeMap: {
-                    dateRangeSlider: {
-                        'defaultValue': [],
-                        'step': null,
-                        'max': null,
-                        'min': null,
-                        'marks': {}
-                    }
-                },
-                chartOptions: {
-                    osStats: {
-                        dim: 'os'
-                    }
-                },
-                // soon to be deprecated
-                options: {
-                    dim: 'name',
-                    dim2: 'date'
-                },
-                didYouKnow: [
-                    'Wussten Sie schon: Fact 1',
-                    'Wussten Sie schon: Fact 2',
-                    'Wussten Sie schon: Fact 3',
-                    'Wussten Sie schon: Fact 4',
-                    'Wussten Sie schon: Fact 5'
-                ],
-                didYouKnowIndex: 0
-            }
-        },
-        async mounted() {
-            // Lets set the initial filters
-            await this.setFilters(['SOURCE', 'services_internet']);
-            await this.setFilters(['YEAR', [2017, 2019]]);
-            await this.setFilters(['MONTH', [1, 12]]);
-
-            // Lets fetch the initial dashboard data
-            await this.fetchOsStats();
-
-            // Initialize the 'Did you know' interval
-            this.didYouKnowInterval();
-
-            // Set initial date range
-            this.changeFilterRange('dateRangeSlider', this.dateRange);
-        },
-        computed: {
-            ...mapGetters([
-                'dashData',
-                'testData',
-                'loading',
-            ])
-        },
-        methods: {
-            ...mapActions([
-                'setFilters',
-                'fetchOsStats',
-                'filterOsStats'
-            ]),
-            testSnackBar() {
-                let options = {
-                    message: "Important bottom message",
-                    position: "center",
-                    duration: 10000,
-                    showSnackbar: true
-                };
-                new Vue({
-                    el: document.getElementById("snack").querySelector("div"),
-                    render: h => h(SnackBar, {attrs: options})
-                });
-            },
-            openToolTip(toolTipRef) {
-                this.$refs[toolTipRef].$emit('open')
-            },
-            changeFilterRange(sliderId, sliderRange) {
-                this.dateRange = sliderRange;
-
-                const today = new Date();
-                let start, end;
-                let values = {
-                    step: 1,
-                    marks: {}
-                };
-
-                if (sliderRange === 'day') {
-                    start = 1;
-                    end = 31;
-                } else if (sliderRange === 'month') {
-                    start = 1;
-                    end = 12;
-                } else if (sliderRange === 'year') {
-                    start = today.getFullYear() - 2;
-                    end = today.getFullYear();
-                }
-                values.defaultValue = [start, end];
-                values.max = end;
-                values.min = start;
-                for (start; start <= end; start++) {
-                    values.marks[start] = start;
-                }
-
-                this.rangeMap[sliderId] = values;
-            },
-            filterChanged(newFilterSelection) {
-                // The new filters could be set here - so far the filter already does that itself
-                // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
-                this.filterOsStats();
-            },
-            dialogResult(isPositive) {
-                this.agreeDialogActive = false;
-                console.log(isPositive)
-            },
-            rangeForChartChanged([min, max]) {
-                switch (this.dateRange) {
-                    case 'year':
-                        this.setFilters(['YEAR', [min, max]]);
-                        break;
-                    case 'month':
-                        this.setFilters(['MONTH', [min, max]]);
-                        break;
-                }
-                this.fetchOsStats();
-            },
-            addDataPoint() {
-                let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
-                this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
-            },
-            handleMouseOut() {
-                let changedObject = this.dashData[this.dashData.length - 1];
-                Vue.set(this.dashData, this.dashData.length - 1, changedObject);
-            },
-            didYouKnowInterval() {
-                this.didYouKnowIndex = setInterval(() => {
-                    if (this.didYouKnowIndex < this.didYouKnow.length - 1) {
-                        this.didYouKnowIndex++;
-                    } else {
-                        this.didYouKnowIndex = 0;
-                    }
-                }, 5000)
+@Component({
+    components: {
+        StatsCard,
+        MultiSelect,
+        RangeSlider,
+        BarChart,
+        LineChart,
+        PieChart,
+        ScatterPlot,
+        HBarChart,
+        TreeMapChart,
+        ConfirmDialog
+    }
+})
+export default class Charts extends Vue {
+    tooltipActive = false;
+    agreeDialogActive = false;
+    dateRange = 'year';
+    rangeMap: { [key: string]: DateRangeSlider } = {
+        dateRangeSlider: {
+            defaultValue: [],
+            step: 0,
+            max: 0,
+            min: 0,
+            marks: {}
+        }
+    };
+    chartOptions = {
+        osStats: {
+            dim: 'os'
+        }
+    };
+    didYouKnow = [
+        'Wussten Sie schon: Fact 1',
+        'Wussten Sie schon: Fact 2',
+        'Wussten Sie schon: Fact 3',
+        'Wussten Sie schon: Fact 4',
+        'Wussten Sie schon: Fact 5'
+    ];
+    didYouKnowIndex = 0;
+    meta: { [key: string]: any } = {
+        osStats: {
+            title: 'Distribution of operating systems',
+            dataSeries: {
+                valueAccessor: 'anzahl_os',
+                valueType: 'number',
+                categoryAccessor: 'os',
+                categoryType: 'string'
             }
         }
+    };
+
+    created() {
+        this.$store.registerModule('udpc', udpcStore);
     }
+
+    getFilterOptions(dataset: string) {
+        if (!this.dashboardData[dataset]) {
+            return [];
+        }
+        const accessor = this.meta[dataset].dataSeries.categoryAccessor;
+        return this.dashboardData[dataset].map(value => value[accessor]);
+    }
+
+    async mounted() {
+        // Lets set the initial dashboard data
+        await this.setFilters(['SOURCE', 'services_internet']);
+        await this.setFilters(['YEAR', [2017, 2019]]);
+        await this.setFilters(['MONTH', [1, 12]]);
+
+        // Lets fetch the initial dashboard data
+        await this.fetchOsStats();
+
+        // Initialize the 'Did you know' interval
+        this.didYouKnowInterval();
+
+        // Set initial date range
+        this.changeFilterRange('dateRangeSlider', this.dateRange);
+    }
+
+    get dashboardData(): { [key: string]: Dataset } {
+        return this.$store.getters.dashboardData;
+    }
+
+    get filteredData(): Dataset {
+        return this.$store.getters.filteredData;
+    }
+
+    get loading(): boolean {
+        return this.$store.getters.loading;
+    }
+
+    setFilters(options: [string, string | number[]]) {
+        this.$store.dispatch('setFilters', options);
+    }
+
+    fetchOsStats() {
+        this.$store.dispatch('fetchOsStats');
+    }
+
+    filterOsStats() {
+        this.$store.dispatch('applyFilter', ['osStats', this.meta.osStats.dataSeries.categoryAccessor]);
+    }
+
+    testSnackBar() {
+        let options = {
+            message: 'Important bottom message',
+            position: 'center',
+            duration: 10000,
+            showSnackbar: true
+        };
+
+        const snack = document.getElementById('snack');
+        if (!snack) {
+            return;
+        }
+        new Vue({
+            el: snack.querySelector('div') || undefined,
+            render: h => h(SnackBar, { attrs: options })
+        });
+    }
+
+    openToolTip(toolTipRef: string) {
+        const component = <Vue>this.$refs[toolTipRef];
+        if (!component) {
+            return;
+        }
+        component.$emit('open');
+    }
+
+    changeFilterRange(sliderId: string, sliderRange: string) {
+        this.dateRange = sliderRange;
+
+        const today = new Date();
+        let start = 0, end = 0;
+        let values: DateRangeSlider = {
+            defaultValue: [],
+            step: 1,
+            max: 0,
+            min: 0,
+            marks: {}
+        };
+
+        if (sliderRange === 'day') {
+            start = 1;
+            end = 31;
+        } else if (sliderRange === 'month') {
+            start = 1;
+            end = 12;
+        } else if (sliderRange === 'year') {
+            start = today.getFullYear() - 2;
+            end = today.getFullYear();
+        }
+        values.defaultValue = [start, end];
+        values.max = end;
+        values.min = start;
+
+        for (start; start <= end; start++) {
+            values.marks[start] = start;
+        }
+
+        this.rangeMap[sliderId] = values;
+    }
+
+    filterChanged() {
+        // The new filters could be set here - so far the filter already does that itself
+        // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
+        this.filterOsStats();
+    }
+
+    dialogResult(isPositive: boolean) {
+        this.agreeDialogActive = false;
+    }
+
+    rangeForChartChanged([min, max]: [number, number]) {
+        switch(this.dateRange) {
+            case 'year':
+                this.setFilters(['YEAR', [min, max]]);
+                break;
+            case 'month':
+                this.setFilters(['MONTH', [min, max]]);
+                break;
+        }
+        this.fetchOsStats();
+    }
+
+    addDataPoint() {
+        let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
+        this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
+    }
+
+    didYouKnowInterval () {
+        this.didYouKnowIndex = setInterval(() => {
+            if (this.didYouKnowIndex < this.didYouKnow.length-1) {
+                this.didYouKnowIndex++;
+            } else {
+                this.didYouKnowIndex = 0;
+            }
+        }, 5000);
+    }
+}
 </script>
 
 <style lang="scss">
-
     /*
         Charts
     */
-
     .chart-row {
         margin-top: 40px;
 
@@ -525,12 +547,9 @@
             }
         }
     }
-
-
 </style>
 
 <style scoped lang="scss">
-
     h1, h2 {
         font-weight: normal;
     }
@@ -557,7 +576,6 @@
         padding-top: 4px !important;
     }
 
-
     .facts-holder span {
         padding: 10px;
     }
@@ -565,7 +583,6 @@
     /*
         Transition
     */
-
     .list {
         position: relative;
     }
@@ -583,5 +600,4 @@
     .list-enter, .list-leave-to {
         opacity: 0;
     }
-
 </style>
