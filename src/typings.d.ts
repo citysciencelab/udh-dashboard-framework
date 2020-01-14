@@ -50,6 +50,13 @@ declare module '*.jpg' {
 
 type Datum = { [key: string]: any };
 
+interface TreeDatum extends Datum {
+  x0?: number;
+  x1?: number;
+  y0?: number;
+  y1?: number;
+}
+
 type Dataset = Datum[];
 
 type ChartOptions = { dim: string, dim2: string };
