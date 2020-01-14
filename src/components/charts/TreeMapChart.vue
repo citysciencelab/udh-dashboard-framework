@@ -71,7 +71,7 @@ export default class TreeMapChart extends AbstractChart {
             .attr('height', d => d.y1 - d.y0)
             .style('stroke', 'black')
             .style('fill', 'slateblue')
-            .attr('transform', 'translate(0,' + xOffset + ',' + yOffset + ')');
+            .attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
 
         const labelPaddingY = 17;
 
@@ -104,6 +104,10 @@ export default class TreeMapChart extends AbstractChart {
                 .html(content);
             return div;
         });
+
+        if (this.title) {
+            this.$utils.chart.addTitle(this.title, svg, this.$data.width);
+        }
     }
 }
 </script>
