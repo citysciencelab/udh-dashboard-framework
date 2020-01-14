@@ -27,20 +27,8 @@ export default class LineChart extends AbstractChart {
         let vOffset = this.$utils.chart.getYOffset(this.title) || 0;
         let hOffset = this.horizontalOffset || 0;
 
-        let maxVal = Math.max.apply(Math, this.ds.map(o => {
-            let values = [];
-            for (let origin of this.origins) {
-                values.push(o[origin]);
-            }
-            return Math.max.apply(Math, values);
-        }));
-        let minVal = Math.min.apply(Math, this.ds.map(o => {
-            let values = [];
-            for (let origin of this.origins) {
-                values.push(o[origin]);
-            }
-            return Math.min.apply(Math, values);
-        }));
+        let maxVal = Math.max(...this.ds.map(o => Math.max(...this.origins.map(origin => o[origin]))));
+        let minVal = Math.min(...this.ds.map(o => Math.min(...this.origins.map(origin => o[origin]))));
 
         let y = d3.scaleLinear()
             .domain([minVal, maxVal])

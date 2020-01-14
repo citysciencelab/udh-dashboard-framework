@@ -44,7 +44,7 @@ export default class HBarChart extends AbstractChart {
         svg.selectAll('.yAxis').remove();
 
         // Now drawing the xAxis
-        let maxVal = Math.max.apply(Math, this.ds.map(o => o[this.metric]));
+        let maxVal = Math.max(...this.ds.map(o => o[this.metric]));
         let xScale = d3.scaleLinear()
             .domain([0, maxVal])
             .range([0, barAreaWidth]);

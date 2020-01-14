@@ -43,7 +43,7 @@ export default class BarChart extends AbstractChart {
         svg.selectAll('xAxis').remove();
 
         // Now drawing the yAxis
-        let maxVal = Math.max.apply(Math, this.ds.map(o => o[this.metric]));
+        let maxVal = Math.max(...this.ds.map(o => o[this.metric]));
         let yScale = d3.scaleLinear()
             .domain([0, maxVal])
             .range([barAreaHeight, 0]);

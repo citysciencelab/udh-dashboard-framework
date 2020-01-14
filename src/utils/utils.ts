@@ -35,7 +35,7 @@ export default class Utils implements IUtils {
 
         drawXAxis(svg: SVG, xAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) {
             svg.append('g')
-                .attr('transform', 'translate(' + xTranslate + ',' + yTranslate + ')')
+                .attr('transform', `translate(${xTranslate},${yTranslate})`)
                 .call(xAxis)
                 .selectAll("text")
                 .style("text-anchor", "end")
@@ -46,7 +46,7 @@ export default class Utils implements IUtils {
 
         drawYAxis(svg: SVG, yAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) {
             svg.append('g')
-                .attr('transform', 'translate(' + xTranslate + ',' + yTranslate + ')')
+                .attr('transform', `translate(${xTranslate},${yTranslate})`)
                 .attr('class', 'yAxis')
                 .call(yAxis);
         },
@@ -60,12 +60,12 @@ export default class Utils implements IUtils {
             offsetLeft = offsetLeft || 0;
 
             svg.append('g')
-                .attr('transform', 'translate(50,' + (yAxisOffset ? yAxisOffset : offsetTop) + ')')
+                .attr('transform', `translate(50,${yAxisOffset ? yAxisOffset : offsetTop})`)
                 .attr('class', 'yAxis')
                 .call(yAxis);
 
             svg.append('g')
-                .attr('transform', 'translate(' + offsetLeft + ',' + (height + offsetTop + 5) + ')')
+                .attr('transform', `translate(${offsetLeft},${height + offsetTop + 5})`)
                 .call(xAxis)
                 .selectAll("text")
                 .style("text-anchor", "end")
@@ -86,16 +86,8 @@ export default class Utils implements IUtils {
                 .attr('class', axisName)
                 .call(axis);
 
-            let maxDimension = 0;
-            svg.call(axis).selectAll<SVGGElement, any>('.tick').each(function () {
-                if (axisName === 'yAxis') {
-                    maxDimension = this.getBBox().width > maxDimension ? this.getBBox().width : maxDimension;
-                } else {
-                    maxDimension = this.getBBox().height > maxDimension ? this.getBBox().height : maxDimension;
-                }
-            });
-
-            return maxDimension;
+            const nodes = svg.call(axis).selectAll<SVGGElement, any>('.tick').nodes();
+            return Math.max(...nodes.map(n => axisName === 'yAxis' ? n.getBBox().width : n.getBBox().height));
         },
 
         addTooltip(d: Datum, svg: SVG, x: number, y: number, v: string) {
