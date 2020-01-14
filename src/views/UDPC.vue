@@ -50,7 +50,7 @@
 
                     <template slot="content">
                         <p class="category">Size of dataset</p>
-                        <h3 class="title">{{ this.dashboardData.osStats.length }}</h3>
+                        <h3 class="title">{{this.dashboardData.osStats ? this.dashboardData.osStats.length : 0}}</h3>
                     </template>
 
                     <template slot="footer">
@@ -170,7 +170,7 @@
                     </template>
 
                     <template slot="content">
-                        <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
+                        <bar-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart1" holder-element="chart-holder"/>
@@ -195,7 +195,7 @@
                     </template>
 
                     <template slot="content">
-                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
+                        <line-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
                                     selector="chart2" holder-element="chart-holder"/>
@@ -222,7 +222,7 @@
                     </template>
 
                     <template slot="content">
-                        <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
+                        <pie-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart3" holder-element="chart-holder"/>
@@ -247,7 +247,7 @@
                     </template>
 
                     <template slot="content">
-                        <tree-map-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
+                        <tree-map-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart4" holder-element="chart-holder"/>
@@ -274,7 +274,7 @@
                     </template>
 
                     <template slot="content">
-                        <h-bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
+                        <h-bar-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
                                      title="Distribution of operating systems"
                                      metric="anzahl_os" descriptor="os"
                                      selector="chart5" holder-element="chart-holder"/>
@@ -327,8 +327,9 @@ import udpcStore from '../store/udpc.module';
         ConfirmDialog
     }
 })
-export default class Charts extends Vue {
+export default class UDPC extends Vue {
     tooltipActive = false;
+    osStats:Dataset = [];
     agreeDialogActive = false;
     dateRange = 'year';
     rangeMap: { [key: string]: DateRangeSlider } = {
@@ -367,6 +368,13 @@ export default class Charts extends Vue {
 
     created() {
         this.$store.registerModule('udpc', udpcStore);
+
+        this.$store.subscribe((mutation, state) => {
+            if (mutation.type === 'SET_FILTERED_DATA' && mutation.payload[1].length > 0) {
+                console.log(`Updating to ${state.status}`);
+                this.osStats = mutation.payload[1]
+            }
+        });
     }
 
     getFilterOptions(dataset: string) {
@@ -395,10 +403,6 @@ export default class Charts extends Vue {
 
     get dashboardData(): { [key: string]: Dataset } {
         return this.$store.getters.dashboardData;
-    }
-
-    get filteredData(): Dataset {
-        return this.$store.getters.filteredData;
     }
 
     get loading(): boolean {

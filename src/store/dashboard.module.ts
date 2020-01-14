@@ -9,10 +9,8 @@ export interface DashboardState {
 
 const initialState: DashboardState = {
     dashboardData: {
-        osStats: []
     },
     filteredData: {
-        osStats: []
     },
     filters: {},
 };
