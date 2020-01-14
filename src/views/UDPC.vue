@@ -170,7 +170,7 @@
                     </template>
 
                     <template slot="content">
-                        <bar-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
+                        <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart1" holder-element="chart-holder"/>
@@ -195,7 +195,7 @@
                     </template>
 
                     <template slot="content">
-                        <line-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
+                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
                                     selector="chart2" holder-element="chart-holder"/>
@@ -222,7 +222,7 @@
                     </template>
 
                     <template slot="content">
-                        <pie-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
+                        <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart3" holder-element="chart-holder"/>
@@ -247,7 +247,7 @@
                     </template>
 
                     <template slot="content">
-                        <tree-map-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
+                        <tree-map-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
                                    selector="chart4" holder-element="chart-holder"/>
@@ -274,7 +274,7 @@
                     </template>
 
                     <template slot="content">
-                        <h-bar-chart v-bind:ds="this.osStats" v-bind:options="chartOptions.osStats"
+                        <h-bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                      title="Distribution of operating systems"
                                      metric="anzahl_os" descriptor="os"
                                      selector="chart5" holder-element="chart-holder"/>
@@ -329,7 +329,6 @@ import udpcStore from '../store/udpc.module';
 })
 export default class UDPC extends Vue {
     tooltipActive = false;
-    osStats:Dataset = [];
     agreeDialogActive = false;
     dateRange = 'year';
     rangeMap: { [key: string]: DateRangeSlider } = {
@@ -340,6 +339,9 @@ export default class UDPC extends Vue {
             min: 0,
             marks: {}
         }
+    };
+    filteredData: { [key: string]: Dataset } = {
+        osStats: []
     };
     chartOptions = {
         osStats: {
@@ -370,9 +372,14 @@ export default class UDPC extends Vue {
         this.$store.registerModule('udpc', udpcStore);
 
         this.$store.subscribe((mutation, state) => {
-            if (mutation.type === 'SET_FILTERED_DATA' && mutation.payload[1].length > 0) {
-                console.log(`Updating to ${state.status}`);
-                this.osStats = mutation.payload[1]
+            if (!mutation.payload) {
+                return;
+            }
+            const id = mutation.payload[0];
+            const data = mutation.payload[1];
+
+            if (mutation.type === 'SET_FILTERED_DATA' && data.length > 0) {
+                this.filteredData[id] = data;
             }
         });
     }
