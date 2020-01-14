@@ -9,15 +9,8 @@ import AbstractChart from './AbstractChart.vue';
 
 @Component({})
 export default class ScatterPlot extends AbstractChart {
-    @Prop() ds!: Dataset;
-    @Prop() options!: { dim: string, dim2: string };
-    @Prop() title!: string;
     @Prop() origins!: string[];
-    @Prop() metric!: string;
     @Prop() metric2!: string;
-    @Prop() descriptor!: string;
-    @Prop() selector!: string;
-    @Prop() holderElement!: string;
 
     mounted() {
         this.redraw();

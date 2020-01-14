@@ -52,7 +52,7 @@ type Datum = { [key: string]: any };
 
 type Dataset = Datum[];
 
-type ChartOptions = { dim: string, dim2?: string };
+type ChartOptions = { dim: string, dim2: string };
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
 

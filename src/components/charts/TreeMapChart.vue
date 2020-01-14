@@ -17,13 +17,6 @@ interface TreeDatum extends Datum {
 
 @Component({})
 export default class TreeMapChart extends AbstractChart {
-    @Prop() ds!: Dataset;
-    @Prop() options!: { dim: string };
-    @Prop() title!: string;
-    @Prop() metric!: string;
-    @Prop() descriptor!: string;
-    @Prop() selector!: string;
-    @Prop() holderElement!: string;
 
     mounted() {
         this.redraw();

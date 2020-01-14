@@ -4,13 +4,13 @@ import * as d3 from 'd3';
 import $ from 'jquery';
 
 export default abstract class AbstractChart extends Vue {
-    @Prop() abstract ds: Dataset;
-    @Prop() abstract options: ChartOptions;
-    @Prop() abstract title: string;
-    @Prop() abstract metric: string;
-    @Prop() abstract descriptor: string;
-    @Prop() abstract selector: string;
-    @Prop() abstract holderElement: string;
+    @Prop() ds!: Dataset;
+    @Prop() options!: ChartOptions;
+    @Prop() title!: string;
+    @Prop() metric!: string;
+    @Prop() descriptor!: string;
+    @Prop() selector!: string;
+    @Prop() holderElement!: string;
     width = 300;
     height = 300;
     horizontalOffset = 60;

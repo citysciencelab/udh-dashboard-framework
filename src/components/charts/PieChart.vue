@@ -13,13 +13,6 @@ const d3tip = _d3tip as () => Tooltip;
 
 @Component({})
 export default class PieChart extends AbstractChart {
-    @Prop() ds!: Dataset;
-    @Prop() options!: { dim: string };
-    @Prop() title!: string;
-    @Prop() metric!: string;
-    @Prop() descriptor!: string;
-    @Prop() selector!: string;
-    @Prop() holderElement!: string;
 
     mounted() {
         this.redraw();
