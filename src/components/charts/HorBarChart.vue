@@ -90,6 +90,7 @@ export default class HBarChart extends AbstractChart {
 
         // this.$utils.chart.drawYAxis(svg, yAxis, (barAreaHeight + yOffset + this.barAxisSpace), (xOffset + this.barAxisSpace + barWidth/2) );
         this.$utils.chart.drawYAxis(svg, yAxis, xOffset + maxWidthAxis, yOffset + this.barAxisSpace);
+        this.$utils.chart.cleanSVGTag(svg);
         g.exit().remove();
     }
 }

@@ -21,6 +21,7 @@ interface IUtils {
         addTooltip: (d: any, svg: SVG, x: number, y: number, v: number) => void,
         removeTooltip: (svg: SVG) => void,
         addTitle: (t: string, svg: SVG, w: number) => void,
+        cleanSVGTag: (svg: SVG) => void,
         getXOffset: (svg: SVGSVGElement, chartHolderClass: string) => number,
         getYOffset: (title: string) => number,
         getDimensions: (svg: SVGSVGElement, title: string, chartHolderClass: string) => number[],
@@ -142,6 +143,13 @@ export default class Utils implements IUtils {
                 .attr('y', 20)
                 .attr('class', 'chart-title')
                 .text(t);
+        },
+
+        cleanSVGTag(svg: SVG) {
+            svg.attr("fill", null);
+            svg.attr("font-size", null);
+            svg.attr("font-family", null);
+            svg.attr("text-anchor", null);
         },
 
         getYOffset(title: string) {

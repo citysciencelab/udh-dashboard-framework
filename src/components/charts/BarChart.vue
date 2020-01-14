@@ -88,6 +88,7 @@ export default class BarChart extends AbstractChart {
         xAxis = d3.axisBottom(xScale);
 
         this.$utils.chart.drawXAxis(svg, xAxis, xOffset + this.barAxisSpace + barWidth/2, barAreaHeight + yOffset + this.barAxisSpace);
+        this.$utils.chart.cleanSVGTag(svg);
         g.exit().remove();
     }
 }
