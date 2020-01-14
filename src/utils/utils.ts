@@ -81,24 +81,24 @@ export default class Utils implements IUtils {
          * @param axisName has to be 'xAxis' or 'yAxis' to determine if to measure width or height
          * @returns [number]
          */
-        drawAxisMeasureExtent(svg: SVG, axis: d3.Axis<any>, axisName: string) {
+        drawAxisMeasureExtent(svg: SVG, axis: d3.Axis<Datum>, axisName: string) {
             svg.append('g')
                 .attr('class', axisName)
                 .call(axis);
 
             let maxDimension = 0;
-            (svg.call(axis).selectAll('.tick')).each(function() {
+            svg.call(axis).selectAll<SVGGElement, any>('.tick').each(function () {
                 if (axisName === 'yAxis') {
-                    maxDimension = (this as any).getBBox().width > maxDimension ? (this as any).getBBox().width : maxDimension;
+                    maxDimension = this.getBBox().width > maxDimension ? this.getBBox().width : maxDimension;
                 } else {
-                    maxDimension = (this as any).getBBox().height > maxDimension ? (this as any).getBBox().height : maxDimension;
+                    maxDimension = this.getBBox().height > maxDimension ? this.getBBox().height : maxDimension;
                 }
             });
 
             return maxDimension;
         },
 
-        addTooltip(d: any, svg: SVG, x: number, y: number, v: number) {
+        addTooltip(d: Datum, svg: SVG, x: number, y: number, v: string) {
             svg.append('text')
                 .attr('x', x || 0)
                 .attr('y', y || 0)

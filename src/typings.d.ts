@@ -79,7 +79,7 @@ interface IUtils {
     drawYAxis: (svg: SVG, yAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) => void,
     drawAxis: (height: number, svg: SVG, xAxis: d3.Axis<any>, yAxis: d3.Axis<any>, offsetTop: number, offsetLeft: number, yAxisOffset: number) => void,
     drawAxisMeasureExtent: (svg: SVG, axis: d3.Axis<any>, axisName: string) => number,
-    addTooltip: (d: any, svg: SVG, x: number, y: number, v: number) => void,
+    addTooltip: (d: Datum, svg: SVG, x: number, y: number, v: string) => void,
     removeTooltip: (svg: SVG) => void,
     addTitle: (t: string, svg: SVG, w: number) => void,
     cleanSVGTag: (svg: SVG) => void,

@@ -86,8 +86,7 @@ export default class LineChart extends AbstractChart {
                         info = a;
                     }
                     //TODO: Tooltip position - also trigger on close areas
-                    this.$utils.chart.addTooltip(info, svg,
-                        x(info['date']), y(info['val2']), <any>origin)
+                    this.$utils.chart.addTooltip(info, svg, x(info.date), y(info.val2), origin);
                 })
                 .on('mouseout', () => this.$utils.chart.removeTooltip(svg));
             index++;
