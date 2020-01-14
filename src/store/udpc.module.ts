@@ -1,12 +1,6 @@
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
 import { aggregateData } from '@/utils/utils';
-import { RootState } from './store';
-import {DashboardState} from "@/store/dashboard.module";
-
-export interface UDPCState extends DashboardState {
-    loading: boolean;
-}
 
 const initialState: UDPCState = {
     dashboardData: {

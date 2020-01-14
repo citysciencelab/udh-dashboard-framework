@@ -299,6 +299,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { Store } from 'vuex';
 import Component from 'vue-class-component';
 import StatsCard from '../components/StatsCard.vue';
 import MultiSelect from '../components/MultiSelect.vue';
@@ -375,8 +376,8 @@ export default class UDPC extends Vue {
             if (!mutation.payload) {
                 return;
             }
-            const id = mutation.payload[0];
-            const data = mutation.payload[1];
+            const id: string = mutation.payload[0];
+            const data: Dataset = mutation.payload[1];
 
             if (mutation.type === 'SET_FILTERED_DATA' && data.length > 0) {
                 this.filteredData[id] = data;

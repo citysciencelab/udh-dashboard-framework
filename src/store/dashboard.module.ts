@@ -1,17 +1,8 @@
 import { Module } from 'vuex';
-import { RootState } from './store';
-
-export interface DashboardState {
-    dashboardData: { [key: string]: Dataset };
-    filteredData: { [key: string]: Dataset };
-    filters: { [key: string]: any };
-}
 
 const initialState: DashboardState = {
-    dashboardData: {
-    },
-    filteredData: {
-    },
+    dashboardData: {},
+    filteredData: {},
     filters: {},
 };
 
