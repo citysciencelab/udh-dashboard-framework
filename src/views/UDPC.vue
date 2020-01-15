@@ -144,14 +144,7 @@
             </div>
             <div class="col-sm">
                 <div class="facts-holder">
-                    <transition-group name="list" tag="p">
-                    <span v-for="(didYou, index) in [this.didYouKnow[didYouKnowIndex]]"
-                          v-bind:key="index"
-                          class="list-item">
-                        {{ $t('udpc.facts', { fact: didYou }) }}
-<!--                        {{ $t("udpc.hello") }} -->
-                    </span>
-                    </transition-group>
+                    <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
                 </div>
             </div>
             <div class="col-sm">
@@ -302,21 +295,23 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import StatsCard from '../components/StatsCard.vue';
+import DidYouKnow from '../components/DidYouKnow.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
-import ConfirmDialog from '../components/ConfimDialog.vue';
+import ConfirmDialog from '../components/ConfirmDialog.vue';
 import RangeSlider from '../components/RangeSlider.vue';
 import LineChart from '../components/charts/LineChart.vue';
 import PieChart from '../components/charts/PieChart.vue';
 import ScatterPlot from '../components/charts/ScatterPlot.vue';
 import BarChart from '../components/charts/BarChart.vue';
-import HBarChart from '../components/charts/HorBarChart.vue';
+import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
 import udpcStore from '../store/udpc.module';
 
 @Component({
     components: {
         StatsCard,
+        DidYouKnow,
         MultiSelect,
         RangeSlider,
         BarChart,
@@ -356,7 +351,6 @@ export default class UDPC extends Vue {
         'Fact 4',
         'Fact 5'
     ];
-    didYouKnowIndex = 0;
     meta: { [key: string]: any } = {
         osStats: {
             title: 'Distribution of operating systems',
@@ -376,8 +370,8 @@ export default class UDPC extends Vue {
             if (!mutation.payload) {
                 return;
             }
-            const id = mutation.payload[0];
-            const data = mutation.payload[1];
+            const id: string = mutation.payload[0];
+            const data: Dataset = mutation.payload[1];
 
             if (mutation.type === 'SET_FILTERED_DATA' && data.length > 0) {
                 this.filteredData[id] = data;
@@ -401,9 +395,6 @@ export default class UDPC extends Vue {
 
         // Lets fetch the initial dashboard data
         await this.fetchOsStats();
-
-        // Initialize the 'Did you know' interval
-        this.didYouKnowInterval();
 
         // Set initial date range
         this.changeFilterRange('dateRangeSlider', this.dateRange);
@@ -515,17 +506,6 @@ export default class UDPC extends Vue {
         let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
         this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
     }
-
-    didYouKnowInterval () {
-        // setInterval(() => {
-        this.didYouKnowIndex = setInterval(() => {
-            if (this.didYouKnowIndex < this.didYouKnow.length-1) {
-                this.didYouKnowIndex++;
-            } else {
-                this.didYouKnowIndex = 0;
-            }
-        }, 5000);
-    }
 }
 </script>
 
@@ -558,26 +538,5 @@ export default class UDPC extends Vue {
 
     .facts-holder span {
         padding: 10px;
-    }
-
-    /*
-        Transition
-    */
-    .list {
-        position: relative;
-    }
-
-    .list-item {
-        position: absolute;
-        display: inline-block;
-        margin-right: 10px;
-    }
-
-    .list-enter-active, .list-leave-active {
-        transition: opacity .8s ease;
-    }
-
-    .list-enter, .list-leave-to {
-        opacity: 0;
     }
 </style>
