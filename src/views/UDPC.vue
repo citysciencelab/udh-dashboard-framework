@@ -84,7 +84,7 @@
         <div class="row">
             <div class="col-sm">
                 <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
-                              v-bind:label="$t('message.os')" @new_selection="filterChanged"
+                              v-bind:label="$t('message.udpc.os')" @new_selection="filterChanged"
                               identifier="osStats"/>
             </div>
             <div class="col-sm">
@@ -516,6 +516,7 @@ export default class UDPC extends Vue {
     }
 
     didYouKnowInterval () {
+        // setInterval(() => {
         this.didYouKnowIndex = setInterval(() => {
             if (this.didYouKnowIndex < this.didYouKnow.length-1) {
                 this.didYouKnowIndex++;
@@ -526,39 +527,6 @@ export default class UDPC extends Vue {
     }
 }
 </script>
-
-<style lang="scss">
-    /*
-        Charts
-    */
-    .chart-row {
-        margin-top: 40px;
-
-        .chart-holder {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding-left: 10px !important;
-            padding-right: 10px !important;
-            padding-bottom: 20px !important;
-
-            .md-card-actions {
-                margin: 0;
-                position: absolute;
-                bottom: 0;
-                float: right;
-                right: 0;
-                padding-right: 5px;
-                padding-top: 0;
-
-                .notice {
-                    font-style: italic;
-                    font-size: 7pt;
-                }
-            }
-        }
-    }
-</style>
 
 <style scoped lang="scss">
     h1, h2 {

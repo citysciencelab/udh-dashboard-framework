@@ -35,6 +35,8 @@
                     <router-link to="/about">About</router-link>
                     |
                     <router-link to="/udpc">UDPC</router-link>
+                    |
+                    <router-link to="/participation">Participation</router-link>
                 </div>
                 <router-view/>
             </md-app-content>
@@ -202,9 +204,44 @@ export default class App extends Vue {
         }
     }
 
+
+    /*
+        Charts
+    */
+
+    .chart-row {
+        margin-top: 40px;
+
+        .chart-holder {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            padding-bottom: 20px !important;
+
+            .md-card-actions {
+                margin: 0;
+                position: absolute;
+                bottom: 0;
+                float: right;
+                right: 0;
+                padding-right: 5px;
+                padding-top: 0;
+
+                .notice {
+                    font-style: italic;
+                    font-size: 7pt;
+                }
+            }
+        }
+    }
+
+
     /*
      Tooltip
     */
+
     .d3-tip, .md-tooltip, .md-snackbar, .udpc-tooltip .tooltip-inner {
         background: rgba(0, 0, 0, 0.65) !important;
 

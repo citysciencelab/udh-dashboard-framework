@@ -1,16 +1,28 @@
 export const messages = {
     de: {
-        message: {
+        general: {
+
+        },
+        udpc: {
             hello: 'hallo welt',
             month: 'Monat',
             os: 'Betriebssystem'
+        },
+        participation: {
+            district: 'Bezirk'
         }
     },
     en: {
-        message: {
+        general: {
+
+        },
+        udpc: {
             hello: 'hello world',
             month: 'Month',
             os: 'OS'
+        },
+        participation: {
+            district: 'District'
         }
     }
 
