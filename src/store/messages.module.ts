@@ -6,7 +6,8 @@ export const messages = {
         udpc: {
             hello: 'hallo welt',
             month: 'Monat',
-            os: 'Betriebssystem'
+            os: 'Betriebssystem',
+            facts: 'Wussten Sie schon: %{fact}'
         },
         participation: {
             district: 'Bezirk'
@@ -19,7 +20,8 @@ export const messages = {
         udpc: {
             hello: 'hello world',
             month: 'Month',
-            os: 'OS'
+            os: 'OS',
+            facts: 'Did you know: %{fact}'
         },
         participation: {
             district: 'District'

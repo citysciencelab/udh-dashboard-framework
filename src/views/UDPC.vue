@@ -148,13 +148,14 @@
                     <span v-for="(didYou, index) in [this.didYouKnow[didYouKnowIndex]]"
                           v-bind:key="index"
                           class="list-item">
-                        {{didYou}}
+                        {{ $t('udpc.facts', { fact: didYou }) }}
+<!--                        {{ $t("udpc.hello") }} -->
                     </span>
                     </transition-group>
                 </div>
             </div>
             <div class="col-sm">
-                <p>{{ $t("message.hello") }}</p>
+                <p>{{ $t("udpc.hello") }}</p>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
@@ -349,11 +350,11 @@ export default class UDPC extends Vue {
         }
     };
     didYouKnow = [
-        'Wussten Sie schon: Fact 1',
-        'Wussten Sie schon: Fact 2',
-        'Wussten Sie schon: Fact 3',
-        'Wussten Sie schon: Fact 4',
-        'Wussten Sie schon: Fact 5'
+        'Fact 1',
+        'Fact 2',
+        'Fact 3',
+        'Fact 4',
+        'Fact 5'
     ];
     didYouKnowIndex = 0;
     meta: { [key: string]: any } = {
