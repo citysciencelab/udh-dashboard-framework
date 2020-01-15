@@ -304,7 +304,7 @@ import Component from 'vue-class-component';
 import StatsCard from '../components/StatsCard.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
-import ConfirmDialog from '../components/ConfimDialog.vue';
+import ConfirmDialog from '../components/ConfirmDialog.vue';
 import RangeSlider from '../components/RangeSlider.vue';
 import LineChart from '../components/charts/LineChart.vue';
 import PieChart from '../components/charts/PieChart.vue';
