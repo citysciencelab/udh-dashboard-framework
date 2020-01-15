@@ -5,9 +5,9 @@
         </div>
         <div class="row" style="background-color: white">
             <div class="col-sm">
-<!--                <multi-select v-bind:selectData="this.getFilterOptions('bezirk')"-->
-<!--                              v-bind:label="$t('message.participation.district')" @new_selection="filterChanged"-->
-<!--                              identifier="osStats"/>-->
+                <multi-select v-bind:selectData="this.getFilterOptions('participationData','bezirk')"
+                              v-bind:label="$t('message.district')" @new_selection="filterChanged"
+                              identifier="bezirk" ref="districtSelect"/>
             </div>
             <div class="col-sm">
                 jghj
@@ -103,18 +103,22 @@
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
                 if (mutation.type === 'SET_FILTERED_DATA' && mutation.payload[1].length > 0) {
-                    console.log(`Updating to ${state.status}`);
-                    this.filteredData.participationDistrictCount = mutation.payload[1]
+
+                    if (mutation.payload[0] === 'participationDistrictCount') {
+                        this.filteredData.participationDistrictCount = mutation.payload[1];
+                    } else if (mutation.payload[0] === 'participationData') {
+                        this.$refs.districtSelect.updateComponent();
+                    }
+
                 }
             });
         }
 
-        getFilterOptions(filterProperty: string) {
-            // if (!this.filteredData) {
-            //     return [];
-            // }
-            // const accessor = this.meta[dataset].dataSeries.categoryAccessor;
-            // return this.dashboardData[dataset].map(value => value[accessor]);
+        getFilterOptions(dataId: string, filterProperty: string) {
+            if (!this.$store.getters.filteredDataById(dataId)) {
+                return [];
+            }
+            return this.$store.getters.getDistinctPropertyValues(dataId, filterProperty);
         }
 
         async mounted() {

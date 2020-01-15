@@ -39,6 +39,7 @@ const participationModule: Module<ParticipationState, RootState> = {
             const resultExtract = wfs.getDataFromWFSJson(results as Object[], wfsTypename, dataPropertyNames, prefix, baseNodes);
             console.log("EXTRAKT!!!", resultExtract);
             context.commit('SET_INITIAL_DATA', ['participationData', resultExtract]);
+            context.commit('SET_FILTERED_DATA', ['participationData', resultExtract]);
             context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(resultExtract, 'bezirk')]);
         },
         applyFilter: (context, [id, accessor]) => {

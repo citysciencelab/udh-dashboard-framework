@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue} from 'vue-property-decorator';
 
 @Component({})
 export default class MultiSelect extends Vue {
@@ -23,9 +23,17 @@ export default class MultiSelect extends Vue {
     @Prop() label!: string;
     selectedData = [];
 
+    created() {
+        console.log("dings")
+    }
+
     closed() {
         this.$store.dispatch('setFilters', [this.identifier, this.selectedData]);
         this.$emit('new_selection', this.selectedData);
+    }
+
+    public updateComponent() {
+        this.$forceUpdate();
     }
 }
 </script>
