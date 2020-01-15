@@ -40,7 +40,7 @@ export default class BarChart extends AbstractChart {
         let maxHeightAxis = this.$utils.chart.drawAxisMeasureExtent(svg, xAxis, 'xAxis');
         let barAreaHeight = this.height - yOffset - maxHeightAxis;
         // Remove the axis
-        svg.selectAll('xAxis').remove();
+        svg.selectAll('.xAxis').remove();
 
         // Now drawing the yAxis
         let maxVal = Math.max.apply(Math, this.ds.map(o => o[this.metric]));
