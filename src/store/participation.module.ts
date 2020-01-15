@@ -37,15 +37,16 @@ const participationModule: Module<ParticipationState, RootState> = {
         fetchParticipationStats: async (context) => {
             const results = await wfs.get(wfsUrl, wfsTypename, dataPropertyNames);
             const resultExtract = wfs.getDataFromWFSJson(results as Object[], wfsTypename, dataPropertyNames, prefix, baseNodes);
-            console.log("EXTRAKT!!!", resultExtract);
+
             context.commit('SET_INITIAL_DATA', ['participationData', resultExtract]);
             context.commit('SET_FILTERED_DATA', ['participationData', resultExtract]);
             context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(resultExtract, 'bezirk')]);
         },
-        applyFilter: (context, [id, accessor]) => {
-            /*const results = await wfs.get();
-            console.log("ddd", results)
-            context.commit('SET_PARTICIPATION_STATS', results);*/
+        recalculateWithFilters: (context) => {
+            const filteredData = context.getters.dataWithAppliedFilters('participationData');
+            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(filteredData, 'bezirk')]);
+            console.log("doe")
+
         }
     },
     getters: {

@@ -118,7 +118,7 @@
             if (!this.$store.getters.filteredDataById(dataId)) {
                 return [];
             }
-            return this.$store.getters.getDistinctPropertyValues(dataId, filterProperty);
+            return this.$store.getters.distinctPropertyValues(dataId, filterProperty);
         }
 
         async mounted() {
@@ -130,10 +130,13 @@
             this.$store.dispatch('fetchParticipationStats');
         }
 
-        filterChanged() {
-            // The new filters could be set here - so far the filter already does that itself
-            // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
-            // this.filterOsStats();
+        /*
+        *   Gets fired when a MultiSelect selection has changed.
+        *   Vuex store ist set from the MultiSelect itself
+        *   @param the selected elements - not used in this dashboard
+        */
+        filterChanged(eventData: string[]) {
+            this.$store.dispatch('recalculateWithFilters');
         }
     }
 </script>
