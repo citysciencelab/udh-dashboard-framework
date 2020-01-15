@@ -84,7 +84,7 @@
         <div class="row">
             <div class="col-sm">
                 <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
-                              v-bind:label="$t('message.udpc.os')" @new_selection="filterChanged"
+                              v-bind:label="$t('udpc.os')" @new_selection="filterChanged"
                               identifier="osStats"/>
             </div>
             <div class="col-sm">

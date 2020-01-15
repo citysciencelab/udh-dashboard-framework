@@ -1,7 +1,7 @@
 export const messages = {
     de: {
         general: {
-
+            title: 'Titel'
         },
         udpc: {
             hello: 'hallo welt',
@@ -14,7 +14,7 @@ export const messages = {
     },
     en: {
         general: {
-
+            title: 'Title'
         },
         udpc: {
             hello: 'hello world',

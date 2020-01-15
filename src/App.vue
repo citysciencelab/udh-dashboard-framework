@@ -7,7 +7,7 @@
         <md-app class="md-app-scroll-fix" md-waterfall md-mode="fixed">
             <md-app-toolbar class="md-primary">
                 <div class="md-toolbar-row">
-                    <span class="md-title">My Title</span>
+                    <span class="md-title">{{ $t('general.title') }}</span>
                     <div class="md-toolbar-section-end">
                         <md-menu md-direction="bottom-start">
                             <md-button md-menu-trigger>

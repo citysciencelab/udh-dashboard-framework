@@ -6,7 +6,7 @@
         <div class="row" style="background-color: white">
             <div class="col-sm">
                 <multi-select v-bind:selectData="this.getFilterOptions('participationData','bezirk')"
-                              v-bind:label="$t('message.district')" @new_selection="filterChanged"
+                              v-bind:label="$t('participation.district')" @new_selection="filterChanged"
                               identifier="bezirk" ref="districtSelect"/>
             </div>
             <div class="col-sm">
