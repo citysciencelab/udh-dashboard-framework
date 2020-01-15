@@ -310,7 +310,7 @@ import LineChart from '../components/charts/LineChart.vue';
 import PieChart from '../components/charts/PieChart.vue';
 import ScatterPlot from '../components/charts/ScatterPlot.vue';
 import BarChart from '../components/charts/BarChart.vue';
-import HBarChart from '../components/charts/HorBarChart.vue';
+import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
 import udpcStore from '../store/udpc.module';
 
