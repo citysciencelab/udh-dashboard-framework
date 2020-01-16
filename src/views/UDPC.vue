@@ -144,7 +144,7 @@
             </div>
             <div class="col-sm">
                 <div class="facts-holder">
-                    <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
+                    <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000" prefix="udpc.facts"></did-you-know>
                 </div>
             </div>
             <div class="col-sm">
@@ -409,7 +409,7 @@ export default class UDPC extends Vue {
     }
 
     setFilters(options: [string, string | number[]]) {
-        this.$store.dispatch('setFilters', options);
+        this.$store.commit('SET_FILTERS', options);
     }
 
     fetchOsStats() {
