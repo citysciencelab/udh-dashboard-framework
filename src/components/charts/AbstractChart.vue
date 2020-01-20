@@ -11,10 +11,8 @@ export default abstract class AbstractChart extends Vue {
     @Prop() descriptor!: string;
     @Prop() selector!: string;
     @Prop() holderElement!: string;
-    width = 300;
-    height = 300;
-    horizontalOffset = 60;
-    barAxisSpace = 10;
+    width = 100; // %
+    height = 100; // %
 
     @Watch('ds') onDsChanged() {
         if (this.ds.length > 0) {
@@ -36,52 +34,27 @@ export default abstract class AbstractChart extends Vue {
         }
     }
 
-    abstract createChart(): void;
-
-    redrawOnDimensionsChange(svg: SVGSVGElement) {
-        const dimensions = this.$utils.chart.getDimensions(svg, this.title, this.holderElement);
-        let changed = false;
-
-        if (!dimensions.length) {
-            return;
-        }
-        if (this.width !== dimensions[0] && dimensions[0] > 0) {
-            this.width = dimensions[0];
-            changed = true;
-        }
-        if (this.height !== dimensions[1] && dimensions[1] > 0) {
-            this.height = dimensions[1];
-            changed = true;
-        }
-        if (changed && this.ds.length > 0) {
-            this.createChart();
-        }
+    get style() {
+        return {
+            width: `${this.width}%`,
+            height: `${this.height}%`
+        };
     }
 
-    getSVGElement() {
+    get svgElement() {
         // We assume it's an <svg>, so we can typecast from JQuery world to DOM world
         return <SVGSVGElement>($('#' + this.selector).get(0) as any);
     }
+
+    abstract createChart(): void;
 }
 </script>
 
-<style>
-    .chart-container {
-        display: inline-block;
-        position: relative;
-        width: 100%;
-        padding-bottom: 100%;
-        vertical-align: top;
-        overflow: hidden;
-    }
-
+<style lang="scss">
     .chart {
         padding: 0 !important;
         height: 100%;
         width: 100%;
         display: inline-block;
-        position: absolute;
-        top: 0;
-        left: 0;
     }
 </style>

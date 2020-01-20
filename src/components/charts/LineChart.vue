@@ -1,5 +1,7 @@
-<template class="chart-container">
-    <svg class="chart" v-bind:id="selector"></svg>
+<template>
+    <div class="chart-wrapper" :style="style">
+        <svg class="chart" v-bind:id="selector"></svg>
+    </div>
 </template>
 
 <script lang="ts">
@@ -11,14 +13,10 @@ import AbstractChart from './AbstractChart.vue';
 export default class LineChart extends AbstractChart {
     @Prop() origins!: string[];
     @Prop() metric2!: string;
+    horizontalOffset = 60;
 
     mounted() {
-        this.redraw();
-        window.addEventListener('resize', this.redraw);
-    }
-
-    redraw() {
-        this.redrawOnDimensionsChange(this.getSVGElement());
+        window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
@@ -34,7 +32,7 @@ export default class LineChart extends AbstractChart {
             .domain([minVal, maxVal])
             .range([this.height, 0]);
         let yAxis = d3.axisLeft(y);
-        let x = this.$utils.chart.initTimeScale(this.ds, this.options.dim2, this.width);
+        let x = this.$utils.chart.timeScale(this.ds, this.options.dim2, this.width);
         let xAxis = d3.axisBottom<Date>(x)
             .tickFormat(d3.timeFormat('%y-%b')).tickValues(this.ds.map(d => d.date));
 
@@ -80,7 +78,7 @@ export default class LineChart extends AbstractChart {
             index++;
         }
 
-        this.$utils.chart.drawAxis(this.height, svg, xAxis, yAxis, vOffset, hOffset, 0);
+        // this.$utils.chart.drawAxis(this.height, svg, xAxis, yAxis, vOffset, hOffset, 0);
         svg.exit().remove();
     }
 }

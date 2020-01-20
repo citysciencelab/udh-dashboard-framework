@@ -80,11 +80,10 @@ interface RootState {
 
 interface IUtils {
   chart: {
-    initOrdinalScale: (ds: Dataset, dim: string, width: number) => d3.ScaleOrdinal<string, any>,
-    initTimeScale: (ds: Dataset, dim: string, width: number) => d3.ScaleTime<number, number>,
-    drawXAxis: (svg: SVG, xAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) => void,
-    drawYAxis: (svg: SVG, yAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) => void,
-    drawAxis: (height: number, svg: SVG, xAxis: d3.Axis<any>, yAxis: d3.Axis<any>, offsetTop: number, offsetLeft: number, yAxisOffset: number) => void,
+    ordinalScale: (ds: Dataset, dim: string, width: number) => d3.ScaleOrdinal<string, any>,
+    timeScale: (ds: Dataset, dim: string, width: number) => d3.ScaleTime<number, number>,
+    drawXAxis: (svg: SVG, xAxis: d3.Axis<any>, xTranslate?: number, yTranslate?: number) => number,
+    drawYAxis: (svg: SVG, yAxis: d3.Axis<any>, xTranslate?: number, yTranslate?: number) => number,
     drawAxisMeasureExtent: (svg: SVG, axis: d3.Axis<any>, axisName: string) => number,
     addTooltip: (d: Datum, svg: SVG, x: number, y: number, v: string) => void,
     removeTooltip: (svg: SVG) => void,
@@ -92,7 +91,6 @@ interface IUtils {
     cleanSVGTag: (svg: SVG) => void,
     getXOffset: (svg: SVGSVGElement, chartHolderClass: string) => number,
     getYOffset: (title: string) => number,
-    getDimensions: (svg: SVGSVGElement, title: string, chartHolderClass: string) => number[],
     getHolderElement: (svg: JQuery<SVGSVGElement>, chartHolderClass: string) => JQuery<SVGSVGElement>
   },
   date: {

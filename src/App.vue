@@ -115,7 +115,7 @@ export default class App extends Vue {
         -webkit-transition: background-image 0.5s ease-in-out;
         transition: background-image 0.5s ease-in-out;
 
-        .md-card.chart-holder, .md-card.md-theme-default,
+        .md-card.chart-card, .md-card.md-theme-default,
         .filter-button, .md-menu.md-select,
         .facts-holder span {
             background-color: rgba(255, 255, 255, 0.9) !important;

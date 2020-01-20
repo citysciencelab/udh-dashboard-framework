@@ -11,67 +11,56 @@ declare module 'vue/types/vue' {
 
 export default class Utils implements IUtils {
     chart = {
-        initOrdinalScale(ds: Dataset, dim: string, width: number) {
-            let domainArr: any[] = [];
-            let rangeArr: any[] = [];
-
-            ds.forEach((t) => {
-                domainArr.push(t[dim])
-            });
-            ds.forEach((t, i) => {
-                rangeArr.push(width * i / ds.length)
-            });
+        ordinalScale(ds: Dataset, dim: string, width: number) {
+            let domainArr = ds.map(d => d[dim]);
+            let rangeArr = ds.map((d, i) => width * i / ds.length);
 
             return d3.scaleOrdinal()
                 .domain(domainArr)
                 .range(rangeArr);
         },
 
-        initTimeScale(ds: Dataset, dim: string, width: number) {
+        timeScale(ds: Dataset, dim: string, width: number) {
             const x = d3.scaleTime().range([0, width]);
             x.domain(<number[]>d3.extent(ds, d => d[dim]));
             return x;
         },
 
-        drawXAxis(svg: SVG, xAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) {
-            svg.append('g')
-                .attr('transform', `translate(${xTranslate},${yTranslate})`)
-                .call(xAxis)
-                .selectAll("text")
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-20)");
-        },
-
-        drawYAxis(svg: SVG, yAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) {
-            svg.append('g')
-                .attr('transform', `translate(${xTranslate},${yTranslate})`)
-                .attr('class', 'yAxis')
-                .call(yAxis);
-        },
-
-        // TODO: delete when the linechart has been adjusted
-        drawAxis(height: number, svg: SVG, xAxis: d3.Axis<Datum>, yAxis: d3.Axis<Datum>, offsetTop: number, offsetLeft: number, yAxisOffset: number) {
-            if (offsetTop === Infinity || offsetLeft === Infinity || yAxisOffset === Infinity) {
-                return;
+        /*
+         * Draw x axis
+         * Returns: height of the axis including labels
+         */
+        drawXAxis(svg: SVG, xAxis: d3.Axis<any>, xTranslate?: number, yTranslate?: number) {
+            let g = svg.append('g')
+            if (xTranslate || yTranslate) {
+                g = g.attr('transform', `translate(${xTranslate}, ${yTranslate})`)
             }
-            offsetTop = offsetTop || 0;
-            offsetLeft = offsetLeft || 0;
+            const created = g.attr('class', 'xAxis')
+                .call(xAxis)
+                .selectAll<SVGGElement, any>('text')
+                .style('text-anchor', 'end')
+                .attr('dx', '-.8em')
+                .attr('dy', '.15em')
+                .attr('transform', 'rotate(-30)');
 
-            svg.append('g')
-                .attr('transform', `translate(50,${yAxisOffset ? yAxisOffset : offsetTop})`)
-                .attr('class', 'yAxis')
+            const ticks = created.nodes();
+            return Math.max(...ticks.map(n => n.getBoundingClientRect().height)) + 5;
+        },
+
+        /*
+         * Draw y axis
+         * Returns: width of the axis including labels
+         */
+        drawYAxis(svg: SVG, yAxis: d3.Axis<any>, xTranslate?: number, yTranslate?: number) {
+            let g = svg.append('g')
+            if (xTranslate || yTranslate) {
+                g = g.attr('transform', `translate(${xTranslate}, ${yTranslate})`)
+            }
+            const created = g.attr('class', 'yAxis')
                 .call(yAxis);
 
-            svg.append('g')
-                .attr('transform', `translate(${offsetLeft},${height + offsetTop + 5})`)
-                .call(xAxis)
-                .selectAll("text")
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-20)");
+            const ticks = created.nodes();
+            return Math.max(...ticks.map(n => n.getBoundingClientRect().width));
         },
 
         /**
@@ -128,20 +117,6 @@ export default class Utils implements IUtils {
         getXOffset(svg: SVGSVGElement, chartHolderClass: string) {
             let holderElement = this.getHolderElement($(svg), chartHolderClass);
             return (parseInt(holderElement.css("padding-left")) + parseInt(holderElement.css("padding-right"))) / 2;
-        },
-
-        /**
-         * This returns the calculated width and height that the chart should adjust to
-         * @param svg the D3 chart element
-         * @param title the possible chart title
-         * @param chartHolderClass the element class that determines the height and width of the chart
-         * @returns [number]
-         */
-        getDimensions(svg: SVGSVGElement, title: string, chartHolderClass: string) {
-            let holderElement = this.getHolderElement($(svg), chartHolderClass);
-            const width = holderElement.width() || 0;
-            const height = (holderElement.height() || 0) - this.getYOffset(title) || 0;
-            return [width, height];
         },
 
         getHolderElement(svg: JQuery<SVGSVGElement>, chartHolderClass: string) {

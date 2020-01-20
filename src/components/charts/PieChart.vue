@@ -1,5 +1,7 @@
 <template>
-    <svg class="chart" v-bind:id="selector"></svg>
+    <div class="chart-wrapper" :style="style">
+        <svg class="chart" v-bind:id="selector"></svg>
+    </div>
 </template>
 
 <script lang="ts">
@@ -15,12 +17,7 @@ const d3tip = _d3tip as () => Tooltip;
 export default class PieChart extends AbstractChart {
 
     mounted() {
-        this.redraw();
-        window.addEventListener('resize', this.redraw);
-    }
-
-    redraw() {
-        this.redrawOnDimensionsChange(this.getSVGElement());
+        window.addEventListener('resize', this.createChart);
     }
 
     createChart() {

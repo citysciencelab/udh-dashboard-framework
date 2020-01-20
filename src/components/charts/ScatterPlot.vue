@@ -1,5 +1,7 @@
 <template>
-    <svg class="chart" v-bind:id="selector" width="500" height="300"></svg>
+    <div class="chart-wrapper" :style="style">
+        <svg class="chart" v-bind:id="selector"></svg>
+    </div>
 </template>
 
 <script lang="ts">
@@ -11,14 +13,10 @@ import AbstractChart from './AbstractChart.vue';
 export default class ScatterPlot extends AbstractChart {
     @Prop() origins!: string[];
     @Prop() metric2!: string;
+    horizontalOffset = 0;
 
     mounted() {
-        this.redraw();
-        window.addEventListener('resize', this.redraw);
-    }
-
-    redraw() {
-        this.redrawOnDimensionsChange(this.getSVGElement());
+        window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
@@ -60,7 +58,7 @@ export default class ScatterPlot extends AbstractChart {
             .attr('cy', d => yScale(d[this.metric]))
             .attr('transform', 'translate(0,' + offset + ')');
 
-        this.$utils.chart.drawAxis(this.height, svg, xAxis, yAxis, offset, this.horizontalOffset, 0);
+        // this.$utils.chart.drawAxis(this.height, svg, xAxis, yAxis, offset, this.horizontalOffset, 0);
         svg.exit().remove();
     }
 }

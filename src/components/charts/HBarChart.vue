@@ -1,5 +1,7 @@
-<template class="chart-container">
-    <svg class="chart" v-bind:id="selector"></svg>
+<template>
+    <div class="chart-wrapper" :style="style">
+        <svg class="chart" v-bind:id="selector"></svg>
+    </div>
 </template>
 
 <script lang="ts">
@@ -13,14 +15,10 @@ const d3tip = _d3tip as () => Tooltip;
 
 @Component({})
 export default class HBarChart extends AbstractChart {
+    barAxisSpace = 10;
 
     mounted() {
-        this.redraw();
-        window.addEventListener('resize', this.redraw);
-    }
-
-    redraw() {
-        this.redrawOnDimensionsChange(this.getSVGElement());
+        window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
@@ -28,14 +26,14 @@ export default class HBarChart extends AbstractChart {
         svg.html(null);
 
         let yOffset = this.$utils.chart.getYOffset(this.title) || 0;
-        let xOffset = this.$utils.chart.getXOffset(this.getSVGElement(), this.holderElement);
+        let xOffset = this.$utils.chart.getXOffset(this.svgElement, this.holderElement);
         let barAreaHeight = this.height - yOffset - this.barAxisSpace;
 
         let g = svg.selectAll<SVGRectElement, any>('rect')
             .data(this.ds);
 
         // Draw the Y-Axis - but just for calculation
-        let yScale = this.$utils.chart.initOrdinalScale(this.ds, this.options.dim, barAreaHeight);
+        let yScale = this.$utils.chart.ordinalScale(this.ds, this.options.dim, barAreaHeight);
         let yAxis = d3.axisLeft(yScale);
 
         let maxWidthAxis = this.$utils.chart.drawAxisMeasureExtent(svg, yAxis, 'yAxis');
@@ -85,7 +83,7 @@ export default class HBarChart extends AbstractChart {
             .attr('transform', 'translate(' + xOffset + ', 0)');
 
         // Now that we have the real barAreaWidth, we can finally draw the xAxis
-        yScale = this.$utils.chart.initOrdinalScale(this.ds, this.options.dim, barAreaHeight);
+        yScale = this.$utils.chart.ordinalScale(this.ds, this.options.dim, barAreaHeight);
         yAxis = d3.axisLeft(yScale);
 
         // this.$utils.chart.drawYAxis(svg, yAxis, (barAreaHeight + yOffset + this.barAxisSpace), (xOffset + this.barAxisSpace + barWidth/2) );

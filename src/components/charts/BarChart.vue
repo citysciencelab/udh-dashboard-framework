@@ -1,5 +1,7 @@
-<template class="chart-container">
-    <svg class="chart" v-bind:id="selector"></svg>
+<template>
+    <div class="chart-wrapper" :style="style">
+        <svg class="chart" v-bind:id="selector"></svg>
+    </div>
 </template>
 
 <script lang="ts">
@@ -13,51 +15,61 @@ const d3tip = _d3tip as () => Tooltip;
 
 @Component({})
 export default class BarChart extends AbstractChart {
+    svgWidth = 0; // px
+    svgHeight = 0; // px
+    axisPadding = 10; // px
 
     mounted() {
-        this.redraw();
-        window.addEventListener('resize', this.redraw);
-    }
-
-    redraw() {
-        this.redrawOnDimensionsChange(this.getSVGElement());
+        window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
         const svg = <SVG>d3.select('#' + this.selector);
         svg.html(null);
 
-        let yOffset = this.$utils.chart.getYOffset(this.title) || 0;
-        let xOffset = this.$utils.chart.getXOffset(this.getSVGElement(), this.holderElement);
-        let barAreaWidth = this.width - xOffset - this.barAxisSpace;
+        const node = svg.node();
+        if (!node) {
+            throw new Error("BarChart element is null")
+        }
+        const container = node.parentElement;
+        if (!container) {
+            throw new Error("BarChart's parent element is null")
+        }
 
-        let g = svg.selectAll<SVGRectElement, any>('rect')
-            .data(this.ds);
+        // Get dimensions in pixels
+        this.svgWidth = container.clientWidth;
+        this.svgHeight = container.clientHeight;
 
-        // Draw the X-Axis - but just for calculation
-        let xScale = this.$utils.chart.initOrdinalScale(this.ds, this.options.dim, barAreaWidth);
+        // Draw axes as if they filled the while SVG, only so we can measure the space
+        // needed for the axis labels
+        let xScale = this.$utils.chart.ordinalScale(this.ds, this.options.dim, this.svgWidth);
         let xAxis = d3.axisBottom(xScale);
-        let maxHeightAxis = this.$utils.chart.drawAxisMeasureExtent(svg, xAxis, 'xAxis');
-        let barAreaHeight = this.height - yOffset - maxHeightAxis;
-        // Remove the axis
-        svg.selectAll('xAxis').remove();
+        let xAxisHeight = this.$utils.chart.drawXAxis(svg, xAxis);
 
-        // Now drawing the yAxis
-        let maxVal = Math.max(...this.ds.map(o => o[this.metric]));
-        let yScale = d3.scaleLinear()
-            .domain([0, maxVal])
-            .range([barAreaHeight, 0]);
+        let yMax = Math.max(...this.ds.map(o => o[this.metric]));
+        let yScale = d3.scaleLinear().domain([0, yMax]).range([this.svgHeight, 0]);
         let yAxis = d3.axisLeft(yScale);
+        let yAxisWidth = this.$utils.chart.drawYAxis(svg, yAxis);
 
-        // Calculate the axis size and take it into account
-        let maxWidthAxis = this.$utils.chart.drawAxisMeasureExtent(svg, yAxis, 'yAxis');
-        xOffset = maxWidthAxis + xOffset;
+        // Origin = bottom left corner of the first bar
+        let originX = yAxisWidth + this.axisPadding;
+        let originY = this.svgHeight - xAxisHeight - this.axisPadding;
 
-        // Now we can recalculate the actual chart area
-        barAreaWidth = this.width - xOffset - this.barAxisSpace;
+        let barAreaWidth = this.svgWidth - originX;
+        let barAreaHeight = originY;
+        let barWidth = barAreaWidth / this.ds.length - 1;
 
-        svg.selectAll('.yAxis')
-            .attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
+        // Remove and redraw axes at fitted scale
+        svg.select('.xAxis').remove();
+        svg.select('.yAxis').remove();
+
+        xScale = this.$utils.chart.ordinalScale(this.ds, this.options.dim, barAreaWidth);
+        xAxis = d3.axisBottom(xScale);
+        this.$utils.chart.drawXAxis(svg, xAxis, originX + barWidth / 2, originY + this.axisPadding);
+
+        yScale = d3.scaleLinear().domain([0, yMax]).range([barAreaHeight, 0]);
+        yAxis = d3.axisLeft(yScale);
+        this.$utils.chart.drawYAxis(svg, yAxis, originX - this.axisPadding, 0);
 
         const tip = d3tip()
             .attr('class', 'd3-tip')
@@ -65,11 +77,7 @@ export default class BarChart extends AbstractChart {
             .html((d: string[]) => d[0]);
         svg.call(tip);
 
-        if (this.title) {
-            this.$utils.chart.addTitle(this.title, svg, this.width);
-        }
-
-        let barWidth = barAreaWidth / this.ds.length - 1;
+        const g = svg.selectAll<SVGRectElement, any>('rect').data(this.ds);
 
         g.enter()
             .append('rect')
@@ -77,17 +85,11 @@ export default class BarChart extends AbstractChart {
             .attr('class', 'bar')
             .attr('width', () => barWidth)
             .attr('height', d => barAreaHeight - yScale(d[this.metric]))
-            .attr('x', (d, i) => i * barAreaWidth / this.ds.length + xOffset + this.barAxisSpace)
+            .attr('x', (d, i) => originX + i * barAreaWidth / this.ds.length)
             .attr('y', d => yScale(d[this.metric]))
-            .on('mouseover', d => tip.show([d[this.descriptor] + ': ' + d[this.metric]], d3.event.target))
+            .on('mouseover', d => tip.show([`${d[this.descriptor]}: ${d[this.metric]}`], d3.event.target))
             .on('mouseout', tip.hide)
-            .attr('transform', 'translate(0,' + yOffset + ')');
 
-        // Now that we have the real barAreaWidth, we can finally draw the xAxis
-        xScale = this.$utils.chart.initOrdinalScale(this.ds, this.options.dim, barAreaWidth);
-        xAxis = d3.axisBottom(xScale);
-
-        this.$utils.chart.drawXAxis(svg, xAxis, xOffset + this.barAxisSpace + barWidth/2, barAreaHeight + yOffset + this.barAxisSpace);
         this.$utils.chart.cleanSVGTag(svg);
         g.exit().remove();
     }
