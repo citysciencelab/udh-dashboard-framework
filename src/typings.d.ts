@@ -67,15 +67,19 @@ interface DashboardState {
   dashboardData: { [key: string]: Dataset };
   filteredData: { [key: string]: Dataset };
   filters: { [key: string]: any };
+  loading: boolean;
 }
 
 interface UDPCState extends DashboardState {
-  loading: boolean;
+  //Potential specific type definitions
+}
+
+interface ParticipationState extends DashboardState {
+  //Potential specific type definitions
 }
 
 interface RootState {
   dashboard: DashboardState;
-  udpc: UDPCState;
 }
 
 interface IUtils {
