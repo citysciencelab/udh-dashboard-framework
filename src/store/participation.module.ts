@@ -1,6 +1,4 @@
 import { Module } from 'vuex';
-import { RootState } from './store';
-import {DashboardState} from "@/store/dashboard.module";
 import {countData} from '@/utils/utils';
 import wfs from "@/utils/wfs";
 
@@ -10,10 +8,6 @@ const dataPropertyNames = ['ebene', 'absender', 'bezirk', 'bezeichnung', 'zustae
     'ende', 'online___zahl_der_beitraege', 'link', 'kontaktpersonen'];
 const prefix = 'de.hh.up';
 const baseNodes = ['wfs:FeatureCollection', 'gml:featureMember'];
-
-export interface ParticipationState extends DashboardState {
-    loading: boolean;
-}
 
 const initialState: ParticipationState = {
     dashboardData: {
