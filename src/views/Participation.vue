@@ -3,7 +3,7 @@
         <div class="row">
             top
         </div>
-        <div class="row" style="background-color: white">
+        <div class="row align-items-center" style="background-color: white">
             <div class="col-sm">
                 <multi-select v-bind:selectData="this.getFilterOptions('participationData','bezirk')"
                               v-bind:label="$t('participation.district')" @new_selection="filterChanged"
@@ -15,7 +15,7 @@
                               identifier="absender" ref="originatorSelect"/>
             </div>
             <div class="col-sm">
-<!--                <md-chip class="md-accent" md-clickable @click="resetFilters">>Clickable</md-chip>-->
+                <md-chip md-clickable @click="resetFilters">{{$t('participation.reset')}}</md-chip>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
@@ -111,6 +111,11 @@
             }
         };
 
+        async mounted() {
+            // Lets fetch the initial dashboard data
+            await this.fetchParticipationStats();
+        }
+
         created() {
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
@@ -137,11 +142,6 @@
             return this.$store.getters.distinctPropertyValues(dataId, filterProperty);
         }
 
-        async mounted() {
-            // Lets fetch the initial dashboard data
-            await this.fetchParticipationStats();
-        }
-
         fetchParticipationStats() {
             this.$store.dispatch('fetchParticipationStats');
         }
@@ -152,6 +152,22 @@
         *   @param the selected elements - not used in this dashboard
         */
         filterChanged(eventData: string[]) {
+            this.recalculate();
+        }
+
+        resetFilters() {
+            this.$store.commit('SET_FILTERS_NONE');
+            if (this.$refs['districtSelect']) {
+                this.$refs['districtSelect'].resetComponent();
+            }
+            if (this.$refs['originatorSelect']) {
+                this.$refs['originatorSelect'].resetComponent();
+            }
+            this.recalculate();
+            console.log(this.getFilterOptions('participationData','bezirk'))
+        }
+
+        recalculate() {
             this.$store.dispatch('recalculateWithFilters');
         }
     }

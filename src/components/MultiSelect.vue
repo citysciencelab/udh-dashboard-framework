@@ -38,6 +38,11 @@ export default class MultiSelect extends Vue {
         }
     }
 
+    public resetComponent() {
+        this.selectedData = [];
+        this.$forceUpdate();
+    }
+
     public updateComponent() {
         this.$forceUpdate();
     }

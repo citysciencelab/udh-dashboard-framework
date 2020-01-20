@@ -30,6 +30,11 @@ const chartsModule: Module<DashboardState, RootState> = {
             } else {
                 delete state.filters[id]
             }
+        },
+        SET_FILTERS_NONE: (state) => {
+            for (const filterId of Object.keys(state.filters)) {
+                delete state.filters[filterId]
+            }
         }
     },
     actions: {

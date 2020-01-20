@@ -10,7 +10,9 @@ export const messages = {
             facts: 'Wussten Sie schon: %{fact}'
         },
         participation: {
-            district: 'Bezirk'
+            district: 'Bezirk',
+            reset: 'Zurücksetzen',
+            sender: 'Absender'
         }
     },
     en: {
@@ -24,7 +26,9 @@ export const messages = {
             facts: 'Did you know: %{fact}'
         },
         participation: {
-            district: 'District'
+            district: 'District',
+            reset: 'Reset',
+            sender: 'Originator'
         }
     }
 
