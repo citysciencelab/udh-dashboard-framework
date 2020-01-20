@@ -125,10 +125,10 @@
                         this.filteredData.participationDistrictCount = mutation.payload[1];
                     } else if (mutation.payload[0] === 'participationData') {
                         if (this.$refs['districtSelect']) {
-                            this.$refs['districtSelect'].updateComponent();
+                            (this.$refs['districtSelect'] as any).updateComponent();
                         }
                         if (this.$refs['originatorSelect']) {
-                            this.$refs['originatorSelect'].updateComponent();
+                            (this.$refs['originatorSelect'] as any).updateComponent();
                         }
                     }
                 }
@@ -158,10 +158,10 @@
         resetFilters() {
             this.$store.commit('SET_FILTERS_NONE');
             if (this.$refs['districtSelect']) {
-                this.$refs['districtSelect'].resetComponent();
+                (this.$refs['districtSelect'] as any).resetComponent();
             }
             if (this.$refs['originatorSelect']) {
-                this.$refs['originatorSelect'].resetComponent();
+                (this.$refs['originatorSelect'] as any).resetComponent();
             }
             this.recalculate();
             console.log(this.getFilterOptions('participationData','bezirk'))

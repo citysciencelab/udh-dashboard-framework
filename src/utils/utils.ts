@@ -197,7 +197,7 @@ export function countData(ds: Dataset, descriptor: string): Dataset {
     let countData: Object[] = [];
     for (const item of ds) {
         const key = item[descriptor];
-        let existingElement = countData.find(data => data[descriptor] === key);
+        let existingElement: Datum = countData.find((data: Datum) => data[descriptor] === key) as Datum;
         if (existingElement) {
             existingElement["count"] += 1;
         } else {
