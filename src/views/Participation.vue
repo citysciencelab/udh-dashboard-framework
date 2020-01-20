@@ -10,7 +10,12 @@
                               identifier="bezirk" ref="districtSelect"/>
             </div>
             <div class="col-sm">
-                jghj
+                <multi-select v-bind:selectData="this.getFilterOptions('participationData','absender')"
+                              v-bind:label="$t('participation.sender')" @new_selection="filterChanged"
+                              identifier="absender" ref="originatorSelect"/>
+            </div>
+            <div class="col-sm">
+<!--                <md-chip class="md-accent" md-clickable @click="resetFilters">>Clickable</md-chip>-->
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
@@ -68,17 +73,24 @@
                 </stats-card>
             </div>
         </div>
+
+        <!--Tooltips-->
+        <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
+            I am tooltip <a href="javascript:void(0)"
+                            onclick="window.open('http://www.swoosh.com')">component</a> content!
+        </b-tooltip>
+
     </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
     import Component from "vue-class-component";
     import StatsCard from "../components/StatsCard.vue";
     import MultiSelect from "../components/MultiSelect.vue";
     import LineChart from "../components/charts/LineChart.vue";
     import BarChart from "../components/charts/BarChart.vue";
     import partStore from '../store/participation.module';
+    import AbstractDashboard from "@/views/AbstractDashboard.vue";
 
     @Component({
         components: {
@@ -88,7 +100,7 @@
             LineChart
         }
     })
-    export default class Participation extends Vue {
+    export default class Participation extends AbstractDashboard {
         filteredData = {
             participationDistrictCount: []
         };
@@ -107,9 +119,13 @@
                     if (mutation.payload[0] === 'participationDistrictCount') {
                         this.filteredData.participationDistrictCount = mutation.payload[1];
                     } else if (mutation.payload[0] === 'participationData') {
-                        this.$refs.districtSelect.updateComponent();
+                        if (this.$refs['districtSelect']) {
+                            this.$refs['districtSelect'].updateComponent();
+                        }
+                        if (this.$refs['originatorSelect']) {
+                            this.$refs['originatorSelect'].updateComponent();
+                        }
                     }
-
                 }
             });
         }

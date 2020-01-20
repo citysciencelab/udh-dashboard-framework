@@ -307,6 +307,7 @@ import BarChart from '../components/charts/BarChart.vue';
 import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
 import udpcStore from '../store/udpc.module';
+import AbstractDashboard from "@/views/AbstractDashboard.vue";
 
 @Component({
     components: {
@@ -323,7 +324,7 @@ import udpcStore from '../store/udpc.module';
         ConfirmDialog
     }
 })
-export default class UDPC extends Vue {
+export default class UDPC extends AbstractDashboard {
     tooltipActive = false;
     agreeDialogActive = false;
     dateRange = 'year';
@@ -436,14 +437,6 @@ export default class UDPC extends Vue {
             el: snack.querySelector('div') || undefined,
             render: h => h(SnackBar, { attrs: options })
         });
-    }
-
-    openToolTip(toolTipRef: string) {
-        const component = <Vue>this.$refs[toolTipRef];
-        if (!component) {
-            return;
-        }
-        component.$emit('open');
     }
 
     changeFilterRange(sliderId: string, sliderRange: string) {
