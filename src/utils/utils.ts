@@ -9,30 +9,6 @@ declare module 'vue/types/vue' {
     }
 }
 
-// Definition for our Utils class
-interface IUtils {
-    chart: {
-        initOrdinalScale: (ds: Dataset, dim: string, width: number) => d3.ScaleOrdinal<string, any>,
-        initTimeScale: (ds: Dataset, dim: string, width: number) => d3.ScaleTime<number, number>,
-        drawXAxis: (svg: SVG, xAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) => void,
-        drawYAxis: (svg: SVG, yAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) => void,
-        drawAxis: (height: number, svg: SVG, xAxis: d3.Axis<any>, yAxis: d3.Axis<any>, offsetTop: number, offsetLeft: number, yAxisOffset: number) => void,
-        drawAxisMeasureExtent: (svg: SVG, axis: d3.Axis<any>, axisName: string) => number,
-        addTooltip: (d: any, svg: SVG, x: number, y: number, v: number) => void,
-        removeTooltip: (svg: SVG) => void,
-        addTitle: (t: string, svg: SVG, w: number) => void,
-        cleanSVGTag: (svg: SVG) => void,
-        getXOffset: (svg: SVGSVGElement, chartHolderClass: string) => number,
-        getYOffset: (title: string) => number,
-        getDimensions: (svg: SVGSVGElement, title: string, chartHolderClass: string) => number[],
-        getHolderElement: (svg: JQuery<SVGSVGElement>, chartHolderClass: string) => JQuery<SVGSVGElement>
-    },
-    date: {
-        getDateStringFromDate: (date: Date) => string,
-        getDateStringFromMillis: (dateMillis: number) => string
-    }
-}
-
 export default class Utils implements IUtils {
     chart = {
         initOrdinalScale(ds: Dataset, dim: string, width: number) {
@@ -59,7 +35,7 @@ export default class Utils implements IUtils {
 
         drawXAxis(svg: SVG, xAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) {
             svg.append('g')
-                .attr('transform', 'translate(' + xTranslate + ',' + yTranslate + ')')
+                .attr('transform', `translate(${xTranslate},${yTranslate})`)
                 .call(xAxis)
                 .selectAll("text")
                 .style("text-anchor", "end")
@@ -70,7 +46,7 @@ export default class Utils implements IUtils {
 
         drawYAxis(svg: SVG, yAxis: d3.Axis<any>, xTranslate: number, yTranslate: number) {
             svg.append('g')
-                .attr('transform', 'translate(' + xTranslate + ',' + yTranslate + ')')
+                .attr('transform', `translate(${xTranslate},${yTranslate})`)
                 .attr('class', 'yAxis')
                 .call(yAxis);
         },
@@ -84,12 +60,12 @@ export default class Utils implements IUtils {
             offsetLeft = offsetLeft || 0;
 
             svg.append('g')
-                .attr('transform', 'translate(50,' + (yAxisOffset ? yAxisOffset : offsetTop) + ')')
+                .attr('transform', `translate(50,${yAxisOffset ? yAxisOffset : offsetTop})`)
                 .attr('class', 'yAxis')
                 .call(yAxis);
 
             svg.append('g')
-                .attr('transform', 'translate(' + offsetLeft + ',' + (height + offsetTop + 5) + ')')
+                .attr('transform', `translate(${offsetLeft},${height + offsetTop + 5})`)
                 .call(xAxis)
                 .selectAll("text")
                 .style("text-anchor", "end")
@@ -105,24 +81,16 @@ export default class Utils implements IUtils {
          * @param axisName has to be 'xAxis' or 'yAxis' to determine if to measure width or height
          * @returns [number]
          */
-        drawAxisMeasureExtent(svg: SVG, axis: d3.Axis<any>, axisName: string) {
+        drawAxisMeasureExtent(svg: SVG, axis: d3.Axis<Datum>, axisName: string) {
             svg.append('g')
                 .attr('class', axisName)
                 .call(axis);
 
-            let maxDimension = 0;
-            (svg.call(axis).selectAll('.tick')).each(function() {
-                if (axisName === 'yAxis') {
-                    maxDimension = (this as any).getBBox().width > maxDimension ? (this as any).getBBox().width : maxDimension;
-                } else {
-                    maxDimension = (this as any).getBBox().height > maxDimension ? (this as any).getBBox().height : maxDimension;
-                }
-            });
-
-            return maxDimension;
+            const nodes = svg.call(axis).selectAll<SVGGElement, any>('.tick').nodes();
+            return Math.max(...nodes.map(n => axisName === 'yAxis' ? n.getBBox().width : n.getBBox().height));
         },
 
-        addTooltip(d: any, svg: SVG, x: number, y: number, v: number) {
+        addTooltip(d: Datum, svg: SVG, x: number, y: number, v: string) {
             svg.append('text')
                 .attr('x', x || 0)
                 .attr('y', y || 0)

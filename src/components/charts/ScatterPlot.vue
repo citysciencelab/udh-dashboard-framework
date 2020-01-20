@@ -24,13 +24,11 @@ export default class ScatterPlot extends AbstractChart {
     createChart() {
         let svg = <SVG>d3.select('#' + this.selector);
         let offset = this.$utils.chart.getYOffset(this.title);
-        let maxVal = Math.max.apply(Math, this.ds.map(o => o[this.metric]));
 
-        let minVal = Math.min.apply(Math, this.ds.map(o => o[this.metric]));
-
-        let maxVal2 = Math.max.apply(Math, this.ds.map(o => o[this.metric2]));
-
-        let minVal2 = Math.min.apply(Math, this.ds.map(o => o[this.metric2]));
+        let maxVal = Math.max(...this.ds.map(o => o[this.metric]));
+        let minVal = Math.min(...this.ds.map(o => o[this.metric]));
+        let maxVal2 = Math.max(...this.ds.map(o => o[this.metric2]));
+        let minVal2 = Math.min(...this.ds.map(o => o[this.metric2]));
 
         let g = (<d3.Selection<SVGCircleElement, any, SVGSVGElement, any>>svg.selectAll('circle'))
             .data(this.ds);

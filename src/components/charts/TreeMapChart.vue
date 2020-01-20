@@ -8,13 +8,6 @@ import * as d3 from 'd3';
 import AbstractChart from './AbstractChart.vue';
 import { HierarchyNode } from 'd3';
 
-interface TreeDatum extends Datum {
-    x0?: number;
-    x1?: number;
-    y0?: number;
-    y1?: number;
-}
-
 @Component({})
 export default class TreeMapChart extends AbstractChart {
 

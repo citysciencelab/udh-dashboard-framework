@@ -293,6 +293,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { Store } from 'vuex';
 import Component from 'vue-class-component';
 import StatsCard from '../components/StatsCard.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
