@@ -46,7 +46,7 @@ const participationModule: Module<ParticipationState, RootState> = {
             const filteredData = context.getters.dataWithAppliedFilters('participationData');
             context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(filteredData, 'bezirk')]);
             // This would set all filter - but the resulting limitation seems wrong
-            // context.commit('SET_FILTERED_DATA', ['participationData', filteredData]);
+            context.commit('SET_FILTERED_DATA', ['participationData', filteredData]);
         }
     },
     getters: {

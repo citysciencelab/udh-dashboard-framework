@@ -66,13 +66,10 @@ const chartsModule: Module<DashboardState, RootState> = {
             const initialData = state.dashboardData[dataId];
 
             if (Object.keys(filters).length !== 0) {
-                let newFilteredData: object[] = [];
+                let newFilteredData: object[] = initialData;
                 for (const filterId of Object.keys(filters)) {
                     const filterFunction = (item: Datum) => filters[filterId].indexOf(item[filterId]) > -1;
-                    const filteredData = initialData.filter(filterFunction);
-                    for (const dataElement of filteredData) {
-                        newFilteredData.indexOf(dataElement) == -1 ? newFilteredData.push(dataElement) : null;
-                    }
+                    newFilteredData = newFilteredData.filter(filterFunction);
                 }
                 return newFilteredData;
             } else {
