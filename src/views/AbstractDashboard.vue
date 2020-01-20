@@ -11,6 +11,9 @@
             }
             component.$emit('open');
 
+            setInterval(() => {
+                component.$emit('close');
+            }, 5000);
         }
     }
 </script>
