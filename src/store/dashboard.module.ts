@@ -4,7 +4,6 @@ const initialState: DashboardState = {
     dashboardData: {},
     filteredData: {},
     filters: {},
-    loading: false
 };
 
 const chartsModule: Module<DashboardState, RootState> = {
