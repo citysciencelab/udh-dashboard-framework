@@ -15,83 +15,83 @@ const d3tip = _d3tip as () => Tooltip;
 
 @Component({})
 export default class BarChart extends AbstractChart {
-    svgWidth = 0; // px
-    svgHeight = 0; // px
     axisPadding = 10; // px
 
     mounted() {
+        this.svg = <SVG>d3.select('#' + this.selector);
         window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
-        const svg = <SVG>d3.select('#' + this.selector);
-        svg.html(null);
-
-        const node = svg.node();
-        if (!node) {
-            throw new Error("BarChart element is null")
-        }
-        const container = node.parentElement;
-        if (!container) {
-            throw new Error("BarChart's parent element is null")
-        }
-
-        // Get dimensions in pixels
-        this.svgWidth = container.clientWidth;
-        this.svgHeight = container.clientHeight;
-
-        // Draw axes as if they filled the while SVG, only so we can measure the space
+        // Draw axes as if they filled the whole SVG, only so we can measure the space
         // needed for the axis labels
-        let xScale = this.$utils.chart.ordinalScale(this.ds, this.options.dim, this.svgWidth);
+        let xScale = this.xScale(this.svgWidth);
         let xAxis = d3.axisBottom(xScale);
-        let xAxisHeight = this.$utils.chart.drawXAxis(svg, xAxis);
+        let xAxisHeight = this.$utils.chart.drawXAxis(this.svg, xAxis);
 
-        let yMax = Math.max(...this.ds.map(o => o[this.metric]));
-        let yScale = d3.scaleLinear().domain([0, yMax]).range([this.svgHeight, 0]);
+        let yScale = this.yScale(this.svgHeight);
         let yAxis = d3.axisLeft(yScale);
-        let yAxisWidth = this.$utils.chart.drawYAxis(svg, yAxis);
+        let yAxisWidth = this.$utils.chart.drawYAxis(this.svg, yAxis);
 
-        // Origin = bottom left corner of the first bar
-        let originX = yAxisWidth + this.axisPadding;
-        let originY = this.svgHeight - xAxisHeight - this.axisPadding;
-
-        let barAreaWidth = this.svgWidth - originX;
-        let barAreaHeight = originY;
+        // Calculate size of drawing area
+        let barAreaWidth = this.svgWidth - yAxisWidth - this.axisPadding;
+        let barAreaHeight = this.svgHeight - xAxisHeight - this.axisPadding;
         let barWidth = barAreaWidth / this.ds.length - 1;
 
+        // Origin = bottom left corner of the first bar
+        let originX = this.svgWidth - barAreaWidth;
+        let originY = barAreaHeight;
+
         // Remove and redraw axes at fitted scale
-        svg.select('.xAxis').remove();
-        svg.select('.yAxis').remove();
+        this.svg.select('.xAxis').remove();
+        this.svg.select('.yAxis').remove();
 
-        xScale = this.$utils.chart.ordinalScale(this.ds, this.options.dim, barAreaWidth);
+        xScale = this.xScale(barAreaWidth);
         xAxis = d3.axisBottom(xScale);
-        this.$utils.chart.drawXAxis(svg, xAxis, originX + barWidth / 2, originY + this.axisPadding);
+        this.$utils.chart.drawXAxis(this.svg, xAxis, originX + barWidth / 2, originY + this.axisPadding);
 
-        yScale = d3.scaleLinear().domain([0, yMax]).range([barAreaHeight, 0]);
-        yAxis = d3.axisLeft(yScale);
-        this.$utils.chart.drawYAxis(svg, yAxis, originX - this.axisPadding, 0);
+        yScale = this.yScale(barAreaHeight);
+        yAxis = d3.axisLeft(this.reverseYScale(barAreaHeight));
+        this.$utils.chart.drawYAxis(this.svg, yAxis, originX - this.axisPadding, 0);
 
+        // Create tooltip
         const tip = d3tip()
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html((d: string[]) => d[0]);
-        svg.call(tip);
+        this.svg.call(tip);
 
-        const g = svg.selectAll<SVGRectElement, any>('rect').data(this.ds);
+        // Draw bars
+        const g = this.svg.selectAll<SVGRectElement, any>('rect')
+            .data(this.ds);
 
         g.enter()
             .append('rect')
             .merge(g)
             .attr('class', 'bar')
-            .attr('width', () => barWidth)
-            .attr('height', d => barAreaHeight - yScale(d[this.metric]))
+            .attr('width', barWidth)
+            .attr('height', d => yScale(d[this.metric]))
             .attr('x', (d, i) => originX + i * barAreaWidth / this.ds.length)
-            .attr('y', d => yScale(d[this.metric]))
+            .attr('y', d => originY - yScale(d[this.metric]))
             .on('mouseover', d => tip.show([`${d[this.descriptor]}: ${d[this.metric]}`], d3.event.target))
-            .on('mouseout', tip.hide)
+            .on('mouseout', tip.hide);
 
-        this.$utils.chart.cleanSVGTag(svg);
+        this.$utils.chart.cleanSVGTag(this.svg);
         g.exit().remove();
+    }
+
+    private xScale(width: number) {
+        return this.$utils.chart.ordinalScale(this.ds, this.options.dim, width);
+    }
+
+    private yScale(height: number) {
+        let yMax = Math.max(...this.ds.map(o => o[this.metric]));
+        return d3.scaleLinear().domain([0, yMax]).range([0, height]);
+    }
+
+    private reverseYScale(height: number) {
+        let yMax = Math.max(...this.ds.map(o => o[this.metric]));
+        return d3.scaleLinear().domain([0, yMax]).range([height, 0]);
     }
 }
 </script>

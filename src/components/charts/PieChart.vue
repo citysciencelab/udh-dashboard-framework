@@ -17,15 +17,13 @@ const d3tip = _d3tip as () => Tooltip;
 export default class PieChart extends AbstractChart {
 
     mounted() {
+        this.svg = <SVG>d3.select('#' + this.selector);
         window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
-        let svg = <SVG>d3.select('#' + this.selector);
-        svg.html(null);
-
-        let radius = this.height > this.width ? this.width / 2 : this.height / 2;
-        let offset = this.$utils.chart.getYOffset(this.title);
+        // Create pie
+        let radius = Math.min(this.svgHeight, this.svgWidth) / 2;
 
         let pie = d3.pie<Datum>().value(d => d[this.metric]);
 
@@ -33,33 +31,28 @@ export default class PieChart extends AbstractChart {
             .outerRadius(radius - 10)
             .innerRadius(25);
 
-        let arc = (<d3.Selection<SVGPathElement, any, SVGSVGElement, any>>svg.selectAll('.arc'))
+        let arc = this.svg.selectAll<SVGPathElement, any>('.arc')
             .data(pie(this.ds));
 
+        // Create tooltip
         const tip = d3tip()
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html((d: string[]) => d[0]);
-
-        svg.call(tip);
+        this.svg.call(tip);
 
         let color = d3.scaleSequential(d3.interpolateRdBu);
 
-        if (this.title) {
-            this.$utils.chart.addTitle(this.title, svg, this.width);
-        }
-
         arc.enter()
             .append('g')
-            .attr('transform', 'translate(' + this.width / 2 + ',' + this.height / 2 + ')')
             .append('path')
             .merge(arc)
             .attr('class', 'arc')
             .attr('d', path)
             .attr('fill', (d, i) => color(i * 0.1))
-            .on('mouseover', d => tip.show([d.data[this.descriptor] + ': ' + d.data[this.metric]], d3.event.target))
+            .on('mouseover', d => tip.show([`${d.data[this.descriptor]}: ${d.data[this.metric]}`], d3.event.target))
             .on('mouseout', tip.hide)
-            .attr('transform', 'translate(0,' + offset + ')');
+            .attr('transform', `translate(${this.svgWidth / 2}, ${this.svgHeight / 2})`);
 
         arc.exit().remove();
     }

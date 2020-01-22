@@ -11,6 +11,7 @@ export default abstract class AbstractChart extends Vue {
     @Prop() descriptor!: string;
     @Prop() selector!: string;
     @Prop() holderElement!: string;
+    svg!: SVG;
     width = 100; // %
     height = 100; // %
 
@@ -32,6 +33,30 @@ export default abstract class AbstractChart extends Vue {
                 }
             }
         }
+    }
+
+    get svgWidth() {
+        const node = this.svg.node();
+        if (!node) {
+            throw new Error("Chart element is null")
+        }
+        const container = node.parentElement;
+        if (!container) {
+            throw new Error("Chart's parent element is null")
+        }
+        return container.clientWidth;
+    }
+
+    get svgHeight() {
+        const node = this.svg.node();
+        if (!node) {
+            throw new Error("Chart element is null")
+        }
+        const container = node.parentElement;
+        if (!container) {
+            throw new Error("Chart's parent element is null")
+        }
+        return container.clientHeight;
     }
 
     get style() {
