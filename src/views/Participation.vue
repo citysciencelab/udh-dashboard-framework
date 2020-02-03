@@ -91,6 +91,7 @@
     import BarChart from "../components/charts/BarChart.vue";
     import partStore from '../store/participation.module';
     import AbstractDashboard from "@/views/AbstractDashboard.vue";
+    import { messages } from '../messages/messages.participation.module';
 
     @Component({
         components: {
@@ -117,6 +118,9 @@
         }
 
         created() {
+            this.$i18n.mergeLocaleMessage('en', messages.en);
+            this.$i18n.mergeLocaleMessage('de', messages.de);
+
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
                 if (mutation.type === 'SET_FILTERED_DATA' && mutation.payload[1].length > 0) {
@@ -164,7 +168,6 @@
                 (this.$refs['originatorSelect'] as any).resetComponent();
             }
             this.recalculate();
-            console.log(this.getFilterOptions('participationData','bezirk'))
         }
 
         recalculate() {

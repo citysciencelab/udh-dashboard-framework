@@ -309,6 +309,7 @@ import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
 import udpcStore from '../store/udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
+import { messages } from '../messages/messages.participation.module';
 
 @Component({
     components: {
@@ -366,6 +367,8 @@ export default class UDPC extends AbstractDashboard {
     };
 
     created() {
+        this.$i18n.mergeLocaleMessage('en', messages.en);
+        this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
         this.$store.subscribe((mutation, state) => {
