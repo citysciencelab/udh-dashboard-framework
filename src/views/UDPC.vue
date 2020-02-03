@@ -309,7 +309,7 @@ import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
 import udpcStore from '../store/udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
-import { messages } from '../messages/messages.participation.module';
+import { messages } from '@/messages/messages.participation.module';
 
 @Component({
     components: {

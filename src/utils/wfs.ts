@@ -1,19 +1,30 @@
 import Axios from "axios";
 import {parseString} from 'xml2js';
 
-
 export default {
 
     get: async (wfsUrl: string, wfsTypename: string, properties: string[]) => {
-        const url = 'https://geodienste.hamburg.de/' + wfsUrl + '?service=WFS&version=1.1.0&request=GetFeature' +
-            '&typename=' + wfsTypename + '&PropertyName=(' + properties.toLocaleString() + ')';
+        let url = 'https://geodienste.hamburg.de/' + wfsUrl + '?service=WFS&version=1.1.0&request=GetFeature' +
+            '&outputFormat=GML3&typename=' + wfsTypename;
+
+        // if (properties.length > 0) {
+        //     url = url + '&PropertyName=(' + properties.toLocaleString() + ')'
+        // }
 
         let results = {};
-        const response = await Axios.get(url).then(response => {
+        await Axios.get(url).then(response => {
             parseString(response.data, {trim: true},(err, result) => {
                 if(err) {
                     console.log(err)
                 } else {
+                    // var formatWFS = new GML2({
+                    //     srsName: 'EPSG:3857',
+                    //     featureNS: "options.featureNS",
+                    //     featureType: "dd"
+                    // });
+                    // let res = result["wfs:FeatureCollection"];
+                    // res["localName"] = 'featureMembers';
+                    // var features = formatWFS.readFeatures(res);
                     results = result
                 }
             });
