@@ -80,9 +80,9 @@
                 <div class="facts-holder">
                     <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
                 </div>
-                <!-- <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
-                              v-bind:label="$t('message.os')" @new_selection="filterChanged"
-                              identifier="osStats"/> -->
+                <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
+                              v-bind:label="$t('udpc.os')" @new_selection="filterChanged"
+                              identifier="osStats"/>
             </div>
             <div class="col-sm">
                 <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
@@ -135,9 +135,12 @@
                 </div>
             </div>
             <div class="col-sm">
+                <div class="facts-holder">
+                    <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000" prefix="udpc.facts"></did-you-know>
+                </div>
             </div>
             <div class="col-sm">
-                <p>{{ $t("message.hello") }}</p>
+                <p>{{ $t("udpc.hello") }}</p>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
@@ -269,6 +272,8 @@ import BarChart from '../components/charts/BarChart.vue';
 import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
 import udpcStore from '../store/udpc.module';
+import AbstractDashboard from "@/views/AbstractDashboard.vue";
+import { messages } from '../messages/messages.participation.module';
 
 @Component({
     components: {
@@ -285,7 +290,7 @@ import udpcStore from '../store/udpc.module';
         ConfirmDialog
     }
 })
-export default class UDPC extends Vue {
+export default class UDPC extends AbstractDashboard {
     tooltipActive = false;
     agreeDialogActive = false;
     dateRange = 'year';
@@ -307,11 +312,11 @@ export default class UDPC extends Vue {
         }
     };
     didYouKnow = [
-        'Wussten Sie schon: Fact 1',
-        'Wussten Sie schon: Fact 2',
-        'Wussten Sie schon: Fact 3',
-        'Wussten Sie schon: Fact 4',
-        'Wussten Sie schon: Fact 5'
+        'Fact 1',
+        'Fact 2',
+        'Fact 3',
+        'Fact 4',
+        'Fact 5'
     ];
     meta: { [key: string]: any } = {
         osStats: {
@@ -326,6 +331,8 @@ export default class UDPC extends Vue {
     };
 
     created() {
+        this.$i18n.mergeLocaleMessage('en', messages.en);
+        this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
         this.$store.subscribe((mutation, state) => {
@@ -371,7 +378,7 @@ export default class UDPC extends Vue {
     }
 
     setFilters(options: [string, string | number[]]) {
-        this.$store.dispatch('setFilters', options);
+        this.$store.commit('SET_FILTERS', options);
     }
 
     fetchOsStats() {
@@ -398,14 +405,6 @@ export default class UDPC extends Vue {
             el: snack.querySelector('div') || undefined,
             render: h => h(SnackBar, { attrs: options })
         });
-    }
-
-    openToolTip(toolTipRef: string) {
-        const component = <Vue>this.$refs[toolTipRef];
-        if (!component) {
-            return;
-        }
-        component.$emit('open');
     }
 
     changeFilterRange(sliderId: string, sliderRange: string) {
@@ -488,6 +487,14 @@ export default class UDPC extends Vue {
 
     a {
         color: #42b983;
+    }
+
+    .filter-button {
+        background-color: transparent !important;
+        color: black !important;
+        height: 28px !important;
+        min-width: 80px !important;
+        padding-top: 4px !important;
     }
 
     .facts-holder span {

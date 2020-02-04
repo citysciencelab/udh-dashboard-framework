@@ -5,7 +5,7 @@ import dashboard from './dashboard.module';
 Vue.use(Vuex);
 
 export default new Store<RootState>({
-    // Additional modules are lazy-loaded in UDPC.vue
+    // type of root state is 'RootState'
     modules: {
         dashboard
     }

@@ -14,7 +14,6 @@ import './assets/scss/_fonts.scss';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
-import { messages } from './store/messages.module';
 import utils from './utils/utils';
 
 // We import ant-design because vue-material does not have a slider - maybe generally?
@@ -42,7 +41,6 @@ Vue.component('country-flag', CountryFlag);
 const i18n = new VueI18n({
     locale: 'en', // set locale
     fallbackLocale: 'de',
-    messages, // set locale messages
 });
 
 new Vue({

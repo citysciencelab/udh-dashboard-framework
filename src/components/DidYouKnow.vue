@@ -1,6 +1,6 @@
 <template>
     <span class="list-item">
-        {{items[currentIndex]}}
+        {{ this.prefix ? $t(prefix, { fact: items[currentIndex] }) : items[currentIndex] }}
     </span>
 </template>
 
@@ -11,6 +11,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class DidYouKnow extends Vue {
     @Prop() items!: string[];
     @Prop() interval!: number;
+    @Prop() prefix!: string;
     currentIndex = 0;
 
     mounted() {
