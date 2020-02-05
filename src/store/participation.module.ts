@@ -14,7 +14,7 @@ const initialState: ParticipationState = {
         participationData: []
     },
     filteredData: {
-        participationDistrictCount: []
+        participationDistrictCount: {}
     },
     filters: {},
     loading: false
@@ -33,14 +33,24 @@ const participationModule: Module<ParticipationState, RootState> = {
             const resultExtract = wfs.getDataFromWFSJson(results as Object[], wfsTypename, dataPropertyNames, prefix, baseNodes);
 
             context.commit('SET_INITIAL_DATA', ['participationData', resultExtract]);
-            context.commit('SET_FILTERED_DATA', ['participationData', resultExtract]);
-            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(resultExtract, 'bezirk')]);
+
+            context.dispatch('recalculateChartData', resultExtract);
         },
-        recalculateWithFilters: (context) => {
-            const filteredData = context.getters.dataWithAppliedFilters('participationData');
-            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(filteredData, 'bezirk')]);
-            // This would set all filter - but the resulting limitation seems wrong
-            context.commit('SET_FILTERED_DATA', ['participationData', filteredData]);
+        recalculateChartData: (context, filteredData) => {
+            if (!filteredData) {
+                return;
+            }
+            const countdata = countData(filteredData, 'bezirk');
+            const participationDistrictCount = {
+                labels: countdata.map(item => item.bezirk),
+                datasets: [{
+                    label: 'procedures',
+                    backgroundColor: '#f87979',
+                    data: countdata.map(item => item.count)
+                }]
+            };
+
+            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', participationDistrictCount]);
         }
     },
     getters: {

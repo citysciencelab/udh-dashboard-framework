@@ -5,13 +5,15 @@
         </div>
         <div class="row align-items-center" style="background-color: white">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.getFilterOptions('participationData','bezirk')"
-                              v-bind:label="$t('participation.district')" @new_selection="filterChanged"
+                <multi-select :selectData="getFilterOptions('participationData', 'bezirk')"
+                              :label="$t('participation.district')"
+                              @new_selection="filterChanged"
                               identifier="bezirk" ref="districtSelect"/>
             </div>
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.getFilterOptions('participationData','absender')"
-                              v-bind:label="$t('participation.sender')" @new_selection="filterChanged"
+                <multi-select :selectData="getFilterOptions('participationData', 'absender')"
+                              :label="$t('participation.sender')"
+                              @new_selection="filterChanged"
                               identifier="absender" ref="originatorSelect"/>
             </div>
             <div class="col-sm">
@@ -23,7 +25,7 @@
                 <stats-card data-background-color="blue" class="chart-holder">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
-                            OS Data
+                            Participation Data
                         </div>
                         <md-icon class="info-icon" id="tooltip-os-data">
                             info_outline
@@ -31,12 +33,8 @@
                     </template>
 
                     <template slot="content">
-                        <bar-chart v-bind:ds="this.filteredData.participationDistrictCount"
-                                   v-bind:options="chartOptions.countStats"
-                                   v-bind:metric="chartOptions.countStats.metric"
-                                   v-bind:descriptor="chartOptions.countStats.metric"
-                                   title="Distribution of operating systems"
-                                   selector="chart1" holder-element="chart-holder"/>
+                        <bar-chart :chartData="chartData.participationDistrictCount"
+                                   :chartOptions="chartOptions.participationDistrictCount"/>
                     </template>
 
                     <template slot="footer">
@@ -102,18 +100,20 @@
         }
     })
     export default class Participation extends AbstractDashboard {
-        filteredData = {
-            participationDistrictCount: []
+        chartData: { [key: string]: Chart.ChartData } = {
+            participationDistrictCount: {}
         };
-        chartOptions = {
-            countStats: {
-                dim: 'bezirk',
-                metric: 'count'
+        chartOptions: { [key: string]: Chart.ChartOptions } = {
+            participationDistrictCount: {
+                title: {
+                    text: 'Public participation procedures'
+                },
+                responsive: true
             }
         };
 
         async mounted() {
-            // Lets fetch the initial dashboard data
+            // fetch the initial dashboard data
             await this.fetchParticipationStats();
         }
 
@@ -123,26 +123,26 @@
 
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
-                if (mutation.type === 'SET_FILTERED_DATA' && mutation.payload[1].length > 0) {
-
-                    if (mutation.payload[0] === 'participationDistrictCount') {
-                        this.filteredData.participationDistrictCount = mutation.payload[1];
-                    } else if (mutation.payload[0] === 'participationData') {
-                        if (this.$refs['districtSelect']) {
-                            (this.$refs['districtSelect'] as any).updateComponent();
+                switch (mutation.type) {
+                    case 'SET_INITIAL_DATA':
+                        if (mutation.payload[0] === 'participationData') {
+                            if (this.$refs['districtSelect']) {
+                                (this.$refs['districtSelect'] as any).updateComponent();
+                            }
+                            if (this.$refs['originatorSelect']) {
+                                (this.$refs['originatorSelect'] as any).updateComponent();
+                            }
                         }
-                        if (this.$refs['originatorSelect']) {
-                            (this.$refs['originatorSelect'] as any).updateComponent();
+                        break;
+                    case 'SET_FILTERED_DATA':
+                        if (mutation.payload[0] === 'participationDistrictCount') {
+                            this.chartData.participationDistrictCount = mutation.payload[1];
                         }
-                    }
                 }
             });
         }
 
-        getFilterOptions(dataId: string, filterProperty: string) {
-            if (!this.$store.getters.filteredDataById(dataId)) {
-                return [];
-            }
+        getFilterOptions(dataId: string, filterProperty: string): any[] {
             return this.$store.getters.distinctPropertyValues(dataId, filterProperty);
         }
 
@@ -171,7 +171,8 @@
         }
 
         recalculate() {
-            this.$store.dispatch('recalculateWithFilters');
+            const data = this.$store.getters.dataWithAppliedFilters('participationData');
+            this.$store.dispatch('recalculateChartData', data);
         }
     }
 </script>

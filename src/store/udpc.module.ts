@@ -1,3 +1,6 @@
+// @ts-nocheck
+// TODO: adapt module for chart.js
+
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
 import { aggregateData } from '@/utils/utils';
