@@ -46,7 +46,7 @@
 
                     <template slot="content">
                         <p class="category">Size of dataset</p>
-                        <h3 class="title">{{this.dashboardData.osStats ? this.dashboardData.osStats.length : 0}}</h3>
+                        <h3 class="title">{{ this.dashboardData.totalDatasets ? this.dashboardData.totalDatasets.total_entities.value : 0 }}</h3>
                     </template>
 
                     <template slot="footer">
@@ -357,13 +357,16 @@ export default class UDPC extends AbstractDashboard {
     }
 
     async mounted() {
-        // Lets set the initial dashboard data
+        // Fetch initial dashboard data
+        await this.$store.dispatch('fetchTotalDatasets');
+        await this.$store.dispatch('fetchTotalDatasetsRange');
+
+        console.log(this.dashboardData);
+
+        // Set initial filters
         await this.setFilters(['SOURCE', 'services_internet']);
         await this.setFilters(['YEAR', [2017, 2019]]);
         await this.setFilters(['MONTH', [1, 12]]);
-
-        // Lets fetch the initial dashboard data
-        await this.fetchOsStats();
 
         // Set initial date range
         this.changeFilterRange('dateRangeSlider', this.dateRange);
@@ -379,10 +382,6 @@ export default class UDPC extends AbstractDashboard {
 
     setFilters(options: [string, string | number[]]) {
         this.$store.commit('SET_FILTERS', options);
-    }
-
-    fetchOsStats() {
-        this.$store.dispatch('fetchOsStats');
     }
 
     filter(chartID: string) {
@@ -460,7 +459,6 @@ export default class UDPC extends AbstractDashboard {
                 this.setFilters(['MONTH', [min, max]]);
                 break;
         }
-        this.fetchOsStats();
     }
 
     addDataPoint() {
