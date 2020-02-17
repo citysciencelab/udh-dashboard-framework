@@ -14,8 +14,7 @@
 
                     <template slot="footer">
                         <div class="stats">
-                            <md-icon>date_range</md-icon>
-                            Last 24 Hours
+                            <md-icon>date_range</md-icon> Last 24 Hours
                         </div>
                     </template>
                 </stats-card>
@@ -28,10 +27,7 @@
 
                     <template slot="content">
                         <p class="category">Used Space</p>
-                        <h3 class="title">
-                            49/50
-                            <small>GB</small>
-                        </h3>
+                        <h3 class="title">49/50 <small>GB</small></h3>
                     </template>
 
                     <template slot="footer">
@@ -55,8 +51,7 @@
 
                     <template slot="footer">
                         <div class="stats">
-                            <md-icon>local_offer</md-icon>
-                            Tracked from Github
+                            <md-icon>local_offer</md-icon> Tracked from Github
                         </div>
                     </template>
                 </stats-card>
@@ -74,8 +69,7 @@
 
                     <template slot="footer">
                         <div class="stats">
-                            <md-icon>update</md-icon>
-                            Just Updated
+                            <md-icon>update</md-icon> Just Updated
                         </div>
                     </template>
                 </stats-card>
@@ -83,21 +77,19 @@
         </div>
         <div class="row">
             <div class="col-sm">
+                <div class="facts-holder">
+                    <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
+                </div>
                 <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
                               v-bind:label="$t('udpc.os')" @new_selection="filterChanged"
                               identifier="osStats"/>
             </div>
             <div class="col-sm">
-                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">
-                    Open Snackbar
-                </md-button>
-                <br/>
-                <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">
-                    Open Confirm Dialog
-                </md-button>
+                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
+
+                <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">Open Confirm Dialog</md-button>
                 <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
                                @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
-                <br/>
             </div>
         </div>
         <div class="row">
@@ -153,131 +145,103 @@
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <stats-card data-background-color="blue" class="chart-card">
                     <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
-                            OS Data
-                        </div>
-                        <md-icon class="info-icon" id="tooltip-os-data">
-                            info_outline
-                        </md-icon>
+                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">OS Data</div>
+                        <md-icon class="info-icon" id="tooltip-os-data">info_outline</md-icon>
                     </template>
 
                     <template slot="content">
-                        <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
-                                   title="Distribution of operating systems"
-                                   metric="anzahl_os" descriptor="os"
-                                   selector="chart1" holder-element="chart-holder"/>
+                        <div class="card-content-container">
+                            <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
+                                       title="Distribution of operating systems"
+                                       metric="anzahl_os" descriptor="os"
+                                       selector="chart1" holder-element="chart-card"/>
+                        </div>
                     </template>
 
                     <template slot="footer">
-                        <div class="notice">
-                            this data is supported the JBe foundation
-                        </div>
+                        <div class="notice">this data is supported the JBe foundation</div>
                     </template>
                 </stats-card>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <stats-card data-background-color="blue" class="chart-card">
                     <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">
-                            Other chart
-                        </div>
-                        <md-icon class="info-icon">
-                            info_outline
-                        </md-icon>
+                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
+                        <md-icon class="info-icon">info_outline</md-icon>
                     </template>
 
                     <template slot="content">
                         <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
                                     title="Distribution of operating systems"
                                     metric="anzahl_os" descriptor="os"
-                                    selector="chart2" holder-element="chart-holder"/>
+                                    selector="chart2" holder-element="chart-card"/>
                     </template>
 
                     <template slot="footer">
-                        <div class="notice">
-                            this data is supported the JBe foundation
-                        </div>
+                        <div class="notice">this data is supported the JBe foundation</div>
                     </template>
                 </stats-card>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <stats-card data-background-color="blue" class="chart-card">
                     <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">
-                            Other chart
-                        </div>
-                        <md-icon class="info-icon">
-                            info_outline
-                        </md-icon>
+                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
+                        <md-icon class="info-icon">info_outline</md-icon>
                     </template>
 
                     <template slot="content">
                         <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart3" holder-element="chart-holder"/>
+                                   selector="chart3" holder-element="chart-card"/>
                     </template>
 
                     <template slot="footer">
-                        <div class="notice">
-                            this data is supported the JBe foundation
-                        </div>
+                        <div class="notice">this data is supported the JBe foundation</div>
                     </template>
                 </stats-card>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <stats-card data-background-color="blue" class="chart-card">
                     <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">
-                            Other chart
-                        </div>
-                        <md-icon class="info-icon">
-                            info_outline
-                        </md-icon>
+                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
+                        <md-icon class="info-icon">info_outline</md-icon>
                     </template>
 
                     <template slot="content">
                         <tree-map-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                    title="Distribution of operating systems"
                                    metric="anzahl_os" descriptor="os"
-                                   selector="chart4" holder-element="chart-holder"/>
+                                   selector="chart4" holder-element="chart-card"/>
                     </template>
 
                     <template slot="footer">
-                        <div class="notice">
-                            this data is supported the JBe foundation
-                        </div>
+                        <div class="notice">this data is supported the JBe foundation</div>
                     </template>
                 </stats-card>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <stats-card data-background-color="blue" class="chart-card">
                     <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">
-                            Other chart
-                        </div>
-                        <md-icon class="info-icon" id="">
-                            info_outline
-                        </md-icon>
+                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
+                        <md-icon class="info-icon" id="">info_outline</md-icon>
                     </template>
 
                     <template slot="content">
                         <h-bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
                                      title="Distribution of operating systems"
                                      metric="anzahl_os" descriptor="os"
-                                     selector="chart5" holder-element="chart-holder"/>
+                                     selector="chart5" holder-element="chart-card"/>
                     </template>
 
                     <template slot="footer">
-                        <div class="notice">
-                            this data is supported the JBe foundation
-                        </div>
+                        <div class="notice">this data is supported the JBe foundation</div>
                     </template>
                 </stats-card>
             </div>
@@ -421,8 +385,8 @@ export default class UDPC extends AbstractDashboard {
         this.$store.dispatch('fetchOsStats');
     }
 
-    filterOsStats() {
-        this.$store.dispatch('applyFilter', ['osStats', this.meta.osStats.dataSeries.categoryAccessor]);
+    filter(chartID: string) {
+        this.$store.dispatch('applyFilter', [chartID, this.meta[chartID].dataSeries.categoryAccessor]);
     }
 
     testSnackBar() {
@@ -480,7 +444,7 @@ export default class UDPC extends AbstractDashboard {
     filterChanged() {
         // The new filters could be set here - so far the filter already does that itself
         // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
-        this.filterOsStats();
+        this.filter('osStats');
     }
 
     dialogResult(isPositive: boolean) {
@@ -506,7 +470,7 @@ export default class UDPC extends AbstractDashboard {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     h1, h2 {
         font-weight: normal;
     }
@@ -535,5 +499,47 @@ export default class UDPC extends AbstractDashboard {
 
     .facts-holder span {
         padding: 10px;
+    }
+
+    .card-content-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    /*
+        Charts
+    */
+    .chart-row {
+        margin-top: 40px;
+
+        .chart-card {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            padding-bottom: 20px !important;
+
+            .chart-container {
+                height: 100%;
+            }
+
+            .md-card-actions {
+                margin: 0;
+                position: absolute;
+                bottom: 0;
+                float: right;
+                right: 0;
+                padding-right: 5px;
+                padding-top: 0;
+
+                .notice {
+                    font-style: italic;
+                    font-size: 7pt;
+                }
+            }
+        }
     }
 </style>

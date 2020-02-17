@@ -1,5 +1,7 @@
-<template class="chart-container">
-    <svg class="chart" v-bind:id="selector"></svg>
+<template>
+    <div class="chart-wrapper" :style="style">
+        <svg class="chart" v-bind:id="selector"></svg>
+    </div>
 </template>
 
 <script lang="ts">
@@ -12,12 +14,7 @@ import { HierarchyNode } from 'd3';
 export default class TreeMapChart extends AbstractChart {
 
     mounted() {
-        this.redraw();
-        window.addEventListener('resize', this.redraw);
-    }
-
-    redraw() {
-        this.redrawOnDimensionsChange(this.getSVGElement());
+        window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
@@ -25,7 +22,7 @@ export default class TreeMapChart extends AbstractChart {
         svg.html(null);
 
         let yOffset = this.$utils.chart.getYOffset(this.title) || 0;
-        let xOffset = this.$utils.chart.getXOffset(this.getSVGElement(), this.holderElement);
+        let xOffset = this.$utils.chart.getXOffset(this.svgElement, this.holderElement);
 
         // If no hierarchy exists - we need to artificially create one
         const parentName = 'parent';

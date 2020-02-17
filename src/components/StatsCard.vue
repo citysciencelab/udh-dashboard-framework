@@ -23,8 +23,8 @@ export default class StatsCard extends Vue {
 }
 </script>
 
-<style scoped>
-    .md-card-header+.md-card-content {
-        padding-top: 10px !important;
+<style scoped lang="scss">
+    .md-card-content {
+        height: 100%;
     }
 </style>
