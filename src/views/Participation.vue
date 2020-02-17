@@ -86,10 +86,10 @@
     import StatsCard from "../components/StatsCard.vue";
     import MultiSelect from "../components/MultiSelect.vue";
     import LineChart from "../components/charts/LineChart.vue";
-    import BarChart from "../components/charts/BarChart.vue";
+    import BarChart from "../components/charts/chartjs/BarChart.vue";
     import partStore from '../store/participation.module';
     import AbstractDashboard from "@/views/AbstractDashboard.vue";
-    import { messages } from '../messages/messages.participation.module';
+    import { messages } from '@/messages/messages.participation.module';
 
     @Component({
         components: {
