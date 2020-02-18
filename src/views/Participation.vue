@@ -57,10 +57,8 @@
                     </template>
 
                     <template slot="content">
-                        <template slot="content">
                             <horizontal-bar-chart   :chartData="chartData.participationDistrictCount"
                                                     :chartOptions="chartOptions.participationDistrictCount"/>
-                        </template>
                     </template>
 
                     <template slot="footer">
@@ -138,6 +136,7 @@
     import MultiSelect from "../components/MultiSelect.vue";
 
     import BarChart from "../components/charts/chartjs/BarChart.vue";
+    import HorizontalBarChart from "../components/charts/chartjs/BarChartHorizontal.vue";
     import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 
     import partStore from '../store/participation.module';
@@ -149,6 +148,7 @@
             StatsCard,
             MultiSelect,
             BarChart,
+            HorizontalBarChart,
             TreeMapChart
         }
     })
@@ -161,6 +161,9 @@
             participationDistrictCount: {
                 title: {
                     text: 'Public participation procedures'
+                },
+                legend: {
+                    display: false
                 },
                 responsive: true
             },
@@ -175,10 +178,21 @@
                 },
                 tooltips: {
                     callbacks: {
+                        title: function(item, data) {
+                            var item = item[0];
+                            return data.datasets[item.datasetIndex].data[item.index].g;
+                        },
                         label: function(item, data) {
-                            var dataset = data.datasets[item.datasetIndex];
-                            var dataItem = dataset.data[item.index];
-                            return dataItem.g + ': \n' + dataItem.v;
+                            console.log("dd")
+                            if (data.datasets && data.datasets.length > 0 && item.datasetIndex != null) {
+                                let index = item.datasetIndex;
+                                let dataset = data.datasets[index];
+                                if (dataset.data && item.index) {
+                                    let index2: number = item.index;
+                                    let dataItem = dataset.data[index2];
+                                    return dataItem ? (dataItem.g + ': \n' + dataItem.v) : '';
+                                }
+                            }
                         }
                     }
                 }
