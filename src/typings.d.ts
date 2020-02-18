@@ -117,7 +117,3 @@ interface DateRangeSlider {
   min: number;
   marks: { [key: number]: number };
 }
-
-export interface CustomWindow extends Window {
-  mpapi?: any;
-}

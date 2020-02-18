@@ -113,8 +113,8 @@
                 metric: 'count'
             }
         };
-        portal: Datum = portalConfig;
-        services: Datum = servicesConfig;
+        portal: object = portalConfig;
+        services: object = servicesConfig;
         geoJson = localGeoJSON;
 
         async mounted() {

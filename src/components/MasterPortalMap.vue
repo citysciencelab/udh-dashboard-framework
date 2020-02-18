@@ -4,11 +4,8 @@
 
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-    import {CustomWindow, Datum} from "@/typings";
-
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
-
     import * as mpapi from "masterportalAPI";
 
     @Component({})
@@ -75,6 +72,10 @@
             };
             return localService;
         }
+    }
+
+    declare interface CustomWindow extends Window {
+         mpapi?: any;
     }
 </script>
 

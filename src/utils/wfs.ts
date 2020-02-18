@@ -1,5 +1,6 @@
 import Axios from "axios";
 import {parseString} from 'xml2js';
+import GML2 from "ol/format/GML2";
 
 export default {
 
@@ -11,12 +12,12 @@ export default {
         //     url = url + '&PropertyName=(' + properties.toLocaleString() + ')'
         // }
 
-        let results = {};
-        await Axios.get(url).then(response => {
+        let response = await Axios.get(url).then(response => {
             parseString(response.data, {trim: true},(err, result) => {
                 if(err) {
-                    console.log(err)
+                    throw err
                 } else {
+                    //TODO: try to parse this data to geoJSON, so we do not have to do the getDataFromWFSJson() method
                     // var formatWFS = new GML2({
                     //     srsName: 'EPSG:3857',
                     //     featureNS: "options.featureNS",
@@ -25,11 +26,11 @@ export default {
                     // let res = result["wfs:FeatureCollection"];
                     // res["localName"] = 'featureMembers';
                     // var features = formatWFS.readFeatures(res);
-                    results = result
+                    return result
                 }
             });
         });
-        return results;
+        return response;
     },
 
     getDataFromWFSJson(wfsData: { [key: string]: any }, wfsTypename: string, properties: string[], prefix: string, baseNodes: string[]): Dataset {
