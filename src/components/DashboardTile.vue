@@ -18,7 +18,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
-export default class StatsCard extends Vue {
+export default class DashboardTile extends Vue {
     @Prop() dataBackgroundColor!: { type: string, default: string };
 }
 </script>

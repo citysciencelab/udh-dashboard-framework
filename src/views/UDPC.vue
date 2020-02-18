@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <stats-card data-background-color="green">
+                <dashboard-tile data-background-color="green">
                     <template slot="header">
                         <md-icon>store</md-icon>
                     </template>
@@ -17,10 +17,10 @@
                             <md-icon>date_range</md-icon> Last 24 Hours
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="orange">
+                <dashboard-tile data-background-color="orange">
                     <template slot="header">
                         <md-icon>file_copy</md-icon>
                     </template>
@@ -36,10 +36,10 @@
                             <a href="#pablo">Get More Space...</a>
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="red">
+                <dashboard-tile data-background-color="red">
                     <template slot="header">
                         <md-icon>info_outline</md-icon>
                     </template>
@@ -54,10 +54,10 @@
                             <md-icon>local_offer</md-icon> Tracked from Github
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="blue">
+                <dashboard-tile data-background-color="blue">
                     <template slot="header">
                         <md-icon>cake</md-icon>
                     </template>
@@ -72,7 +72,7 @@
                             <md-icon>update</md-icon> Just Updated
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
         </div>
         <div class="row">
@@ -145,7 +145,7 @@
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
+                <dashboard-tile data-background-color="blue" class="chart-card">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">OS Data</div>
                         <md-icon class="info-icon" id="tooltip-os-data">info_outline</md-icon>
@@ -163,10 +163,10 @@
                     <template slot="footer">
                         <div class="notice">this data is supported the JBe foundation</div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
+                <dashboard-tile data-background-color="blue" class="chart-card">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
                         <md-icon class="info-icon">info_outline</md-icon>
@@ -182,12 +182,12 @@
                     <template slot="footer">
                         <div class="notice">this data is supported the JBe foundation</div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
+                <dashboard-tile data-background-color="blue" class="chart-card">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
                         <md-icon class="info-icon">info_outline</md-icon>
@@ -203,10 +203,10 @@
                     <template slot="footer">
                         <div class="notice">this data is supported the JBe foundation</div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
+                <dashboard-tile data-background-color="blue" class="chart-card">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
                         <md-icon class="info-icon">info_outline</md-icon>
@@ -222,12 +222,12 @@
                     <template slot="footer">
                         <div class="notice">this data is supported the JBe foundation</div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
+                <dashboard-tile data-background-color="blue" class="chart-card">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
                         <md-icon class="info-icon" id="">info_outline</md-icon>
@@ -243,7 +243,7 @@
                     <template slot="footer">
                         <div class="notice">this data is supported the JBe foundation</div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
         </div>
 
@@ -259,7 +259,7 @@
 import Vue from 'vue';
 import { Store } from 'vuex';
 import Component from 'vue-class-component';
-import StatsCard from '../components/StatsCard.vue';
+import DashboardTile from '../components/DashboardTile.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
@@ -277,7 +277,7 @@ import { messages } from '../messages/messages.participation.module';
 
 @Component({
     components: {
-        StatsCard,
+        DashboardTile,
         DidYouKnow,
         MultiSelect,
         RangeSlider,
