@@ -85,7 +85,7 @@
 
 <script lang="ts">
     import Component from "vue-class-component";
-    import StatsCard from "../components/StatsCard.vue";
+    import DashboardTile from "../components/DashboardTile.vue";
     import MultiSelect from "../components/MultiSelect.vue";
     import LineChart from "../components/charts/LineChart.vue";
     import BarChart from "../components/charts/BarChart.vue";
