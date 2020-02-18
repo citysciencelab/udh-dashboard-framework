@@ -57,10 +57,61 @@
                     </template>
 
                     <template slot="content">
-                        <!--                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options" v-bind:origins="['anzahl_os']"-->
-                        <!--                                    title="Distribution of operating systems"-->
-                        <!--                                    metric="anzahl_os" descriptor="os"-->
-                        <!--                                    selector="chart2" holder-element="chart-holder"/>-->
+                        <template slot="content">
+                            <horizontal-bar-chart   :chartData="chartData.participationDistrictCount"
+                                                    :chartOptions="chartOptions.participationDistrictCount"/>
+                        </template>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
+            </div>
+        </div>
+        <div class="row chart-row" style="height: 420px">
+            <div class="col-sm">
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data-3')">
+                            Participation Data
+                        </div>
+                        <md-icon class="info-icon" id="tooltip-os-data-3">
+                            info_outline
+                        </md-icon>
+                    </template>
+
+                    <template slot="content">
+                        <tree-map-chart :chartData="chartData.participationDistrictCountTree"
+                                   :chartOptions="chartOptions.participationDistrictCountTree"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </stats-card>
+            </div>
+            <div class="col-sm">
+                <stats-card data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+                        <!--                        <md-icon class="info-icon" id="">-->
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
+                    </template>
+
+                    <template slot="content">
+                        <template slot="content">
+<!--                            <horizontal-bar-chart   :chartData="chartData.participationDistrictCount"-->
+<!--                                                    :chartOptions="chartOptions.participationDistrictCount"/>-->
+                        </template>
                     </template>
 
                     <template slot="footer">
@@ -85,8 +136,10 @@
     import Component from "vue-class-component";
     import StatsCard from "../components/StatsCard.vue";
     import MultiSelect from "../components/MultiSelect.vue";
-    import LineChart from "../components/charts/LineChart.vue";
+
     import BarChart from "../components/charts/chartjs/BarChart.vue";
+    import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
+
     import partStore from '../store/participation.module';
     import AbstractDashboard from "@/views/AbstractDashboard.vue";
     import { messages } from '@/messages/messages.participation.module';
@@ -96,12 +149,13 @@
             StatsCard,
             MultiSelect,
             BarChart,
-            LineChart
+            TreeMapChart
         }
     })
     export default class Participation extends AbstractDashboard {
         chartData: { [key: string]: Chart.ChartData } = {
-            participationDistrictCount: {}
+            participationDistrictCount: {},
+            participationDistrictCountTree: {}
         };
         chartOptions: { [key: string]: Chart.ChartOptions } = {
             participationDistrictCount: {
@@ -109,8 +163,28 @@
                     text: 'Public participation procedures'
                 },
                 responsive: true
+            },
+            participationDistrictCountTree: {
+                maintainAspectRatio: true,
+                title: {
+                    display: true,
+                    text: "Basic treemap sample"
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(item, data) {
+                            var dataset = data.datasets[item.datasetIndex];
+                            var dataItem = dataset.data[item.index];
+                            return dataItem.g + ': \n' + dataItem.v;
+                        }
+                    }
+                }
             }
         };
+
 
         async mounted() {
             // fetch the initial dashboard data
@@ -137,6 +211,8 @@
                     case 'SET_FILTERED_DATA':
                         if (mutation.payload[0] === 'participationDistrictCount') {
                             this.chartData.participationDistrictCount = mutation.payload[1];
+                        } else if (mutation.payload[0] === 'participationDistrictCountTree') {
+                            this.chartData.participationDistrictCountTree = mutation.payload[1];
                         }
                 }
             });

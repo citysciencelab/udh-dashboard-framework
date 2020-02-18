@@ -1,6 +1,8 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { Bar } from 'vue-chartjs'
+import Chart from 'chart.js'
+import { generateChart } from 'vue-chartjs';
+import 'chartjs-chart-treemap'
 
 // Workaround for a problem with vue-chartjs, see: https://github.com/apertureless/vue-chartjs/issues/495
 declare module 'vue/types/vue' {
@@ -9,10 +11,12 @@ declare module 'vue/types/vue' {
   }
 }
 
+const TreeMap = generateChart('tree-map', 'treemap')
+
 @Component({
-    extends: Bar
+    extends: TreeMap
 })
-export default class BarChart extends Vue {
+export default class TreeMapChart extends Vue {
     @Prop() chartData!: Chart.ChartData;
     @Prop() chartOptions!: Chart.ChartOptions;
 

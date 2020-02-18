@@ -50,7 +50,19 @@ const participationModule: Module<ParticipationState, RootState> = {
                 }]
             };
 
+            const participationDistrictCountTree = {
+                datasets: [{
+                    tree: countdata,
+                    key: "count",
+                    groups: ['bezirk'],
+                    spacing: 2,
+                    borderWidth: 0.5,
+                    fontColor: "black",
+                }]
+            };
+
             context.commit('SET_FILTERED_DATA', ['participationDistrictCount', participationDistrictCount]);
+            context.commit('SET_FILTERED_DATA', ['participationDistrictCountTree', participationDistrictCountTree]);
         }
     },
     getters: {
