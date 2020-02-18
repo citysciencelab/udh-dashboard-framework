@@ -132,7 +132,11 @@ export default class App extends Vue {
 
             .tool-tip-header {
                 cursor: pointer;
-                padding: 15px 20px;
+                font-size: 15pt;
+                text-align: left;
+                font-family: 'HamburgSans-Bold';
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
         }
 

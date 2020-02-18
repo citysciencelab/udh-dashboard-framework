@@ -10,4 +10,16 @@ $font_path_hh: '~@/assets/fonts/HamburgSans/';
   url($font_path_hh + 'HamburgSans-Regular/HamburgSans-Regular.svg#HamburgSans-Regular') format('svg');
   font-weight: normal;
   font-style: normal;
+}$font_path_hh: '~@/assets/fonts/HamburgSans/';
+
+@font-face {
+  font-family: 'HamburgSans-Bold';
+  src: url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.eot?');
+  src: url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.eot?#iefix') format('embedded-opentype'),
+  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.woff') format('woff'),
+  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.woff2') format('woff2'),
+  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.ttf') format('truetype'),
+  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.svg#HamburgSans-Bold') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
