@@ -147,12 +147,6 @@ export default class App extends Vue {
             grid-template-columns: 1fr 2fr;
         }
 
-        .segment {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            text-align: center;
-        }
-
         .chart {
             padding: 10px;
         }
