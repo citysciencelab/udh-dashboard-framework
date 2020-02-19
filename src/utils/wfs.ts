@@ -1,24 +1,36 @@
 import Axios from "axios";
 import {parseString} from 'xml2js';
-
+import GML2 from "ol/format/GML2";
 
 export default {
 
     get: async (wfsUrl: string, wfsTypename: string, properties: string[]) => {
-        const url = 'https://geodienste.hamburg.de/' + wfsUrl + '?service=WFS&version=1.1.0&request=GetFeature' +
-            '&typename=' + wfsTypename + '&PropertyName=(' + properties.toLocaleString() + ')';
+        let url = 'https://geodienste.hamburg.de/' + wfsUrl + '?service=WFS&version=1.1.0&request=GetFeature' +
+            '&outputFormat=GML3&typename=' + wfsTypename;
 
-        let results = {};
-        const response = await Axios.get(url).then(response => {
+        // if (properties.length > 0) {
+        //     url = url + '&PropertyName=(' + properties.toLocaleString() + ')'
+        // }
+
+        let response = await Axios.get(url).then(response => {
             parseString(response.data, {trim: true},(err, result) => {
                 if(err) {
-                    console.log(err)
+                    throw err
                 } else {
-                    results = result
+                    //TODO: try to parse this data to geoJSON, so we do not have to do the getDataFromWFSJson() method
+                    // var formatWFS = new GML2({
+                    //     srsName: 'EPSG:3857',
+                    //     featureNS: "options.featureNS",
+                    //     featureType: "dd"
+                    // });
+                    // let res = result["wfs:FeatureCollection"];
+                    // res["localName"] = 'featureMembers';
+                    // var features = formatWFS.readFeatures(res);
+                    return result
                 }
             });
         });
-        return results;
+        return response;
     },
 
     getDataFromWFSJson(wfsData: { [key: string]: any }, wfsTypename: string, properties: string[], prefix: string, baseNodes: string[]): Dataset {

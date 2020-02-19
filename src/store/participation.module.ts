@@ -29,8 +29,8 @@ const participationModule: Module<ParticipationState, RootState> = {
     },
     actions: {
         fetchParticipationStats: async (context) => {
-            const results = await wfs.get(wfsUrl, wfsTypename, []);
-            const resultExtract = wfs.getDataFromWFSJson(results as Object[], wfsTypename, dataPropertyNames, prefix, baseNodes);
+            const results: any = await wfs.get(wfsUrl, wfsTypename, []);
+            const resultExtract = wfs.getDataFromWFSJson(results as any[], wfsTypename, dataPropertyNames, prefix, baseNodes);
 
             context.commit('SET_INITIAL_DATA', ['participationData', resultExtract]);
             context.commit('SET_FILTERED_DATA', ['participationData', resultExtract]);

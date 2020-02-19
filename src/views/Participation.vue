@@ -56,10 +56,7 @@
                     </template>
 
                     <template slot="content">
-                        <!--                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options" v-bind:origins="['anzahl_os']"-->
-                        <!--                                    title="Distribution of operating systems"-->
-                        <!--                                    metric="anzahl_os" descriptor="os"-->
-                        <!--                                    selector="chart2" holder-element="chart-holder"/>-->
+                        <master-portal-map v-bind:services="services" v-bind:portal="portal" v-bind:geo-json="geoJson" />
                     </template>
 
                     <template slot="footer">
@@ -88,11 +85,20 @@
     import BarChart from "../components/charts/BarChart.vue";
     import partStore from '../store/participation.module';
     import AbstractDashboard from "@/views/AbstractDashboard.vue";
-    import { messages } from '../messages/messages.participation.module';
+    import portalConfig from "@/assets/map-config/portal.json";
+    import servicesConfig from "@/assets/map-config/services.json";
+    import localGeoJSON from "@/assets/map-config/localGeoJSON.json";
+    import MasterPortalMap from "@/components/MasterPortalMap.vue";
+    import { messages } from '@/messages/messages.participation.module';
 
     @Component({
         components: {
+<<<<<<< HEAD
             DashboardTile,
+=======
+            MasterPortalMap,
+            StatsCard,
+>>>>>>> feature/masterportal-api
             MultiSelect,
             BarChart,
             LineChart
@@ -108,6 +114,9 @@
                 metric: 'count'
             }
         };
+        portal: object = portalConfig;
+        services: object = servicesConfig;
+        geoJson = localGeoJSON;
 
         async mounted() {
             // Lets fetch the initial dashboard data
@@ -174,24 +183,11 @@
 </script>
 
 
-<style scoped lang="scss">
+<style lang="scss">
 
-    /*    h1, h2 {
-            font-weight: normal;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            display: inline-block;
-            margin: 0 10px;
-        }
-
-        a {
-            color: #42b983;
-        }*/
+    .md-card-content {
+        height: 100% !important;
+        width: 100% !important;
+    }
 
 </style>
