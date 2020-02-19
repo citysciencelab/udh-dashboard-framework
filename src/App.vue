@@ -1,6 +1,5 @@
 <template>
-    <div id="page" class="page-container"
-         v-bind:style="{'background-image': 'url(' + this.imageUrl + ')'}">
+    <div id="page" class="page-container">
         <div id="loading-overlay" v-if="this.loading">
             <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
         </div>
@@ -24,12 +23,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import CountryFlag from 'vue-country-flag';
-// TODO: How to bulk load these images?
-// import image0 from './assets/images/background/0.jpg';
-// import image1 from './assets/images/background/1.jpg';
-// import image2 from './assets/images/background/2.jpg';
-// import image3 from './assets/images/background/3.jpg';
-// import image4 from './assets/images/background/4.jpg';
 
 @Component({
     components: {
@@ -37,21 +30,6 @@ import CountryFlag from 'vue-country-flag';
     }
 })
 export default class App extends Vue {
-    // images = [
-    //     image0,
-    //     image1,
-    //     image2,
-    //     image3,
-    //     image4,
-    // ];
-    imageIndex = 0;
-    imageUrl = '';
-
-    mounted() {
-        // For now we do not need this
-        // this.imageUrl = this.images[this.imageIndex];
-    }
-
     get loading(): boolean {
         return this.$store.getters.loading;
     }
