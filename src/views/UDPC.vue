@@ -124,7 +124,7 @@
 
                         <template slot="footer">
                             <div class="notice">
-                                <md-switch class="dashboard-switch">
+                                <md-switch v-model="countGroupedWithPlans" class="dashboard-switch">
                                     {{ $t('udpc.includeDevPlan') }}
                                 </md-switch>
                             </div>
@@ -156,7 +156,9 @@
 
                         <template slot="footer">
                             <div class="notice">
-                                {{ $t('udpc.includeDevPlan') }}
+                                <md-switch v-model="countTotalWithPlans" class="dashboard-switch">
+                                    {{ $t('udpc.includeDevPlan') }}
+                                </md-switch>
                             </div>
                         </template>
                     </dashboard-tile>
@@ -383,6 +385,9 @@ import { messages } from '@/messages/messages.udpc.module';
     }
 })
 export default class UDPC extends AbstractDashboard {
+    countTotalWithPlans = false;
+    countGroupedWithPlans = false;
+
     tooltipActive = false;
     agreeDialogActive = false;
     dateRange = 'year';
@@ -647,16 +652,28 @@ export default class UDPC extends AbstractDashboard {
         .md-switch-container {
             background-color: white !important;
             border: 1px solid black;
-            width: 45px;
-            height: 23px;
+            width: 36px;
+            height: 19px;
+            padding-left: 2px;
         }
         .md-switch-thumb {
             background-color: black !important;
-            width: 17px;
-            height: 17px;
+            width: 15px;
+            height: 15px;
         }
         .md-switch-label {
-            margin-top: 7px;
+            margin-top: 3px;
+            padding-left: 10px;
+        }
+    }
+
+    .dashboard-switch.md-checked {
+        .md-switch-container {
+            background-color: $hamburg-blue !important;
+            border: 1px solid $hamburg-blue;
+        }
+        .md-switch-thumb {
+            background-color: white !important;
         }
     }
 
@@ -671,6 +688,7 @@ export default class UDPC extends AbstractDashboard {
         .md-card-actions {
             .notice {
                 width: 100%;
+                text-align: left;
             }
         }
     }
