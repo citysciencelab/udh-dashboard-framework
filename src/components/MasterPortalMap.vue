@@ -17,6 +17,7 @@
         cWindow: CustomWindow = window;
 
         mounted() {
+            console.log(this.geoJson);
             this.testCreateMPMap();
         }
 
