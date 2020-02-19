@@ -9,8 +9,6 @@ import BootstrapVue from 'bootstrap-vue';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 import VueMaterial from 'vue-material';
-import './assets/scss/material-dashboard.scss';
-import './assets/scss/_fonts.scss';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
