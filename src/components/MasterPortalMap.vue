@@ -73,10 +73,6 @@
             return localService;
         }
     }
-
-    declare interface CustomWindow extends Window {
-         mpapi?: any;
-    }
 </script>
 
 <style scoped>
