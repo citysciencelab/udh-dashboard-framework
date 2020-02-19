@@ -311,7 +311,7 @@
             <!--
                 The two rows below can be deleted later
             -->
-            <div class="row">
+            <div class="row" style="margin: 100px">
                 <div class="col-sm">
                     <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
 
@@ -488,7 +488,6 @@ export default class UDPC extends AbstractDashboard {
     }
 
     testSnackBar() {
-        console.log("dfdd")
         let options = {
             message: 'Important bottom message',
             position: 'center',
@@ -502,7 +501,7 @@ export default class UDPC extends AbstractDashboard {
         }
         new Vue({
             el: snack.querySelector('div') || undefined,
-            render: h => h(SnackBar, { attrs: options })
+            render: h => h(SnackBar, { props: options })
         });
     }
 
