@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-        <div class="row">
-            top
-        </div>
         <div class="row align-items-center" style="background-color: white">
             <div class="col-sm">
                 <multi-select v-bind:selectData="this.getFilterOptions('participationData','bezirk')"
@@ -95,7 +92,7 @@
 
     @Component({
         components: {
-            StatsCard,
+            DashboardTile,
             MultiSelect,
             BarChart,
             LineChart
