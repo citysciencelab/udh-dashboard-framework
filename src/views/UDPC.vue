@@ -465,8 +465,6 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTotalDatasets');
         await this.$store.dispatch('fetchTotalDatasetsRange');
 
-        console.log(this.dashboardData);
-
         // Set initial filters
         await this.setFilters(['SOURCE', 'services_internet']);
         await this.setFilters(['YEAR', [2017, 2019]]);

@@ -14,7 +14,6 @@ export const messages = {
             accessApps: 'Zugriffe Apps',
             didYouKNow: 'Wussten Sie schon?',
             facts: 'Wussten Sie schon: %{fact}',
-
             tabTopics: 'Themen',
             tabOrganisations: 'Organisationen',
             tabSensors: 'Sensordatensätze',
@@ -41,7 +40,9 @@ export const messages = {
             accessApps: 'Access Apps',
             didYouKNow: 'Did you know?',
             facts: 'Did you know: %{fact}',
-
+            tabTopics: 'Topics',
+            tabOrganisations: 'Prganisations',
+            tabSensors: 'Sensors',
             tabYear: 'Year',
             tabMonth: 'Month',
             tabDay: 'Day',
