@@ -4,13 +4,6 @@ import Chart from 'chart.js'
 import { generateChart } from 'vue-chartjs';
 import 'chartjs-chart-treemap'
 
-// Workaround for a problem with vue-chartjs, see: https://github.com/apertureless/vue-chartjs/issues/495
-declare module 'vue/types/vue' {
-  interface Vue {
-    renderChart(chartData: Chart.ChartData, options?: Chart.ChartOptions): void
-  }
-}
-
 const TreeMap = generateChart('tree-map', 'treemap');
 
 @Component({
