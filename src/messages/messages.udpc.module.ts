@@ -18,11 +18,9 @@ export const messages = {
             tabTopics: 'Themen',
             tabOrganisations: 'Organisationen',
             tabSensors: 'Sensordatensätze',
-
             tabYear: 'Jahr',
             tabMonth: 'Monat',
             tabDay: 'Tag',
-
             tabDatasets: 'Datensätze',
             tabApps: 'Apps',
             tabDownloads: 'Downloads',
@@ -39,7 +37,7 @@ export const messages = {
             map: 'Map',
             top5: 'Monthly top 5',
             download: 'Download',
-            accessTopicData: 'Access ---',
+            accessTopicData: 'Access application data',
             accessApps: 'Access Apps',
             didYouKNow: 'Did you know?',
             facts: 'Did you know: %{fact}',
