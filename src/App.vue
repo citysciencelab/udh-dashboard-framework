@@ -1,43 +1,17 @@
 <template>
-    <div id="page" class="page-container"
-         v-bind:style="{'background-image': 'url(' + this.imageUrl + ')'}">
+    <div id="page" class="page-container">
         <div id="loading-overlay" v-if="this.loading">
             <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
         </div>
+
+        <div id="nav">
+            <router-link to="/udpc">UDPC</router-link>
+            |
+            <router-link to="/participation">Participation</router-link>
+        </div>
+
         <md-app class="md-app-scroll-fix" md-waterfall md-mode="fixed">
-            <md-app-toolbar class="md-primary">
-                <div class="md-toolbar-row">
-                    <span class="md-title">{{ $t('general.title') }}</span>
-                    <div class="md-toolbar-section-end">
-                        <md-menu md-direction="bottom-start">
-                            <md-button md-menu-trigger>
-                                <country-flag v-if="$i18n.locale === 'de'" @click="changeLanguage('de')"
-                                              country="de" size="normal"/>
-                                <country-flag v-if="$i18n.locale === 'en'" @click="changeLanguage('en')"
-                                              country="gb" size="normal"/>
-                            </md-button>
-                            <md-menu-content>
-                                <md-menu-item @click="changeLanguage('de')">
-                                    <country-flag country="de" size="normal"/>
-                                </md-menu-item>
-                                <md-menu-item @click="changeLanguage('en')">
-                                    <country-flag country="gb" size="normal"/>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
-                    </div>
-                </div>
-            </md-app-toolbar>
             <md-app-content>
-                <div id="nav">
-                    <router-link to="/">Home</router-link>
-                    |
-                    <router-link to="/about">About</router-link>
-                    |
-                    <router-link to="/udpc">UDPC</router-link>
-                    |
-                    <router-link to="/participation">Participation</router-link>
-                </div>
                 <router-view/>
             </md-app-content>
         </md-app>
@@ -49,12 +23,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import CountryFlag from 'vue-country-flag';
-// TODO: How to bulk load these images?
-import image0 from './assets/images/background/0.jpg';
-import image1 from './assets/images/background/1.jpg';
-import image2 from './assets/images/background/2.jpg';
-import image3 from './assets/images/background/3.jpg';
-import image4 from './assets/images/background/4.jpg';
 
 @Component({
     components: {
@@ -62,26 +30,8 @@ import image4 from './assets/images/background/4.jpg';
     }
 })
 export default class App extends Vue {
-    images = [
-        image0,
-        image1,
-        image2,
-        image3,
-        image4,
-    ];
-    imageIndex = 0;
-    imageUrl = '';
-
-    mounted() {
-        this.imageUrl = this.images[this.imageIndex];
-    }
-
     get loading(): boolean {
         return this.$store.getters.loading;
-    }
-
-    changeLanguage(lang: string) {
-        this.$i18n.locale = lang
     }
 }
 </script>
@@ -108,9 +58,6 @@ export default class App extends Vue {
     @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons");
 
     #page {
-        font-family: 'HamburgSans-Regular';
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
         background-size: cover;
@@ -123,20 +70,42 @@ export default class App extends Vue {
             background-color: rgba(255, 255, 255, 0.9) !important;
         }
 
-        .md-card .md-card-header {
-            margin: -28px 5px 0 !important;
+        .md-card {
+            padding: 15px;
+            margin: 0;
+            height: 100%;
             position: relative;
-            padding: 0 !important;
-            z-index: 2;
 
-            .tool-tip-header {
-                cursor: pointer;
-                padding: 15px 20px;
+            .md-card-header {
+                position: relative;
+                padding: 0 !important;
+                z-index: 2;
+
+                .tool-tip-header {
+                    cursor: pointer;
+                    font-size: 15pt;
+                    text-align: left;
+                }
+            }
+
+            .md-card-content {
+                padding: 15px 0 0 0;
+                height: auto;
+            }
+
+            .md-card-actions {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                margin: 0;
+                padding: 0 20px !important;
+                width: 100%;
             }
         }
 
+
         .md-card .md-card-header .info-icon {
-            font-size: 15px !important;
+            font-size: 19px !important;
             width: 15px;
             height: 15px;
             position: absolute;
@@ -146,11 +115,13 @@ export default class App extends Vue {
         }
 
         .md-toolbar {
-            background-color: rgba(68, 138, 255, .7);
+            background-color: white;
+            border-bottom: 1px solid black;
         }
 
         .md-app, .md-app-container, .md-app-content {
             background: none;
+            padding: 0;
         }
 
         .md-app-scroll-fix {
@@ -174,12 +145,6 @@ export default class App extends Vue {
         .content {
             display: grid;
             grid-template-columns: 1fr 2fr;
-        }
-
-        .segment {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            text-align: center;
         }
 
         .chart {
@@ -219,21 +184,6 @@ export default class App extends Vue {
             padding-left: 10px !important;
             padding-right: 10px !important;
             padding-bottom: 20px !important;
-
-            .md-card-actions {
-                margin: 0;
-                position: absolute;
-                bottom: 0;
-                float: right;
-                right: 0;
-                padding-right: 5px;
-                padding-top: 0;
-
-                .notice {
-                    font-style: italic;
-                    font-size: 7pt;
-                }
-            }
         }
     }
 
@@ -256,7 +206,7 @@ export default class App extends Vue {
     }
 
     .d3-tip, .md-tooltip, .md-snackbar {
-        font-family: 'HamburgSans-Regular' !important;
+        font-family: 'HamburgSans' !important;
         line-height: 1 !important;
         padding: 10px !important;
         color: #fff !important;

@@ -1,251 +1,346 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <stats-card data-background-color="green">
-                    <template slot="header">
-                        <md-icon>store</md-icon>
-                    </template>
-
-                    <template slot="content">
-                        <p class="category">Revenue</p>
-                        <h3 class="title">$34,245</h3>
-                    </template>
-
-                    <template slot="footer">
-                        <div class="stats">
-                            <md-icon>date_range</md-icon> Last 24 Hours
-                        </div>
-                    </template>
-                </stats-card>
-            </div>
-            <div class="col-sm">
-                <stats-card data-background-color="orange">
-                    <template slot="header">
-                        <md-icon>file_copy</md-icon>
-                    </template>
-
-                    <template slot="content">
-                        <p class="category">Used Space</p>
-                        <h3 class="title">49/50 <small>GB</small></h3>
-                    </template>
-
-                    <template slot="footer">
-                        <div class="stats">
-                            <md-icon class="text-danger">warning</md-icon>
-                            <a href="#pablo">Get More Space...</a>
-                        </div>
-                    </template>
-                </stats-card>
-            </div>
-            <div class="col-sm">
-                <stats-card data-background-color="red">
-                    <template slot="header">
-                        <md-icon>info_outline</md-icon>
-                    </template>
-
-                    <template slot="content">
-                        <p class="category">Size of dataset</p>
-                        <h3 class="title">{{this.dashboardData.osStats ? this.dashboardData.osStats.length : 0}}</h3>
-                    </template>
-
-                    <template slot="footer">
-                        <div class="stats">
-                            <md-icon>local_offer</md-icon> Tracked from Github
-                        </div>
-                    </template>
-                </stats-card>
-            </div>
-            <div class="col-sm">
-                <stats-card data-background-color="blue">
-                    <template slot="header">
-                        <md-icon>cake</md-icon>
-                    </template>
-
-                    <template slot="content">
-                        <p class="category">Folowers</p>
-                        <h3 class="title">+245</h3>
-                    </template>
-
-                    <template slot="footer">
-                        <div class="stats">
-                            <md-icon>update</md-icon> Just Updated
-                        </div>
-                    </template>
-                </stats-card>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <div class="facts-holder">
-                    <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
-                </div>
-                <multi-select v-bind:selectData="this.getFilterOptions('osStats')"
-                              v-bind:label="$t('udpc.os')" @new_selection="filterChanged"
-                              identifier="osStats"/>
-            </div>
-            <div class="col-sm">
-                <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
-
-                <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">Open Confirm Dialog</md-button>
-                <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
-                               @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <md-button type="submit" class="md-primary md-raised filter-button"
-                                   v-bind:class="{'active' : dateRange === 'day'}"
-                                   @click="changeFilterRange('dateRangeSlider', 'day')">
-                            Tag
+    <div>
+        <md-app-toolbar class="md-primary">
+            <div class="md-toolbar-row">
+                <div class="md-toolbar-section-end">
+                    <md-menu md-direction="bottom-start">
+                        <md-button md-menu-trigger>
+                            <country-flag v-if="$i18n.locale === 'de'" @click="changeLanguage('de')"
+                                          country="de" size="normal"/>
+                            <country-flag v-if="$i18n.locale === 'en'" @click="changeLanguage('en')"
+                                          country="gb" size="normal"/>
                         </md-button>
-                    </div>
-                    <div class="col-sm-4">
-                        <md-button type="submit" class="md-primary md-raised filter-button"
-                                   v-bind:class="{'active' : dateRange === 'month'}"
-                                   @click="changeFilterRange('dateRangeSlider', 'month')">
-                            Monat
-                        </md-button>
-                    </div>
-                    <div class="col-sm-4">
-                        <md-button type="submit" class="md-primary md-raised filter-button"
-                                   v-bind:class="{'active' : dateRange === 'year'}"
-                                   @click="changeFilterRange('dateRangeSlider', 'year')">
-                            Jahr
-                        </md-button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <range-slider id="dateRangeSlider"
-                                      v-bind:identity="dateRange"
-                                      v-bind:defaultValue="rangeMap.dateRangeSlider.defaultValue"
-                                      v-bind:step="rangeMap.dateRangeSlider.step"
-                                      v-bind:max="rangeMap.dateRangeSlider.max"
-                                      v-bind:min="rangeMap.dateRangeSlider.min"
-                                      v-bind:marks="rangeMap.dateRangeSlider.marks"
-                                      v-bind:isDateRange="true"
-                                      @rangeChange="rangeForChartChanged"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div v-if="this.loading">LOADING ...</div>
+                        <md-menu-content>
+                            <md-menu-item @click="changeLanguage('de')">
+                                <country-flag country="de" size="normal"/>
+                            </md-menu-item>
+                            <md-menu-item @click="changeLanguage('en')">
+                                <country-flag country="gb" size="normal"/>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
                 </div>
             </div>
-            <div class="col-sm">
-                <div class="facts-holder">
-                    <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000" prefix="udpc.facts"></did-you-know>
-                </div>
-            </div>
-            <div class="col-sm">
-                <p>{{ $t("udpc.hello") }}</p>
-            </div>
-        </div>
-        <div class="row chart-row" style="height: 420px">
-            <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
-                    <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">OS Data</div>
-                        <md-icon class="info-icon" id="tooltip-os-data">info_outline</md-icon>
-                    </template>
+        </md-app-toolbar>
 
-                    <template slot="content">
-                        <div class="card-content-container">
-                            <bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
-                                       title="Distribution of operating systems"
-                                       metric="anzahl_os" descriptor="os"
-                                       selector="chart1" holder-element="chart-card"/>
+        <div class="container">
+
+            <div class="row chart-row" style="height: 150px">
+                <div class="col-sm-4">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
+                                {{ $t('udpc.didYouKNow') }}
+                            </div>
+                            <md-icon class="info-icon" id="tooltip-os-data">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            <div class="card-content-container">
+                                <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
+                            </div>
+                        </template>
+
+                        <template slot="footer">
+                        </template>
+                    </dashboard-tile>
+                </div>
+                <div class="col-sm-4">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('')">
+                                {{ $t('udpc.newDatassets') }}
+                            </div>
+                            <md-icon class="info-icon">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            <did-you-know v-bind:items="dataSets" v-bind:interval="5000"></did-you-know>
+                        </template>
+
+                        <template slot="footer">
+                        </template>
+                    </dashboard-tile>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row" style="padding: 0 !important; height: 100%;">
+                        <div class="col-sm-6">
+                            <dashboard-tile data-background-color="blue" class="chart-card">
+                                <template slot="header">
+                                    <div class="tool-tip-header" @click="openToolTip('')">
+                                        {{ $t('udpc.sensors') }}
+                                    </div>
+                                    <md-icon class="info-icon">help</md-icon>
+                                </template>
+
+                                <template slot="content" class="dashboard-kpi">
+                                    386
+                                </template>
+
+                                <template slot="footer">
+                                </template>
+                            </dashboard-tile>
                         </div>
-                    </template>
+                        <div class="col-sm-6">
+                            <dashboard-tile data-background-color="blue" class="chart-card">
+                                <template slot="header">
+                                    <div class="tool-tip-header" @click="openToolTip('')">
+                                        {{ $t('udpc.visitors') }}
+                                    </div>
+                                    <md-icon class="info-icon">help</md-icon>
+                                </template>
 
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </stats-card>
+                                <template slot="content" class="dashboard-kpi">
+                                    893
+                                </template>
+
+                                <template slot="footer">
+                                </template>
+                            </dashboard-tile>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
-                    <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
-                        <md-icon class="info-icon">info_outline</md-icon>
-                    </template>
+            <div class="row chart-row" style="height: 420px">
+                <div class="col-sm-4">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('')">
+                                {{ $t('udpc.countBy') }}
+                            </div>
+                            <md-icon class="info-icon">help</md-icon>
+                        </template>
 
-                    <template slot="content">
-                        <line-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats" v-bind:origins="['anzahl_os']"
-                                    title="Distribution of operating systems"
-                                    metric="anzahl_os" descriptor="os"
-                                    selector="chart2" holder-element="chart-card"/>
-                    </template>
+                        <template slot="content">
+                            <md-tabs class="dashboard-tabs">
+                                <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">
+                                    Treechart1
+                                </md-tab>
+                                <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">
+                                    Treechart2
+                                </md-tab>
+                            </md-tabs>
+                        </template>
 
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </stats-card>
+                        <template slot="footer">
+                            <div class="notice">
+                                <md-switch v-model="countGroupedWithPlans" class="dashboard-switch">
+                                    {{ $t('udpc.includeDevPlan') }}
+                                </md-switch>
+                            </div>
+                        </template>
+                    </dashboard-tile>
+                </div>
+                <div class="col-sm-4">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('')">
+                                {{ $t('udpc.countTotal') }}
+                            </div>
+                            <md-icon class="info-icon">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            <md-tabs class="dashboard-tabs">
+                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">
+                                    chart1
+                                </md-tab>
+                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">
+                                    chart2
+                                </md-tab>
+                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">
+                                    chart3
+                                </md-tab>
+                            </md-tabs>
+                        </template>
+
+                        <template slot="footer">
+                            <div class="notice">
+                                <md-switch v-model="countTotalWithPlans" class="dashboard-switch">
+                                    {{ $t('udpc.includeDevPlan') }}
+                                </md-switch>
+                            </div>
+                        </template>
+                    </dashboard-tile>
+                </div>
+                <div class="col-sm-4">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('')">
+                                {{ $t('udpc.map') }}
+                            </div>
+                            <md-icon class="info-icon">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            MasterportalAPI
+                        </template>
+
+                        <template slot="footer">
+                        </template>
+                    </dashboard-tile>
+                </div>
+            </div>
+            <div class="row chart-row" style="height: 420px">
+                <div class="col-sm-3">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('top5')">
+                                {{ $t('udpc.top5') }}
+                            </div>
+                            <md-icon class="info-icon" id="top5">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            <md-tabs class="dashboard-tabs">
+                                <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">
+                                    chart1
+                                </md-tab>
+                                <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">
+                                    chart2
+                                </md-tab>
+                                <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">
+                                    chart3
+                                </md-tab>
+                            </md-tabs>
+                        </template>
+
+                        <template slot="footer">
+                        </template>
+                    </dashboard-tile>
+                </div>
+                <div class="col-sm-3">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('download')">
+                                {{ $t('udpc.download') }}
+                            </div>
+                            <md-icon class="info-icon" id="download">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            <md-tabs class="dashboard-tabs">
+                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')">
+                                    chart1
+                                </md-tab>
+                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')">
+                                    chart2
+                                </md-tab>
+                                <md-tab id="tab-downloads-day" :md-label="$t('udpc.tabDay')">
+                                    chart3
+                                </md-tab>
+                            </md-tabs>
+                        </template>
+
+                        <template slot="footer">
+                            <div class="notice">placeholder range slider</div>
+                        </template>
+                    </dashboard-tile>
+                </div>
+                <div class="col-sm-3">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('access_topicdata')">
+                                {{ $t('udpc.accessTopicData') }}
+                            </div>
+                            <md-icon class="info-icon" id="access_topicdata">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            <md-tabs class="dashboard-tabs">
+                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')">
+                                    chart1
+                                </md-tab>
+                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')">
+                                    chart2
+                                </md-tab>
+                                <md-tab id="tab-access-topic-day" :md-label="$t('udpc.tabDay')">
+                                    chart3
+                                </md-tab>
+                            </md-tabs>
+                        </template>
+
+                        <template slot="footer">
+                            <div class="notice">placeholder range slider</div>
+                        </template>
+                    </dashboard-tile>
+                </div>
+                <div class="col-sm-3">
+                    <dashboard-tile data-background-color="blue" class="chart-card">
+                        <template slot="header">
+                            <div class="tool-tip-header" @click="openToolTip('access_apps')">
+                                {{ $t('udpc.accessApps') }}
+                            </div>
+                            <md-icon class="info-icon" id="access_apps">help</md-icon>
+                        </template>
+
+                        <template slot="content">
+                            <md-tabs class="dashboard-tabs">
+                                <md-tab id="tab-access-apps-year" :md-label="$t('udpc.tabYear')"
+                                        @click="changeFilterRange('dateRangeSlider', 'year')">
+                                    chart1
+                                </md-tab>
+                                <md-tab id="tab-access-apps-month" :md-label="$t('udpc.tabMonth')"
+                                        @click="changeFilterRange('dateRangeSlider', 'month')">
+                                    chart2
+                                </md-tab>
+                                <md-tab id="tab-access-apps-day" :md-label="$t('udpc.tabDay')"
+                                        @click="changeFilterRange('dateRangeSlider', 'day')">
+                                    chart3
+                                </md-tab>
+                            </md-tabs>
+                        </template>
+
+                        <template slot="footer">
+                            <div class="notice">
+                                <range-slider id="dateRangeSlider"
+                                              v-bind:identity="dateRange"
+                                              v-bind:defaultValue="rangeMap.dateRangeSlider.defaultValue"
+                                              v-bind:step="rangeMap.dateRangeSlider.step"
+                                              v-bind:max="rangeMap.dateRangeSlider.max"
+                                              v-bind:min="rangeMap.dateRangeSlider.min"
+                                              v-bind:marks="rangeMap.dateRangeSlider.marks"
+                                              v-bind:isDateRange="true"
+                                              @rangeChange="rangeForChartChanged"/>
+                            </div>
+                        </template>
+                    </dashboard-tile>
+                </div>
+            </div>
+
+
+
+            <!--
+                The two rows below can be deleted later
+            -->
+            <div class="row" style="margin: 100px">
+                <div class="col-sm">
+                    <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
+
+                    <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">Open Confirm Dialog</md-button>
+                    <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
+                                    @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
+                </div>
             </div>
         </div>
-        <div class="row chart-row" style="height: 420px">
-            <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
-                    <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
-                        <md-icon class="info-icon">info_outline</md-icon>
-                    </template>
 
-                    <template slot="content">
-                        <pie-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
-                                   title="Distribution of operating systems"
-                                   metric="anzahl_os" descriptor="os"
-                                   selector="chart3" holder-element="chart-card"/>
-                    </template>
 
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </stats-card>
+        <md-bottom-bar class="udpc-bottom-bar">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="element-holder links-bottom-left">
+                        <a href="">Datenschutz</a>
+                        <a href="">Impressum</a>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="element-holder images-bottom-right">
+                        <a href="">IMAGE1</a>
+                        <a href="">IMAGE2</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
-                    <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
-                        <md-icon class="info-icon">info_outline</md-icon>
-                    </template>
-
-                    <template slot="content">
-                        <tree-map-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
-                                   title="Distribution of operating systems"
-                                   metric="anzahl_os" descriptor="os"
-                                   selector="chart4" holder-element="chart-card"/>
-                    </template>
-
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </stats-card>
-            </div>
-        </div>
-        <div class="row chart-row" style="height: 420px">
-            <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-card">
-                    <template slot="header">
-                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
-                        <md-icon class="info-icon" id="">info_outline</md-icon>
-                    </template>
-
-                    <template slot="content">
-                        <h-bar-chart v-bind:ds="this.filteredData.osStats" v-bind:options="chartOptions.osStats"
-                                     title="Distribution of operating systems"
-                                     metric="anzahl_os" descriptor="os"
-                                     selector="chart5" holder-element="chart-card"/>
-                    </template>
-
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </stats-card>
-            </div>
-        </div>
+        </md-bottom-bar>
 
         <!--Tooltips-->
         <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
@@ -257,9 +352,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Store } from 'vuex';
 import Component from 'vue-class-component';
-import StatsCard from '../components/StatsCard.vue';
+import DashboardTile from '../components/DashboardTile.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
@@ -273,11 +367,11 @@ import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
 import udpcStore from '../store/udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
-import { messages } from '../messages/messages.participation.module';
+import { messages } from '@/messages/messages.udpc.module';
 
 @Component({
     components: {
-        StatsCard,
+        DashboardTile,
         DidYouKnow,
         MultiSelect,
         RangeSlider,
@@ -291,6 +385,9 @@ import { messages } from '../messages/messages.participation.module';
     }
 })
 export default class UDPC extends AbstractDashboard {
+    countTotalWithPlans = false;
+    countGroupedWithPlans = false;
+
     tooltipActive = false;
     agreeDialogActive = false;
     dateRange = 'year';
@@ -317,6 +414,13 @@ export default class UDPC extends AbstractDashboard {
         'Fact 3',
         'Fact 4',
         'Fact 5'
+    ];
+    dataSets = [
+        'New Dataset 1',
+        'New Dataset 2',
+        'New Dataset 3',
+        'New Dataset 4',
+        'New Dataset 5'
     ];
     meta: { [key: string]: any } = {
         osStats: {
@@ -357,13 +461,14 @@ export default class UDPC extends AbstractDashboard {
     }
 
     async mounted() {
-        // Lets set the initial dashboard data
+        // Fetch initial dashboard data
+        await this.$store.dispatch('fetchTotalDatasets');
+        await this.$store.dispatch('fetchTotalDatasetsRange');
+
+        // Set initial filters
         await this.setFilters(['SOURCE', 'services_internet']);
         await this.setFilters(['YEAR', [2017, 2019]]);
         await this.setFilters(['MONTH', [1, 12]]);
-
-        // Lets fetch the initial dashboard data
-        await this.fetchOsStats();
 
         // Set initial date range
         this.changeFilterRange('dateRangeSlider', this.dateRange);
@@ -379,10 +484,6 @@ export default class UDPC extends AbstractDashboard {
 
     setFilters(options: [string, string | number[]]) {
         this.$store.commit('SET_FILTERS', options);
-    }
-
-    fetchOsStats() {
-        this.$store.dispatch('fetchOsStats');
     }
 
     filter(chartID: string) {
@@ -403,7 +504,7 @@ export default class UDPC extends AbstractDashboard {
         }
         new Vue({
             el: snack.querySelector('div') || undefined,
-            render: h => h(SnackBar, { attrs: options })
+            render: h => h(SnackBar, { props: options })
         });
     }
 
@@ -460,33 +561,35 @@ export default class UDPC extends AbstractDashboard {
                 this.setFilters(['MONTH', [min, max]]);
                 break;
         }
-        this.fetchOsStats();
     }
 
     addDataPoint() {
         let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
         this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
     }
+
+    changeLanguage(lang: string) {
+        this.$i18n.locale = lang
+    }
 }
 </script>
 
 <style lang="scss">
-    h1, h2 {
-        font-weight: normal;
+    @import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
+
+    #page {
+        font-family: 'HamburgSans';
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
-    ul {
-        list-style-type: none;
+    .md-toolbar {
         padding: 0;
-    }
+        border-bottom: none;
+        .md-toolbar-row {
 
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
+            background-color: $hamburg-blue-dark !important;
+        }
     }
 
     .filter-button {
@@ -508,38 +611,112 @@ export default class UDPC extends AbstractDashboard {
         width: 100%;
     }
 
-    /*
-        Charts
-    */
-    .chart-row {
-        margin-top: 40px;
+    .md-card .md-card-header .info-icon {
+        color: $hamburg-blue;
+    }
 
-        .chart-card {
-            height: 100%;
+    .dashboard-kpi {
+        font-family: 'HamburgSans';
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .dashboard-tabs {
+        width: 100%;
+
+        .md-button {
+            border: 1px solid $hamburg-grey;
+            height: 35px;
+            font-size: 11px;
+            .md-button-content {
+                color: $hamburg-blue;
+                font-weight: bold;
+            }
+        }
+
+        .md-button.md-active {
+            border: 1px solid $hamburg-grey-light;
+            .md-button-content {
+                color: $hamburg-red;
+            }
+        }
+
+        .md-tabs-indicator {
+            background-color: white !important;
+        }
+    }
+
+    .dashboard-switch {
+        margin: 0;
+        .md-switch-container {
+            background-color: white !important;
+            border: 1px solid black;
+            width: 36px;
+            height: 19px;
+            padding-left: 2px;
+        }
+        .md-switch-thumb {
+            background-color: black !important;
+            width: 15px;
+            height: 15px;
+        }
+        .md-switch-label {
+            margin-top: 3px;
+            padding-left: 10px;
+        }
+    }
+
+    .dashboard-switch.md-checked {
+        .md-switch-container {
+            background-color: $hamburg-blue !important;
+            border: 1px solid $hamburg-blue;
+        }
+        .md-switch-thumb {
+            background-color: white !important;
+        }
+    }
+
+    .md-card {
+        .md-card-header {
+            .tool-tip-header {
+                font-family: 'HamburgSans';
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-weight: bold;
+            }
+        }
+        .md-card-actions {
+            .notice {
+                width: 100%;
+                text-align: left;
+            }
+        }
+    }
+
+    .udpc-bottom-bar {
+        height: 120px;
+        background-color: $hamburg-grey-background !important;
+        position: relative;
+
+        .row {
             width: 100%;
-            margin: 0;
-            padding-left: 10px !important;
-            padding-right: 10px !important;
-            padding-bottom: 20px !important;
+        }
 
-            .chart-container {
-                height: 100%;
+        .element-holder {
+            position: absolute;
+            bottom: 15px;
+
+            a {
+                padding-left: 10px;
             }
+        }
 
-            .md-card-actions {
-                margin: 0;
-                position: absolute;
-                bottom: 0;
-                float: right;
-                right: 0;
-                padding-right: 5px;
-                padding-top: 0;
+        .links-bottom-left {
+            left: 35px;
+        }
 
-                .notice {
-                    font-style: italic;
-                    font-size: 7pt;
-                }
-            }
+        .images-bottom-right {
+            right: 35px;
         }
     }
 </style>
