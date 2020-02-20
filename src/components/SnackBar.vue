@@ -11,10 +11,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class SnackBar extends Vue {
-    @Prop() message = '';
-    @Prop() position = '';
-    @Prop() duration = 0;
-    @Prop() showSnackbar = false;
+    @Prop() message!: string;
+    @Prop() position!: string;
+    @Prop() duration!: number;
+    @Prop() showSnackbar!: boolean;
     snackBar = false;
 
     mounted() {

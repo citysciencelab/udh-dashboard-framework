@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-        <div class="row">
-            top
-        </div>
         <div class="row align-items-center" style="background-color: white">
             <div class="col-sm">
                 <multi-select v-bind:selectData="this.getFilterOptions('participationData','bezirk')"
@@ -20,7 +17,7 @@
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <dashboard-tile data-background-color="blue" class="chart-holder">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
                             OS Data
@@ -44,10 +41,10 @@
                             this data is supported the JBe foundation
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <dashboard-tile data-background-color="blue" class="chart-holder">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('')">
                             Other chart
@@ -70,7 +67,7 @@
                             this data is supported the JBe foundation
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
         </div>
 
@@ -85,7 +82,7 @@
 
 <script lang="ts">
     import Component from "vue-class-component";
-    import StatsCard from "../components/StatsCard.vue";
+    import DashboardTile from "../components/DashboardTile.vue";
     import MultiSelect from "../components/MultiSelect.vue";
     import LineChart from "../components/charts/LineChart.vue";
     import BarChart from "../components/charts/BarChart.vue";
@@ -95,7 +92,7 @@
 
     @Component({
         components: {
-            StatsCard,
+            DashboardTile,
             MultiSelect,
             BarChart,
             LineChart

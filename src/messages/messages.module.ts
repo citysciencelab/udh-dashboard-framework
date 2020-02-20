@@ -1,12 +1,14 @@
 export const messages = {
     de: {
         general: {
-            title: 'Titel'
+            title: 'Titel',
+            help: 'Hilfe'
         }
     },
     en: {
         general: {
-            title: 'Title'
+            title: 'Title',
+            help: 'Help'
         }
     }
 
