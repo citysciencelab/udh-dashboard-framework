@@ -206,7 +206,7 @@ export default class App extends Vue {
     }
 
     .d3-tip, .md-tooltip, .md-snackbar {
-        font-family: 'HamburgSans-Regular' !important;
+        font-family: 'HamburgSans' !important;
         line-height: 1 !important;
         padding: 10px !important;
         color: #fff !important;

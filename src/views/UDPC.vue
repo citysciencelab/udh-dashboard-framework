@@ -580,7 +580,7 @@ export default class UDPC extends AbstractDashboard {
     @import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
 
     #page {
-        font-family: 'HamburgSans-Regular';
+        font-family: 'HamburgSans';
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
@@ -618,8 +618,9 @@ export default class UDPC extends AbstractDashboard {
     }
 
     .dashboard-kpi {
-        font-family: 'HamburgSans-Bold';
+        font-family: 'HamburgSans';
         font-size: 18px;
+        font-weight: bold;
     }
 
     .dashboard-tabs {
@@ -680,9 +681,10 @@ export default class UDPC extends AbstractDashboard {
     .md-card {
         .md-card-header {
             .tool-tip-header {
-                font-family: 'HamburgSans-Bold';
+                font-family: 'HamburgSans';
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
+                font-weight: bold;
             }
         }
         .md-card-actions {
