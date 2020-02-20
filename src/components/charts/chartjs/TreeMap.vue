@@ -11,7 +11,7 @@ declare module 'vue/types/vue' {
   }
 }
 
-const TreeMap = generateChart('tree-map', 'treemap')
+const TreeMap = generateChart('tree-map', 'treemap');
 
 @Component({
     extends: TreeMap

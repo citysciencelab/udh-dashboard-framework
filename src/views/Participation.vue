@@ -178,19 +178,18 @@
                 },
                 tooltips: {
                     callbacks: {
-                        title: function(item, data) {
-                            var item = item[0];
-                            return data.datasets[item.datasetIndex].data[item.index].g;
+                        title: function(item: any, data: any) {
+                            let titleItem = item[0];
+                            return data.datasets[titleItem.datasetIndex].data[titleItem.index].g;
                         },
-                        label: function(item, data) {
-                            console.log("dd")
+                        label: function(item: any, data: any) {
                             if (data.datasets && data.datasets.length > 0 && item.datasetIndex != null) {
                                 let index = item.datasetIndex;
                                 let dataset = data.datasets[index];
                                 if (dataset.data && item.index) {
                                     let index2: number = item.index;
                                     let dataItem = dataset.data[index2];
-                                    return dataItem ? (dataItem.g + ': \n' + dataItem.v) : '';
+                                    return dataItem.v;
                                 }
                             }
                         }

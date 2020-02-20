@@ -18,17 +18,6 @@ export default class HorizontalBarChart extends Vue {
 
     @Watch('chartData') onChartDataChanged() {
         this.renderChart(this.chartData, this.chartOptions);
-        // this.renderChart({
-        //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        //     datasets: [
-        //         {
-        //             type: 'horizontalBar',
-        //             label: 'Data One',
-        //             backgroundColor: '#f87979',
-        //             data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-        //         }
-        //     ]
-        // }, this.chartOptions)
     }
 
 }
