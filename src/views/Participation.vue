@@ -63,12 +63,12 @@
                             this data is supported the JBe foundation
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
         </div>
         <div class="row chart-row" style="height: 420px">
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <dashboard-tile data-background-color="blue" class="chart-holder">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('tooltip-os-data-3')">
                             Participation Data
@@ -88,10 +88,10 @@
                             this data is supported the JBe foundation
                         </div>
                     </template>
-                </stats-card>
+                </dashboard-tile>
             </div>
             <div class="col-sm">
-                <stats-card data-background-color="blue" class="chart-holder">
+                <dashboard-tile data-background-color="blue" class="chart-holder">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('')">
                             Other chart
