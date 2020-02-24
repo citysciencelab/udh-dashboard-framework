@@ -220,9 +220,18 @@
                         break;
                     case 'SET_FILTERED_DATA':
                         if (mutation.payload[0] === 'participationDistrictCount') {
-                            this.chartData.participationDistrictCount = mutation.payload[1];
+                            let chartCountData = mutation.payload[1];
+                            chartCountData.datasets[0]['label'] = 'procedures';
+                            chartCountData.datasets[0]['backgroundColor'] = '#f87979';
+                            this.chartData.participationDistrictCount = chartCountData;
                         } else if (mutation.payload[0] === 'participationDistrictCountTree') {
-                            this.chartData.participationDistrictCountTree = mutation.payload[1];
+                            let chartCountTree = mutation.payload[1];
+                            chartCountTree.datasets[0]['key'] = 'count';
+                            chartCountTree.datasets[0]['groups'] = ['bezirk'];
+                            chartCountTree.datasets[0]['spacing'] = 2;
+                            chartCountTree.datasets[0]['borderWidth'] =0.5;
+                            chartCountTree.datasets[0]['fontColor'] = 'black';
+                            this.chartData.participationDistrictCountTree = chartCountTree;
                         }
                 }
             });

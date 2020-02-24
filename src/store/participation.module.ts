@@ -44,20 +44,13 @@ const participationModule: Module<ParticipationState, RootState> = {
             const participationDistrictCount = {
                 labels: countdata.map(item => item.bezirk),
                 datasets: [{
-                    label: 'procedures',
-                    backgroundColor: '#f87979',
                     data: countdata.map(item => item.count)
                 }]
             };
 
             const participationDistrictCountTree = {
                 datasets: [{
-                    tree: countdata,
-                    key: "count",
-                    groups: ['bezirk'],
-                    spacing: 2,
-                    borderWidth: 0.5,
-                    fontColor: "black",
+                    tree: countdata
                 }]
             };
 
