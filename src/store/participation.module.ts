@@ -41,21 +41,18 @@ const participationModule: Module<ParticipationState, RootState> = {
                 return;
             }
             const countdata = countData(filteredData, 'bezirk');
-            const participationDistrictCount = {
+
+            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', {
                 labels: countdata.map(item => item.bezirk),
                 datasets: [{
                     data: countdata.map(item => item.count)
                 }]
-            };
-
-            const participationDistrictCountTree = {
+            }]);
+            context.commit('SET_FILTERED_DATA', ['participationDistrictCountTree', {
                 datasets: [{
                     tree: countdata
                 }]
-            };
-
-            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', participationDistrictCount]);
-            context.commit('SET_FILTERED_DATA', ['participationDistrictCountTree', participationDistrictCountTree]);
+            }]);
         }
     },
     getters: {
