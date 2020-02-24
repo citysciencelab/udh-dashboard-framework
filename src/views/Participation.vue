@@ -162,6 +162,13 @@
                 legend: {
                     display: false
                 },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
                 responsive: true
             },
             participationDistrictCountTree: {
@@ -183,7 +190,7 @@
                             if (data.datasets && data.datasets.length > 0 && item.datasetIndex != null) {
                                 let index = item.datasetIndex;
                                 let dataset = data.datasets[index];
-                                if (dataset.data && item.index) {
+                                if (dataset.data && item.index > -1) {
                                     let index2: number = item.index;
                                     let dataItem = dataset.data[index2];
                                     return dataItem.v;
@@ -221,7 +228,7 @@
                     case 'SET_FILTERED_DATA':
                         if (mutation.payload[0] === 'participationDistrictCount') {
                             let chartCountData = mutation.payload[1];
-                            chartCountData.datasets[0]['label'] = 'procedures';
+                            chartCountData.datasets[0]['label'] = "Verfahren";
                             chartCountData.datasets[0]['backgroundColor'] = '#f87979';
                             this.chartData.participationDistrictCount = chartCountData;
                         } else if (mutation.payload[0] === 'participationDistrictCountTree') {
@@ -233,6 +240,7 @@
                             chartCountTree.datasets[0]['fontColor'] = 'black';
                             this.chartData.participationDistrictCountTree = chartCountTree;
                         }
+                        break;
                 }
             });
         }
