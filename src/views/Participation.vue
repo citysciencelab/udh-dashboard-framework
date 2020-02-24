@@ -93,15 +93,11 @@
 
     @Component({
         components: {
-<<<<<<< HEAD
             DashboardTile,
-=======
-            MasterPortalMap,
-            StatsCard,
->>>>>>> feature/masterportal-api
             MultiSelect,
             BarChart,
-            LineChart
+            LineChart,
+            MasterPortalMap
         }
     })
     export default class Participation extends AbstractDashboard {

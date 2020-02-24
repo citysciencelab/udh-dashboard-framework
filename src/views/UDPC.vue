@@ -171,7 +171,7 @@
                         </template>
 
                         <template slot="content">
-                            MasterportalAPI
+                            <master-portal-map v-bind:services="services" v-bind:portal="portal" />
                         </template>
 
                         <template slot="footer">
@@ -363,13 +363,13 @@ import ScatterPlot from '../components/charts/ScatterPlot.vue';
 import BarChart from '../components/charts/BarChart.vue';
 import HBarChart from '../components/charts/HBarChart.vue';
 import TreeMapChart from '../components/charts/TreeMapChart.vue';
+import MasterPortalMap from '../components/MasterPortalMap.vue'
 import udpcStore from '../store/udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
-<<<<<<< HEAD
 import { messages } from '@/messages/messages.udpc.module';
-=======
-import { messages } from '@/messages/messages.participation.module';
->>>>>>> feature/masterportal-api
+
+import portalConfig from "@/assets/map-config/portal.json";
+import servicesConfig from "@/assets/map-config/services.json";
 
 @Component({
     components: {
@@ -383,7 +383,8 @@ import { messages } from '@/messages/messages.participation.module';
         ScatterPlot,
         HBarChart,
         TreeMapChart,
-        ConfirmDialog
+        ConfirmDialog,
+        MasterPortalMap
     }
 })
 export default class UDPC extends AbstractDashboard {
@@ -421,6 +422,8 @@ export default class UDPC extends AbstractDashboard {
         'New Dataset 4',
         'New Dataset 5'
     ];
+    services: object = servicesConfig;
+    portal: object = portalConfig;
     meta: { [key: string]: any } = {
         osStats: {
             title: 'Distribution of operating systems',

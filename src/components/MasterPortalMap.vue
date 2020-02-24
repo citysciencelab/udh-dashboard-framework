@@ -1,5 +1,5 @@
 <template>
-    <div id="map-div-id"></div>
+    <div id="map-div-id" v-bind:style="style"></div>
 </template>
 
 <script lang="ts">
@@ -13,12 +13,13 @@
         @Prop() portal!: Datum;
         @Prop() services!: Datum;
         @Prop() geoJson!: any;
+        @Prop() style!: object;
         geoJsonId = '2002';
         cWindow: CustomWindow = window;
 
         mounted() {
             console.log(this.geoJson);
-            this.testCreateMPMap();
+            this.createMap();
         }
 
         @Watch('geoJson') onGeoJsonChanged(newVal: any) {
@@ -30,7 +31,7 @@
             // this.cWindow.mpapi.map.addLayer(this.geoJsonId);
         }
 
-        testCreateMPMap() {
+        createMap() {
             this.cWindow.mpapi = {
                 ...mpapi,
                 map: null

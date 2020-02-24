@@ -32,16 +32,6 @@
   "devDependencies": {
     "@types/d3": "^5.7.2",
     "@types/d3-tip": "^3.5.5",
-<<<<<<< HEAD
-    "@types/jquery": "^3.3.32",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
-    "@vue/cli": "^4.2.2",
-    "@vue/cli-plugin-babel": "^4.2.2",
-    "@vue/cli-plugin-eslint": "^4.2.2",
-    "@vue/cli-plugin-typescript": "^4.2.2",
-    "@vue/cli-service": "^4.2.2",
-=======
     "@types/jquery": "^3.3.31",
     "@types/ol": "^6.1.0",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
@@ -51,7 +41,6 @@
     "@vue/cli-plugin-eslint": "^4.1.2",
     "@vue/cli-plugin-typescript": "^4.1.2",
     "@vue/cli-service": "^4.1.2",
->>>>>>> feature/masterportal-api
     "@vue/eslint-config-typescript": "^5.0.1",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.1",
