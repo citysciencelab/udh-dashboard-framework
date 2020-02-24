@@ -1,6 +1,7 @@
 import { Module } from 'vuex';
 import {countData} from '@/utils/utils';
 import wfs from "@/utils/wfs";
+import { compose } from 'ol/transform';
 
 const wfsUrl: string = 'HH_WFS_Beteiligungsverfahren';
 const wfsTypename = 'beteiligungsverfahren';
@@ -32,9 +33,11 @@ const participationModule: Module<ParticipationState, RootState> = {
             const results: any = await wfs.get(wfsUrl, wfsTypename, []);
             const resultExtract = wfs.getDataFromWFSJson(results as any[], wfsTypename, dataPropertyNames, prefix, baseNodes);
 
-            context.commit('SET_INITIAL_DATA', ['participationData', resultExtract]);
-            context.commit('SET_FILTERED_DATA', ['participationData', resultExtract]);
-            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(resultExtract, 'bezirk')]);
+            // console.log(results, resultExtract);
+
+            // context.commit('SET_INITIAL_DATA', ['participationData', resultExtract]);
+            // context.commit('SET_FILTERED_DATA', ['participationData', resultExtract]);
+            // context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(resultExtract, 'bezirk')]);
         },
         recalculateWithFilters: (context) => {
             const filteredData = context.getters.dataWithAppliedFilters('participationData');

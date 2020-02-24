@@ -1,5 +1,5 @@
 <template>
-    <div id="map-div-id" v-bind:style="style"></div>
+    <div id="map-div-id" v-bind:style="mapStyle"></div>
 </template>
 
 <script lang="ts">
@@ -13,12 +13,11 @@
         @Prop() portal!: Datum;
         @Prop() services!: Datum;
         @Prop() geoJson!: any;
-        @Prop() style!: object;
+        @Prop() mapStyle!: object;
         geoJsonId = '2002';
         cWindow: CustomWindow = window;
 
         mounted() {
-            console.log(this.geoJson);
             this.createMap();
         }
 
