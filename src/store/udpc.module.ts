@@ -24,7 +24,6 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             // example
             const aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
-            console.log(aggregations)
 
             context.commit('SET_INITIAL_DATA', ['totalDatasets', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasets', {
@@ -34,11 +33,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTotalDatasetsRange: async (context) => {
+        fetchTops: async (context, topTopic) => {
             context.commit('SET_LOADING', true);
-
-            // example
-            const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', 'datasets', 10, 'month');
+            const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', topTopic, 10, 'month');
             const topX = aggregations.top_x.buckets;
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
@@ -49,8 +46,6 @@ const udpcModule: Module<UDPCState, RootState> = {
                     data: topX.map(item => item.total_hits.value)
                 }]
             }]);
-
-            // console.log(aggregations)
             context.commit('SET_LOADING', false);
         },
         applyFilter: (context, [id, accessor]) => {

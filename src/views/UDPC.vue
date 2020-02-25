@@ -193,18 +193,14 @@
                         </template>
 
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">
-                                    <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
-                                                 :chartOptions="chartOptions.dataSetsTopX"/>
-                                </md-tab>
-                                <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">
-                                    chart2
-                                </md-tab>
-                                <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">
-                                    chart3
-                                </md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotals">
+                                <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
+                                <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
+                                <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">&nbsp;</md-tab>
                             </md-tabs>
+
+                            <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
+                                                  :chartOptions="chartOptions.dataSetsTopX"/>
                         </template>
 
                         <template slot="footer">
@@ -436,7 +432,26 @@ export default class UDPC extends AbstractDashboard {
             legend: {
                 display: false
             },
-            responsive: false
+            responsive: false,
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        display: false,
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
     };
 
@@ -477,18 +492,10 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
-    getFilterOptions(dataset: string) {
-        if (!this.dashboardData[dataset]) {
-            return [];
-        }
-        // const accessor = this.meta[dataset].dataSeries.categoryAccessor;
-        // return this.dashboardData[dataset].map(value => value[accessor]);
-    }
-
     async mounted() {
         // Fetch initial dashboard data
         await this.$store.dispatch('fetchTotalDatasets');
-        await this.$store.dispatch('fetchTotalDatasetsRange');
+        // this.fetchTotals('tab-top5-datasets');
 
         // Set initial filters
         await this.setFilters(['SOURCE', 'services_internet']);
@@ -497,6 +504,33 @@ export default class UDPC extends AbstractDashboard {
 
         // Set initial date range
         this.changeFilterRange('dateRangeSlider', this.dateRange);
+    }
+
+    async fetchTotals(topTopic?: string) {
+        console.log("dd")
+
+        switch (topTopic) {
+            case 'tab-top5-apps':
+                topTopic ='apps';
+                break;
+            case 'tab-top5-downloads':
+                topTopic ='downloads';
+                break;
+            case 'tab-top5-datasets':
+                topTopic ='datasets';
+                break;
+        }
+        if (topTopic) {
+            await this.$store.dispatch('fetchTops', topTopic);
+        }
+    }
+
+    getFilterOptions(dataset: string) {
+        if (!this.dashboardData[dataset]) {
+            return [];
+        }
+        // const accessor = this.meta[dataset].dataSeries.categoryAccessor;
+        // return this.dashboardData[dataset].map(value => value[accessor]);
     }
 
     get dashboardData(): { [key: string]: Dataset } {
@@ -664,6 +698,10 @@ export default class UDPC extends AbstractDashboard {
             .md-button-content {
                 color: $hamburg-red;
             }
+        }
+
+        .md-tab {
+            padding: 5px 0;
         }
 
         .md-tabs-indicator {
