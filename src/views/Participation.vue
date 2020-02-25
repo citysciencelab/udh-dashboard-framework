@@ -2,13 +2,15 @@
     <div class="container">
         <div class="row align-items-center" style="background-color: white">
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.getFilterOptions('participationData','bezirk')"
-                              v-bind:label="$t('participation.district')" @new_selection="filterChanged"
+                <multi-select :selectData="getFilterOptions('participationData', 'bezirk')"
+                              :label="$t('participation.district')"
+                              @new_selection="filterChanged"
                               identifier="bezirk" ref="districtSelect"/>
             </div>
             <div class="col-sm">
-                <multi-select v-bind:selectData="this.getFilterOptions('participationData','absender')"
-                              v-bind:label="$t('participation.sender')" @new_selection="filterChanged"
+                <multi-select :selectData="getFilterOptions('participationData', 'absender')"
+                              :label="$t('participation.sender')"
+                              @new_selection="filterChanged"
                               identifier="absender" ref="originatorSelect"/>
             </div>
             <div class="col-sm">
@@ -20,7 +22,7 @@
                 <dashboard-tile data-background-color="blue" class="chart-holder">
                     <template slot="header">
                         <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
-                            OS Data
+                            Participation Data
                         </div>
                         <md-icon class="info-icon" id="tooltip-os-data">
                             info_outline
@@ -28,12 +30,8 @@
                     </template>
 
                     <template slot="content">
-                        <bar-chart v-bind:ds="this.filteredData.participationDistrictCount"
-                                   v-bind:options="chartOptions.countStats"
-                                   v-bind:metric="chartOptions.countStats.metric"
-                                   v-bind:descriptor="chartOptions.countStats.metric"
-                                   title="Distribution of operating systems"
-                                   selector="chart1" holder-element="chart-holder"/>
+                        <bar-chart :chartData="chartData.participationDistrictCount"
+                                   :chartOptions="chartOptions.participationDistrictCount"/>
                     </template>
 
                     <template slot="footer">
@@ -56,10 +54,59 @@
                     </template>
 
                     <template slot="content">
-                        <!--                        <line-chart v-bind:ds="this.testData.osStats" v-bind:options="options" v-bind:origins="['anzahl_os']"-->
-                        <!--                                    title="Distribution of operating systems"-->
-                        <!--                                    metric="anzahl_os" descriptor="os"-->
-                        <!--                                    selector="chart2" holder-element="chart-holder"/>-->
+                            <horizontal-bar-chart   :chartData="chartData.participationDistrictCount"
+                                                    :chartOptions="chartOptions.participationDistrictCount"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </dashboard-tile>
+            </div>
+        </div>
+        <div class="row chart-row" style="height: 420px">
+            <div class="col-sm">
+                <dashboard-tile data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data-3')">
+                            Participation Data
+                        </div>
+                        <md-icon class="info-icon" id="tooltip-os-data-3">
+                            info_outline
+                        </md-icon>
+                    </template>
+
+                    <template slot="content">
+                        <tree-map-chart :chartData="chartData.participationDistrictCountTree"
+                                   :chartOptions="chartOptions.participationDistrictCountTree"/>
+                    </template>
+
+                    <template slot="footer">
+                        <div class="notice">
+                            this data is supported the JBe foundation
+                        </div>
+                    </template>
+                </dashboard-tile>
+            </div>
+            <div class="col-sm">
+                <dashboard-tile data-background-color="blue" class="chart-holder">
+                    <template slot="header">
+                        <div class="tool-tip-header" @click="openToolTip('')">
+                            Other chart
+                        </div>
+                        <!--                        <md-icon class="info-icon" id="">-->
+                        <md-icon class="info-icon">
+                            info_outline
+                        </md-icon>
+                    </template>
+
+                    <template slot="content">
+                        <template slot="content">
+<!--                            <horizontal-bar-chart   :chartData="chartData.participationDistrictCount"-->
+<!--                                                    :chartOptions="chartOptions.participationDistrictCount"/>-->
+                        </template>
                     </template>
 
                     <template slot="footer">
@@ -84,33 +131,80 @@
     import Component from "vue-class-component";
     import DashboardTile from "../components/DashboardTile.vue";
     import MultiSelect from "../components/MultiSelect.vue";
-    import LineChart from "../components/charts/LineChart.vue";
-    import BarChart from "../components/charts/BarChart.vue";
+
+    import BarChart from "../components/charts/chartjs/BarChart.vue";
+    import HorizontalBarChart from "../components/charts/chartjs/BarChartHorizontal.vue";
+    import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
+
     import partStore from '../store/participation.module';
     import AbstractDashboard from "@/views/AbstractDashboard.vue";
-    import { messages } from '../messages/messages.participation.module';
+    import { messages } from '@/messages/messages.participation.module';
 
     @Component({
         components: {
             DashboardTile,
             MultiSelect,
             BarChart,
-            LineChart
+            HorizontalBarChart,
+            TreeMapChart
         }
     })
     export default class Participation extends AbstractDashboard {
-        filteredData = {
-            participationDistrictCount: []
+        chartData: { [key: string]: Chart.ChartData } = {
+            participationDistrictCount: {},
+            participationDistrictCountTree: {}
         };
-        chartOptions = {
-            countStats: {
-                dim: 'bezirk',
-                metric: 'count'
+        chartOptions: { [key: string]: Chart.ChartOptions } = {
+            participationDistrictCount: {
+                title: {
+                    text: 'Public participation procedures'
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                responsive: true
+            },
+            participationDistrictCountTree: {
+                maintainAspectRatio: true,
+                title: {
+                    display: true,
+                    text: "Basic treemap sample"
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    callbacks: {
+                        title: function(item: any, data: any) {
+                            let titleItem = item[0];
+                            return data.datasets[titleItem.datasetIndex].data[titleItem.index].g;
+                        },
+                        label: function(item: any, data: any) {
+                            if (data.datasets && data.datasets.length > 0 && item.datasetIndex != null) {
+                                let index = item.datasetIndex;
+                                let dataset = data.datasets[index];
+                                if (dataset.data && item.index > -1) {
+                                    let index2: number = item.index;
+                                    let dataItem = dataset.data[index2];
+                                    return dataItem.v;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         };
 
+
         async mounted() {
-            // Lets fetch the initial dashboard data
+            // fetch the initial dashboard data
             await this.fetchParticipationStats();
         }
 
@@ -120,26 +214,38 @@
 
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
-                if (mutation.type === 'SET_FILTERED_DATA' && mutation.payload[1].length > 0) {
-
-                    if (mutation.payload[0] === 'participationDistrictCount') {
-                        this.filteredData.participationDistrictCount = mutation.payload[1];
-                    } else if (mutation.payload[0] === 'participationData') {
-                        if (this.$refs['districtSelect']) {
-                            (this.$refs['districtSelect'] as any).updateComponent();
+                switch (mutation.type) {
+                    case 'SET_INITIAL_DATA':
+                        if (mutation.payload[0] === 'participationData') {
+                            if (this.$refs['districtSelect']) {
+                                (this.$refs['districtSelect'] as any).updateComponent();
+                            }
+                            if (this.$refs['originatorSelect']) {
+                                (this.$refs['originatorSelect'] as any).updateComponent();
+                            }
                         }
-                        if (this.$refs['originatorSelect']) {
-                            (this.$refs['originatorSelect'] as any).updateComponent();
+                        break;
+                    case 'SET_FILTERED_DATA':
+                        if (mutation.payload[0] === 'participationDistrictCount') {
+                            let chartCountData = mutation.payload[1];
+                            chartCountData.datasets[0]['label'] = "Verfahren";
+                            chartCountData.datasets[0]['backgroundColor'] = '#f87979';
+                            this.chartData.participationDistrictCount = chartCountData;
+                        } else if (mutation.payload[0] === 'participationDistrictCountTree') {
+                            let chartCountTree = mutation.payload[1];
+                            chartCountTree.datasets[0]['key'] = 'count';
+                            chartCountTree.datasets[0]['groups'] = ['bezirk'];
+                            chartCountTree.datasets[0]['spacing'] = 2;
+                            chartCountTree.datasets[0]['borderWidth'] =0.5;
+                            chartCountTree.datasets[0]['fontColor'] = 'black';
+                            this.chartData.participationDistrictCountTree = chartCountTree;
                         }
-                    }
+                        break;
                 }
             });
         }
 
-        getFilterOptions(dataId: string, filterProperty: string) {
-            if (!this.$store.getters.filteredDataById(dataId)) {
-                return [];
-            }
+        getFilterOptions(dataId: string, filterProperty: string): any[] {
             return this.$store.getters.distinctPropertyValues(dataId, filterProperty);
         }
 
@@ -168,30 +274,13 @@
         }
 
         recalculate() {
-            this.$store.dispatch('recalculateWithFilters');
+            const data = this.$store.getters.dataWithAppliedFilters('participationData');
+            this.$store.dispatch('recalculateChartData', data);
         }
     }
 </script>
 
 
 <style scoped lang="scss">
-
-    /*    h1, h2 {
-            font-weight: normal;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            display: inline-block;
-            margin: 0 10px;
-        }
-
-        a {
-            color: #42b983;
-        }*/
 
 </style>

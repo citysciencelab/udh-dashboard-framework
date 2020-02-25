@@ -2,13 +2,6 @@ import Vue from 'vue';
 import * as d3 from 'd3';
 import $ from 'jquery';
 
-// Augmenting module so TypeScript knows about the new property on Vue
-declare module 'vue/types/vue' {
-    interface Vue {
-        $utils: IUtils
-    }
-}
-
 export default class Utils implements IUtils {
     chart = {
         ordinalScale(ds: Dataset, dim: string, width: number) {
@@ -169,17 +162,17 @@ export function aggregateData(ds: Dataset, descriptor: string, metric: string): 
 }
 
 export function countData(ds: Dataset, descriptor: string): Dataset {
-    let countData: Object[] = [];
+    let countData = [];
     for (const item of ds) {
         const key = item[descriptor];
         let existingElement: Datum = countData.find((data: Datum) => data[descriptor] === key) as Datum;
         if (existingElement) {
-            existingElement["count"] += 1;
+            existingElement.count++;
         } else {
             const newElement: { [key: string]: any } = {'count' : 1};
-            newElement[descriptor] =key;
+            newElement[descriptor] = key;
             countData.push(newElement);
         }
     }
-    return <Dataset>Object.values(countData);
+    return countData;
 }

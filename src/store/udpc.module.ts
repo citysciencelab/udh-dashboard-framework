@@ -1,3 +1,6 @@
+// @ts-nocheck
+// TODO: adapt module for chart.js
+
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
 
@@ -23,7 +26,12 @@ const udpcModule: Module<UDPCState, RootState> = {
             const aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
 
             context.commit('SET_INITIAL_DATA', ['totalDatasets', aggregations]);
-            context.commit('SET_FILTERED_DATA', ['totalDatasets', aggregations]);
+            context.commit('SET_FILTERED_DATA', ['totalDatasets', {
+                labels: aggregations.organization.buckets.map(item => item.key),
+                datasets: [{
+                    data: aggregations.organization.buckets.map(item => item.doc_count)
+                }]
+            }]);
             context.commit('SET_LOADING', false);
         },
         fetchTotalDatasetsRange: async (context) => {
@@ -34,6 +42,17 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRange', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsRange', aggregations]);
+            //TODO some aggregation here as well - as shown in the example above
+/*
+            context.commit('SET_FILTERED_DATA', ['totalDatasetsRange', {
+                labels: aggregations.organization.buckets.map(item => item.###),
+                datasets: [{
+                    data: aggregations.organization.buckets.map(item => item.###)
+                }]
+            }]);
+            */
+
+
             context.commit('SET_LOADING', false);
         },
         applyFilter: (context, [id, accessor]) => {

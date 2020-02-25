@@ -114,7 +114,8 @@
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">
-                                    Treechart1
+                                    <bar-chart :chartData="chartData.dataSetsByTopic"
+                                               :chartOptions="chartOptions.dataSetsByTopic"/>
                                 </md-tab>
                                 <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">
                                     Treechart2
@@ -353,21 +354,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import udpcStore from '../store/udpc.module';
+import { messages } from '@/messages/messages.udpc.module';
+import AbstractDashboard from "@/views/AbstractDashboard.vue";
 import DashboardTile from '../components/DashboardTile.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
 import RangeSlider from '../components/RangeSlider.vue';
-import LineChart from '../components/charts/LineChart.vue';
-import PieChart from '../components/charts/PieChart.vue';
-import ScatterPlot from '../components/charts/ScatterPlot.vue';
-import BarChart from '../components/charts/BarChart.vue';
-import HBarChart from '../components/charts/HBarChart.vue';
-import TreeMapChart from '../components/charts/TreeMapChart.vue';
-import udpcStore from '../store/udpc.module';
-import AbstractDashboard from "@/views/AbstractDashboard.vue";
-import { messages } from '@/messages/messages.udpc.module';
+import BarChart from "@/components/charts/chartjs/BarChart.vue";
 
 @Component({
     components: {
@@ -375,13 +371,8 @@ import { messages } from '@/messages/messages.udpc.module';
         DidYouKnow,
         MultiSelect,
         RangeSlider,
-        BarChart,
-        LineChart,
-        PieChart,
-        ScatterPlot,
-        HBarChart,
-        TreeMapChart,
-        ConfirmDialog
+        ConfirmDialog,
+        BarChart
     }
 })
 export default class UDPC extends AbstractDashboard {
@@ -400,14 +391,6 @@ export default class UDPC extends AbstractDashboard {
             marks: {}
         }
     };
-    filteredData: { [key: string]: Dataset } = {
-        osStats: []
-    };
-    chartOptions = {
-        osStats: {
-            dim: 'os'
-        }
-    };
     didYouKnow = [
         'Fact 1',
         'Fact 2',
@@ -422,17 +405,22 @@ export default class UDPC extends AbstractDashboard {
         'New Dataset 4',
         'New Dataset 5'
     ];
-    meta: { [key: string]: any } = {
-        osStats: {
-            title: 'Distribution of operating systems',
-            dataSeries: {
-                valueAccessor: 'anzahl_os',
-                valueType: 'number',
-                categoryAccessor: 'os',
-                categoryType: 'string'
-            }
+
+    chartData: { [key: string]: Chart.ChartData } = {
+        dataSetsByTopic: {}
+    };
+    chartOptions: { [key: string]: Chart.ChartOptions } = {
+        dataSetsByTopic: {
+            title: {
+                text: 'Datasets by topic'
+            },
+            legend: {
+                display: false
+            },
+            responsive: false
         }
     };
+
 
     created() {
         this.$i18n.mergeLocaleMessage('en', messages.en);
@@ -443,11 +431,20 @@ export default class UDPC extends AbstractDashboard {
             if (!mutation.payload) {
                 return;
             }
-            const id: string = mutation.payload[0];
-            const data: Dataset = mutation.payload[1];
+            const mutationData = mutation.payload[1];
 
-            if (mutation.type === 'SET_FILTERED_DATA' && data.length > 0) {
-                this.filteredData[id] = data;
+            switch (mutation.type) {
+                case 'SET_INITIAL_DATA':
+                    break;
+                case 'SET_FILTERED_DATA':
+                    switch (mutation.payload[0]) {
+                        case 'totalDatasets':
+                            mutationData.datasets[0]['label'] = 'Datensätze';
+                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            this.chartData.dataSetsByTopic = mutationData;
+                            break;
+                    }
+                    break;
             }
         });
     }
@@ -456,8 +453,8 @@ export default class UDPC extends AbstractDashboard {
         if (!this.dashboardData[dataset]) {
             return [];
         }
-        const accessor = this.meta[dataset].dataSeries.categoryAccessor;
-        return this.dashboardData[dataset].map(value => value[accessor]);
+        // const accessor = this.meta[dataset].dataSeries.categoryAccessor;
+        // return this.dashboardData[dataset].map(value => value[accessor]);
     }
 
     async mounted() {
@@ -487,7 +484,7 @@ export default class UDPC extends AbstractDashboard {
     }
 
     filter(chartID: string) {
-        this.$store.dispatch('applyFilter', [chartID, this.meta[chartID].dataSeries.categoryAccessor]);
+        // this.$store.dispatch('applyFilter', [chartID, this.meta[chartID].dataSeries.categoryAccessor]);
     }
 
     testSnackBar() {
@@ -545,7 +542,7 @@ export default class UDPC extends AbstractDashboard {
     filterChanged() {
         // The new filters could be set here - so far the filter already does that itself
         // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
-        this.filter('osStats');
+        // this.filter('osStats');
     }
 
     dialogResult(isPositive: boolean) {
