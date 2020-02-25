@@ -26,6 +26,9 @@ const chartsModule: Module<DashboardState, RootState> = {
         },
         SET_FILTERS_NONE: (state) => {
             state.filters = {}
+        },
+        SET_LOADING: (state, loading: boolean) => {
+            state.loading = loading;
         }
     },
     actions: {
@@ -66,6 +69,9 @@ const chartsModule: Module<DashboardState, RootState> = {
             } else {
                 return initialData;
             }
+        },
+        loading: state => {
+            return state.loading
         }
     }
 };

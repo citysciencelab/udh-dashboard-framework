@@ -13,11 +13,7 @@ const initialState: UDPCState = {
 
 const udpcModule: Module<UDPCState, RootState> = {
     state: initialState,
-    mutations: {
-        SET_LOADING: (state, loading: boolean) => {
-            state.loading = loading;
-        }
-    },
+    mutations: {    },
     actions: {
         fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
@@ -26,6 +22,7 @@ const udpcModule: Module<UDPCState, RootState> = {
                 context.getters.dashboardData['totalDatasets'] : null;
 
             if (!aggregations) {
+                //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
                 aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
                 context.commit('SET_INITIAL_DATA', ['totalDatasets', aggregations]);
             }
@@ -41,6 +38,7 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTops: async (context, topTopic) => {
             context.commit('SET_LOADING', true);
 
+            //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
             const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', topTopic, 10, 'month');
             const topX = aggregations.top_x.buckets;
 
@@ -60,11 +58,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_FILTERED_DATA', [id, filteredData]);
         }
     },
-    getters: {
-        loading: state => {
-            return state.loading
-        }
-    }
+    getters: {    }
 };
 
 export default udpcModule;

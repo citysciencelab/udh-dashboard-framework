@@ -22,11 +22,7 @@ const initialState: ParticipationState = {
 
 const participationModule: Module<ParticipationState, RootState> = {
     state: { ...initialState },
-    mutations: {
-        SET_LOADING: (state, loading: boolean) => {
-            state.loading = loading;
-        }
-    },
+    mutations: {    },
     actions: {
         fetchParticipationStats: async (context) => {
             const results = await wfs.get(wfsUrl, wfsTypename, []);
@@ -55,11 +51,7 @@ const participationModule: Module<ParticipationState, RootState> = {
             }]);
         }
     },
-    getters: {
-        loading: state => {
-            return state.loading
-        }
-    }
+    getters: {    }
 };
 
 export default participationModule;
