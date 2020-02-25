@@ -41,7 +41,7 @@ export const messages = {
             didYouKNow: 'Did you know?',
             facts: 'Did you know: %{fact}',
             tabTopics: 'Topics',
-            tabOrganisations: 'Prganisations',
+            tabOrganisations: 'Organisations',
             tabSensors: 'Sensors',
             tabYear: 'Year',
             tabMonth: 'Month',

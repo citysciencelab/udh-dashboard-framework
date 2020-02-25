@@ -112,15 +112,12 @@
                         </template>
 
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">
-                                        <tree-map-chart :chartData="chartData.dataSetsByTopic"
-                                                    :chartOptions="chartOptions.dataSetsByTopic"/>
-                                </md-tab>
-                                <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">
-                                    Treechart2
-                                </md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotalsByTopic">
+                                <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">&nbsp;</md-tab>
+                                <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">&nbsp;</md-tab>
                             </md-tabs>
+                            <tree-map-chart :chartData="chartData.dataSetsByTopic"
+                                            :chartOptions="chartOptions.dataSetsByTopic"/>
                         </template>
 
                         <template slot="footer">
@@ -193,7 +190,7 @@
                         </template>
 
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotals">
+                            <md-tabs class="dashboard-tabs" @md-changed="fetchTops">
                                 <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
                                 <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
                                 <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">&nbsp;</md-tab>
@@ -494,8 +491,8 @@ export default class UDPC extends AbstractDashboard {
 
     async mounted() {
         // Fetch initial dashboard data
-        await this.$store.dispatch('fetchTotalDatasets');
-        // this.fetchTotals('tab-top5-datasets');
+        // await this.$store.dispatch('fetchTotalDatasets');
+        // this.fetchTops('tab-top5-datasets');
 
         // Set initial filters
         await this.setFilters(['SOURCE', 'services_internet']);
@@ -506,9 +503,21 @@ export default class UDPC extends AbstractDashboard {
         this.changeFilterRange('dateRangeSlider', this.dateRange);
     }
 
-    async fetchTotals(topTopic?: string) {
-        console.log("dd")
+    async fetchTotalsByTopic(totalsTopic?: string) {
+        switch (totalsTopic) {
+            case 'tab-organisations':
+                totalsTopic ='organization';
+                break;
+            case 'tab-topics':
+                totalsTopic ='theme';
+                break;
+        }
+        if (totalsTopic) {
+            await this.$store.dispatch('fetchTotalsByTopic', totalsTopic);
+        }
+    }
 
+    async fetchTops(topTopic?: string) {
         switch (topTopic) {
             case 'tab-top5-apps':
                 topTopic ='apps';

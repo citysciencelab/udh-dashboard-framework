@@ -19,27 +19,32 @@ const udpcModule: Module<UDPCState, RootState> = {
         }
     },
     actions: {
-        fetchTotalDatasets: async (context) => {
+        fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
 
-            // example
-            const aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
+            let aggregations = context.getters.dashboardData.hasOwnProperty('totalDatasets') ?
+                context.getters.dashboardData['totalDatasets'] : null;
 
-            context.commit('SET_INITIAL_DATA', ['totalDatasets', aggregations]);
+            if (!aggregations) {
+                aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
+                context.commit('SET_INITIAL_DATA', ['totalDatasets', aggregations]);
+            }
+
             context.commit('SET_FILTERED_DATA', ['totalDatasets', {
                 datasets: [{
-                    tree: aggregations.theme.buckets
+                    tree: aggregations[totalsTopic].buckets
                 }]
             }]);
+
             context.commit('SET_LOADING', false);
         },
         fetchTops: async (context, topTopic) => {
             context.commit('SET_LOADING', true);
+
             const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', topTopic, 10, 'month');
             const topX = aggregations.top_x.buckets;
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
-
             context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
                 labels: topX.map(item => item.key),
                 datasets: [{
