@@ -174,30 +174,10 @@
             participationDistrictCountTree: {
                 maintainAspectRatio: true,
                 title: {
-                    display: true,
-                    text: "Basic treemap sample"
+                    display: false
                 },
                 legend: {
                     display: false
-                },
-                tooltips: {
-                    callbacks: {
-                        title: function(item: any, data: any) {
-                            let titleItem = item[0];
-                            return data.datasets[titleItem.datasetIndex].data[titleItem.index].g;
-                        },
-                        label: function(item: any, data: any) {
-                            if (data.datasets && data.datasets.length > 0 && item.datasetIndex != null) {
-                                let index = item.datasetIndex;
-                                let dataset = data.datasets[index];
-                                if (dataset.data && item.index > -1) {
-                                    let index2: number = item.index;
-                                    let dataItem = dataset.data[index2];
-                                    return dataItem.v;
-                                }
-                            }
-                        }
-                    }
                 }
             }
         };
@@ -214,6 +194,9 @@
 
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
+
+                const mutationData = mutation.payload[1].datasets[0];
+
                 switch (mutation.type) {
                     case 'SET_INITIAL_DATA':
                         if (mutation.payload[0] === 'participationData') {

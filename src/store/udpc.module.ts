@@ -24,12 +24,12 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             // example
             const aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
+            console.log(aggregations)
 
             context.commit('SET_INITIAL_DATA', ['totalDatasets', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasets', {
-                labels: aggregations.organization.buckets.map(item => item.key),
                 datasets: [{
-                    data: aggregations.organization.buckets.map(item => item.doc_count)
+                    tree: aggregations.theme.buckets
                 }]
             }]);
             context.commit('SET_LOADING', false);
@@ -39,20 +39,18 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             // example
             const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', 'datasets', 10, 'month');
+            const topX = aggregations.top_x.buckets;
 
-            context.commit('SET_INITIAL_DATA', ['totalDatasetsRange', aggregations]);
-            context.commit('SET_FILTERED_DATA', ['totalDatasetsRange', aggregations]);
-            //TODO some aggregation here as well - as shown in the example above
-/*
-            context.commit('SET_FILTERED_DATA', ['totalDatasetsRange', {
-                labels: aggregations.organization.buckets.map(item => item.###),
+            context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
+
+            context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
+                labels: topX.map(item => item.key),
                 datasets: [{
-                    data: aggregations.organization.buckets.map(item => item.###)
+                    data: topX.map(item => item.total_hits.value)
                 }]
             }]);
-            */
 
-
+            // console.log(aggregations)
             context.commit('SET_LOADING', false);
         },
         applyFilter: (context, [id, accessor]) => {

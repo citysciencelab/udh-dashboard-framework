@@ -114,8 +114,8 @@
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">
-                                    <bar-chart :chartData="chartData.dataSetsByTopic"
-                                               :chartOptions="chartOptions.dataSetsByTopic"/>
+                                        <tree-map-chart :chartData="chartData.dataSetsByTopic"
+                                                    :chartOptions="chartOptions.dataSetsByTopic"/>
                                 </md-tab>
                                 <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">
                                     Treechart2
@@ -195,7 +195,8 @@
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">
-                                    chart1
+                                    <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
+                                                 :chartOptions="chartOptions.dataSetsTopX"/>
                                 </md-tab>
                                 <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">
                                     chart2
@@ -364,15 +365,21 @@ import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
 import RangeSlider from '../components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
+import HBarChart from "@/components/charts/chartjs/BarChartHorizontal.vue"
+import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
+import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 
 @Component({
     components: {
+        BarChartHorizontal,
+        HBarChart,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
         RangeSlider,
         ConfirmDialog,
-        BarChart
+        BarChart,
+        TreeMapChart
     }
 })
 export default class UDPC extends AbstractDashboard {
@@ -407,12 +414,24 @@ export default class UDPC extends AbstractDashboard {
     ];
 
     chartData: { [key: string]: Chart.ChartData } = {
-        dataSetsByTopic: {}
+        dataSetsByTopic: {},
+        dataSetsTopX: {}
     };
+
+    // TODO: make this more generic
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
+            maintainAspectRatio: true,
             title: {
-                text: 'Datasets by topic'
+                display: false
+            },
+            legend: {
+                display: false
+            }
+        },
+        dataSetsTopX: {
+            title: {
+                display: false,
             },
             legend: {
                 display: false
@@ -439,9 +458,18 @@ export default class UDPC extends AbstractDashboard {
                 case 'SET_FILTERED_DATA':
                     switch (mutation.payload[0]) {
                         case 'totalDatasets':
-                            mutationData.datasets[0]['label'] = 'Datensätze';
-                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            mutationData.datasets[0]['key'] = 'doc_count';
+                            mutationData.datasets[0]['groups'] = ['key'];
+                            mutationData.datasets[0]['spacing'] = 2;
+                            mutationData.datasets[0]['borderWidth'] = 0.5;
+                            mutationData.datasets[0]['fontColor'] = 'black';
+                            mutationData.datasets[0]['fontSize'] = 11;
                             this.chartData.dataSetsByTopic = mutationData;
+                            break;
+                        case 'totalDatasetsRangeTop':
+                            mutationData.datasets[0]['label'] = 'Zugriffe';
+                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            this.chartData.dataSetsTopX = mutationData;
                             break;
                     }
                     break;

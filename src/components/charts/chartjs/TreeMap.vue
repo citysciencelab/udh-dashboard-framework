@@ -14,6 +14,26 @@ export default class TreeMapChart extends Vue {
     @Prop() chartOptions!: Chart.ChartOptions;
 
     @Watch('chartData') onChartDataChanged() {
+        this.chartOptions['tooltips'] = {
+            callbacks: {
+                title: function(item: any, data: any) {
+                    let titleItem = item[0];
+                    return data.datasets[titleItem.datasetIndex].data[titleItem.index].g;
+                },
+                label: function(item: any, data: any) {
+                    if (data.datasets && data.datasets.length > 0 && item.datasetIndex != null) {
+                        let index = item.datasetIndex;
+                        let dataset = data.datasets[index];
+                        if (dataset.data && item.index > -1) {
+                            let index2: number = item.index;
+                            let dataItem = dataset.data[index2];
+                            return dataItem.v;
+                        }
+                    }
+                }
+            }
+        }
+
         this.renderChart(this.chartData, this.chartOptions);
     }
 
