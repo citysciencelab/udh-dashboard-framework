@@ -55,6 +55,7 @@ export default class RangeSlider extends Vue {
         }
 
         // build scale and marks
+        this.marks = {};
         for (let i = 0; i <= this.max - this.min; i += this.step) {
             switch (this.options.unit) {
                 case 'year':
@@ -67,6 +68,7 @@ export default class RangeSlider extends Vue {
                     break;
             }
         }
+
         this.defaults = [this.min, this.max];
     }
 

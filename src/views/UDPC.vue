@@ -24,7 +24,6 @@
         </md-app-toolbar>
 
         <div class="container">
-
             <div class="row chart-row" style="height: 150px">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
@@ -289,23 +288,7 @@
                     </dashboard-tile>
                 </div>
             </div>
-
-
-
-            <!--
-                The two rows below can be deleted later
-            -->
-            <div class="row" style="margin: 100px">
-                <div class="col-sm">
-                    <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
-
-                    <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">Open Confirm Dialog</md-button>
-                    <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
-                                    @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
-                </div>
-            </div>
         </div>
-
 
         <md-bottom-bar class="udpc-bottom-bar">
             <div class="row">
@@ -326,8 +309,7 @@
 
         <!--Tooltips-->
         <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
-            I am tooltip <a href="javascript:void(0)"
-                            onclick="window.open('http://www.swoosh.com')">component</a> content!
+            I am tooltip component content!
         </b-tooltip>
     </div>
 </template>
@@ -345,14 +327,12 @@ import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
 import RangeSlider from '../components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
-import HBarChart from "@/components/charts/chartjs/BarChartHorizontal.vue"
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
 import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 
 @Component({
     components: {
         BarChartHorizontal,
-        HBarChart,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
@@ -386,6 +366,7 @@ export default class UDPC extends AbstractDashboard {
             max: `${new Date().getFullYear()}`
         }
     };
+
     didYouKnow = [
         'Fact 1',
         'Fact 2',
@@ -447,11 +428,10 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
-
     created() {
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
-        this.$store.registerModule('udpc', udpcStore);
+        // this.$store.registerModule('udpc', udpcStore);
 
         this.$store.subscribe((mutation, state) => {
             if (!mutation.payload) {
