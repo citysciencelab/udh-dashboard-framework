@@ -98,11 +98,10 @@ export default class App extends Vue {
                 bottom: 0;
                 left: 0;
                 margin: 0;
-                padding: 0 20px !important;
+                padding: 15px;
                 width: 100%;
             }
         }
-
 
         .md-card .md-card-header .info-icon {
             font-size: 19px !important;
