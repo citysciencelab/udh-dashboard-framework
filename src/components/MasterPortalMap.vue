@@ -63,6 +63,8 @@
             ["2001", this.geoJsonId].forEach(id =>
                 this.cWindow.mpapi.map.addLayer(id)
             );
+
+            this.cWindow.mpapi.createLayer("14DF2C11-AFA8-44E0-9EDD-F0AAB7F17CDB");
         }
 
         createGeoJsonLayer() {

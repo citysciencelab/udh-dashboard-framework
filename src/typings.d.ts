@@ -59,7 +59,17 @@ declare module 'masterportalAPI' {
       createLayer(rawLayer: object): Layer
       updateSource(layer: Layer): number
       getGfiURL(layer: Layer, map: Map, coordinate: Coordinate): string | undefined
-    }
+    },
+    wfs: {
+      setCustomStyles(styles: object): void
+      createLayerSource(rawLayer: object, options?: object): Vector
+      createLayer(rawLayer: object, params?: object): VectorLayer
+      updateSource(layer: VectorLayer): void
+      setFeatureStyle(features: Feature[], featureStyle: StyleLike): void
+      hideAllFeatures(layer: Layer): void
+      showAllFeatures(layer: Layer): void
+      showFeaturesById(layer: Layer, featureIdList: string[]): void
+    },
     geojson: {
       setCustomStyles(styles: object): void
       createLayerSource(rawLayer: object, map: Map): Vector
