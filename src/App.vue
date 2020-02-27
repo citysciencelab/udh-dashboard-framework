@@ -104,6 +104,10 @@ export default class App extends Vue {
 
         .main-row {
             margin-top: 40px;
+
+            > div {
+                height: 100%;
+            }
         }
 
     }

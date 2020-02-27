@@ -343,8 +343,6 @@ import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 export default class UDPC extends AbstractDashboard {
     countTotalWithPlans = false;
     countGroupedWithPlans = false;
-
-    tooltipActive = false;
     agreeDialogActive = false;
 
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {
@@ -403,7 +401,7 @@ export default class UDPC extends AbstractDashboard {
             legend: {
                 display: false
             },
-            responsive: false,
+            responsive: true,
             scales: {
                 yAxes: [{
                     gridLines: {
@@ -429,7 +427,7 @@ export default class UDPC extends AbstractDashboard {
     created() {
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
-        // this.$store.registerModule('udpc', udpcStore);
+        this.$store.registerModule('udpc', udpcStore);
 
         this.$store.subscribe((mutation, state) => {
             if (!mutation.payload) {

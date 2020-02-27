@@ -54,7 +54,8 @@
 
         .md-card-content {
             padding: 15px 0 0 0;
-            height: 100%;
+            height: auto;
+            //height: 100%;
         }
 
         .md-card-actions {
