@@ -62,7 +62,7 @@
             bottom: 0;
             left: 0;
             margin: 0;
-            padding: 0 20px !important;
+            padding: 0 15px;
             width: 100%;
 
             .notice {
