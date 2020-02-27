@@ -24,7 +24,7 @@
         </md-app-toolbar>
 
         <div class="container">
-            <div class="row chart-row" style="height: 150px">
+            <div class="row main-row" style="height: 150px">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -35,9 +35,7 @@
                         </template>
 
                         <template slot="content">
-                            <div class="card-content-container">
-                                <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
-                            </div>
+                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
                         </template>
 
                         <template slot="footer">
@@ -100,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row chart-row" style="height: 420px">
+            <div class="row main-row" style="height: 420px">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -178,7 +176,7 @@
                     </dashboard-tile>
                 </div>
             </div>
-            <div class="row chart-row" style="height: 420px">
+            <div class="row main-row" style="height: 420px">
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -609,7 +607,6 @@ export default class UDPC extends AbstractDashboard {
         padding: 0;
         border-bottom: none;
         .md-toolbar-row {
-
             background-color: $hamburg-blue-dark !important;
         }
     }
@@ -624,13 +621,6 @@ export default class UDPC extends AbstractDashboard {
 
     .facts-holder span {
         padding: 10px;
-    }
-
-    .card-content-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
     }
 
     .md-card .md-card-header .info-icon {
@@ -702,6 +692,10 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
+    .md-tooltip, .md-snackbar {
+        font-family: 'HamburgSans' !important;
+    }
+
     .md-card {
         .md-card-header {
             .tool-tip-header {
@@ -709,12 +703,6 @@ export default class UDPC extends AbstractDashboard {
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
                 font-weight: bold;
-            }
-        }
-        .md-card-actions {
-            .notice {
-                width: 100%;
-                text-align: left;
             }
         }
     }
