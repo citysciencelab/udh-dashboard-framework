@@ -49,14 +49,14 @@
                         <div class="tool-tip-header" @click="openToolTip('')">
                             Other chart
                         </div>
-                        <!--                        <md-icon class="info-icon" id="">-->
+                        <!--<md-icon class="info-icon" id="">-->
                         <md-icon class="info-icon">
                             info_outline
                         </md-icon>
                     </template>
 
                     <template slot="content">
-                        <master-portal-map v-bind:services="services" v-bind:portal="portal" v-bind:geo-json="geoJson" />
+                        <master-portal-map v-bind:services="services" v-bind:portal="portal" v-bind:geo-json="geoJson" v-bind:features="filteredData.features" />
                     </template>
 
                     <template slot="footer">
@@ -102,7 +102,8 @@
     })
     export default class Participation extends AbstractDashboard {
         filteredData = {
-            participationDistrictCount: []
+            participationDistrictCount: [],
+            features: []
         };
         chartOptions = {
             countStats: {
@@ -126,10 +127,10 @@
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
                 if (mutation.type === 'SET_FILTERED_DATA' && mutation.payload[1].length > 0) {
-
                     if (mutation.payload[0] === 'participationDistrictCount') {
                         this.filteredData.participationDistrictCount = mutation.payload[1];
                     } else if (mutation.payload[0] === 'participationData') {
+                        // this.filteredData.features = mutation.payload[1];
                         if (this.$refs['districtSelect']) {
                             (this.$refs['districtSelect'] as any).updateComponent();
                         }

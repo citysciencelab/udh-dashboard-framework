@@ -7,6 +7,7 @@
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
     import * as mpapi from "masterportalAPI";
+    import { Feature } from 'ol';
 
     @Component({})
     export default class MasterPortalMap extends Vue {
@@ -14,6 +15,7 @@
         @Prop() services!: Datum;
         @Prop() geoJson!: any;
         @Prop() mapStyle!: object;
+        @Prop() features!: Feature[];
         geoJsonId = '2002';
         cWindow: CustomWindow = window;
 

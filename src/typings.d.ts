@@ -125,6 +125,8 @@ interface TreeDatum extends Datum {
 
 type Dataset = Datum[];
 
+declare class FeatureSet extends Array {}
+
 type ChartOptions = { dim: string, dim2: string };
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
