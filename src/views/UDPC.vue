@@ -29,10 +29,10 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-did-you-know'].showMe()">
                                 {{ $t('udpc.didYouKNow') }}
                             </div>
-                            <md-icon class="info-icon" id="tooltip-os-data">help</md-icon>
+                            <md-icon class="info-icon">help</md-icon>
                         </template>
 
                         <template slot="content">
@@ -48,7 +48,7 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-latest-datasets'].showMe()">
                                 {{ $t('udpc.newDatassets') }}
                             </div>
                             <md-icon class="info-icon">help</md-icon>
@@ -67,7 +67,7 @@
                         <div class="col-sm-6">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
-                                    <div class="tool-tip-header" @click="openToolTip('')">
+                                    <div class="tool-tip-header" @click="$refs['tooltip-sensors'].showMe()">
                                         {{ $t('udpc.sensors') }}
                                     </div>
                                     <md-icon class="info-icon">help</md-icon>
@@ -84,7 +84,7 @@
                         <div class="col-sm-6">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
-                                    <div class="tool-tip-header" @click="openToolTip('')">
+                                    <div class="tool-tip-header" @click="$refs['tooltip-visitors-today'].showMe()">
                                         {{ $t('udpc.visitors') }}
                                     </div>
                                     <md-icon class="info-icon">help</md-icon>
@@ -105,7 +105,7 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-datasets-by'].showMe()">
                                 {{ $t('udpc.countBy') }}
                             </div>
                             <md-icon class="info-icon">help</md-icon>
@@ -132,7 +132,7 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-count-total'].showMe()">
                                 {{ $t('udpc.countTotal') }}
                             </div>
                             <md-icon class="info-icon">help</md-icon>
@@ -164,7 +164,7 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-map'].showMe()">
                                 {{ $t('udpc.map') }}
                             </div>
                             <md-icon class="info-icon">help</md-icon>
@@ -183,10 +183,10 @@
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('top5')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-top-x'].showMe()">
                                 {{ $t('udpc.top5') }}
                             </div>
-                            <md-icon class="info-icon" id="top5">help</md-icon>
+                            <md-icon class="info-icon">help</md-icon>
                         </template>
 
                         <template slot="content">
@@ -207,10 +207,10 @@
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('download')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-downloads'].showMe()">
                                 {{ $t('udpc.download') }}
                             </div>
-                            <md-icon class="info-icon" id="download">help</md-icon>
+                            <md-icon class="info-icon">help</md-icon>
                         </template>
 
                         <template slot="content">
@@ -235,10 +235,10 @@
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('access_topicdata')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-access-data'].showMe()">
                                 {{ $t('udpc.accessTopicData') }}
                             </div>
-                            <md-icon class="info-icon" id="access_topicdata">help</md-icon>
+                            <md-icon class="info-icon">help</md-icon>
                         </template>
 
                         <template slot="content">
@@ -263,10 +263,10 @@
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('access_apps')">
+                            <div class="tool-tip-header" @click="$refs['tooltip-access-apps'].showMe()">
                                 {{ $t('udpc.accessApps') }}
                             </div>
-                            <md-icon class="info-icon" id="access_apps">help</md-icon>
+                            <md-icon class="info-icon">help</md-icon>
                         </template>
 
                         <template slot="content">
@@ -337,11 +337,19 @@
             </div>
         </md-bottom-bar>
 
-        <!--Tooltips-->
-        <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
-            I am tooltip <a href="javascript:void(0)"
-                            onclick="window.open('http://www.swoosh.com')">component</a> content!
-        </b-tooltip>
+
+        <info-overlay v-bind:content="$t('udpc.tooltipDidYouKnow')" ref="tooltip-did-you-know"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipLatestDataSets')" ref="tooltip-latest-datasets"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipSensors')" ref="tooltip-sensors"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipVisitorsToday')" ref="tooltip-visitors-today"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipDatasetsBy')" ref="tooltip-datasets-by"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipCountTotal')" ref="tooltip-count-total"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipMap')" ref="tooltip-map"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipTopX')" ref="tooltip-top-x"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipDownloads')" ref="tooltip-downloads"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipAccessData')" ref="tooltip-access-data"/>
+        <info-overlay v-bind:content="$t('udpc.tooltipAccessApps')" ref="tooltip-access-apps"/>
+
     </div>
 </template>
 
@@ -356,6 +364,7 @@ import DidYouKnow from '../components/DidYouKnow.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
+import InfoOverlay from '../components/InfoOverlay.vue';
 import RangeSlider from '../components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import HBarChart from "@/components/charts/chartjs/BarChartHorizontal.vue"
@@ -371,6 +380,7 @@ import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
         MultiSelect,
         RangeSlider,
         ConfirmDialog,
+        InfoOverlay,
         BarChart,
         TreeMapChart
     }
@@ -681,6 +691,7 @@ export default class UDPC extends AbstractDashboard {
 
     .md-card .md-card-header .info-icon {
         color: $hamburg-blue;
+        z-index: -1;
     }
 
     .dashboard-kpi {
@@ -791,4 +802,11 @@ export default class UDPC extends AbstractDashboard {
             right: 35px;
         }
     }
+
+    .tooltip-inner {
+        height: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
 </style>
