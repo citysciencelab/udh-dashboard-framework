@@ -7,10 +7,12 @@ const wfsTypename = 'beteiligungsverfahren';
 
 const initialState: ParticipationState = {
     dashboardData: {
-        participationData: []
+        participationData: [],
+        featureData: []
     },
     filteredData: {
-        participationDistrictCount: {}
+        participationDistrictCount: {},
+        participationDistrictCountTree: {}
     },
     filters: {},
     loading: false
@@ -23,11 +25,8 @@ const participationModule: Module<ParticipationState, RootState> = {
         fetchParticipationStats: async (context) => {
             const results: any = await wfs.get(wfsUrl, wfsTypename, []);
 
-            context.commit('SET_INITIAL_DATA', ['participationData', results.getProperties()]);
-            context.commit('SET_FILTERED_DATA', ['participationData', results.getProperties()]);
-            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(results.getProperties(), 'bezirk')]);
-
             context.dispatch('recalculateChartData', results.getProperties());
+            context.commit('SET_INITIAL_DATA', ['participationData', results]);
         },
         recalculateChartData: (context, filteredData) => {
             if (!filteredData) {

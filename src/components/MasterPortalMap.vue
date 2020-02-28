@@ -11,25 +11,17 @@
 
     @Component({})
     export default class MasterPortalMap extends Vue {
+        @Prop() customLayerId!: string;
         @Prop() portal!: Datum;
         @Prop() services!: Datum;
-        @Prop() geoJson!: any;
         @Prop() mapStyle!: object;
         @Prop() features!: Feature[];
-        geoJsonId = '2002';
         cWindow: CustomWindow = window;
 
         mounted() {
+            if (!this.customLayerId) this.customLayerId === "dashboardData";
             this.createMap();
-        }
-
-        @Watch('geoJson') onGeoJsonChanged(newVal: any) {
-            //TODO: in the case of a local GeoJSON this should update the corresponding layer
-            let newLayer = this.createGeoJsonLayer();
-            this.cWindow.mpapi.map.removeLayer(this.geoJsonId);
-            // how to add this to layerconf
-            // this.services.push(this.createGeoJsonLayer());
-            // this.cWindow.mpapi.map.addLayer(this.geoJsonId);
+            this.showFeaturesInMap();
         }
 
         createMap() {
@@ -42,8 +34,6 @@
             if (mapElement) {
                 mapElement.innerHTML = "";
             }
-
-            this.services.push(this.createGeoJsonLayer());
 
             mpapi.geojson.setCustomStyles({
                 MultiPolygon: new Style({
@@ -61,21 +51,17 @@
                 ...this.portal,
                 layerConf: this.services
             });
-
-            ["2001", this.geoJsonId].forEach(id =>
-                this.cWindow.mpapi.map.addLayer(id)
-            );
-
-            this.cWindow.mpapi.createLayer("14DF2C11-AFA8-44E0-9EDD-F0AAB7F17CDB");
         }
 
-        createGeoJsonLayer() {
-            const localService: Datum = {
-                id: this.geoJsonId,
-                typ: "GeoJSON",
-                features: this.geoJson
-            };
-            return localService;
+        showFeaturesInMap() {
+            const layer = this.cWindow.mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.features);
+
+            this.cWindow.mpapi.map.removeLayer(this.customLayerId);
+            this.cWindow.mpapi.map.addLayer(layer);
+        }
+
+        public updateComponent() {
+            this.showFeaturesInMap();
         }
     }
 </script>

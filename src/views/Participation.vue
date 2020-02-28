@@ -103,11 +103,12 @@
                     </template>
 
                     <template slot="content">
-                        <template slot="content">
-                            <master-portal-map v-bind:services="services" v-bind:portal="portal" v-bind:geo-json="geoJson" v-bind:features="filteredData.features" />
+                        <master-portal-map v-bind:services="services"
+                            v-bind:portal="portal"
+                            v-bind:features="dataAsFeatures"
+                            ref="featureSelect"/>
 <!--                            <horizontal-bar-chart   :chartData="chartData.participationDistrictCount"-->
 <!--                                                    :chartOptions="chartOptions.participationDistrictCount"/>-->
-                        </template>
                     </template>
 
                     <template slot="footer">
@@ -151,18 +152,18 @@
             DashboardTile,
             MultiSelect,
             BarChart,
-            MasterPortalMap
+            MasterPortalMap,
             HorizontalBarChart,
-            TreeMapChart
+            TreeMapChart,
             HorizontalBarChart,
-            TreeMapChart
+            TreeMapChart,
         }
     })
     export default class Participation extends AbstractDashboard {
+        dataAsFeatures: FeatureSet = [];
         chartData: { [key: string]: Chart.ChartData } = {
             participationDistrictCount: {},
-            participationDistrictCountTree: {}
-            features: []
+            participationDistrictCountTree: {},
         };
         chartOptions: { [key: string]: Chart.ChartOptions } = {
             participationDistrictCount: {
@@ -210,11 +211,15 @@
                 switch (mutation.type) {
                     case 'SET_INITIAL_DATA':
                         if (mutation.payload[0] === 'participationData') {
+                            this.dataAsFeatures = mutation.payload[1];
                             if (this.$refs['districtSelect']) {
                                 (this.$refs['districtSelect'] as any).updateComponent();
                             }
                             if (this.$refs['originatorSelect']) {
                                 (this.$refs['originatorSelect'] as any).updateComponent();
+                            }
+                            if (this.$refs['featureSelect']) {
+                                (this.$refs['featureSelect'] as any).updateComponent();
                             }
                         }
                         break;
