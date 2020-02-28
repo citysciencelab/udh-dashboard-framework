@@ -1,4 +1,5 @@
 import { Module } from 'vuex';
+import Chart from 'chart.js';
 
 const initialState: DashboardState = {
     dashboardData: {},
@@ -8,12 +9,12 @@ const initialState: DashboardState = {
 };
 
 const chartsModule: Module<DashboardState, RootState> = {
-    state: { ...initialState },
+    state: initialState,
     mutations: {
         SET_INITIAL_DATA: (state, [id, data]: [string, Dataset]) => {
             state.dashboardData[id] = data;
         },
-        SET_FILTERED_DATA: (state, [id, data]: [string, Dataset]) => {
+        SET_FILTERED_DATA: (state, [id, data]: [string, Chart.ChartData]) => {
             state.filteredData[id] = data;
         },
         SET_FILTERS: (state, [id, values]) => {
@@ -25,6 +26,9 @@ const chartsModule: Module<DashboardState, RootState> = {
         },
         SET_FILTERS_NONE: (state) => {
             state.filters = {}
+        },
+        SET_LOADING: (state, loading: boolean) => {
+            state.loading = loading;
         }
     },
     actions: {
@@ -36,15 +40,15 @@ const chartsModule: Module<DashboardState, RootState> = {
         filteredData: state => {
             return state.filteredData;
         },
-        filteredDataById: state => (dataId: string) => {
-            return state.filteredData[dataId];
-        },
         filters: state => {
             return state.filters;
         },
         distinctPropertyValues: state => (dataId: string, property: string) => {
+            if (!state.dashboardData[dataId]) {
+                return;
+            }
             let valuesForProperty: string[] = [];
-            for (let obj of state.filteredData[dataId]) {
+            for (let obj of state.dashboardData[dataId]) {
                 if (obj[property] && !valuesForProperty.find(element => element === obj[property])) {
                     valuesForProperty.push(obj[property])
                 }
@@ -65,6 +69,9 @@ const chartsModule: Module<DashboardState, RootState> = {
             } else {
                 return initialData;
             }
+        },
+        loading: state => {
+            return state.loading
         }
     }
 };

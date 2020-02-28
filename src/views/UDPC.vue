@@ -24,8 +24,7 @@
         </md-app-toolbar>
 
         <div class="container">
-
-            <div class="row chart-row" style="height: 150px">
+            <div class="row main-row" style="height: 150px">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -36,9 +35,7 @@
                         </template>
 
                         <template slot="content">
-                            <div class="card-content-container">
-                                <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
-                            </div>
+                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
                         </template>
 
                         <template slot="footer">
@@ -101,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row chart-row" style="height: 420px">
+            <div class="row main-row" style="height: 420px">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -112,19 +109,17 @@
                         </template>
 
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">
-                                    Treechart1
-                                </md-tab>
-                                <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">
-                                    Treechart2
-                                </md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotalsByTopic">
+                                <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">&nbsp;</md-tab>
+                                <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">&nbsp;</md-tab>
                             </md-tabs>
+                            <tree-map-chart :chartData="chartData.dataSetsByTopic"
+                                            :chartOptions="chartOptions.dataSetsByTopic"/>
                         </template>
 
                         <template slot="footer">
                             <div class="notice">
-                                <md-switch class="dashboard-switch">
+                                <md-switch v-model="countGroupedWithPlans" class="dashboard-switch">
                                     {{ $t('udpc.includeDevPlan') }}
                                 </md-switch>
                             </div>
@@ -156,7 +151,9 @@
 
                         <template slot="footer">
                             <div class="notice">
-                                {{ $t('udpc.includeDevPlan') }}
+                                <md-switch v-model="countTotalWithPlans" class="dashboard-switch">
+                                    {{ $t('udpc.includeDevPlan') }}
+                                </md-switch>
                             </div>
                         </template>
                     </dashboard-tile>
@@ -179,7 +176,7 @@
                     </dashboard-tile>
                 </div>
             </div>
-            <div class="row chart-row" style="height: 420px">
+            <div class="row main-row" style="height: 420px">
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -190,17 +187,14 @@
                         </template>
 
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">
-                                    chart1
-                                </md-tab>
-                                <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">
-                                    chart2
-                                </md-tab>
-                                <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">
-                                    chart3
-                                </md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="fetchTops">
+                                <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
+                                <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
+                                <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">&nbsp;</md-tab>
                             </md-tabs>
+
+                            <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
+                                                  :chartOptions="chartOptions.dataSetsTopX"/>
                         </template>
 
                         <template slot="footer">
@@ -218,20 +212,20 @@
 
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')">
+                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')"
+                                        @click="changeFilterRange('downloads', 'year')">
                                     chart1
                                 </md-tab>
-                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')">
+                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')"
+                                        @click="changeFilterRange('downloads', 'month')">
                                     chart2
-                                </md-tab>
-                                <md-tab id="tab-downloads-day" :md-label="$t('udpc.tabDay')">
-                                    chart3
                                 </md-tab>
                             </md-tabs>
                         </template>
 
                         <template slot="footer">
-                            <div class="notice">placeholder range slider</div>
+                            <range-slider :options="sliderOptions.downloads"
+                                          @rangeChange="rangeForChartChanged('downloads', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -246,20 +240,20 @@
 
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')">
+                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')"
+                                        @click="changeFilterRange('access', 'year')">
                                     chart1
                                 </md-tab>
-                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')">
+                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')"
+                                        @click="changeFilterRange('access', 'month')">
                                     chart2
-                                </md-tab>
-                                <md-tab id="tab-access-topic-day" :md-label="$t('udpc.tabDay')">
-                                    chart3
                                 </md-tab>
                             </md-tabs>
                         </template>
 
                         <template slot="footer">
-                            <div class="notice">placeholder range slider</div>
+                            <range-slider :options="sliderOptions.access"
+                                          @rangeChange="rangeForChartChanged('access', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -275,53 +269,24 @@
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-access-apps-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('dateRangeSlider', 'year')">
+                                        @click="changeFilterRange('access-apps', 'year')">
                                     chart1
                                 </md-tab>
                                 <md-tab id="tab-access-apps-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('dateRangeSlider', 'month')">
+                                        @click="changeFilterRange('access-apps', 'month')">
                                     chart2
-                                </md-tab>
-                                <md-tab id="tab-access-apps-day" :md-label="$t('udpc.tabDay')"
-                                        @click="changeFilterRange('dateRangeSlider', 'day')">
-                                    chart3
                                 </md-tab>
                             </md-tabs>
                         </template>
 
                         <template slot="footer">
-                            <div class="notice">
-                                <range-slider id="dateRangeSlider"
-                                              v-bind:identity="dateRange"
-                                              v-bind:defaultValue="rangeMap.dateRangeSlider.defaultValue"
-                                              v-bind:step="rangeMap.dateRangeSlider.step"
-                                              v-bind:max="rangeMap.dateRangeSlider.max"
-                                              v-bind:min="rangeMap.dateRangeSlider.min"
-                                              v-bind:marks="rangeMap.dateRangeSlider.marks"
-                                              v-bind:isDateRange="true"
-                                              @rangeChange="rangeForChartChanged"/>
-                            </div>
+                            <range-slider :options="sliderOptions['access-apps']"
+                                          @rangeChange="rangeForChartChanged('access-apps', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
             </div>
-
-
-
-            <!--
-                The two rows below can be deleted later
-            -->
-            <div class="row" style="margin: 100px">
-                <div class="col-sm">
-                    <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
-
-                    <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">Open Confirm Dialog</md-button>
-                    <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
-                                    @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
-                </div>
-            </div>
         </div>
-
 
         <md-bottom-bar class="udpc-bottom-bar">
             <div class="row">
@@ -342,8 +307,7 @@
 
         <!--Tooltips-->
         <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
-            I am tooltip <a href="javascript:void(0)"
-                            onclick="window.open('http://www.swoosh.com')">component</a> content!
+            I am tooltip component content!
         </b-tooltip>
     </div>
 </template>
@@ -351,63 +315,61 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import udpcStore from '../store/udpc.module';
+import { messages } from '@/messages/messages.udpc.module';
+import AbstractDashboard from "@/views/AbstractDashboard.vue";
 import DashboardTile from '../components/DashboardTile.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
 import RangeSlider from '../components/RangeSlider.vue';
-import LineChart from '../components/charts/LineChart.vue';
-import PieChart from '../components/charts/PieChart.vue';
-import ScatterPlot from '../components/charts/ScatterPlot.vue';
-import BarChart from '../components/charts/BarChart.vue';
-import HBarChart from '../components/charts/HBarChart.vue';
-import TreeMapChart from '../components/charts/TreeMapChart.vue';
+import BarChart from "@/components/charts/chartjs/BarChart.vue";
+import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
+import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 import MasterPortalMap from '../components/MasterPortalMap.vue'
-import udpcStore from '../store/udpc.module';
-import AbstractDashboard from "@/views/AbstractDashboard.vue";
-import { messages } from '@/messages/messages.udpc.module';
 
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 
 @Component({
     components: {
+        BarChartHorizontal,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
         RangeSlider,
-        BarChart,
-        LineChart,
-        PieChart,
-        ScatterPlot,
-        HBarChart,
-        TreeMapChart,
         ConfirmDialog,
+        BarChart,
+        TreeMapChart,
         MasterPortalMap
     }
 })
 export default class UDPC extends AbstractDashboard {
-    tooltipActive = false;
+    countTotalWithPlans = false;
+    countGroupedWithPlans = false;
     agreeDialogActive = false;
-    dateRange = 'year';
-    rangeMap: { [key: string]: DateRangeSlider } = {
-        dateRangeSlider: {
-            defaultValue: [],
-            step: 0,
-            max: 0,
-            min: 0,
-            marks: {}
+    services: object = servicesConfig;
+    portal: object = portalConfig;
+
+    sliderOptions: { [key: string]: DateRangeSliderOptions } = {
+        downloads: {
+            unit: 'year',
+            min: '2019',
+            max: `${new Date().getFullYear()}`
+        },
+        access: {
+            unit: 'year',
+            min: '2019',
+            max: `${new Date().getFullYear()}`
+        },
+        'access-apps': {
+            unit: 'year',
+            min: '2019',
+            max: `${new Date().getFullYear()}`
         }
     };
-    filteredData: { [key: string]: Dataset } = {
-        osStats: []
-    };
-    chartOptions = {
-        osStats: {
-            dim: 'os'
-        }
-    };
+
     didYouKnow = [
         'Fact 1',
         'Fact 2',
@@ -422,16 +384,49 @@ export default class UDPC extends AbstractDashboard {
         'New Dataset 4',
         'New Dataset 5'
     ];
-    services: object = servicesConfig;
-    portal: object = portalConfig;
-    meta: { [key: string]: any } = {
-        osStats: {
-            title: 'Distribution of operating systems',
-            dataSeries: {
-                valueAccessor: 'anzahl_os',
-                valueType: 'number',
-                categoryAccessor: 'os',
-                categoryType: 'string'
+
+    chartData: { [key: string]: Chart.ChartData } = {
+        dataSetsByTopic: {},
+        dataSetsTopX: {}
+    };
+
+    // TODO: make this more generic
+    chartOptions: { [key: string]: Chart.ChartOptions } = {
+        dataSetsByTopic: {
+            maintainAspectRatio: true,
+            title: {
+                display: false
+            },
+            legend: {
+                display: false
+            }
+        },
+        dataSetsTopX: {
+            title: {
+                display: false,
+            },
+            legend: {
+                display: false
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        display: false,
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
         }
     };
@@ -445,37 +440,81 @@ export default class UDPC extends AbstractDashboard {
             if (!mutation.payload) {
                 return;
             }
-            const id: string = mutation.payload[0];
-            const data: Dataset = mutation.payload[1];
+            const mutationData = mutation.payload[1];
 
-            if (mutation.type === 'SET_FILTERED_DATA' && data.length > 0) {
-                this.filteredData[id] = data;
+            switch (mutation.type) {
+                case 'SET_INITIAL_DATA':
+                    break;
+                case 'SET_FILTERED_DATA':
+                    switch (mutation.payload[0]) {
+                        case 'totalDatasets':
+                            mutationData.datasets[0]['key'] = 'doc_count';
+                            mutationData.datasets[0]['groups'] = ['key'];
+                            mutationData.datasets[0]['spacing'] = 2;
+                            mutationData.datasets[0]['borderWidth'] = 0.5;
+                            mutationData.datasets[0]['fontColor'] = 'black';
+                            mutationData.datasets[0]['fontSize'] = 11;
+                            this.chartData.dataSetsByTopic = mutationData;
+                            break;
+                        case 'totalDatasetsRangeTop':
+                            mutationData.datasets[0]['label'] = 'Zugriffe';
+                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            this.chartData.dataSetsTopX = mutationData;
+                            break;
+                    }
+                    break;
             }
         });
+    }
+
+    async mounted() {
+        // Fetch initial dashboard data
+        // await this.$store.dispatch('fetchTotalDatasets');
+        // this.fetchTops('tab-top5-datasets');
+
+        // Set initial filters
+        await this.setFilters(['SOURCE', 'services_internet']);
+        await this.setFilters(['YEAR', [2017, 2019]]);
+        await this.setFilters(['MONTH', [1, 12]]);
+    }
+
+    async fetchTotalsByTopic(totalsTopic?: string) {
+        switch (totalsTopic) {
+            case 'tab-organisations':
+                totalsTopic ='organization';
+                break;
+            case 'tab-topics':
+                totalsTopic ='theme';
+                break;
+        }
+        if (totalsTopic) {
+            await this.$store.dispatch('fetchTotalsByTopic', totalsTopic);
+        }
+    }
+
+    async fetchTops(topTopic?: string) {
+        switch (topTopic) {
+            case 'tab-top5-apps':
+                topTopic ='apps';
+                break;
+            case 'tab-top5-downloads':
+                topTopic ='downloads';
+                break;
+            case 'tab-top5-datasets':
+                topTopic ='datasets';
+                break;
+        }
+        if (topTopic) {
+            await this.$store.dispatch('fetchTops', topTopic);
+        }
     }
 
     getFilterOptions(dataset: string) {
         if (!this.dashboardData[dataset]) {
             return [];
         }
-        const accessor = this.meta[dataset].dataSeries.categoryAccessor;
-        return this.dashboardData[dataset].map(value => value[accessor]);
-    }
-
-    async mounted() {
-        // Fetch initial dashboard data
-        await this.$store.dispatch('fetchTotalDatasets');
-        await this.$store.dispatch('fetchTotalDatasetsRange');
-
-        console.log(this.dashboardData);
-
-        // Set initial filters
-        await this.setFilters(['SOURCE', 'services_internet']);
-        await this.setFilters(['YEAR', [2017, 2019]]);
-        await this.setFilters(['MONTH', [1, 12]]);
-
-        // Set initial date range
-        this.changeFilterRange('dateRangeSlider', this.dateRange);
+        // const accessor = this.meta[dataset].dataSeries.categoryAccessor;
+        // return this.dashboardData[dataset].map(value => value[accessor]);
     }
 
     get dashboardData(): { [key: string]: Dataset } {
@@ -486,12 +525,8 @@ export default class UDPC extends AbstractDashboard {
         return this.$store.getters.loading;
     }
 
-    setFilters(options: [string, string | number[]]) {
+    setFilters(options: [string, any]) {
         this.$store.commit('SET_FILTERS', options);
-    }
-
-    filter(chartID: string) {
-        this.$store.dispatch('applyFilter', [chartID, this.meta[chartID].dataSeries.categoryAccessor]);
     }
 
     testSnackBar() {
@@ -512,52 +547,38 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
-    changeFilterRange(sliderId: string, sliderRange: string) {
-        this.dateRange = sliderRange;
-
+    changeFilterRange(sliderId: string, unit: 'year' | 'month') {
         const today = new Date();
-        let start = 0, end = 0;
-        let values: DateRangeSlider = {
-            defaultValue: [],
-            step: 1,
-            max: 0,
-            min: 0,
-            marks: {}
-        };
 
-        if (sliderRange === 'day') {
-            start = 1;
-            end = 31;
-        } else if (sliderRange === 'month') {
-            start = 1;
-            end = 12;
-        } else if (sliderRange === 'year') {
-            start = today.getFullYear() - 2;
-            end = today.getFullYear();
-        }
-        values.defaultValue = [start, end];
-        values.max = end;
-        values.min = start;
-
-        for (start; start <= end; start++) {
-            values.marks[start] = start;
+        if (unit === 'month') {
+            this.sliderOptions[sliderId] = {
+                unit: 'month',
+                min: '2019-07',
+                max: `${today.getFullYear()}-${today.getMonth()}`
+            };
+        } else {
+            this.sliderOptions[sliderId] = {
+                unit: 'year',
+                min: '2019',
+                max: `${today.getFullYear()}`
+            };
         }
 
-        this.rangeMap[sliderId] = values;
-    }
-
-    filterChanged() {
-        // The new filters could be set here - so far the filter already does that itself
-        // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
-        this.filter('osStats');
+        this.rangeForChartChanged(
+            sliderId,
+            [this.sliderOptions[sliderId].min, this.sliderOptions[sliderId].max]
+        );
     }
 
     dialogResult(isPositive: boolean) {
         this.agreeDialogActive = false;
     }
 
-    rangeForChartChanged([min, max]: [number, number]) {
-        switch(this.dateRange) {
+    rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
+        const unit = this.sliderOptions[chartId].unit;
+        console.log(`date ranged changed for ${chartId}:`, min, max);
+
+        switch (unit) {
             case 'year':
                 this.setFilters(['YEAR', [min, max]]);
                 break;
@@ -582,7 +603,7 @@ export default class UDPC extends AbstractDashboard {
     @import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
 
     #page {
-        font-family: 'HamburgSans-Regular';
+        font-family: 'HamburgSans';
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
@@ -591,7 +612,6 @@ export default class UDPC extends AbstractDashboard {
         padding: 0;
         border-bottom: none;
         .md-toolbar-row {
-
             background-color: $hamburg-blue-dark !important;
         }
     }
@@ -608,20 +628,14 @@ export default class UDPC extends AbstractDashboard {
         padding: 10px;
     }
 
-    .card-content-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-    }
-
     .md-card .md-card-header .info-icon {
         color: $hamburg-blue;
     }
 
     .dashboard-kpi {
-        font-family: 'HamburgSans-Bold';
+        font-family: 'HamburgSans';
         font-size: 18px;
+        font-weight: bold;
     }
 
     .dashboard-tabs {
@@ -644,6 +658,10 @@ export default class UDPC extends AbstractDashboard {
             }
         }
 
+        .md-tab {
+            padding: 5px 0;
+        }
+
         .md-tabs-indicator {
             background-color: white !important;
         }
@@ -654,30 +672,42 @@ export default class UDPC extends AbstractDashboard {
         .md-switch-container {
             background-color: white !important;
             border: 1px solid black;
-            width: 45px;
-            height: 23px;
+            width: 36px;
+            height: 19px;
+            padding-left: 2px;
         }
         .md-switch-thumb {
             background-color: black !important;
-            width: 17px;
-            height: 17px;
+            width: 15px;
+            height: 15px;
         }
         .md-switch-label {
-            margin-top: 7px;
+            margin-top: 3px;
+            padding-left: 10px;
         }
+    }
+
+    .dashboard-switch.md-checked {
+        .md-switch-container {
+            background-color: $hamburg-blue !important;
+            border: 1px solid $hamburg-blue;
+        }
+        .md-switch-thumb {
+            background-color: white !important;
+        }
+    }
+
+    .md-tooltip, .md-snackbar {
+        font-family: 'HamburgSans' !important;
     }
 
     .md-card {
         .md-card-header {
             .tool-tip-header {
-                font-family: 'HamburgSans-Bold';
+                font-family: 'HamburgSans';
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
-            }
-        }
-        .md-card-actions {
-            .notice {
-                width: 100%;
+                font-weight: bold;
             }
         }
     }

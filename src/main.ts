@@ -15,6 +15,14 @@ import store from './store/store';
 import { messages } from './messages/messages.module';
 import utils from './utils/utils';
 
+// Module augmentations for Vue
+declare module 'vue/types/vue' {
+    interface Vue {
+      $utils: IUtils
+      renderChart(chartData: Chart.ChartData, options?: Chart.ChartOptions): void
+    }
+  }
+
 // We import ant-design because vue-material does not have a slider - maybe generally?
 Vue.component(Slider.name, Slider);
 Vue.use(Slider);

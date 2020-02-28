@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Compatibility definitions */
 
 declare module "d3/types/d3" {
@@ -114,6 +115,8 @@ declare module '*.jpg' {
 
 /* Custom types */
 
+=======
+>>>>>>> dev
 type Datum = { [key: string]: any };
 
 interface TreeDatum extends Datum {
@@ -133,7 +136,7 @@ type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
 
 interface DashboardState {
   dashboardData: { [key: string]: Dataset };
-  filteredData: { [key: string]: Dataset };
+  filteredData: { [key: string]: Chart.ChartData };
   filters: { [key: string]: any };
   loading: boolean;
 }
@@ -144,10 +147,6 @@ interface UDPCState extends DashboardState {
 
 interface ParticipationState extends DashboardState {
   //Potential specific type definitions
-}
-
-interface UDPCState extends DashboardState {
-  loading: boolean;
 }
 
 interface RootState {
@@ -195,6 +194,16 @@ declare module 'masterportalAPI' {
       updateSource(layer: Layer): number
       getGfiURL(layer: Layer, map: Map, coordinate: Coordinate): string | undefined
     }
+    wfs: {
+      setCustomStyles(styles: object): void
+      createLayerSource(rawLayer: object, options?: object): Vector
+      createLayer(rawLayer: object, params?: object): VectorLayer
+      updateSource(layer: VectorLayer): void
+      setFeatureStyle(features: Feature[], featureStyle: StyleLike): void
+      hideAllFeatures(layer: Layer): void
+      showAllFeatures(layer: Layer): void
+      showFeaturesById(layer: Layer, featureIdList: string[]): void
+    }
     geojson: {
       setCustomStyles(styles: object): void
       createLayerSource(rawLayer: object, map: Map): Vector
@@ -231,10 +240,8 @@ declare module 'masterportalAPI' {
   };
 }
 
-interface DateRangeSlider {
-  defaultValue: number[];
-  step: number;
-  max: number;
-  min: number;
-  marks: { [key: number]: number };
+interface DateRangeSliderOptions {
+  unit: 'month' | 'year';
+  min: string;
+  max: string;
 }

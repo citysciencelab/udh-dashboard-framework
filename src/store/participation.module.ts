@@ -4,17 +4,13 @@ import wfs from "@/utils/wfs";
 
 const wfsUrl: string = 'HH_WFS_Beteiligungsverfahren';
 const wfsTypename = 'beteiligungsverfahren';
-const dataPropertyNames = ['ebene', 'absender', 'bezirk', 'bezeichnung', 'zustaendigkeit', 'gebiet', 'planverfahren', 'beteiligungsformate', 'status', 'start',
-    'ende', 'online___zahl_der_beitraege', 'link', 'kontaktpersonen'];
-const prefix = 'de.hh.up';
-const baseNodes = ['wfs:FeatureCollection', 'gml:featureMember'];
 
 const initialState: ParticipationState = {
     dashboardData: {
         participationData: []
     },
     filteredData: {
-        participationDistrictCount: []
+        participationDistrictCount: {}
     },
     filters: {},
     loading: false
@@ -22,32 +18,37 @@ const initialState: ParticipationState = {
 
 const participationModule: Module<ParticipationState, RootState> = {
     state: { ...initialState },
-    mutations: {
-        SET_LOADING: (state, loading: boolean) => {
-            state.loading = loading;
-        }
-    },
+    mutations: {    },
     actions: {
         fetchParticipationStats: async (context) => {
             const results: any = await wfs.get(wfsUrl, wfsTypename, []);
-            // const resultExtract = wfs.getDataFromWFSJson(results as any[], wfsTypename, dataPropertyNames, prefix, baseNodes);
 
             context.commit('SET_INITIAL_DATA', ['participationData', results.getProperties()]);
             context.commit('SET_FILTERED_DATA', ['participationData', results.getProperties()]);
             context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(results.getProperties(), 'bezirk')]);
+
+            context.dispatch('recalculateChartData', results.getProperties());
         },
-        recalculateWithFilters: (context) => {
-            const filteredData = context.getters.dataWithAppliedFilters('participationData');
-            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', countData(filteredData, 'bezirk')]);
-            // This would set all filter - but the resulting limitation seems wrong
-            context.commit('SET_FILTERED_DATA', ['participationData', filteredData]);
+        recalculateChartData: (context, filteredData) => {
+            if (!filteredData) {
+                return;
+            }
+            const countdata = countData(filteredData, 'bezirk');
+
+            context.commit('SET_FILTERED_DATA', ['participationDistrictCount', {
+                labels: countdata.map(item => item.bezirk),
+                datasets: [{
+                    data: countdata.map(item => item.count)
+                }]
+            }]);
+            context.commit('SET_FILTERED_DATA', ['participationDistrictCountTree', {
+                datasets: [{
+                    tree: countdata
+                }]
+            }]);
         }
     },
-    getters: {
-        loading: state => {
-            return state.loading
-        }
-    }
+    getters: {    }
 };
 
 export default participationModule;
