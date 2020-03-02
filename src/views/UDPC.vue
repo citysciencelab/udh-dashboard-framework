@@ -660,40 +660,9 @@ i {
 }
 
 .md-card {
-    padding: 15px;
-    margin: 0 !important;
-    height: 100%;
-    position: relative;
-
     .md-card-header {
-        position: relative;
-        padding: 0 !important;
-        z-index: 2;
-
-        .card-header-text {
-            font-size: 15px;
-            text-align: left;
-            font-weight: bold;
-        }
-
         .info-icon-holder .md-icon {
-            float: right;
-            font-size: 19px !important;
-            width: 15px;
-            height: 15px;
-            min-width: 15px;
             color: $hamburg-blue;
-        }
-    }
-
-    .md-card-content {
-        padding: 15px 0 0 0;
-    }
-
-    .md-card-actions {
-        .notice {
-            width: 100%;
-            text-align: left;
         }
     }
 }
