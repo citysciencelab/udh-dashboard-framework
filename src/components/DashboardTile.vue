@@ -36,19 +36,21 @@
             z-index: 2;
 
             .tool-tip-header {
-                cursor: pointer;
                 font-size: 15pt;
                 text-align: left;
             }
 
-            .info-icon {
-                font-size: 19px !important;
-                width: 15px;
-                height: 15px;
+            .info-icon-holder {
+                .md-icon {
+                    width: 15px;
+                    height: 15px;
+                    min-width: 15px;
+                    font-size: 19px !important;
+                }
                 position: absolute;
-                top: 2px;
-                right: 2px;
-                min-width: 15px;
+                top: 0;
+                right: 0;
+                cursor: pointer;
             }
         }
 
