@@ -1,5 +1,6 @@
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
+import Utils from '@/utils/utils'
 
 const initialState: UDPCState = {
     dashboardData: {},
@@ -51,10 +52,10 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTotalsByType: async (context, totalsType) => {
             context.commit('SET_LOADING', true);
 
-            //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
-            let aggregations = await elastic.getRangeful('', '', '2000-01', '2020-01', totalsType, 100, 'year');
-            context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
+            let yearMonth = new Utils().date.getYearMonthStringFromDate(new Date());
+            let aggregations = await elastic.getRangeful('', '', '2000-01', yearMonth, totalsType, 100, 'year');
 
+            context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
                 labels: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.key_as_string),
                 datasets: [{
