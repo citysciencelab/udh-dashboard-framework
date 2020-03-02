@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import * as d3 from 'd3';
 import $ from 'jquery';
-import { Feature } from 'ol';
 
 export default class Utils implements IUtils {
     chart = {
@@ -163,7 +162,7 @@ export function aggregateData(ds: Dataset, descriptor: string, metric: string): 
 }
 
 export function countData(ds: Dataset, descriptor: string): Dataset {
-    return ds.reduce((countData: Datum[], datum: Datum) => {
+    return ds.reduce((countData: Dataset, datum: Datum) => {
         const match: any = countData.find((item: Datum) => item[descriptor] === datum[descriptor]);
         if (match) {
             match.count += 1;
@@ -171,16 +170,4 @@ export function countData(ds: Dataset, descriptor: string): Dataset {
         }
         return [...countData,  {[descriptor]: datum[descriptor], count: 1}];
     }, [])
-}
-
- export class FeatureSet extends Array {
-    getProperties(): Dataset {
-        try {
-            return this.map(f => f.getProperties());
-        }
-        catch(e) {
-            console.error(e);
-            return [];
-        }
-    }
 }

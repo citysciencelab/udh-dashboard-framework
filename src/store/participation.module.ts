@@ -1,5 +1,6 @@
 import { Module } from 'vuex';
 import {countData} from '@/utils/utils';
+import {FeatureSet} from "@/utils/wfs";
 import wfs from "@/utils/wfs";
 
 const wfsUrl: string = 'HH_WFS_Beteiligungsverfahren';
@@ -8,7 +9,6 @@ const wfsTypename = 'beteiligungsverfahren';
 const initialState: ParticipationState = {
     dashboardData: {
         participationData: [],
-        featureData: []
     },
     filteredData: {
         participationDistrictCount: {},
@@ -33,7 +33,6 @@ const participationModule: Module<ParticipationState, RootState> = {
                 return;
             }
             const countdata = countData(filteredData, 'bezirk');
-
             context.commit('SET_FILTERED_DATA', ['participationDistrictCount', {
                 labels: countdata.map(item => item.bezirk),
                 datasets: [{

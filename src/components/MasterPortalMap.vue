@@ -15,7 +15,7 @@
         @Prop() portal!: Datum;
         @Prop() services!: Datum;
         @Prop() mapStyle!: object;
-        @Prop() features!: Feature[];
+        @Prop() featureData!: Feature[];
         cWindow: CustomWindow = window;
 
         mounted() {
@@ -54,13 +54,13 @@
         }
 
         showFeaturesInMap() {
-            const layer = this.cWindow.mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.features);
+            const layer = this.cWindow.mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.featureData);
 
             this.cWindow.mpapi.map.removeLayer(this.customLayerId);
             this.cWindow.mpapi.map.addLayer(layer);
         }
 
-        public updateComponent() {
+        @Watch('featureData') onFeatureDataChanged() {
             this.showFeaturesInMap();
         }
     }

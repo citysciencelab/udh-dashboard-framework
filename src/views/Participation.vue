@@ -105,7 +105,7 @@
                     <template slot="content">
                         <master-portal-map v-bind:services="services"
                             v-bind:portal="portal"
-                            v-bind:features="dataAsFeatures"
+                            v-bind:featureData="dataAsFeatures"
                             ref="featureSelect"/>
 <!--                            <horizontal-bar-chart   :chartData="chartData.participationDistrictCount"-->
 <!--                                                    :chartOptions="chartOptions.participationDistrictCount"/>-->
@@ -146,6 +146,7 @@
     import servicesConfig from "@/assets/map-config/services.json";
 
     import { messages } from '@/messages/messages.participation.module';
+    import { FeatureSet } from '../utils/wfs';
 
     @Component({
         components: {
@@ -155,12 +156,14 @@
             MasterPortalMap,
             HorizontalBarChart,
             TreeMapChart,
-            HorizontalBarChart,
-            TreeMapChart,
         }
     })
     export default class Participation extends AbstractDashboard {
-        dataAsFeatures: FeatureSet = [];
+        dataAsFeatures: FeatureSet = new FeatureSet();
+        data: { [key: string]: Chart.ChartData } = {
+            participationDistrictCount: {},
+            participationDistrictCountTree: {},
+        }
         chartData: { [key: string]: Chart.ChartData } = {
             participationDistrictCount: {},
             participationDistrictCountTree: {},
@@ -212,15 +215,6 @@
                     case 'SET_INITIAL_DATA':
                         if (mutation.payload[0] === 'participationData') {
                             this.dataAsFeatures = mutation.payload[1];
-                            if (this.$refs['districtSelect']) {
-                                (this.$refs['districtSelect'] as any).updateComponent();
-                            }
-                            if (this.$refs['originatorSelect']) {
-                                (this.$refs['originatorSelect'] as any).updateComponent();
-                            }
-                            if (this.$refs['featureSelect']) {
-                                (this.$refs['featureSelect'] as any).updateComponent();
-                            }
                         }
                         break;
                     case 'SET_FILTERED_DATA':

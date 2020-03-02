@@ -15,6 +15,8 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
 
+            console.log('loading');
+
             let aggregations = context.getters.dashboardData.hasOwnProperty('totalDatasets') ?
                 context.getters.dashboardData['totalDatasets'] : null;
 
@@ -38,6 +40,8 @@ const udpcModule: Module<UDPCState, RootState> = {
             //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
             const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', topTopic, 10, 'month');
             const topX = aggregations.top_x.buckets;
+
+            console.log(aggregations);
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {

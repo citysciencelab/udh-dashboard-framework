@@ -1,5 +1,4 @@
 import WFS from 'ol/format/WFS';
-import {FeatureSet} from './utils';
 import {registerProjections} from './projections';
 
 export default {
@@ -21,5 +20,17 @@ export default {
                     res(FeatureSet.from(features));
                 });
         });
+    }
+}
+
+export class FeatureSet extends Array {
+    getProperties(): Dataset {
+        try {
+            return this.map(f => f.getProperties());
+        }
+        catch(e) {
+            console.error(e);
+            return [];
+        }
     }
 }

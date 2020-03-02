@@ -1,6 +1,6 @@
 import { Module } from 'vuex';
 import Chart from 'chart.js';
-import {FeatureSet} from '../utils/utils';
+import { FeatureSet } from '../utils/wfs';
 
 const initialState: DashboardState = {
     dashboardData: {},
@@ -12,7 +12,7 @@ const initialState: DashboardState = {
 const chartsModule: Module<DashboardState, RootState> = {
     state: initialState,
     mutations: {
-        SET_INITIAL_DATA: (state, [id, data]: [string, Dataset|FeatureSet]) => {
+        SET_INITIAL_DATA: (state, [id, data]: [string, FeatureSet|Dataset]) => {
             state.dashboardData[id] = data;
         },
         SET_FILTERED_DATA: (state, [id, data]: [string, Chart.ChartData]) => {
@@ -45,12 +45,9 @@ const chartsModule: Module<DashboardState, RootState> = {
             return state.filters;
         },
         distinctPropertyValues: state => (dataId: string, property: string) => {
-            var data: Dataset|FeatureSet = state.dashboardData[dataId];
+            if (state.dashboardData[dataId]) {
+                var data = (FeatureSet.from(state.dashboardData[dataId]) as FeatureSet).getProperties();
 
-            if (data) {
-                if (data instanceof FeatureSet) {
-                    data = data.getProperties();
-                }
                 return data.reduce((result: string[], obj: Datum) => {
                     return result.find((el: string) => el === obj[property]) ?
                         result :
@@ -59,8 +56,8 @@ const chartsModule: Module<DashboardState, RootState> = {
             }
         },
         dataWithAppliedFilters: state => (dataId: string) => {
-            const filters = state.filters;
-            const initialData = state.dashboardData[dataId];
+            var filters = state.filters,
+                initialData = state.dashboardData[dataId];
 
             if (Object.keys(filters).length !== 0) {
                 let newFilteredData: object[] = initialData;
