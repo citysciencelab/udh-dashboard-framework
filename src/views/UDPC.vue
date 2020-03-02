@@ -23,21 +23,19 @@
             </div>
         </md-app-toolbar>
 
-        <div class="container">
-            <div class="row main-row" style="height: 150px">
+        <div class="container-fluid">
+            <div class="row py-2">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
+                            <md-icon class="info-icon" id="tooltip-os-data">help</md-icon>
                             <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">
                                 {{ $t('udpc.didYouKNow') }}
                             </div>
-                            <md-icon class="info-icon" id="tooltip-os-data">help</md-icon>
                         </template>
-
                         <template slot="content">
                             <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
                         </template>
-
                         <template slot="footer">
                         </template>
                     </dashboard-tile>
@@ -45,35 +43,29 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
-                                {{ $t('udpc.newDatassets') }}
-                            </div>
                             <md-icon class="info-icon">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('')">{{ $t('udpc.newDatassets') }}</div>
                         </template>
-
                         <template slot="content">
                             <did-you-know v-bind:items="dataSets" v-bind:interval="5000"></did-you-know>
                         </template>
-
                         <template slot="footer">
                         </template>
                     </dashboard-tile>
                 </div>
                 <div class="col-sm-4">
-                    <div class="row" style="padding: 0 !important; height: 100%;">
+                    <div class="row">
                         <div class="col-sm-6">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
+                                    <md-icon class="info-icon">help</md-icon>
                                     <div class="tool-tip-header" @click="openToolTip('')">
                                         {{ $t('udpc.sensors') }}
                                     </div>
-                                    <md-icon class="info-icon">help</md-icon>
                                 </template>
-
                                 <template slot="content" class="dashboard-kpi">
-                                    386
+                                    <span>386</span>
                                 </template>
-
                                 <template slot="footer">
                                 </template>
                             </dashboard-tile>
@@ -81,16 +73,12 @@
                         <div class="col-sm-6">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
-                                    <div class="tool-tip-header" @click="openToolTip('')">
-                                        {{ $t('udpc.visitors') }}
-                                    </div>
                                     <md-icon class="info-icon">help</md-icon>
+                                    <div class="tool-tip-header" @click="openToolTip('')">{{ $t('udpc.visitors') }}</div>
                                 </template>
-
                                 <template slot="content" class="dashboard-kpi">
-                                    893
+                                    <span>893</span>
                                 </template>
-
                                 <template slot="footer">
                                 </template>
                             </dashboard-tile>
@@ -98,16 +86,13 @@
                     </div>
                 </div>
             </div>
-            <div class="row main-row" style="height: 420px">
+            <div class="row py-2">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
-                                {{ $t('udpc.countBy') }}
-                            </div>
                             <md-icon class="info-icon">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('')">{{ $t('udpc.countBy') }}</div>
                         </template>
-
                         <template slot="content">
                             <md-tabs class="dashboard-tabs" @md-changed="fetchTotalsByTopic">
                                 <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">&nbsp;</md-tab>
@@ -116,12 +101,9 @@
                             <tree-map-chart :chartData="chartData.dataSetsByTopic"
                                             :chartOptions="chartOptions.dataSetsByTopic"/>
                         </template>
-
                         <template slot="footer">
                             <div class="notice">
-                                <md-switch v-model="countGroupedWithPlans" class="dashboard-switch">
-                                    {{ $t('udpc.includeDevPlan') }}
-                                </md-switch>
+                                <md-switch v-model="countGroupedWithPlans" class="dashboard-switch">{{ $t('udpc.includeDevPlan') }}</md-switch>
                             </div>
                         </template>
                     </dashboard-tile>
@@ -129,31 +111,19 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
-                                {{ $t('udpc.countTotal') }}
-                            </div>
                             <md-icon class="info-icon">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('')">{{ $t('udpc.countTotal') }}</div>
                         </template>
-
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">
-                                    chart1
-                                </md-tab>
-                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">
-                                    chart2
-                                </md-tab>
-                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">
-                                    chart3
-                                </md-tab>
+                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">chart1</md-tab>
+                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">chart2</md-tab>
+                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">chart3</md-tab>
                             </md-tabs>
                         </template>
-
                         <template slot="footer">
                             <div class="notice">
-                                <md-switch v-model="countTotalWithPlans" class="dashboard-switch">
-                                    {{ $t('udpc.includeDevPlan') }}
-                                </md-switch>
+                                <md-switch v-model="countTotalWithPlans" class="dashboard-switch">{{ $t('udpc.includeDevPlan') }}</md-switch>
                             </div>
                         </template>
                     </dashboard-tile>
@@ -161,42 +131,33 @@
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('')">
-                                {{ $t('udpc.map') }}
-                            </div>
                             <md-icon class="info-icon">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('')">{{ $t('udpc.map') }}</div>
                         </template>
-
                         <template slot="content">
-                            MasterportalAPI
+                            <span>MasterportalAPI</span>
                         </template>
-
                         <template slot="footer">
                         </template>
                     </dashboard-tile>
                 </div>
             </div>
-            <div class="row main-row" style="height: 420px">
+            <div class="row py-2">
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('top5')">
-                                {{ $t('udpc.top5') }}
-                            </div>
                             <md-icon class="info-icon" id="top5">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('top5')">{{ $t('udpc.top5') }}</div>
                         </template>
-
                         <template slot="content">
                             <md-tabs class="dashboard-tabs" @md-changed="fetchTops">
                                 <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
                                 <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
                                 <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">&nbsp;</md-tab>
                             </md-tabs>
-
                             <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
                                                   :chartOptions="chartOptions.dataSetsTopX"/>
                         </template>
-
                         <template slot="footer">
                         </template>
                     </dashboard-tile>
@@ -204,25 +165,17 @@
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('download')">
-                                {{ $t('udpc.download') }}
-                            </div>
                             <md-icon class="info-icon" id="download">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('download')">{{ $t('udpc.download') }}</div>
                         </template>
-
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('downloads', 'year')">
-                                    chart1
-                                </md-tab>
+                                        @click="changeFilterRange('downloads', 'year')">chart1</md-tab>
                                 <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('downloads', 'month')">
-                                    chart2
-                                </md-tab>
+                                        @click="changeFilterRange('downloads', 'month')">chart2</md-tab>
                             </md-tabs>
                         </template>
-
                         <template slot="footer">
                             <range-slider :options="sliderOptions.downloads"
                                           @rangeChange="rangeForChartChanged('downloads', $event)"/>
@@ -232,25 +185,17 @@
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('access_topicdata')">
-                                {{ $t('udpc.accessTopicData') }}
-                            </div>
                             <md-icon class="info-icon" id="access_topicdata">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('access_topicdata')">{{ $t('udpc.accessTopicData') }}</div>
                         </template>
-
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('access', 'year')">
-                                    chart1
-                                </md-tab>
+                                        @click="changeFilterRange('access', 'year')">chart1</md-tab>
                                 <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('access', 'month')">
-                                    chart2
-                                </md-tab>
+                                        @click="changeFilterRange('access', 'month')">chart2</md-tab>
                             </md-tabs>
                         </template>
-
                         <template slot="footer">
                             <range-slider :options="sliderOptions.access"
                                           @rangeChange="rangeForChartChanged('access', $event)"/>
@@ -260,25 +205,17 @@
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
-                            <div class="tool-tip-header" @click="openToolTip('access_apps')">
-                                {{ $t('udpc.accessApps') }}
-                            </div>
                             <md-icon class="info-icon" id="access_apps">help</md-icon>
+                            <div class="tool-tip-header" @click="openToolTip('access_apps')">{{ $t('udpc.accessApps') }}</div>
                         </template>
-
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-access-apps-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('access-apps', 'year')">
-                                    chart1
-                                </md-tab>
+                                        @click="changeFilterRange('access-apps', 'year')">chart1</md-tab>
                                 <md-tab id="tab-access-apps-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('access-apps', 'month')">
-                                    chart2
-                                </md-tab>
+                                        @click="changeFilterRange('access-apps', 'month')">chart2</md-tab>
                             </md-tabs>
                         </template>
-
                         <template slot="footer">
                             <range-slider :options="sliderOptions['access-apps']"
                                           @rangeChange="rangeForChartChanged('access-apps', $event)"/>
@@ -306,9 +243,7 @@
         </md-bottom-bar>
 
         <!--Tooltips-->
-        <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">
-            I am tooltip component content!
-        </b-tooltip>
+        <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">I am tooltip component content!</b-tooltip>
     </div>
 </template>
 
@@ -593,142 +528,183 @@ export default class UDPC extends AbstractDashboard {
 </script>
 
 <style lang="scss">
-    @import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
+@import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
 
-    #page {
-        font-family: 'HamburgSans';
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+* {
+    font-family: 'HamburgSans';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+i {
+    font-family: 'Material Icons';
+}
+
+.md-toolbar {
+    padding: 0;
+    border-bottom: none;
+
+    .md-toolbar-row {
+        background-color: $hamburg-blue-dark !important;
     }
+}
 
-    .md-toolbar {
-        padding: 0;
-        border-bottom: none;
-        .md-toolbar-row {
-            background-color: $hamburg-blue-dark !important;
+.filter-button {
+    background-color: transparent !important;
+    color: black !important;
+    height: 28px !important;
+    min-width: 80px !important;
+    padding-top: 4px !important;
+}
+
+.facts-holder span {
+    padding: 10px;
+}
+
+.dashboard-kpi {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dashboard-tabs {
+    width: 100%;
+
+    .md-button {
+        border: 1px solid $hamburg-grey;
+        height: 35px;
+        font-size: 11px;
+
+        .md-button-content {
+            color: $hamburg-blue;
+            font-weight: bold;
         }
     }
 
-    .filter-button {
-        background-color: transparent !important;
-        color: black !important;
-        height: 28px !important;
-        min-width: 80px !important;
-        padding-top: 4px !important;
-    }
-
-    .facts-holder span {
-        padding: 10px;
-    }
-
-    .md-card .md-card-header .info-icon {
-        color: $hamburg-blue;
-    }
-
-    .dashboard-kpi {
-        font-family: 'HamburgSans';
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .dashboard-tabs {
-        width: 100%;
-
-        .md-button {
-            border: 1px solid $hamburg-grey;
-            height: 35px;
-            font-size: 11px;
-            .md-button-content {
-                color: $hamburg-blue;
-                font-weight: bold;
-            }
-        }
-
-        .md-button.md-active {
-            border: 1px solid $hamburg-grey-light;
-            .md-button-content {
-                color: $hamburg-red;
-            }
-        }
-
-        .md-tab {
-            padding: 5px 0;
-        }
-
-        .md-tabs-indicator {
-            background-color: white !important;
+    .md-button.md-active {
+        border: 1px solid $hamburg-grey-light;
+        .md-button-content {
+            color: $hamburg-red;
         }
     }
 
-    .dashboard-switch {
-        margin: 0;
-        .md-switch-container {
-            background-color: white !important;
-            border: 1px solid black;
-            width: 36px;
-            height: 19px;
-            padding-left: 2px;
+    .md-tab {
+        padding: 5px 0;
+    }
+
+    .md-tabs-indicator {
+        background-color: white !important;
+    }
+}
+
+.dashboard-switch {
+    margin: 0;
+
+    .md-switch-container {
+        background-color: white !important;
+        border: 1px solid black;
+        width: 36px;
+        height: 19px;
+        padding-left: 2px;
+    }
+
+    .md-switch-thumb {
+        background-color: black !important;
+        width: 15px;
+        height: 15px;
+    }
+
+    .md-switch-label {
+        margin-top: 3px;
+        padding-left: 10px;
+    }
+}
+
+.dashboard-switch.md-checked {
+    .md-switch-container {
+        background-color: $hamburg-blue !important;
+        border: 1px solid $hamburg-blue;
+    }
+
+    .md-switch-thumb {
+        background-color: white !important;
+    }
+}
+
+.md-card {
+    padding: 15px;
+    margin: 0 !important;
+    height: 100%;
+    position: relative;
+
+    .md-card-header {
+        padding: 0 !important;
+        z-index: 2;
+
+        .tool-tip-header {
+            cursor: pointer;
+            font-size: 15pt;
+            text-align: left;
+            font-weight: bold;
         }
-        .md-switch-thumb {
-            background-color: black !important;
+
+        .info-icon {
+            float: right;
+            font-size: 19px !important;
             width: 15px;
             height: 15px;
+            min-width: 15px;
+            color: $hamburg-blue;
         }
-        .md-switch-label {
-            margin-top: 3px;
+    }
+
+    .md-card-content {
+        padding: 15px 0 0 0;
+        height: auto;
+    }
+
+    .md-card-actions {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        margin: 0;
+        padding: 0 15px;
+        width: 100%;
+
+        .notice {
+            width: 100%;
+            text-align: left;
+        }
+    }
+}
+
+.ant-slider-mark {
+    font-size: 11px;
+}
+
+.udpc-bottom-bar {
+    height: 120px;
+    background-color: $hamburg-grey-background !important;
+    position: relative;
+
+    .row {
+        width: 100%;
+    }
+
+    .element-holder {
+        position: absolute;
+        bottom: 15px;
+
+        a {
             padding-left: 10px;
         }
     }
 
-    .dashboard-switch.md-checked {
-        .md-switch-container {
-            background-color: $hamburg-blue !important;
-            border: 1px solid $hamburg-blue;
-        }
-        .md-switch-thumb {
-            background-color: white !important;
-        }
+    .links-bottom-left {
+        left: 35px;
     }
 
-    .md-tooltip, .md-snackbar {
-        font-family: 'HamburgSans' !important;
+    .images-bottom-right {
+        right: 35px;
     }
-
-    .md-card {
-        .md-card-header {
-            .tool-tip-header {
-                font-family: 'HamburgSans';
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                font-weight: bold;
-            }
-        }
-    }
-
-    .udpc-bottom-bar {
-        height: 120px;
-        background-color: $hamburg-grey-background !important;
-        position: relative;
-
-        .row {
-            width: 100%;
-        }
-
-        .element-holder {
-            position: absolute;
-            bottom: 15px;
-
-            a {
-                padding-left: 10px;
-            }
-        }
-
-        .links-bottom-left {
-            left: 35px;
-        }
-
-        .images-bottom-right {
-            right: 35px;
-        }
-    }
+}
 </style>
