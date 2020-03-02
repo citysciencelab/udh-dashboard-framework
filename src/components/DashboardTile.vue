@@ -6,8 +6,11 @@
 
         <md-card-content>
             <slot name="content"></slot>
-            <slot name="footer"></slot>
         </md-card-content>
+
+        <md-card-actions>
+            <slot name="footer"></slot>
+        </md-card-actions>
     </md-card>
 </template>
 

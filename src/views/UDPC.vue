@@ -658,6 +658,7 @@ i {
         background-color: white !important;
     }
 }
+
 .md-card {
     padding: 15px;
     margin: 0 !important;
@@ -687,26 +688,14 @@ i {
 
     .md-card-content {
         padding: 15px 0 0 0;
-        height: auto;
     }
 
     .md-card-actions {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        margin: 0;
-        padding: 0 15px;
-        width: 100%;
-
         .notice {
             width: 100%;
             text-align: left;
         }
     }
-}
-
-.ant-slider-mark {
-    font-size: 11px;
 }
 
 .udpc-bottom-bar {

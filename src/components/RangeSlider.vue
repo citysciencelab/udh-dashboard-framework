@@ -82,3 +82,13 @@ export default class RangeSlider extends Vue {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.ant-slider /deep/ {
+    width: 100%;
+
+    & .ant-slider-mark {
+        font-size: 11px;
+    }
+}
+</style>
