@@ -440,7 +440,7 @@ export default class UDPC extends AbstractDashboard {
                     break;
                 case 'SET_FILTERED_DATA':
                     switch (mutation.payload[0]) {
-                        case 'totalDatasets':
+                        case 'totalTopicDatasets':
                             mutationData.datasets[0]['key'] = 'doc_count';
                             mutationData.datasets[0]['groups'] = ['key'];
                             mutationData.datasets[0]['spacing'] = 2;
