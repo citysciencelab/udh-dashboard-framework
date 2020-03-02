@@ -107,6 +107,7 @@ export default class App extends Vue {
 
             > div {
                 height: 100%;
+                padding: 0;
             }
         }
 
