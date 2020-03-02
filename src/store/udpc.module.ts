@@ -48,6 +48,22 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
+        fetchTotalsByType: async (context, totalsType) => {
+            context.commit('SET_LOADING', true);
+
+            //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
+            let aggregations = await elastic.getRangeful('', '', '2000-01', '2020-01', totalsType, 100, 'year');
+            context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
+
+            context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
+                labels: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.key_as_string),
+                datasets: [{
+                    data: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.doc_count)
+                }]
+            }]);
+
+            context.commit('SET_LOADING', false);
+        },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
             const filteredData = context.state.dashboardData[id].filter(filterFunction);
