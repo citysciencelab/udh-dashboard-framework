@@ -1,6 +1,3 @@
-// @ts-nocheck
-// TODO: adapt module for chart.js
-
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
 
@@ -13,7 +10,7 @@ const initialState: UDPCState = {
 
 const udpcModule: Module<UDPCState, RootState> = {
     state: initialState,
-    mutations: {    },
+    mutations: {},
     actions: {
         fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
@@ -44,9 +41,9 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
-                labels: topX.map(item => item.key),
+                labels: topX.map((item: any) => item.key),
                 datasets: [{
-                    data: topX.map(item => item.total_hits.value)
+                    data: topX.map((item: any) => item.total_hits.value)
                 }]
             }]);
             context.commit('SET_LOADING', false);
@@ -58,7 +55,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_FILTERED_DATA', [id, filteredData]);
         }
     },
-    getters: {    }
+    getters: {}
 };
 
 export default udpcModule;

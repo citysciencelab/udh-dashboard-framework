@@ -17,7 +17,7 @@
                 <md-chip md-clickable @click="resetFilters">{{$t('participation.reset')}}</md-chip>
             </div>
         </div>
-        <div class="row chart-row" style="height: 420px">
+        <div class="row main-row" style="height: 420px">
             <div class="col-sm">
                 <dashboard-tile data-background-color="blue" class="chart-holder">
                     <template slot="header">
@@ -66,7 +66,7 @@
                 </dashboard-tile>
             </div>
         </div>
-        <div class="row chart-row" style="height: 420px">
+        <div class="row main-row" style="height: 420px">
             <div class="col-sm">
                 <dashboard-tile data-background-color="blue" class="chart-holder">
                     <template slot="header">
@@ -195,8 +195,6 @@
             this.$store.registerModule('participation', partStore);
             this.$store.subscribe((mutation, state) => {
 
-                const mutationData = mutation.payload[1].datasets[0];
-
                 switch (mutation.type) {
                     case 'SET_INITIAL_DATA':
                         if (mutation.payload[0] === 'participationData') {
@@ -265,5 +263,14 @@
 
 
 <style scoped lang="scss">
+
+    .chart-holder {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-bottom: 20px !important;
+    }
 
 </style>

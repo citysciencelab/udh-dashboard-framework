@@ -24,8 +24,7 @@
         </md-app-toolbar>
 
         <div class="container">
-
-            <div class="row chart-row" style="height: 150px">
+            <div class="row main-row" style="height: 150px">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -36,9 +35,7 @@
                         </template>
 
                         <template slot="content">
-                            <div class="card-content-container">
-                                <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
-                            </div>
+                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
                         </template>
 
                         <template slot="footer">
@@ -101,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row chart-row" style="height: 420px">
+            <div class="row main-row" style="height: 420px">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -179,7 +176,7 @@
                     </dashboard-tile>
                 </div>
             </div>
-            <div class="row chart-row" style="height: 420px">
+            <div class="row main-row" style="height: 420px">
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -215,20 +212,20 @@
 
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')">
+                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')"
+                                        @click="changeFilterRange('downloads', 'year')">
                                     chart1
                                 </md-tab>
-                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')">
+                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')"
+                                        @click="changeFilterRange('downloads', 'month')">
                                     chart2
-                                </md-tab>
-                                <md-tab id="tab-downloads-day" :md-label="$t('udpc.tabDay')">
-                                    chart3
                                 </md-tab>
                             </md-tabs>
                         </template>
 
                         <template slot="footer">
-                            <div class="notice">placeholder range slider</div>
+                            <range-slider :options="sliderOptions.downloads"
+                                          @rangeChange="rangeForChartChanged('downloads', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -243,20 +240,20 @@
 
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')">
+                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')"
+                                        @click="changeFilterRange('access', 'year')">
                                     chart1
                                 </md-tab>
-                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')">
+                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')"
+                                        @click="changeFilterRange('access', 'month')">
                                     chart2
-                                </md-tab>
-                                <md-tab id="tab-access-topic-day" :md-label="$t('udpc.tabDay')">
-                                    chart3
                                 </md-tab>
                             </md-tabs>
                         </template>
 
                         <template slot="footer">
-                            <div class="notice">placeholder range slider</div>
+                            <range-slider :options="sliderOptions.access"
+                                          @rangeChange="rangeForChartChanged('access', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -272,53 +269,24 @@
                         <template slot="content">
                             <md-tabs class="dashboard-tabs">
                                 <md-tab id="tab-access-apps-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('dateRangeSlider', 'year')">
+                                        @click="changeFilterRange('access-apps', 'year')">
                                     chart1
                                 </md-tab>
                                 <md-tab id="tab-access-apps-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('dateRangeSlider', 'month')">
+                                        @click="changeFilterRange('access-apps', 'month')">
                                     chart2
-                                </md-tab>
-                                <md-tab id="tab-access-apps-day" :md-label="$t('udpc.tabDay')"
-                                        @click="changeFilterRange('dateRangeSlider', 'day')">
-                                    chart3
                                 </md-tab>
                             </md-tabs>
                         </template>
 
                         <template slot="footer">
-                            <div class="notice">
-                                <range-slider id="dateRangeSlider"
-                                              v-bind:identity="dateRange"
-                                              v-bind:defaultValue="rangeMap.dateRangeSlider.defaultValue"
-                                              v-bind:step="rangeMap.dateRangeSlider.step"
-                                              v-bind:max="rangeMap.dateRangeSlider.max"
-                                              v-bind:min="rangeMap.dateRangeSlider.min"
-                                              v-bind:marks="rangeMap.dateRangeSlider.marks"
-                                              v-bind:isDateRange="true"
-                                              @rangeChange="rangeForChartChanged"/>
-                            </div>
+                            <range-slider :options="sliderOptions['access-apps']"
+                                          @rangeChange="rangeForChartChanged('access-apps', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
             </div>
-
-
-
-            <!--
-                The two rows below can be deleted later
-            -->
-            <div class="row" style="margin: 100px">
-                <div class="col-sm">
-                    <md-button type="submit" class="md-primary md-raised" @click="testSnackBar">Open Snackbar</md-button>
-
-                    <md-button type="submit" class="md-primary md-raised" @click="agreeDialogActive = true">Open Confirm Dialog</md-button>
-                    <confirm-dialog title="Some title" content="Some important question" confirmText="Agree" cancelText="No way"
-                                    @dialogResult="dialogResult" v-bind:active="this.agreeDialogActive"/>
-                </div>
-            </div>
         </div>
-
 
         <md-bottom-bar class="udpc-bottom-bar">
             <div class="row">
@@ -367,14 +335,12 @@ import ConfirmDialog from '../components/ConfirmDialog.vue';
 import InfoOverlay from '../components/InfoOverlay.vue';
 import RangeSlider from '../components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
-import HBarChart from "@/components/charts/chartjs/BarChartHorizontal.vue"
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
 import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 
 @Component({
     components: {
         BarChartHorizontal,
-        HBarChart,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
@@ -388,19 +354,26 @@ import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 export default class UDPC extends AbstractDashboard {
     countTotalWithPlans = false;
     countGroupedWithPlans = false;
-
-    tooltipActive = false;
     agreeDialogActive = false;
-    dateRange = 'year';
-    rangeMap: { [key: string]: DateRangeSlider } = {
-        dateRangeSlider: {
-            defaultValue: [],
-            step: 0,
-            max: 0,
-            min: 0,
-            marks: {}
+
+    sliderOptions: { [key: string]: DateRangeSliderOptions } = {
+        downloads: {
+            unit: 'year',
+            min: '2019',
+            max: `${new Date().getFullYear()}`
+        },
+        access: {
+            unit: 'year',
+            min: '2019',
+            max: `${new Date().getFullYear()}`
+        },
+        'access-apps': {
+            unit: 'year',
+            min: '2019',
+            max: `${new Date().getFullYear()}`
         }
     };
+
     didYouKnow = [
         'Fact 1',
         'Fact 2',
@@ -439,7 +412,7 @@ export default class UDPC extends AbstractDashboard {
             legend: {
                 display: false
             },
-            responsive: false,
+            responsive: true,
             scales: {
                 yAxes: [{
                     gridLines: {
@@ -461,7 +434,6 @@ export default class UDPC extends AbstractDashboard {
             }
         }
     };
-
 
     created() {
         this.$i18n.mergeLocaleMessage('en', messages.en);
@@ -508,9 +480,6 @@ export default class UDPC extends AbstractDashboard {
         await this.setFilters(['SOURCE', 'services_internet']);
         await this.setFilters(['YEAR', [2017, 2019]]);
         await this.setFilters(['MONTH', [1, 12]]);
-
-        // Set initial date range
-        this.changeFilterRange('dateRangeSlider', this.dateRange);
     }
 
     async fetchTotalsByTopic(totalsTopic?: string) {
@@ -560,12 +529,8 @@ export default class UDPC extends AbstractDashboard {
         return this.$store.getters.loading;
     }
 
-    setFilters(options: [string, string | number[]]) {
+    setFilters(options: [string, any]) {
         this.$store.commit('SET_FILTERS', options);
-    }
-
-    filter(chartID: string) {
-        // this.$store.dispatch('applyFilter', [chartID, this.meta[chartID].dataSeries.categoryAccessor]);
     }
 
     testSnackBar() {
@@ -586,52 +551,38 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
-    changeFilterRange(sliderId: string, sliderRange: string) {
-        this.dateRange = sliderRange;
-
+    changeFilterRange(sliderId: string, unit: 'year' | 'month') {
         const today = new Date();
-        let start = 0, end = 0;
-        let values: DateRangeSlider = {
-            defaultValue: [],
-            step: 1,
-            max: 0,
-            min: 0,
-            marks: {}
-        };
 
-        if (sliderRange === 'day') {
-            start = 1;
-            end = 31;
-        } else if (sliderRange === 'month') {
-            start = 1;
-            end = 12;
-        } else if (sliderRange === 'year') {
-            start = today.getFullYear() - 2;
-            end = today.getFullYear();
-        }
-        values.defaultValue = [start, end];
-        values.max = end;
-        values.min = start;
-
-        for (start; start <= end; start++) {
-            values.marks[start] = start;
+        if (unit === 'month') {
+            this.sliderOptions[sliderId] = {
+                unit: 'month',
+                min: '2019-07',
+                max: `${today.getFullYear()}-${today.getMonth()}`
+            };
+        } else {
+            this.sliderOptions[sliderId] = {
+                unit: 'year',
+                min: '2019',
+                max: `${today.getFullYear()}`
+            };
         }
 
-        this.rangeMap[sliderId] = values;
-    }
-
-    filterChanged() {
-        // The new filters could be set here - so far the filter already does that itself
-        // With the Listener (my watcher plugin) i was trying to avoid listening to the filter here, but doing it globally
-        // this.filter('osStats');
+        this.rangeForChartChanged(
+            sliderId,
+            [this.sliderOptions[sliderId].min, this.sliderOptions[sliderId].max]
+        );
     }
 
     dialogResult(isPositive: boolean) {
         this.agreeDialogActive = false;
     }
 
-    rangeForChartChanged([min, max]: [number, number]) {
-        switch(this.dateRange) {
+    rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
+        const unit = this.sliderOptions[chartId].unit;
+        console.log(`date ranged changed for ${chartId}:`, min, max);
+
+        switch (unit) {
             case 'year':
                 this.setFilters(['YEAR', [min, max]]);
                 break;
@@ -665,7 +616,6 @@ export default class UDPC extends AbstractDashboard {
         padding: 0;
         border-bottom: none;
         .md-toolbar-row {
-
             background-color: $hamburg-blue-dark !important;
         }
     }
@@ -680,13 +630,6 @@ export default class UDPC extends AbstractDashboard {
 
     .facts-holder span {
         padding: 10px;
-    }
-
-    .card-content-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
     }
 
     .md-card .md-card-header .info-icon {
@@ -759,6 +702,10 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
+    .md-tooltip, .md-snackbar {
+        font-family: 'HamburgSans' !important;
+    }
+
     .md-card {
         .md-card-header {
             .tool-tip-header {
@@ -766,12 +713,6 @@ export default class UDPC extends AbstractDashboard {
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
                 font-weight: bold;
-            }
-        }
-        .md-card-actions {
-            .notice {
-                width: 100%;
-                text-align: left;
             }
         }
     }

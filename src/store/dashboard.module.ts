@@ -9,7 +9,7 @@ const initialState: DashboardState = {
 };
 
 const chartsModule: Module<DashboardState, RootState> = {
-    state: { ...initialState },
+    state: initialState,
     mutations: {
         SET_INITIAL_DATA: (state, [id, data]: [string, Dataset]) => {
             state.dashboardData[id] = data;

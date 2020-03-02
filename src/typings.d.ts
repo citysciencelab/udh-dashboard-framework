@@ -54,10 +54,8 @@ interface IUtils {
   }
 }
 
-interface DateRangeSlider {
-  defaultValue: number[];
-  step: number;
-  max: number;
-  min: number;
-  marks: { [key: number]: number };
+interface DateRangeSliderOptions {
+  unit: 'month' | 'year';
+  min: string;
+  max: string;
 }
