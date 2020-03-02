@@ -1,27 +1,8 @@
 <template>
     <div>
-        <md-app-toolbar class="md-primary">
-            <div class="md-toolbar-row">
-                <div class="md-toolbar-section-end">
-                    <md-menu md-direction="bottom-start">
-                        <md-button md-menu-trigger>
-                            <country-flag v-if="$i18n.locale === 'de'" @click="changeLanguage('de')"
-                                          country="de" size="normal"/>
-                            <country-flag v-if="$i18n.locale === 'en'" @click="changeLanguage('en')"
-                                          country="gb" size="normal"/>
-                        </md-button>
-                        <md-menu-content>
-                            <md-menu-item @click="changeLanguage('de')">
-                                <country-flag country="de" size="normal"/>
-                            </md-menu-item>
-                            <md-menu-item @click="changeLanguage('en')">
-                                <country-flag country="gb" size="normal"/>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </div>
-            </div>
-        </md-app-toolbar>
+        <nav class="navbar navbar-expand-lg">
+            <span class="navbar-brand">Urban Data Platform</span>
+        </nav>
 
         <div class="container-fluid">
             <div class="row py-2">
@@ -244,15 +225,13 @@
         </div>
 
         <md-bottom-bar class="udpc-bottom-bar">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="element-holder links-bottom-left">
+            <div class="container-fluid">
+                <div class="row justify-content-between">
+                    <div class="col-sm-6 py-2 align-self-end links-bottom-left">
                         <a href="">Datenschutz</a>
                         <a href="">Impressum</a>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="element-holder images-bottom-right">
+                    <div class="col-sm-6 py-2 align-self-end images-bottom-right">
                         <a href="">IMAGE1</a>
                         <a href="">IMAGE2</a>
                     </div>
@@ -389,6 +368,7 @@ export default class UDPC extends AbstractDashboard {
     };
 
     created() {
+        this.$i18n.locale = 'de';
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
@@ -569,12 +549,15 @@ i {
     font-family: 'Material Icons';
 }
 
-.md-toolbar {
-    padding: 0;
-    border-bottom: none;
+.navbar {
+    height: 90px;
+    border-bottom: 30px solid $hamburg-blue-dark;
+    margin-bottom: 10px;
+    background-color: white;
 
-    .md-toolbar-row {
-        background-color: $hamburg-blue-dark !important;
+    .navbar-brand {
+        font-size: 16px;
+        color: $hamburg-blue-dark;
     }
 }
 
@@ -602,6 +585,7 @@ i {
         border: 1px solid $hamburg-grey;
         height: 35px;
         font-size: 11px;
+        text-transform: none;
 
         .md-button-content {
             color: $hamburg-blue;
@@ -611,6 +595,7 @@ i {
 
     .md-button.md-active {
         border: 1px solid $hamburg-grey-light;
+
         .md-button-content {
             color: $hamburg-red;
         }
@@ -668,29 +653,30 @@ i {
 }
 
 .udpc-bottom-bar {
-    height: 120px;
+    margin-top: 15px;
     background-color: $hamburg-grey-background !important;
-    position: relative;
+    color: $hamburg-blue-dark;
 
     .row {
-        width: 100%;
-    }
-
-    .element-holder {
-        position: absolute;
-        bottom: 15px;
-
-        a {
-            padding-left: 10px;
-        }
+        flex-wrap: nowrap;
     }
 
     .links-bottom-left {
-        left: 35px;
+        text-align: left;
+
+        a {
+            padding-right: 10px;
+            color: $hamburg-blue;
+        }
     }
 
     .images-bottom-right {
-        right: 35px;
+        text-align: right;
+
+        a {
+            padding-left: 10px;
+            color: $hamburg-blue;
+        }
     }
 }
 

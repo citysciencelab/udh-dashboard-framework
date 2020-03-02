@@ -1,13 +1,7 @@
 <template>
-    <div class="page page-container">
+    <div class="page">
         <div class="loading-overlay" v-if="this.loading">
             <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-        </div>
-
-        <div class="nav">
-            <router-link to="/udpc">UDPC</router-link>
-            |
-            <router-link to="/participation">Participation</router-link>
         </div>
 
         <md-app class="md-app-scroll-fix" md-waterfall md-mode="fixed">
@@ -88,8 +82,8 @@ export default class App extends Vue {
         padding: 0;
     }
 
-    .md-app-scroll-fix {
-        height: calc(100vh - 80px);
+    .md-app {
+        height: 100vh;
     }
 
     .flag {
