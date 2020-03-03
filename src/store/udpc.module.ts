@@ -15,16 +15,16 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
 
-            let aggregations = context.getters.dashboardData.hasOwnProperty('totalDatasets') ?
-                context.getters.dashboardData['totalDatasets'] : null;
+            let aggregations = context.getters.dashboardData.hasOwnProperty('totalTopicDatasets') ?
+                context.getters.dashboardData['totalTopicDatasets'] : null;
 
             if (!aggregations) {
                 //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
                 aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
-                context.commit('SET_INITIAL_DATA', ['totalDatasets', aggregations]);
+                context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
             }
 
-            context.commit('SET_FILTERED_DATA', ['totalDatasets', {
+            context.commit('SET_FILTERED_DATA', ['totalTopicDatasets', {
                 datasets: [{
                     tree: aggregations[totalsTopic].buckets
                 }]
