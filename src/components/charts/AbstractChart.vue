@@ -75,7 +75,7 @@ export default abstract class AbstractChart extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
     .chart {
         padding: 0 !important;
         height: 100%;
