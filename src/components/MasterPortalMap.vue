@@ -8,6 +8,9 @@
     import {Style, Stroke, Fill} from "ol/style";
     import * as mpapi from "masterportalAPI";
     import { Feature } from 'ol';
+    import TileLayer from 'ol/layer/Tile';
+    import VectorLayer from 'ol/layer/Vector';
+import { Layer } from 'ol/layer';
 
     @Component({})
     export default class MasterPortalMap extends Vue {
@@ -16,12 +19,15 @@
         @Prop() services!: Datum;
         @Prop() mapStyle!: object;
         @Prop() featureData!: Feature[];
-        cWindow: CustomWindow = window;
+        @Prop() md_id!: string;
+        cWindow: any = window;
+        tempLayers: Layer[] | unknown;
 
         mounted() {
             if (!this.customLayerId) this.customLayerId === "dashboardData";
             this.createMap();
             this.showFeaturesInMap();
+            this.createLayerByMdId();
         }
 
         createMap() {
@@ -60,8 +66,25 @@
             this.cWindow.mpapi.map.addLayer(layer);
         }
 
+        createLayerByMdId() {
+            if (this.md_id) {
+                if (this.tempLayers) {
+                    (this.tempLayers as Layer[]).forEach(layer => {
+                       this.cWindow.mpapi.map.removeLayer(layer);
+                    });
+                }
+                this.cWindow.mpapi.createLayer(this.md_id, 1).then((layer: Layer) => {
+                    this.tempLayers = layer;
+                });
+            }
+        }
+
         @Watch('featureData') onFeatureDataChanged() {
             this.showFeaturesInMap();
+        }
+
+        @Watch('md_id') onMdIdChanged() {
+            this.createLayerByMdId();
         }
     }
 </script>

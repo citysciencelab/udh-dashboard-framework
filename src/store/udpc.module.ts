@@ -39,13 +39,12 @@ const udpcModule: Module<UDPCState, RootState> = {
             const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', topTopic, 10, 'month');
             const topX = aggregations.top_x.buckets;
 
-            console.log(aggregations);
-
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
                 labels: topX.map((item: any) => item.key),
                 datasets: [{
-                    data: topX.map((item: any) => item.total_hits.value)
+                    data: topX.map((item: any) => item.total_hits.value),
+                    md_id: topX.map((item: any) => item.md_id.buckets[0].key)
                 }]
             }]);
             context.commit('SET_LOADING', false);

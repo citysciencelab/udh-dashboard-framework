@@ -29,6 +29,8 @@
         margin: 0;
         height: 100%;
         position: relative;
+        display: flex;
+        flex-direction: column;
 
         .md-card-header {
             position: relative;

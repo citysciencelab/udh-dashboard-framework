@@ -24,7 +24,7 @@
         </md-app-toolbar>
 
         <div class="container">
-            <div class="row main-row" style="height: 150px">
+            <div class="row main-row" v-bind:style="{ height: styles.rowHeightS }">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -39,7 +39,7 @@
                         </template>
 
                         <template slot="content">
-                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
+                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="10000"></did-you-know>
                         </template>
 
                         <template slot="footer">
@@ -60,7 +60,7 @@
                         </template>
 
                         <template slot="content">
-                            <did-you-know v-bind:items="dataSets" v-bind:interval="5000"></did-you-know>
+                            <did-you-know v-bind:items="dataSets" v-bind:interval="10000" v-on:show-in-map="showDataInMap"></did-you-know>
                         </template>
 
                         <template slot="footer">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row main-row" style="height: 420px">
+            <div class="row main-row" v-bind:style="{ height: styles.rowHeightL }">
                 <div class="col-sm-4">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -196,7 +196,7 @@
                         </template>
 
                         <template slot="content">
-                            <master-portal-map v-bind:services="services" v-bind:portal="portal" />
+                            <master-portal-map v-bind:services="mapData.services" v-bind:portal="mapData.portal" v-bind:md_id="mapData.md_id"/>
                         </template>
 
                         <template slot="footer">
@@ -204,7 +204,7 @@
                     </dashboard-tile>
                 </div>
             </div>
-            <div class="row main-row" style="height: 420px">
+            <div class="row main-row" v-bind:style="{ height: styles.rowHeightL }">
                 <div class="col-sm-3">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
@@ -404,8 +404,12 @@ export default class UDPC extends AbstractDashboard {
     countTotalWithPlans = false;
     countGroupedWithPlans = false;
     agreeDialogActive = false;
-    services: object = servicesConfig;
-    portal: object = portalConfig;
+
+    mapData: MapData = {
+        services: servicesConfig,
+        portal: portalConfig,
+        md_id: ''
+    };
 
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {
         downloads: {
@@ -432,13 +436,10 @@ export default class UDPC extends AbstractDashboard {
         'Fact 4',
         'Fact 5'
     ];
-    dataSets = [
-        'New Dataset 1',
-        'New Dataset 2',
-        'New Dataset 3',
-        'New Dataset 4',
-        'New Dataset 5'
-    ];
+    dataSets = {
+        items: [],
+        action: 'map'
+    };
 
     chartData: { [key: string]: Chart.ChartData } = {
         dataSetsByTopic: {},
@@ -486,6 +487,11 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
+    styles = {
+        rowHeightL: 420,
+        rowHeightS: 150
+    }
+
     created() {
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
@@ -515,6 +521,12 @@ export default class UDPC extends AbstractDashboard {
                             mutationData.datasets[0]['label'] = 'Zugriffe';
                             mutationData.datasets[0]['backgroundColor'] = '#f87979';
                             this.chartData.dataSetsTopX = mutationData;
+                            this.dataSets = {
+                                items: mutationData.labels
+                                    .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
+                                    .filter((d: any, i: number) => i > 3 && i < 7), // demo: filter for sensible sets
+                                action: 'map'
+                            }
                             break;
                     }
                     break;
@@ -650,6 +662,10 @@ export default class UDPC extends AbstractDashboard {
 
     changeLanguage(lang: string) {
         this.$i18n.locale = lang
+    }
+
+    showDataInMap(md_id: string) {
+        this.mapData.md_id = md_id;
     }
 }
 </script>

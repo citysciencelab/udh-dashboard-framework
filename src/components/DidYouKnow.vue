@@ -1,27 +1,74 @@
 <template>
     <span class="list-item">
-        {{ this.prefix ? $t(prefix, { fact: items[currentIndex] }) : items[currentIndex] }}
+        <a v-on:click="onClick($event)" :href="$data.$items[currentIndex].link">{{ this.prefix ? $t(prefix, { fact: $data.$items[currentIndex].label }) : $data.$items[currentIndex].label }}</a>
     </span>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({})
 export default class DidYouKnow extends Vue {
-    @Prop() items!: string[];
+    @Prop() items!: string[] | any;
     @Prop() interval!: number;
     @Prop() prefix!: string;
+    timer: any;
     currentIndex = 0;
+    action: string = 'none';
+    $items: { label: string, link: string }[] = [{
+        label: '',
+        link: ''
+    }];
 
     mounted() {
-        setInterval(() => {
-            if (this.currentIndex < this.items.length - 1) {
-                this.currentIndex++;
-            } else {
-                this.currentIndex = 0;
-            }
-        }, this.interval);
+        this.updateItems();
+    }
+
+    @Watch('items') onItemsChanged() {
+        this.updateItems();
+    }
+
+    updateItems() {
+        if (this.items) {
+            const isObj = typeof this.items[0] !== "string"
+
+            this.$data.$items = isObj ?
+                this.items.items.length ?
+                    this.items.items :
+                    this.$data.$items : 
+                this.items.map((item: any) => ({label: item, link: ''}));
+            this.action = isObj ? this.items.action : 'none';
+
+            clearInterval(this.timer);
+            this.timer = setInterval(() => {
+                if (this.currentIndex < this.$data.$items.length - 1) {
+                    this.currentIndex++;
+                } else {
+                    this.currentIndex = 0;
+                }
+                this.onInterval();
+            }, this.interval);
+        }
+    }
+
+    onInterval() {
+        switch (this.action) {
+            case 'map':
+                this.$emit('show-in-map', this.$data.$items[this.currentIndex].link);
+                break;
+            default:
+                // add more options
+        }
+    }
+
+    onClick(evt: Event) {
+        switch (this.action) {
+            case 'link':
+                break;
+            default:
+                evt.preventDefault();
+                // follow click
+        }
     }
 }
 </script>
@@ -32,9 +79,9 @@ export default class DidYouKnow extends Vue {
     }
 
     .list-item {
-        position: absolute;
+        /* position: absolute;
         display: inline-block;
-        margin-right: 10px;
+        margin-right: 10px; */
     }
 
     .list-enter-active, .list-leave-active {

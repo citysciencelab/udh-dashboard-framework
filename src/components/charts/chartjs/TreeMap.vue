@@ -14,6 +14,7 @@ export default class TreeMapChart extends Vue {
     @Prop() chartOptions!: Chart.ChartOptions;
 
     @Watch('chartData') onChartDataChanged() {
+        console.log(this.chartData);
         this.chartOptions['tooltips'] = {
             callbacks: {
                 title: function(item: any, data: any) {

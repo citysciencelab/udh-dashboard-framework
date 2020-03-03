@@ -13,6 +13,14 @@ declare class FeatureSet extends Array {
   getProperties(): Dataset
 }
 
+interface MapData {
+  services: { [key: string]: any },
+  portal: { [key: string]: any },
+  features?: FeatureSet,
+  geoJson?: any,
+  md_id?: string
+}
+
 type ChartOptions = { dim: string, dim2: string };
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
