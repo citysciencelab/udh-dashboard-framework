@@ -226,14 +226,18 @@
 
         <md-bottom-bar class="udpc-bottom-bar">
             <div class="container-fluid">
-                <div class="row justify-content-between">
-                    <div class="col-sm-6 py-2 align-self-end links-bottom-left">
+                <div class="row">
+                    <div class="col-sm-6 align-self-end links-bottom-left">
                         <a href="">Datenschutz</a>
                         <a href="">Impressum</a>
                     </div>
-                    <div class="col-sm-6 py-2 align-self-end images-bottom-right">
-                        <a href="">IMAGE1</a>
-                        <a href="">IMAGE2</a>
+                    <div class="col-sm-6 align-self-center images-bottom-right">
+                        <a href="#" target="_blank">
+                            <img src="../assets/images/nl-lgv-logo@2x.png" alt="LGV">
+                        </a>
+                        <a href="#" target="_blank" onclick="window.open('http://www.urbandataplatform.hamburg/', '_blank').focus();">
+                            <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -664,7 +668,7 @@ i {
     color: $hamburg-blue-dark;
 
     .row {
-        flex-wrap: nowrap;
+        min-height: 116px;
     }
 
     .links-bottom-left {
@@ -682,6 +686,10 @@ i {
         a {
             padding-left: 10px;
             color: $hamburg-blue;
+
+            img {
+                max-height: 70px;
+            }
         }
     }
 }
