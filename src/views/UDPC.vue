@@ -5,8 +5,8 @@
         </nav>
 
         <div class="container-fluid">
-            <div class="row py-2">
-                <div class="col-sm-4">
+            <div class="row ">
+                <div class="col-sm-4 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-did-you-know'].showMe()">
@@ -21,7 +21,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-latest-datasets'].showMe()">
@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 py-2">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
                                     <div class="info-icon-holder" @click="$refs['tooltip-sensors'].showMe()">
@@ -53,7 +53,7 @@
                                 </template>
                             </dashboard-tile>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 py-2">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
                                     <div class="info-icon-holder" @click="$refs['tooltip-visitors-today'].showMe()">
@@ -71,8 +71,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row py-2">
-                <div class="col-sm-4">
+            <div class="row ">
+                <div class="col-sm-4 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-datasets-by'].showMe()">
@@ -95,7 +95,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-count-total'].showMe()">
@@ -117,7 +117,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-map'].showMe()">
@@ -133,8 +133,8 @@
                     </dashboard-tile>
                 </div>
             </div>
-            <div class="row py-2">
-                <div class="col-sm-3">
+            <div class="row ">
+                <div class="col-sm-3 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-top-x'].showMe()">
@@ -155,7 +155,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-downloads'].showMe()">
@@ -177,7 +177,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-access-data'].showMe()">
@@ -199,7 +199,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-access-apps'].showMe()">
@@ -326,7 +326,8 @@ export default class UDPC extends AbstractDashboard {
         dataSetsTopX: {}
     };
 
-    // TODO: make this more generic
+    // TODO: 1. make this more generic - 2. font-color und border-color direkt aus der scss laden?
+    // TODO: Alle grid lines auch color: '#707070'
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
             maintainAspectRatio: true,
@@ -352,7 +353,8 @@ export default class UDPC extends AbstractDashboard {
                     },
                     ticks: {
                         display: false,
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontColor: '#707070'
                     }
                 }],
                 xAxes: [{
@@ -582,7 +584,9 @@ i {
     width: 100%;
 
     .md-button {
-        border: 1px solid $hamburg-grey;
+        border-top: 1px solid $hamburg-grey-inactive;
+        border-right: 1px solid $hamburg-grey-inactive;
+        border-bottom: 1px solid $hamburg-blue-dark50;
         height: 35px;
         font-size: 11px;
         text-transform: none;
@@ -594,7 +598,7 @@ i {
     }
 
     .md-button.md-active {
-        border: 1px solid $hamburg-grey-light;
+        border: 1px solid $hamburg-blue-dark50 !important;
 
         .md-button-content {
             color: $hamburg-red;
@@ -645,6 +649,8 @@ i {
 }
 
 .md-card {
+    box-shadow: none !important;
+    border: 1px solid $hamburg-blue-dark25;
     .md-card-header {
         .info-icon-holder .md-icon {
             color: $hamburg-blue;
