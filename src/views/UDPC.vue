@@ -755,6 +755,7 @@ export default class UDPC extends AbstractDashboard {
         .md-switch-label {
             margin-top: 3px;
             padding-left: 10px;
+            margin-bottom: 0;
         }
     }
 

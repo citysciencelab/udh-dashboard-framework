@@ -10,7 +10,7 @@
     import { Feature } from 'ol';
     import TileLayer from 'ol/layer/Tile';
     import VectorLayer from 'ol/layer/Vector';
-import { Layer } from 'ol/layer';
+    import { Layer } from 'ol/layer';
 
     @Component({})
     export default class MasterPortalMap extends Vue {
@@ -25,9 +25,14 @@ import { Layer } from 'ol/layer';
 
         mounted() {
             if (!this.customLayerId) this.customLayerId === "dashboardData";
-            this.createMap();
-            this.showFeaturesInMap();
-            this.createLayerByMdId();
+            // wait for the Tile To be rendered completely
+            // wait for DOM height to be adjusted
+            // TODO: make it event based
+            setTimeout(() => {
+                this.createMap();
+                this.showFeaturesInMap();
+                this.createLayerByMdId();
+            }, 1000);
         }
 
         createMap() {

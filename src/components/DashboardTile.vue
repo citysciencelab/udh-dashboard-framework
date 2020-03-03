@@ -25,7 +25,7 @@
 
 <style lang="scss">
     .md-card {
-        padding: 15px;
+        padding: 15px 15px 0 15px;;
         margin: 0;
         height: 100%;
         position: relative;
@@ -58,17 +58,13 @@
 
         .md-card-content {
             padding: 15px 0 0 0;
-            height: auto;
-            //height: 100%;
+            height: 100%;
         }
 
         .md-card-actions {
-            position: absolute;
-            bottom: 0;
-            left: 0;
             margin: 0;
-            padding: 0 15px;
             width: 100%;
+            padding: 8px 0;
 
             .notice {
                 width: 100%;
