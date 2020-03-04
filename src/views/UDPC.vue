@@ -8,7 +8,7 @@
 
         <div class="container-fluid">
             <div class="row ">
-                <div class="col-sm-4 py-2">
+                <div class="col-lg-4 col-md-6 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-did-you-know'].showMe()">
@@ -23,7 +23,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-4 py-2">
+                <div class="col-lg-4 col-md-6 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-latest-datasets'].showMe()">
@@ -38,9 +38,9 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-lg-4 col-md-12">
                     <div class="row">
-                        <div class="col-sm-6 col-6 py-2">
+                        <div class="col-lg-6 col-6 py-2">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
                                     <div class="info-icon-holder" @click="$refs['tooltip-sensors'].showMe()">
@@ -57,7 +57,7 @@
                                 </template>
                             </dashboard-tile>
                         </div>
-                        <div class="col-sm-6 col-6 py-2">
+                        <div class="col-lg-6 col-6 py-2">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
                                     <div class="info-icon-holder" @click="$refs['tooltip-visitors-today'].showMe()">
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="row ">
-                <div class="col-sm-4 py-2">
+                <div class="col-lg-4 col-md-6  py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-datasets-by'].showMe()">
@@ -103,7 +103,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-4 py-2">
+                <div class="col-lg-4 col-md-6  py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-count-total'].showMe()">
@@ -125,7 +125,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-4 py-2">
+                <div class="col-lg-4 col-md-12 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-map'].showMe()">
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="row ">
-                <div class="col-sm-3 py-2">
+                <div class="col-lg-3 col-md-6 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-top-x'].showMe()">
@@ -165,7 +165,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-3 py-2">
+                <div class="col-lg-3 col-md-6 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-downloads'].showMe()">
@@ -187,7 +187,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-3 py-2">
+                <div class="col-lg-3 col-md-6 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-access-data'].showMe()">
@@ -209,7 +209,7 @@
                         </template>
                     </dashboard-tile>
                 </div>
-                <div class="col-sm-3 py-2">
+                <div class="col-lg-3 col-md-6 py-2">
                     <dashboard-tile data-background-color="blue" class="chart-card">
                         <template slot="header">
                             <div class="info-icon-holder" @click="$refs['tooltip-access-apps'].showMe()">
@@ -237,18 +237,18 @@
         <md-bottom-bar class="udpc-bottom-bar">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="order-sm-0 order-12 col-sm-6 align-self-end links-bottom-left">
+                    <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
                         <a href="">Datenschutz</a>
                         <a href="">Impressum</a>
                     </div>
-                    <div class="col-sm-6 align-self-center images-bottom-right">
+                    <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
                         <div class="row">
-                            <div class="offset-sm-4 col-sm-4 col-6 image-col">
+                            <div class="offset-lg-4 col-lg-4 col-6 image-col">
                                 <a href="#" target="_blank">
                                     <img src="../assets/images/nl-lgv-logo@2x.png" alt="LGV">
                                 </a>
                             </div>
-                            <div class="col-sm-4 col-6 image-col">
+                            <div class="col-lg-4 col-6 image-col">
                                 <a href="#" target="_blank" onclick="window.open('http://www.urbandataplatform.hamburg/', '_blank').focus();">
                                     <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
                                 </a>
