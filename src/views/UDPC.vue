@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="row">
-                        <div class="col-sm-6 py-2">
+                        <div class="col-sm-6 col-6 py-2">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
                                     <div class="info-icon-holder" @click="$refs['tooltip-sensors'].showMe()">
@@ -57,7 +57,7 @@
                                 </template>
                             </dashboard-tile>
                         </div>
-                        <div class="col-sm-6 py-2">
+                        <div class="col-sm-6 col-6 py-2">
                             <dashboard-tile data-background-color="blue" class="chart-card">
                                 <template slot="header">
                                     <div class="info-icon-holder" @click="$refs['tooltip-visitors-today'].showMe()">
@@ -237,17 +237,23 @@
         <md-bottom-bar class="udpc-bottom-bar">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-6 align-self-end links-bottom-left">
+                    <div class="order-sm-0 order-12 col-sm-6 align-self-end links-bottom-left">
                         <a href="">Datenschutz</a>
                         <a href="">Impressum</a>
                     </div>
                     <div class="col-sm-6 align-self-center images-bottom-right">
-                        <a href="#" target="_blank">
-                            <img src="../assets/images/nl-lgv-logo@2x.png" alt="LGV">
-                        </a>
-                        <a href="#" target="_blank" onclick="window.open('http://www.urbandataplatform.hamburg/', '_blank').focus();">
-                            <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
-                        </a>
+                        <div class="row">
+                            <div class="offset-sm-4 col-sm-4 col-6 image-col">
+                                <a href="#" target="_blank">
+                                    <img src="../assets/images/nl-lgv-logo@2x.png" alt="LGV">
+                                </a>
+                            </div>
+                            <div class="col-sm-4 col-6 image-col">
+                                <a href="#" target="_blank" onclick="window.open('http://www.urbandataplatform.hamburg/', '_blank').focus();">
+                                    <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -716,6 +722,7 @@ i {
 
     .links-bottom-left {
         text-align: left;
+        padding-bottom: 10px;
 
         a {
             font-size: 16px;
@@ -725,7 +732,25 @@ i {
     }
 
     .images-bottom-right {
-        text-align: right;
+        //text-align: right;
+
+        @media (min-width: 459px) {
+            .image-col {
+                padding-top: 24px;
+                text-align: right;
+            }
+        }
+        @media (max-width: 458px) {
+            .image-col {
+                text-align: center;
+            }
+            img {
+                width: 180px;
+                padding-top: 20px;
+            }
+        }
+
+
 
         a {
             padding-left: 10px;
@@ -735,6 +760,7 @@ i {
                 max-height: 70px;
             }
         }
+
     }
 }
 
