@@ -30,16 +30,14 @@ export default class DidYouKnow extends Vue {
 
     updateItems() {
         if (this.inputData) {
-            const isObj = typeof this.inputData[0] !== "string"
-
-            this.$data.$items = isObj ?
-                this.inputData.items.length ?
-                    this.inputData.items :
-                    this.$data.$items : 
-                this.inputData.map((item: any) => ({label: item, link: ''}));
-
-            this.action = isObj ? this.inputData.action : 'none';
-
+            if (this.inputData[0] instanceof String) {
+                this.$data.$items = this.inputData.map((item: any) => ({label: item, link: ''}));
+                this.action = 'none'
+            }
+            else {
+                this.$data.$items = this.inputData.items.length ? this.inputData.items : this.$data.$items
+                this.action = this.inputData.action
+            }
             this.setInterval();
         }
     }
