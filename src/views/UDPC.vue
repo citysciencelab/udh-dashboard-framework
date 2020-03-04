@@ -48,8 +48,10 @@
                                     </div>
                                     <div class="card-header-text">{{ $t('udpc.sensors') }}</div>
                                 </template>
-                                <template slot="content" class="dashboard-kpi">
-                                    <span>386</span>
+                                <template slot="content">
+                                    <span class="dashboard-kpi">
+                                        386
+                                    </span>
                                 </template>
                                 <template slot="footer">
                                 </template>
@@ -63,8 +65,10 @@
                                     </div>
                                     <div class="card-header-text">{{ $t('udpc.visitors') }}</div>
                                 </template>
-                                <template slot="content" class="dashboard-kpi">
-                                    <span>893</span>
+                                <template slot="content">
+                                    <span class="dashboard-kpi">
+                                        893
+                                    </span>
                                 </template>
                                 <template slot="footer">
                                 </template>
@@ -87,8 +91,10 @@
                                 <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">&nbsp;</md-tab>
                                 <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">&nbsp;</md-tab>
                             </md-tabs>
-                            <tree-map-chart :chartData="chartData.dataSetsByTopic"
-                                            :chartOptions="chartOptions.dataSetsByTopic"/>
+                            <div class="chart-holder">
+                                <tree-map-chart :chartData="chartData.dataSetsByTopic"
+                                                :chartOptions="chartOptions.dataSetsByTopic"/>
+                            </div>
                         </template>
                         <template slot="footer">
                             <div class="notice">
@@ -150,8 +156,10 @@
                                 <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
                                 <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">&nbsp;</md-tab>
                             </md-tabs>
-                            <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
-                                                  :chartOptions="chartOptions.dataSetsTopX"/>
+                            <div class="chart-holder">
+                                <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
+                                                      :chartOptions="chartOptions.dataSetsTopX"/>
+                            </div>
                         </template>
                         <template slot="footer">
                         </template>
@@ -564,14 +572,16 @@ i {
     background-color: white;
 
     .navbar-brand {
-        font-size: 16px;
+        font-size: 26px;
         color: $hamburg-blue-dark;
+        padding-left: 5px;
+        padding-top: 8px;
     }
 
     .hh-bug {
         height: 18px;
         position: absolute;
-        left: -130px;
+        left: -120px;
         bottom: -8px;
     }
 
@@ -593,8 +603,9 @@ i {
 }
 
 .dashboard-kpi {
-    font-size: 18px;
+    font-size: 30px;
     font-weight: bold;
+    color: $hamburg-blue;
 }
 
 .dashboard-tabs {
@@ -609,6 +620,7 @@ i {
         text-transform: none;
 
         .md-button-content {
+            font-size: 16px;
             color: $hamburg-blue;
             font-weight: bold;
         }
@@ -616,6 +628,7 @@ i {
 
     .md-button.md-active {
         border: 1px solid $hamburg-blue-dark50 !important;
+        border-bottom: none !important;
 
         .md-button-content {
             color: $hamburg-red;
@@ -649,6 +662,7 @@ i {
     }
 
     .md-switch-label {
+        font-size: 16px;
         margin-top: 3px;
         padding-left: 10px;
     }
@@ -669,8 +683,24 @@ i {
     box-shadow: none !important;
     border: 1px solid $hamburg-blue-dark25;
     .md-card-header {
+        .card-header-text {
+            font-size: 24px !important;
+        }
         .info-icon-holder .md-icon {
             color: $hamburg-blue;
+        }
+    }
+    .md-card-content {
+        font-size: 18px;
+        text-align: left;
+
+        span {
+            position: relative;
+            top: 10px;
+        }
+
+        .chart-holder {
+            padding-top: 15px;
         }
     }
 }
@@ -688,6 +718,7 @@ i {
         text-align: left;
 
         a {
+            font-size: 16px;
             padding-right: 10px;
             color: $hamburg-blue;
         }
