@@ -57,7 +57,8 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
-                labels: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.key_as_string),
+                labels: aggregations['total_entities_and_hits'].buckets.map((item: any) =>
+                    item.key_as_string.substr(0, item.key_as_string.indexOf('-'))),
                 datasets: [{
                     data: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.doc_count)
                 }]
