@@ -49,8 +49,8 @@ export default class MultiSelect extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-    .md-field {
-        max-width: 300px;
-    }
+<style scoped lang="scss">
+.md-field {
+    max-width: 300px;
+}
 </style>

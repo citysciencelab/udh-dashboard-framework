@@ -73,22 +73,22 @@ export default class DidYouKnow extends Vue {
 }
 </script>
 
-<style scoped>
-    .list {
-        position: relative;
-    }
+<style scoped lang="scss">
+.list {
+    position: relative;
+}
 
-    .list-item {
-        /* position: absolute;
-        display: inline-block;
-        margin-right: 10px; */
-    }
+.list-item {
+    /* position: absolute;
+    display: inline-block;
+    margin-right: 10px; */
+}
 
-    .list-enter-active, .list-leave-active {
-        transition: opacity .8s ease;
-    }
+.list-enter-active, .list-leave-active {
+    transition: opacity .8s ease;
+}
 
-    .list-enter, .list-leave-to {
-        opacity: 0;
-    }
+.list-enter, .list-leave-to {
+    opacity: 0;
+}
 </style>
