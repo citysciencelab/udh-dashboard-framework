@@ -9,7 +9,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({})
 export default class DidYouKnow extends Vue {
-    @Prop() items!: string[] | any;
+    @Prop() inputData!: any;
     @Prop() interval!: number;
     @Prop() prefix!: string;
     timer: any;
@@ -29,26 +29,31 @@ export default class DidYouKnow extends Vue {
     }
 
     updateItems() {
-        if (this.items) {
-            const isObj = typeof this.items[0] !== "string"
+        if (this.inputData) {
+            const isObj = typeof this.inputData[0] !== "string"
 
             this.$data.$items = isObj ?
-                this.items.items.length ?
-                    this.items.items :
+                this.inputData.items.length ?
+                    this.inputData.items :
                     this.$data.$items : 
-                this.items.map((item: any) => ({label: item, link: ''}));
-            this.action = isObj ? this.items.action : 'none';
+                this.inputData.map((item: any) => ({label: item, link: ''}));
 
-            clearInterval(this.timer);
-            this.timer = setInterval(() => {
-                if (this.currentIndex < this.$data.$items.length - 1) {
-                    this.currentIndex++;
-                } else {
-                    this.currentIndex = 0;
-                }
-                this.onInterval();
-            }, this.interval);
+            this.action = isObj ? this.inputData.action : 'none';
+
+            this.setInterval();
         }
+    }
+
+    setInterval() {
+        clearInterval(this.timer);
+        this.timer = setInterval(() => {
+            if (this.currentIndex < this.$data.$items.length - 1) {
+                this.currentIndex++;
+            } else {
+                this.currentIndex = 0;
+            }
+            this.onInterval();
+        }, this.interval);
     }
 
     onInterval() {

@@ -23,7 +23,7 @@ const participationModule: Module<ParticipationState, RootState> = {
     mutations: {    },
     actions: {
         fetchParticipationStats: async (context) => {
-            const results: any = await wfs.get(wfsUrl, wfsTypename, []);
+            const results: FeatureSet = await wfs.get(wfsUrl, wfsTypename, []) as FeatureSet;
 
             context.dispatch('recalculateChartData', results.getProperties());
             context.commit('SET_INITIAL_DATA', ['participationData', results]);

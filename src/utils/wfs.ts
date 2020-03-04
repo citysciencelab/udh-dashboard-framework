@@ -1,36 +1,34 @@
 import WFS from 'ol/format/WFS';
 import {registerProjections} from './projections';
+import * as mpapi from "masterportalAPI";
 
 export default {
-    get: (wfsUrl: string, wfsTypename: string, options: Datum) => {
-        return new Promise((res, rej) => {
-            registerProjections();
-            const parser = new WFS();
-            let url = `https://geodienste.hamburg.de/${wfsUrl}?service=WFS&version=1.1.0&request=GetFeature&typename=${wfsTypename}`;
-    
-            for (const key in options) {
-                const option = Array.isArray(options[key]) ? options[key].join(",") : options[key];
-                url += `&${key}=${option}`;
-            }
-    
-            fetch(url)
-                .then(response => response.text())
-                .then(responseString => parser.readFeatures(responseString))
-                .then(features => {
-                    res(FeatureSet.from(features));
-                });
-        });
+    get: (wfsUrl: string, wfsTypename: string, options: { [key: string]: string|string[]  }) => {
+        registerProjections();
+        const parser = new WFS();
+        let url = `https://geodienste.hamburg.de/${wfsUrl}?service=WFS&version=1.1.0&request=GetFeature&typename=${wfsTypename}`;
+
+        for (const key in options) {
+            const option = Array.isArray(options[key]) ? (options[key] as string[]).join(',') : options[key];
+            url += `&${key}=${option}`;
+        }
+
+        return fetch(url)
+            .then(response => response.text())
+            .then(responseString => parser.readFeatures(responseString))
+            .then(features => FeatureSet.from(features));
     }
 }
 
 export class FeatureSet extends Array {
     getProperties(): Dataset {
-        try {
-            return this.map(f => f.getProperties());
-        }
-        catch(e) {
-            console.error(e);
-            return [];
-        }
+        return this.map(f => {
+            try {
+                return f.getProperties()
+            }
+            catch(e) {
+                return f;
+            }
+        }) as FeatureSet;
     }
 }

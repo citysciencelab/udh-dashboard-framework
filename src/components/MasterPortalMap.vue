@@ -28,11 +28,9 @@
             // wait for the Tile To be rendered completely
             // wait for DOM height to be adjusted
             // TODO: make it event based
-            setTimeout(() => {
-                this.createMap();
-                this.showFeaturesInMap();
-                this.createLayerByMdId();
-            }, 1000);
+            this.createMap();
+            this.showFeaturesInMap();
+            this.createLayerByMdId();
         }
 
         createMap() {

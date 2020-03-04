@@ -46,7 +46,7 @@ const chartsModule: Module<DashboardState, RootState> = {
         },
         distinctPropertyValues: state => (dataId: string, property: string) => {
             if (state.dashboardData[dataId]) {
-                var data = (FeatureSet.from(state.dashboardData[dataId]) as FeatureSet).getProperties();
+                const data = (FeatureSet.from(state.dashboardData[dataId]) as FeatureSet).getProperties();
 
                 return data.reduce((result: string[], obj: Datum) => {
                     return result.find((el: string) => el === obj[property]) ?
@@ -56,7 +56,7 @@ const chartsModule: Module<DashboardState, RootState> = {
             }
         },
         dataWithAppliedFilters: state => (dataId: string) => {
-            var filters = state.filters,
+            const filters = state.filters,
                 initialData = state.dashboardData[dataId];
 
             if (Object.keys(filters).length !== 0) {

@@ -75,7 +75,7 @@
                         <master-portal-map v-bind:services="services"
                             v-bind:portal="portal"
                             v-bind:featureData="dataAsFeatures"
-                            ref="featureSelect"/>
+                        />
                     </template>
                     <template slot="footer">
                         <div class="notice">this data is supported the JBe foundation</div>
@@ -99,10 +99,10 @@ import TreeMapChart from '../components/charts/chartjs/TreeMap.vue';
 import partStore from '@/store/participation.module';
 import AbstractDashboard from '@/views/AbstractDashboard.vue';
 import { messages } from '@/messages/messages.participation.module';
-
 import MasterPortalMap from "@/components/MasterPortalMap.vue";
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
+import { FeatureSet } from '../utils/wfs';
 
 @Component({
     components: {
@@ -110,7 +110,8 @@ import servicesConfig from "@/assets/map-config/services.json";
         MultiSelect,
         BarChart,
         HorizontalBarChart,
-        TreeMapChart
+        TreeMapChart,
+        MasterPortalMap
     }
 })
 export default class Participation extends AbstractDashboard {

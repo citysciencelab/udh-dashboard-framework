@@ -324,7 +324,7 @@ export default class UDPC extends AbstractDashboard {
         'Fact 4',
         'Fact 5'
     ];
-    dataSets = {
+    dataSets: { [key: string]: string|string[] }= {
         items: [],
         action: 'map'
     };
@@ -375,11 +375,6 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
-    styles = {
-        rowHeightL: 420,
-        rowHeightS: 150
-    }
-
     created() {
         this.$i18n.locale = 'de';
         this.$i18n.mergeLocaleMessage('en', messages.en);
@@ -413,7 +408,7 @@ export default class UDPC extends AbstractDashboard {
                             this.dataSets = {
                                 items: mutationData.labels
                                     .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
-                                    .filter((d: any, i: number) => i > 3 && i < 7), // demo: filter for sensible sets
+                                    .filter((d: any, i: number) => i > 1 && i < 7), // demo: filter for sensible sets
                                 action: 'map'
                             }
                             break;
