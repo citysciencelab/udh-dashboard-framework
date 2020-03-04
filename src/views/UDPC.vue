@@ -732,14 +732,13 @@ i {
     }
 
     .images-bottom-right {
-        //text-align: right;
-
         @media (min-width: 459px) {
             .image-col {
                 padding-top: 24px;
                 text-align: right;
             }
         }
+
         @media (max-width: 458px) {
             .image-col {
                 text-align: center;
@@ -750,8 +749,6 @@ i {
             }
         }
 
-
-
         a {
             padding-left: 10px;
             color: $hamburg-blue;
@@ -760,7 +757,6 @@ i {
                 max-height: 70px;
             }
         }
-
     }
 }
 
