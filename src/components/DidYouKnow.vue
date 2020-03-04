@@ -24,13 +24,13 @@ export default class DidYouKnow extends Vue {
         this.updateItems();
     }
 
-    @Watch('items') onItemsChanged() {
+    @Watch('inputData') onItemsChanged() {
         this.updateItems();
     }
 
     updateItems() {
         if (this.inputData) {
-            if (this.inputData[0] instanceof String) {
+            if (typeof this.inputData[0] === 'string') {
                 this.$data.$items = this.inputData.map((item: any) => ({label: item, link: ''}));
                 this.action = 'none'
             }
@@ -79,12 +79,6 @@ export default class DidYouKnow extends Vue {
 <style scoped lang="scss">
 .list {
     position: relative;
-}
-
-.list-item {
-    /* position: absolute;
-    display: inline-block;
-    margin-right: 10px; */
 }
 
 .list-enter-active, .list-leave-active {

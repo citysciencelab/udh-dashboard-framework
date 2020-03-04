@@ -20,7 +20,7 @@
         @Prop() mapStyle!: object;
         @Prop() featureData!: Feature[];
         @Prop() md_id!: string;
-        cWindow: any = window;
+        mpapi: any = mpapi; 
         tempLayers: Layer[] | unknown;
 
         mounted() {
@@ -34,17 +34,12 @@
         }
 
         createMap() {
-            this.cWindow.mpapi = {
-                ...mpapi,
-                map: null
-            };
-
             const mapElement = document.getElementById(this.portal.target);
             if (mapElement) {
                 mapElement.innerHTML = "";
             }
 
-            mpapi.geojson.setCustomStyles({
+            this.mpapi.geojson.setCustomStyles({
                 MultiPolygon: new Style({
                     stroke: new Stroke({
                         width: 2,
@@ -56,27 +51,27 @@
                 })
             });
 
-            this.cWindow.mpapi.map = mpapi.createMap({
+            this.mpapi.map = this.mpapi.createMap({
                 ...this.portal,
                 layerConf: this.services
             });
         }
 
         showFeaturesInMap() {
-            const layer = this.cWindow.mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.featureData);
+            const layer = this.mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.featureData);
 
-            this.cWindow.mpapi.map.removeLayer(this.customLayerId);
-            this.cWindow.mpapi.map.addLayer(layer);
+            this.mpapi.map.removeLayer(this.customLayerId);
+            this.mpapi.map.addLayer(layer);
         }
 
         createLayerByMdId() {
             if (this.md_id) {
                 if (this.tempLayers) {
                     (this.tempLayers as Layer[]).forEach(layer => {
-                       this.cWindow.mpapi.map.removeLayer(layer);
+                       this.mpapi.map.removeLayer(layer);
                     });
                 }
-                this.cWindow.mpapi.createLayer(this.md_id, 1).then((layer: Layer) => {
+                this.mpapi.map.createLayer(this.md_id, 5).then((layer: Layer) => {
                     this.tempLayers = layer;
                 });
             }

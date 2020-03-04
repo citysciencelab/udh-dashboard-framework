@@ -15,7 +15,7 @@
                             <div class="card-header-text">{{ $t('udpc.didYouKNow') }}</div>
                         </template>
                         <template slot="content">
-                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="10000"></did-you-know>
+                            <did-you-know v-bind:inputData="didYouKnow" v-bind:interval="10000"></did-you-know>
                         </template>
                         <template slot="footer">
                         </template>
@@ -30,7 +30,7 @@
                             <div class="card-header-text">{{ $t('udpc.newDatassets') }}</div>
                         </template>
                         <template slot="content">
-                            <did-you-know v-bind:items="dataSets" v-bind:interval="10000" v-on:show-in-map="showDataInMap"></did-you-know>
+                            <did-you-know v-bind:inputData="dataSets" v-bind:interval="10000" v-on:show-in-map="showDataInMap"></did-you-know>
                         </template>
                         <template slot="footer">
                         </template>
@@ -408,7 +408,7 @@ export default class UDPC extends AbstractDashboard {
                             this.dataSets = {
                                 items: mutationData.labels
                                     .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
-                                    .filter((d: any, i: number) => i > 1 && i < 7), // demo: filter for sensible sets
+                                    .filter((d: any, i: number) => i > 4 && i < 9), // demo: filter for sensible sets
                                 action: 'map'
                             }
                             break;
