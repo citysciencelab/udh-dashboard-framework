@@ -1,6 +1,8 @@
 <template>
     <div>
         <nav class="navbar navbar-expand-lg">
+            <img class="hh-logo" src="../assets/images/_HH_Logo_2016.svg" alt="Hamburg Logo">
+            <img class="hh-bug" src="../assets/images/Hamburg_Bug_NEU_RGB.png" alt="Hamburg Bug">
             <span class="navbar-brand">Urban Data Platform</span>
         </nav>
 
@@ -564,6 +566,17 @@ i {
     .navbar-brand {
         font-size: 16px;
         color: $hamburg-blue-dark;
+    }
+
+    .hh-bug {
+        height: 18px;
+        position: absolute;
+        left: -130px;
+        bottom: -8px;
+    }
+
+    .hh-logo {
+        height: 43px;
     }
 }
 
