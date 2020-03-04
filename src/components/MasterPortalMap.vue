@@ -20,7 +20,7 @@
         @Prop() mapStyle!: object;
         @Prop() featureData!: Feature[];
         @Prop() md_id!: string;
-        mpapi: any = mpapi; 
+        mpapi: MPAPI = mpapi; 
         tempLayers: Layer[] | unknown;
 
         mounted() {

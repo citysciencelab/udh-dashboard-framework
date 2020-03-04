@@ -324,7 +324,7 @@ export default class UDPC extends AbstractDashboard {
         'Fact 4',
         'Fact 5'
     ];
-    dataSets: { [key: string]: string|string[] }= {
+    dataSets: { [key: string]: string|string[] } = {
         items: [],
         action: 'map'
     };

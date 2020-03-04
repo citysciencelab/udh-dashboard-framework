@@ -71,3 +71,11 @@ interface DateRangeSliderOptions {
   min: string;
   max: string;
 }
+
+interface DidYouKnowData {
+  items: {
+    label: string,
+    link: string
+  }[],
+  action: string
+}

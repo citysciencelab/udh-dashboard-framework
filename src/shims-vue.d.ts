@@ -40,7 +40,7 @@ declare module 'masterportalAPI' {
   import { Vector, TileWMS, ImageWMS } from 'ol/source'
   import { StyleLike } from 'ol/style/Style'
 
-  export const mpapi: {
+  export interface MPAPI {
     createMap(config?: object, params?: object): Map
     createMapView(config: object): View
     wms: {
@@ -94,7 +94,7 @@ declare module 'masterportalAPI' {
       transformToMapProjection(map: Map, sourceProjection: string | object, point: number[]): number[] | undefined
       transformFromMapProjection(map: Map, targetProjection: string | object, point: number[]): number[] | undefined
     }
-  };
+  }
 }
 
 declare module 'vue-material' {

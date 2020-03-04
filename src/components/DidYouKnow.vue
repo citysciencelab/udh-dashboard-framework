@@ -6,13 +6,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { TimeInterval } from 'd3';
 
 @Component({})
 export default class DidYouKnow extends Vue {
-    @Prop() inputData!: any;
+    @Prop() inputData!: string[] | DidYouKnowData;
     @Prop() interval!: number;
     @Prop() prefix!: string;
-    timer: any;
+    timer: TimeInterval | unknown;
     currentIndex = 0;
     action: string = 'none';
     $items: { label: string, link: string }[] = [{
@@ -30,13 +31,15 @@ export default class DidYouKnow extends Vue {
 
     updateItems() {
         if (this.inputData) {
-            if (typeof this.inputData[0] === 'string') {
-                this.$data.$items = this.inputData.map((item: any) => ({label: item, link: ''}));
+            if (typeof (this.inputData as string[])[0] === 'string') {
+                this.$data.$items = (this.inputData as string[]).map((item: any) => ({label: item, link: ''}));
                 this.action = 'none'
             }
             else {
-                this.$data.$items = this.inputData.items.length ? this.inputData.items : this.$data.$items
-                this.action = this.inputData.action
+                const _inputData = (this.inputData as DidYouKnowData);
+
+                this.$data.$items = _inputData.items.length ? _inputData.items : this.$data.$items
+                this.action = _inputData.action
             }
             this.setInterval();
         }
