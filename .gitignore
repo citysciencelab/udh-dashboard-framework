@@ -1,8 +1,6 @@
 .DS_Store
 node_modules
 /dist
-src/assets/map-config/services-internet.json
-src/assets/map-config/localGeoJSON.json
 
 # local env files
 .env.local
