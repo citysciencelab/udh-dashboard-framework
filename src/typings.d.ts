@@ -73,9 +73,6 @@ interface DateRangeSliderOptions {
 }
 
 interface DidYouKnowData {
-  items: {
-    label: string,
-    link: string
-  }[],
+  items: { label: string, link: string }[],
   action: string
 }

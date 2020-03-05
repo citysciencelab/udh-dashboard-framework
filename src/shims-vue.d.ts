@@ -39,63 +39,66 @@ declare module 'masterportalAPI' {
   import { Vector as VectorLayer } from 'ol/layer'
   import { Vector, TileWMS, ImageWMS } from 'ol/source'
   import { StyleLike } from 'ol/style/Style'
+  import BaseLayer from 'ol/layer/Base';
 
-  const mpapi: {
-    createMap(config?: object, params?: object): Map
-    createMapView(config: object): View
-    wms: {
-      generateSessionId(): number
-      makeParams(rawLayer: object): object
-      createLayerSource(rawLayer: object): TileWMS | ImageWMS
-      createLayer(rawLayer: object): Layer
-      updateSource(layer: Layer): number
-      getGfiURL(layer: Layer, map: Map, coordinate: Coordinate): string | undefined
-    }
-    wfs: {
-      setCustomStyles(styles: object): void
-      createLayerSource(rawLayer: object, options?: object): Vector
-      createLayer(rawLayer: object, params?: object, options?: object, features?: Feature[]): VectorLayer
-      updateSource(layer: VectorLayer): void
-      setFeatureStyle(features: Feature[], featureStyle: StyleLike): void
-      hideAllFeatures(layer: Layer): void
-      showAllFeatures(layer: Layer): void
-      showFeaturesById(layer: Layer, featureIdList: string[]): void
-    }
-    geojson: {
-      setCustomStyles(styles: object): void
-      createLayerSource(rawLayer: object, map: Map): Vector
-      createLayer(rawLayer: object, params?: object): VectorLayer
-      updateSource(layer: VectorLayer): void
-      setFeatureStyle(features: Feature[], featureStyle: StyleLike): void
-      hideAllFeatures(layer: Layer): void
-      showAllFeatures(layer: Layer): void
-      showFeaturesById(layer: Layer, featureIdList: string[]): void
-    }
-    layerLib: {
-      isLayerVisibleInResolution(layer: Layer, params: object): boolean
-      getLegendURLs (rawLayer: object): string[]
-    }
-    setBackgroundImage(config?: object): void
-    setGazetteerUrl(url: string): void
-    rawLayerList: {
-      initializeLayerList(layerConf?: object, callback?: unknown): void
-      getLayerWhere(searchAttributes: object): object
-      getLayerList(): object[] | null
-      getDisplayNamesOfFeatureAttributes(layerId: string, featureAttribute: string): object | string | null
-    }
-    search(searchstring: string, params: object): Promise<object[]>
-    crs: {
-      registerProjections(namedProjections?: string[]): void
-      getProjection(name: string): object | undefined
-      getProjections(): object[]
-      getMapProjection(map: Map): string
-      getProj4Projection(projection: string | object): object | undefined
-      transform(sourceProjection: string | object, targetProjection: string | object, point: number[]): number[] | undefined
-      transformToMapProjection(map: Map, sourceProjection: string | object, point: number[]): number[] | undefined
-      transformFromMapProjection(map: Map, targetProjection: string | object, point: number[]): number[] | undefined
-    }
-  };
-  export = mpapi;
+  export class MPMap extends Map {
+    addLayer(layer: BaseLayer|string, params?: object): void;
+    createLayer(layerAttrs: object|string, limit?: number, url?: string): Promise<Layer[]>;
+    removeLayer(layer: BaseLayer|string ): BaseLayer;
+  }
+  export function createMap(config?: object, params?: object): MPMap
+  export function createMapView(config: object): View
+  export const wms: {
+    generateSessionId(): number
+    makeParams(rawLayer: object): object
+    createLayerSource(rawLayer: object): TileWMS | ImageWMS
+    createLayer(rawLayer: object): Layer
+    updateSource(layer: Layer): number
+    getGfiURL(layer: Layer, map: Map, coordinate: Coordinate): string | undefined
+  }
+  export const wfs: {
+    setCustomStyles(styles: object): void
+    createLayerSource(rawLayer: object, options?: object): Vector
+    createLayer(rawLayer: object, params?: object, options?: object, features?: Feature[]): VectorLayer
+    updateSource(layer: VectorLayer): void
+    setFeatureStyle(features: Feature[], featureStyle: StyleLike): void
+    hideAllFeatures(layer: Layer): void
+    showAllFeatures(layer: Layer): void
+    showFeaturesById(layer: Layer, featureIdList: string[]): void
+  }
+  export const geojson: {
+    setCustomStyles(styles: object): void
+    createLayerSource(rawLayer: object, map: Map): Vector
+    createLayer(rawLayer: object, params?: object): VectorLayer
+    updateSource(layer: VectorLayer): void
+    setFeatureStyle(features: Feature[], featureStyle: StyleLike): void
+    hideAllFeatures(layer: Layer): void
+    showAllFeatures(layer: Layer): void
+    showFeaturesById(layer: Layer, featureIdList: string[]): void
+  }
+  export const layerLib: {
+    isLayerVisibleInResolution(layer: Layer, params: object): boolean
+    getLegendURLs (rawLayer: object): string[]
+  }
+  export function setBackgroundImage(config?: object): void
+  export function setGazetteerUrl(url: string): void
+  export const rawLayerList: {
+    initializeLayerList(layerConf?: object, callback?: unknown): void
+    getLayerWhere(searchAttributes: object): object
+    getLayerList(): object[] | null
+    getDisplayNamesOfFeatureAttributes(layerId: string, featureAttribute: string): object | string | null
+  }
+  export function search(searchstring: string, params: object): Promise<object[]>
+  export const crs: {
+    registerProjections(namedProjections?: string[]): void
+    getProjection(name: string): object | undefined
+    getProjections(): object[]
+    getMapProjection(map: Map): string
+    getProj4Projection(projection: string | object): object | undefined
+    transform(sourceProjection: string | object, targetProjection: string | object, point: number[]): number[] | undefined
+    transformToMapProjection(map: Map, sourceProjection: string | object, point: number[]): number[] | undefined
+    transformFromMapProjection(map: Map, targetProjection: string | object, point: number[]): number[] | undefined
+  }
 }
 
 declare module 'vue-material' {

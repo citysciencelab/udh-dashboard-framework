@@ -13,7 +13,7 @@ export default class DidYouKnow extends Vue {
     @Prop() inputData!: string[] | DidYouKnowData;
     @Prop() interval!: number;
     @Prop() prefix!: string;
-    timer: TimeInterval | unknown;
+    timer!: number;
     currentIndex = 0;
     action: string = 'none';
     $items: { label: string, link: string }[] = [{

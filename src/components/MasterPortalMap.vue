@@ -7,21 +7,19 @@
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
     import * as mpapi from "masterportalAPI";
-    import { Feature } from 'ol';
-    import TileLayer from 'ol/layer/Tile';
-    import VectorLayer from 'ol/layer/Vector';
-    import { Layer } from 'ol/layer';
+    import {Layer} from 'ol/layer';
+    import {Map} from 'ol';
 
     @Component({})
     export default class MasterPortalMap extends Vue {
         @Prop() customLayerId!: string;
-        @Prop() portal!: Datum;
-        @Prop() services!: Datum;
+        @Prop() portal!: { [key: string]: any };
+        @Prop() services!: { [key: string]: any };
         @Prop() mapStyle!: object;
-        @Prop() featureData!: Feature[];
+        @Prop() featureData!: FeatureSet;
         @Prop() md_id!: string;
-        map: any;
-        tempLayers: Layer[] | unknown;
+        map!: mpapi.MPMap;
+        tempLayers!: Layer[];
 
         mounted() {
             if (!this.customLayerId) this.customLayerId === "dashboardData";
@@ -71,8 +69,8 @@
                        this.map.removeLayer(layer);
                     });
                 }
-                this.map.createLayer(this.md_id, 5).then((layer: Layer) => {
-                    this.tempLayers = layer;
+                this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
+                    this.tempLayers = layers;
                 });
             }
         }
