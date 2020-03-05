@@ -624,9 +624,11 @@ i {
         border-top: 1px solid $hamburg-grey-inactive;
         border-right: 1px solid $hamburg-grey-inactive;
         border-bottom: 1px solid $hamburg-blue-dark50;
-        height: 35px;
+        height: 44px;
         font-size: 11px;
         text-transform: none;
+        width: 50%;
+        max-width: none;
 
         .md-button-content {
             font-size: 16px;
