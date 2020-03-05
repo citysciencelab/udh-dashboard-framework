@@ -112,11 +112,14 @@
                             <div class="card-header-text">{{ $t('udpc.countTotal') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">chart1</md-tab>
-                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">chart2</md-tab>
-                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">chart3</md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotalsByType">
+                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
+                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
+                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">&nbsp;</md-tab>
                             </md-tabs>
+
+                            <bar-chart :chartData="chartData.dataSetsByType"
+                                       :chartOptions="chartOptions.dataSetsByType"/>
                         </template>
                         <template slot="footer">
                             <div class="notice">
@@ -295,7 +298,6 @@ import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 
 @Component({
     components: {
-        BarChartHorizontal,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
@@ -303,6 +305,7 @@ import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
         ConfirmDialog,
         InfoOverlay,
         BarChart,
+        BarChartHorizontal,
         TreeMapChart
     }
 })
@@ -346,7 +349,8 @@ export default class UDPC extends AbstractDashboard {
 
     chartData: { [key: string]: Chart.ChartData } = {
         dataSetsByTopic: {},
-        dataSetsTopX: {}
+        dataSetsTopX: {},
+        dataSetsByType: {}
     };
 
     // TODO: 1. make this more generic - 2. font-color und border-color direkt aus der scss laden?
@@ -359,6 +363,34 @@ export default class UDPC extends AbstractDashboard {
             },
             legend: {
                 display: false
+            }
+        },
+        dataSetsByType: {
+            title: {
+                display: false,
+            },
+            legend: {
+                display: false
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        display: true,
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
         },
         dataSetsTopX: {
@@ -382,7 +414,7 @@ export default class UDPC extends AbstractDashboard {
                 }],
                 xAxes: [{
                     gridLines: {
-                        display: false
+                        drawOnChartArea: false
                     },
                     ticks: {
                         beginAtZero: true
@@ -423,6 +455,11 @@ export default class UDPC extends AbstractDashboard {
                             mutationData.datasets[0]['backgroundColor'] = '#f87979';
                             this.chartData.dataSetsTopX = mutationData;
                             break;
+                        case 'totalDatasetsCount':
+                            mutationData.datasets[0]['label'] = 'Anzahl';
+                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            this.chartData.dataSetsByType = mutationData;
+                            break;
                     }
                     break;
             }
@@ -451,6 +488,24 @@ export default class UDPC extends AbstractDashboard {
         }
         if (totalsTopic) {
             await this.$store.dispatch('fetchTotalsByTopic', totalsTopic);
+        }
+    }
+
+    async fetchTotalsByType(totalsType?: string) {
+        switch (totalsType) {
+            case 'tab-datasets':
+                totalsType = 'datasets';
+                break;
+            case 'tab-apps':
+                totalsType = 'apps';
+                break;
+            case 'tab-sensordatasets':
+                // totalsType ='sensors';
+                totalsType = undefined;
+                break;
+        }
+        if (totalsType) {
+            await this.$store.dispatch('fetchTotalsByType', totalsType);
         }
     }
 
