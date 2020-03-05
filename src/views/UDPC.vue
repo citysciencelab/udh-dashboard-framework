@@ -631,7 +631,7 @@ i {
 }
 
 .navbar {
-    height: 90px;
+    height: 100px;
     border-bottom: 30px solid $hamburg-blue-dark;
     margin-bottom: 10px;
     background-color: white;
@@ -641,12 +641,16 @@ i {
         color: $hamburg-blue-dark;
         padding-left: 5px;
         padding-top: 8px;
+
+        @media (max-width: 380px) {
+            font-size: 20px;
+        }
     }
 
     .hh-bug {
         height: 18px;
         position: absolute;
-        left: -120px;
+        left: -105px;
         bottom: -8px;
     }
 
