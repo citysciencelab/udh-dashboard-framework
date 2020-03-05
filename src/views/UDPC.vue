@@ -750,7 +750,6 @@ i {
         }
 
         a {
-            padding-left: 10px;
             color: $hamburg-blue;
 
             img {
