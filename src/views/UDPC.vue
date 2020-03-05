@@ -117,9 +117,10 @@
                                 <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
                                 <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">&nbsp;</md-tab>
                             </md-tabs>
-
-                            <bar-chart :chartData="chartData.dataSetsByType"
-                                       :chartOptions="chartOptions.dataSetsByType"/>
+                            <div class="chart-holder">
+                                <bar-chart :chartData="chartData.dataSetsByType"
+                                           :chartOptions="chartOptions.dataSetsByType"/>
+                            </div>
                         </template>
                         <template slot="footer">
                             <div class="notice">
