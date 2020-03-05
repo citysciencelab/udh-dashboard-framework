@@ -20,7 +20,7 @@
         @Prop() mapStyle!: object;
         @Prop() featureData!: Feature[];
         @Prop() md_id!: string;
-        mpapi: MPAPI = mpapi; 
+        map: any;
         tempLayers: Layer[] | unknown;
 
         mounted() {
@@ -39,7 +39,7 @@
                 mapElement.innerHTML = "";
             }
 
-            this.mpapi.geojson.setCustomStyles({
+            mpapi.geojson.setCustomStyles({
                 MultiPolygon: new Style({
                     stroke: new Stroke({
                         width: 2,
@@ -51,27 +51,27 @@
                 })
             });
 
-            this.mpapi.map = this.mpapi.createMap({
+            this.map = mpapi.createMap({
                 ...this.portal,
                 layerConf: this.services
             });
         }
 
         showFeaturesInMap() {
-            const layer = this.mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.featureData);
+            const layer = mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.featureData);
 
-            this.mpapi.map.removeLayer(this.customLayerId);
-            this.mpapi.map.addLayer(layer);
+            this.map.removeLayer(this.customLayerId);
+            this.map.addLayer(layer);
         }
 
         createLayerByMdId() {
             if (this.md_id) {
                 if (this.tempLayers) {
                     (this.tempLayers as Layer[]).forEach(layer => {
-                       this.mpapi.map.removeLayer(layer);
+                       this.map.removeLayer(layer);
                     });
                 }
-                this.mpapi.map.createLayer(this.md_id, 5).then((layer: Layer) => {
+                this.map.createLayer(this.md_id, 5).then((layer: Layer) => {
                     this.tempLayers = layer;
                 });
             }
