@@ -1,5 +1,6 @@
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
+import Utils from '@/utils/utils'
 
 const initialState: UDPCState = {
     dashboardData: {},
@@ -46,6 +47,23 @@ const udpcModule: Module<UDPCState, RootState> = {
                     data: topX.map((item: any) => item.total_hits.value)
                 }]
             }]);
+            context.commit('SET_LOADING', false);
+        },
+        fetchTotalsByType: async (context, totalsType) => {
+            context.commit('SET_LOADING', true);
+
+            let yearMonth = new Utils().date.getYearMonthStringFromDate(new Date());
+            let aggregations = await elastic.getRangeful('', '', '2000-01', yearMonth, totalsType, 100, 'year');
+
+            context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
+            context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
+                labels: aggregations['total_entities_and_hits'].buckets.map((item: any) =>
+                    item.key_as_string.substr(0, item.key_as_string.indexOf('-'))),
+                datasets: [{
+                    data: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.doc_count)
+                }]
+            }]);
+
             context.commit('SET_LOADING', false);
         },
         applyFilter: (context, [id, accessor]) => {
