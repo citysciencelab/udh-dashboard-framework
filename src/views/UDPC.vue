@@ -15,7 +15,7 @@
                             <div class="card-header-text">{{ $t('udpc.didYouKNow') }}</div>
                         </template>
                         <template slot="content">
-                            <did-you-know v-bind:inputData="didYouKnow" v-bind:interval="10000"></did-you-know>
+                            <did-you-know v-bind:data="didYouKnow" v-bind:interval="5000"></did-you-know>
                         </template>
                         <template slot="footer">
                         </template>
@@ -30,7 +30,7 @@
                             <div class="card-header-text">{{ $t('udpc.newDatassets') }}</div>
                         </template>
                         <template slot="content">
-                            <did-you-know v-bind:inputData="dataSets" v-bind:interval="10000" v-on:show-in-map="showDataInMap"></did-you-know>
+                            <did-you-know v-bind:data="dataSets" v-bind:interval="7500" v-on:show-in-map="showDataInMap"></did-you-know>
                         </template>
                         <template slot="footer">
                         </template>
@@ -104,11 +104,14 @@
                             <div class="card-header-text">{{ $t('udpc.countTotal') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">chart1</md-tab>
-                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">chart2</md-tab>
-                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">chart3</md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotalsByType">
+                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
+                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
+                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">&nbsp;</md-tab>
                             </md-tabs>
+
+                            <bar-chart :chartData="chartData.dataSetsByType"
+                                       :chartOptions="chartOptions.dataSetsByType"/>
                         </template>
                         <template slot="footer">
                             <div class="notice">
@@ -276,7 +279,6 @@ import servicesConfig from "@/assets/map-config/services.json";
 
 @Component({
     components: {
-        BarChartHorizontal,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
@@ -284,6 +286,7 @@ import servicesConfig from "@/assets/map-config/services.json";
         ConfirmDialog,
         InfoOverlay,
         BarChart,
+        BarChartHorizontal,
         TreeMapChart,
         MasterPortalMap
     }
@@ -317,21 +320,25 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
-    didYouKnow = [
-        'Fact 1',
-        'Fact 2',
-        'Fact 3',
-        'Fact 4',
-        'Fact 5'
-    ];
-    dataSets: { [key: string]: string|string[] } = {
+    didYouKnow: DidYouKnowData = {
+        items: [
+            { label: 'Fact 1', link: '' },
+            { label: 'Fact 2', link: '' },
+            { label: 'Fact 3', link: '' },
+            { label: 'Fact 4', link: '' },
+            { label: 'Fact 5', link: '' },        
+        ],
+        action: null
+    };
+    dataSets: DidYouKnowData = {
         items: [],
         action: 'map'
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
         dataSetsByTopic: {},
-        dataSetsTopX: {}
+        dataSetsTopX: {},
+        dataSetsByType: {}
     };
 
     // TODO: make this more generic
@@ -343,6 +350,34 @@ export default class UDPC extends AbstractDashboard {
             },
             legend: {
                 display: false
+            }
+        },
+        dataSetsByType: {
+            title: {
+                display: false,
+            },
+            legend: {
+                display: false
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        display: true,
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
         },
         dataSetsTopX: {
@@ -365,7 +400,7 @@ export default class UDPC extends AbstractDashboard {
                 }],
                 xAxes: [{
                     gridLines: {
-                        display: false
+                        drawOnChartArea: false
                     },
                     ticks: {
                         beginAtZero: true
@@ -412,6 +447,11 @@ export default class UDPC extends AbstractDashboard {
                                 action: 'map'
                             }
                             break;
+                        case 'totalDatasetsCount':
+                            mutationData.datasets[0]['label'] = 'Anzahl';
+                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            this.chartData.dataSetsByType = mutationData;
+                            break;
                     }
                     break;
             }
@@ -440,6 +480,24 @@ export default class UDPC extends AbstractDashboard {
         }
         if (totalsTopic) {
             await this.$store.dispatch('fetchTotalsByTopic', totalsTopic);
+        }
+    }
+
+    async fetchTotalsByType(totalsType?: string) {
+        switch (totalsType) {
+            case 'tab-datasets':
+                totalsType = 'datasets';
+                break;
+            case 'tab-apps':
+                totalsType = 'apps';
+                break;
+            case 'tab-sensordatasets':
+                // totalsType ='sensors';
+                totalsType = undefined;
+                break;
+        }
+        if (totalsType) {
+            await this.$store.dispatch('fetchTotalsByType', totalsType);
         }
     }
 

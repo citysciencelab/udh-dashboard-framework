@@ -132,6 +132,9 @@ export default class Utils implements IUtils {
     };
 
     date = {
+        getYearMonthStringFromDate(date: Date) {
+            return date.getFullYear() + `-` + (date.getMonth() < 9 ? '0': '') + (date.getMonth() + 1);
+        },
         getDateStringFromDate(date: Date) {
             return date.getDate() + `.` + date.getMonth() + `.` + date.getFullYear();
         },

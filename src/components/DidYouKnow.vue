@@ -1,6 +1,11 @@
-<template>
+<template v-if="data">
     <span class="list-item">
-        <a v-on:click="onClick($event)" :href="$data.$items[currentIndex].link">{{ this.prefix ? $t(prefix, { fact: $data.$items[currentIndex].label }) : $data.$items[currentIndex].label }}</a>
+        <template v-if="data.items.length > 0">
+            <a v-on:click="onClick($event)"
+                :href="data.items[currentIndex].link">
+                {{ this.prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
+            </a>
+        </template>
     </span>
 </template>
 
@@ -10,57 +15,34 @@ import { TimeInterval } from 'd3';
 
 @Component({})
 export default class DidYouKnow extends Vue {
-    @Prop() inputData!: string[] | DidYouKnowData;
+    @Prop() data!: DidYouKnowData;
     @Prop() interval!: number;
     @Prop() prefix!: string;
     timer!: number;
     currentIndex = 0;
-    action: string = 'none';
-    $items: { label: string, link: string }[] = [{
-        label: '',
-        link: ''
-    }];
 
     mounted() {
-        this.updateItems();
+        this.updateInterval();
     }
 
-    @Watch('inputData') onItemsChanged() {
-        this.updateItems();
-    }
-
-    updateItems() {
-        if (this.inputData) {
-            if (typeof (this.inputData as string[])[0] === 'string') {
-                this.$data.$items = (this.inputData as string[]).map((item: any) => ({label: item, link: ''}));
-                this.action = 'none'
-            }
-            else {
-                const _inputData = (this.inputData as DidYouKnowData);
-
-                this.$data.$items = _inputData.items.length ? _inputData.items : this.$data.$items
-                this.action = _inputData.action
-            }
-            this.setInterval();
+    updateInterval() {
+        if (this.data) {
+            clearInterval(this.timer);
+            this.timer = setInterval(() => {
+                if (this.currentIndex < this.data.items.length - 1) {
+                    this.currentIndex++;
+                } else {
+                    this.currentIndex = 0;
+                }
+                this.onInterval();
+            }, this.interval);
         }
     }
 
-    setInterval() {
-        clearInterval(this.timer);
-        this.timer = setInterval(() => {
-            if (this.currentIndex < this.$data.$items.length - 1) {
-                this.currentIndex++;
-            } else {
-                this.currentIndex = 0;
-            }
-            this.onInterval();
-        }, this.interval);
-    }
-
     onInterval() {
-        switch (this.action) {
+        switch (this.data.action) {
             case 'map':
-                this.$emit('show-in-map', this.$data.$items[this.currentIndex].link);
+                this.$emit('show-in-map', this.data.items[this.currentIndex].link);
                 break;
             default:
                 // add more options
@@ -68,13 +50,17 @@ export default class DidYouKnow extends Vue {
     }
 
     onClick(evt: Event) {
-        switch (this.action) {
+        switch (this.data.action) {
             case 'link':
                 break;
             default:
                 evt.preventDefault();
                 // follow click
         }
+    }
+
+    @Watch('data') onDataChanged() {
+        this.updateInterval();
     }
 }
 </script>
