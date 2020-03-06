@@ -98,6 +98,22 @@ const udpcModule: Module<UDPCState, RootState> = {
                 }]
             }]);
         },
+        fetchApps: async (context, params: { min: string, max: string, unit: string }) => {
+            sanitizeRangefulParams(params);
+
+            const aggregations = await elastic.getRangeful('', '', params.min, params.max, 'apps', undefined, params.unit);
+
+            context.commit('SET_FILTERED_DATA', ['totalApps', {
+                labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
+                    return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
+                }),
+                datasets: [{
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
+                    label: 'Anzahl',
+                    backgroundColor: '#40648B'
+                }]
+            }]);
+        },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
             const filteredData = context.state.dashboardData[id].filter(filterFunction);

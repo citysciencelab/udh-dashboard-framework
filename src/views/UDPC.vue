@@ -211,13 +211,15 @@
                         </template>
                         <template slot="content">
                             <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
-                                <md-tab id="tab-access-apps-year" :md-label="$t('udpc.tabYear')">chart1</md-tab>
-                                <md-tab id="tab-access-apps-month" :md-label="$t('udpc.tabMonth')">chart2</md-tab>
+                                <md-tab id="tab-apps-year" :md-label="$t('udpc.tabYear')"></md-tab>
+                                <md-tab id="tab-apps-month" :md-label="$t('udpc.tabMonth')"></md-tab>
                             </md-tabs>
+                            <bar-chart :chartData="chartData.totalApps"
+                                       :chartOptions="chartOptions.totalApps"/>
                         </template>
                         <template slot="footer">
-                            <range-slider :options="sliderOptions['access-apps']"
-                                          @rangeChange="rangeForChartChanged('access-apps', $event)"/>
+                            <range-slider :options="sliderOptions.apps"
+                                          @rangeChange="rangeForChartChanged('apps', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -299,7 +301,7 @@ export default class UDPC extends AbstractDashboard {
             min: '2014',
             max: `${new Date().getFullYear()}`
         },
-        'access-apps': {
+        apps: {
             unit: 'year',
             min: '2014',
             max: `${new Date().getFullYear()}`
@@ -327,6 +329,7 @@ export default class UDPC extends AbstractDashboard {
         dataSetsByType: {},
         totalDownloads: {},
         totalDatasets: {},
+        totalApps: {}
     };
 
     barChartConfigDefaults = {
@@ -427,6 +430,7 @@ export default class UDPC extends AbstractDashboard {
         },
         totalDownloads: this.barChartConfigDefaults,
         totalDatasets: this.barChartConfigDefaults,
+        totalApps: this.barChartConfigDefaults
     };
 
     created() {
@@ -465,6 +469,7 @@ export default class UDPC extends AbstractDashboard {
                         break;
                     case 'totalDownloads':
                     case 'totalDatasets':
+                    case 'totalApps':
                         this.chartData[mutation.payload[0]] = mutation.payload[1];
                 }
             }
@@ -506,29 +511,29 @@ export default class UDPC extends AbstractDashboard {
         const currentMonth = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
 
         switch (tab) {
-            case 'tab-downloads-year': {
-                const sliderOptionsYear = { min: '2014', max: currentYear, unit: 'year'};
-                this.sliderOptions.downloads = sliderOptionsYear;
-                this.fetchDownloadsRange(sliderOptionsYear);
+            case 'tab-downloads-year':
+                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year'};
+                this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
-            }
-            case 'tab-downloads-month': {
-                const sliderOptionsMonth = { min: '2014-09', max: currentMonth, unit: 'month'};
-                this.sliderOptions.downloads = sliderOptionsMonth;
-                this.fetchDownloadsRange(sliderOptionsMonth);
+            case 'tab-downloads-month':
+                this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month'};
+                this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
-            }
-            case 'tab-datasets-year': {
-                const sliderOptionsYear = { min: '2018', max: currentYear, unit: 'year'};
-                this.sliderOptions.datasets = sliderOptionsYear;
-                this.fetchDatasetsRange(sliderOptionsYear);
+            case 'tab-datasets-year':
+                this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year'};
+                this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
-            }
-            case 'tab-datasets-month': {
-                const sliderOptionsMonth = { min: '2018-11', max: currentMonth, unit: 'month'};
-                this.sliderOptions.datasets = sliderOptionsMonth;
-                this.fetchDatasetsRange(sliderOptionsMonth);
-            }
+            case 'tab-datasets-month':
+                this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month'};
+                this.fetchDatasetsRange(this.sliderOptions.datasets);
+                break;
+            case 'tab-apps-year':
+                this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year'};
+                this.fetchAppsRange(this.sliderOptions.apps);
+                break;
+            case 'tab-apps-month':
+                this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month'};
+                this.fetchAppsRange(this.sliderOptions.apps);
         }
     }
 
@@ -542,6 +547,8 @@ export default class UDPC extends AbstractDashboard {
             case 'datasets':
                 this.fetchDatasetsRange({ min, max, unit });
                 break;
+            case 'apps':
+                this.fetchAppsRange({ min, max, unit });
         }
     }
 
@@ -563,6 +570,10 @@ export default class UDPC extends AbstractDashboard {
 
     async fetchDatasetsRange(params: { min: string, max: string, unit: string }) {
         await this.$store.dispatch('fetchDatasets', params);
+    }
+
+    async fetchAppsRange(params: { min: string, max: string, unit: string }) {
+        await this.$store.dispatch('fetchApps', params);
     }
 
     testSnackBar() {
