@@ -66,6 +66,30 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_LOADING', false);
         },
+        fetchDownloads: async (context, params: { min: string, max: string, unit: string }) => {
+            // API requires 'YYYY-MM' format
+            if (params.unit === 'year') {
+                if (params.min.length === 4) {
+                    params.min += '-01';
+                }
+                if (params.max.length === 4) {
+                    params.max += '-01';
+                }
+            }
+
+            const aggregations = await elastic.getRangeful('', '', params.min, params.max, 'downloads', undefined, params.unit);
+
+            context.commit('SET_FILTERED_DATA', ['totalDownloads', {
+                labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
+                    return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
+                }),
+                datasets: [{
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
+                    label: 'Anzahl',
+                    backgroundColor: '#7F97B0'
+                }]
+            }]);
+        },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
             const filteredData = context.state.dashboardData[id].filter(filterFunction);

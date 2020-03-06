@@ -81,7 +81,7 @@
                             <div class="card-header-text">{{ $t('udpc.countBy') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotalsByTopic">
+                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchTab">
                                 <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">&nbsp;</md-tab>
                                 <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">&nbsp;</md-tab>
                             </md-tabs>
@@ -104,12 +104,11 @@
                             <div class="card-header-text">{{ $t('udpc.countTotal') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="fetchTotalsByType">
+                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchTab">
                                 <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
                                 <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
                                 <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">&nbsp;</md-tab>
                             </md-tabs>
-
                             <bar-chart :chartData="chartData.dataSetsByType"
                                        :chartOptions="chartOptions.dataSetsByType"/>
                         </template>
@@ -146,7 +145,7 @@
                             <div class="card-header-text">{{ $t('udpc.top5') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="fetchTops">
+                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchTab">
                                 <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
                                 <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
                                 <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">&nbsp;</md-tab>
@@ -167,12 +166,12 @@
                             <div class="card-header-text">{{ $t('udpc.download') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('downloads', 'year')">chart1</md-tab>
-                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('downloads', 'month')">chart2</md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
+                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')"></md-tab>
+                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')"></md-tab>
                             </md-tabs>
+                            <bar-chart :chartData="chartData.totalDownloads"
+                                       :chartOptions="chartOptions.totalDownloads"/>
                         </template>
                         <template slot="footer">
                             <range-slider :options="sliderOptions.downloads"
@@ -189,11 +188,9 @@
                             <div class="card-header-text">{{ $t('udpc.accessTopicData') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('access', 'year')">chart1</md-tab>
-                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('access', 'month')">chart2</md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
+                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')">chart1</md-tab>
+                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')">chart2</md-tab>
                             </md-tabs>
                         </template>
                         <template slot="footer">
@@ -211,11 +208,9 @@
                             <div class="card-header-text">{{ $t('udpc.accessApps') }}</div>
                         </template>
                         <template slot="content">
-                            <md-tabs class="dashboard-tabs">
-                                <md-tab id="tab-access-apps-year" :md-label="$t('udpc.tabYear')"
-                                        @click="changeFilterRange('access-apps', 'year')">chart1</md-tab>
-                                <md-tab id="tab-access-apps-month" :md-label="$t('udpc.tabMonth')"
-                                        @click="changeFilterRange('access-apps', 'month')">chart2</md-tab>
+                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
+                                <md-tab id="tab-access-apps-year" :md-label="$t('udpc.tabYear')">chart1</md-tab>
+                                <md-tab id="tab-access-apps-month" :md-label="$t('udpc.tabMonth')">chart2</md-tab>
                             </md-tabs>
                         </template>
                         <template slot="footer">
@@ -294,17 +289,17 @@ export default class UDPC extends AbstractDashboard {
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {
         downloads: {
             unit: 'year',
-            min: '2019',
+            min: '2014',
             max: `${new Date().getFullYear()}`
         },
         access: {
             unit: 'year',
-            min: '2019',
+            min: '2014',
             max: `${new Date().getFullYear()}`
         },
         'access-apps': {
             unit: 'year',
-            min: '2019',
+            min: '2014',
             max: `${new Date().getFullYear()}`
         }
     };
@@ -327,7 +322,8 @@ export default class UDPC extends AbstractDashboard {
     chartData: { [key: string]: Chart.ChartData } = {
         dataSetsByTopic: {},
         dataSetsTopX: {},
-        dataSetsByType: {}
+        dataSetsByType: {},
+        totalDownloads: {}
     };
 
     // TODO: make this more generic
@@ -396,7 +392,35 @@ export default class UDPC extends AbstractDashboard {
                     }
                 }]
             }
-        }
+        },
+        totalDownloads: {
+            title: {
+                display: false,
+            },
+            legend: {
+                display: false
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        display: true,
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        },
     };
 
     created() {
@@ -409,116 +433,110 @@ export default class UDPC extends AbstractDashboard {
             if (!mutation.payload) {
                 return;
             }
-            const mutationData = mutation.payload[1];
 
-            switch (mutation.type) {
-                case 'SET_INITIAL_DATA':
-                    break;
-                case 'SET_FILTERED_DATA':
-                    switch (mutation.payload[0]) {
-                        case 'totalTopicDatasets':
-                            mutationData.datasets[0]['key'] = 'doc_count';
-                            mutationData.datasets[0]['groups'] = ['key'];
-                            mutationData.datasets[0]['spacing'] = 2;
-                            mutationData.datasets[0]['borderWidth'] = 0.5;
-                            mutationData.datasets[0]['fontColor'] = 'black';
-                            mutationData.datasets[0]['fontSize'] = 11;
-                            this.chartData.dataSetsByTopic = mutationData;
-                            break;
-                        case 'totalDatasetsRangeTop':
-                            mutationData.datasets[0]['label'] = 'Zugriffe';
-                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
-                            this.chartData.dataSetsTopX = mutationData;
-                            break;
-                        case 'totalDatasetsCount':
-                            mutationData.datasets[0]['label'] = 'Anzahl';
-                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
-                            this.chartData.dataSetsByType = mutationData;
-                            break;
-                    }
-                    break;
+            if (mutation.type ==='SET_FILTERED_DATA') {
+                const mutationData = mutation.payload[1];
+
+                switch (mutation.payload[0]) {
+                    case 'totalTopicDatasets':
+                        mutationData.datasets[0]['key'] = 'doc_count';
+                        mutationData.datasets[0]['groups'] = ['key'];
+                        mutationData.datasets[0]['spacing'] = 2;
+                        mutationData.datasets[0]['borderWidth'] = 0.5;
+                        mutationData.datasets[0]['fontColor'] = 'black';
+                        mutationData.datasets[0]['fontSize'] = 11;
+                        this.chartData.dataSetsByTopic = mutationData;
+                        break;
+                    case 'totalDatasetsRangeTop':
+                        mutationData.datasets[0]['label'] = 'Zugriffe';
+                        mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                        this.chartData.dataSetsTopX = mutationData;
+                        break;
+                    case 'totalDatasetsCount':
+                        mutationData.datasets[0]['label'] = 'Anzahl';
+                        mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                        this.chartData.dataSetsByType = mutationData;
+                        break;
+                    case 'totalDownloads':
+                        this.chartData.totalDownloads = mutationData;
+                        break;
+                }
             }
         });
     }
 
-    async mounted() {
-        // Fetch initial dashboard data
-        // await this.$store.dispatch('fetchTotalDatasets');
-        // this.fetchTops('tab-top5-datasets');
-
-        // Set initial filters
-        await this.setFilters(['SOURCE', 'services_internet']);
-        await this.setFilters(['YEAR', [2017, 2019]]);
-        await this.setFilters(['MONTH', [1, 12]]);
-    }
-
-    async fetchTotalsByTopic(totalsTopic?: string) {
-        switch (totalsTopic) {
+    onSwitchTab(tab: string) {
+        switch (tab) {
             case 'tab-organisations':
-                totalsTopic ='organization';
+                this.fetchTotalsByTopic('organization');
                 break;
             case 'tab-topics':
-                totalsTopic ='theme';
+                this.fetchTotalsByTopic('theme');
                 break;
-        }
-        if (totalsTopic) {
-            await this.$store.dispatch('fetchTotalsByTopic', totalsTopic);
-        }
-    }
-
-    async fetchTotalsByType(totalsType?: string) {
-        switch (totalsType) {
             case 'tab-datasets':
-                totalsType = 'datasets';
+                this.fetchTotalsByType('datasets');
                 break;
             case 'tab-apps':
-                totalsType = 'apps';
+                this.fetchTotalsByType('apps');
                 break;
             case 'tab-sensordatasets':
-                // totalsType ='sensors';
-                totalsType = undefined;
+                // this.fetchTotalsByType('sensors');
                 break;
-        }
-        if (totalsType) {
-            await this.$store.dispatch('fetchTotalsByType', totalsType);
-        }
-    }
-
-    async fetchTops(topTopic?: string) {
-        switch (topTopic) {
             case 'tab-top5-apps':
-                topTopic ='apps';
+                this.fetchTops('apps');
                 break;
             case 'tab-top5-downloads':
-                topTopic ='downloads';
+                this.fetchTops('downloads');
                 break;
             case 'tab-top5-datasets':
-                topTopic ='datasets';
+                this.fetchTops('datasets');
                 break;
         }
-        if (topTopic) {
-            await this.$store.dispatch('fetchTops', topTopic);
+    }
+
+    onSwitchYearMonthTab(tab: string) {
+        const today = new Date();
+        const currentYear = `${today.getFullYear()}`;
+        const currentMonth = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+        const sliderOptionsYear = { min: '2014', max: currentYear, unit: 'year'};
+        const sliderOptionsMonth = { min: '2014-09', max: currentMonth, unit: 'month'};
+
+        switch (tab) {
+            case 'tab-downloads-year':
+                this.sliderOptions.downloads = sliderOptionsYear;
+                this.fetchDownloads(sliderOptionsYear);
+                break;
+            case 'tab-downloads-month':
+                this.sliderOptions.downloads = sliderOptionsMonth;
+                this.fetchDownloads(sliderOptionsMonth);
+                break;
         }
     }
 
-    getFilterOptions(dataset: string) {
-        if (!this.dashboardData[dataset]) {
-            return [];
+    rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
+        const unit = this.sliderOptions[chartId].unit;
+
+        switch (chartId) {
+            case 'downloads':
+                this.fetchDownloads({ min, max, unit });
+                break;
         }
-        // const accessor = this.meta[dataset].dataSeries.categoryAccessor;
-        // return this.dashboardData[dataset].map(value => value[accessor]);
     }
 
-    get dashboardData(): { [key: string]: Dataset } {
-        return this.$store.getters.dashboardData;
+    async fetchTotalsByTopic(topic: string) {
+        await this.$store.dispatch('fetchTotalsByTopic', topic);
     }
 
-    get loading(): boolean {
-        return this.$store.getters.loading;
+    async fetchTotalsByType(type: string) {
+        await this.$store.dispatch('fetchTotalsByType', type);
     }
 
-    setFilters(options: [string, any]) {
-        this.$store.commit('SET_FILTERS', options);
+    async fetchTops(topic: string ) {
+        await this.$store.dispatch('fetchTops', topic);
+    }
+
+    async fetchDownloads(params: { min: string, max: string, unit: string }) {
+        await this.$store.dispatch('fetchDownloads', params);
     }
 
     testSnackBar() {
@@ -539,50 +557,8 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
-    changeFilterRange(sliderId: string, unit: 'year' | 'month') {
-        const today = new Date();
-
-        if (unit === 'month') {
-            this.sliderOptions[sliderId] = {
-                unit: 'month',
-                min: '2019-07',
-                max: `${today.getFullYear()}-${today.getMonth()}`
-            };
-        } else {
-            this.sliderOptions[sliderId] = {
-                unit: 'year',
-                min: '2019',
-                max: `${today.getFullYear()}`
-            };
-        }
-
-        this.rangeForChartChanged(
-            sliderId,
-            [this.sliderOptions[sliderId].min, this.sliderOptions[sliderId].max]
-        );
-    }
-
     dialogResult(isPositive: boolean) {
         this.agreeDialogActive = false;
-    }
-
-    rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
-        const unit = this.sliderOptions[chartId].unit;
-        console.log(`date ranged changed for ${chartId}:`, min, max);
-
-        switch (unit) {
-            case 'year':
-                this.setFilters(['YEAR', [min, max]]);
-                break;
-            case 'month':
-                this.setFilters(['MONTH', [min, max]]);
-                break;
-        }
-    }
-
-    addDataPoint() {
-        let dataElement = {'val': 50, 'name': 'Fuz', 'val2': 1800};
-        this.$store.commit('ADD_DASH_ELEMENT', {dataElement: dataElement});
     }
 
     changeLanguage(lang: string) {
