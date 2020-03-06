@@ -290,23 +290,7 @@ export default class UDPC extends AbstractDashboard {
     countGroupedWithPlans = false;
     agreeDialogActive = false;
 
-    sliderOptions: { [key: string]: DateRangeSliderOptions } = {
-        downloads: {
-            unit: 'year',
-            min: '2014',
-            max: `${new Date().getFullYear()}`
-        },
-        datasets: {
-            unit: 'year',
-            min: '2014',
-            max: `${new Date().getFullYear()}`
-        },
-        apps: {
-            unit: 'year',
-            min: '2014',
-            max: `${new Date().getFullYear()}`
-        }
-    };
+    sliderOptions: { [key: string]: DateRangeSliderOptions } = {};
 
     didYouKnow = [
         'Fact 1',

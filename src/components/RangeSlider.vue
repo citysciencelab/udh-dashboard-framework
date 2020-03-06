@@ -34,6 +34,10 @@ export default class RangeSlider extends Vue {
     }
 
     @Watch('options') onOptionsChanged() {
+        if (!this.options) {
+            return;
+        }
+
         // parse min/max values
         let [minY, minM] = this.options.min.split('-');
         let [maxY, maxM] = this.options.max.split('-');
