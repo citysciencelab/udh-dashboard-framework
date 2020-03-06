@@ -189,13 +189,15 @@
                         </template>
                         <template slot="content">
                             <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
-                                <md-tab id="tab-access-topic-year" :md-label="$t('udpc.tabYear')">chart1</md-tab>
-                                <md-tab id="tab-access-topic-month" :md-label="$t('udpc.tabMonth')">chart2</md-tab>
+                                <md-tab id="tab-datasets-year" :md-label="$t('udpc.tabYear')"></md-tab>
+                                <md-tab id="tab-datasets-month" :md-label="$t('udpc.tabMonth')"></md-tab>
                             </md-tabs>
+                            <bar-chart :chartData="chartData.totalDatasets"
+                                       :chartOptions="chartOptions.totalDatasets"/>
                         </template>
                         <template slot="footer">
-                            <range-slider :options="sliderOptions.access"
-                                          @rangeChange="rangeForChartChanged('access', $event)"/>
+                            <range-slider :options="sliderOptions.datasets"
+                                          @rangeChange="rangeForChartChanged('datasets', $event)"/>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -292,7 +294,7 @@ export default class UDPC extends AbstractDashboard {
             min: '2014',
             max: `${new Date().getFullYear()}`
         },
-        access: {
+        datasets: {
             unit: 'year',
             min: '2014',
             max: `${new Date().getFullYear()}`
@@ -323,7 +325,37 @@ export default class UDPC extends AbstractDashboard {
         dataSetsByTopic: {},
         dataSetsTopX: {},
         dataSetsByType: {},
-        totalDownloads: {}
+        totalDownloads: {},
+        totalDatasets: {},
+    };
+
+    barChartConfigDefaults = {
+        title: {
+            display: false,
+        },
+        legend: {
+            display: false
+        },
+        responsive: true,
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    drawOnChartArea: false
+                },
+                ticks: {
+                    display: true,
+                    beginAtZero: true
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    drawOnChartArea: false
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
     };
 
     // TODO: make this more generic
@@ -393,34 +425,8 @@ export default class UDPC extends AbstractDashboard {
                 }]
             }
         },
-        totalDownloads: {
-            title: {
-                display: false,
-            },
-            legend: {
-                display: false
-            },
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    gridLines: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        display: true,
-                        beginAtZero: true
-                    }
-                }],
-                xAxes: [{
-                    gridLines: {
-                        drawOnChartArea: false
-                    },
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        },
+        totalDownloads: this.barChartConfigDefaults,
+        totalDatasets: this.barChartConfigDefaults,
     };
 
     created() {
@@ -458,8 +464,8 @@ export default class UDPC extends AbstractDashboard {
                         this.chartData.dataSetsByType = mutationData;
                         break;
                     case 'totalDownloads':
-                        this.chartData.totalDownloads = mutationData;
-                        break;
+                    case 'totalDatasets':
+                        this.chartData[mutation.payload[0]] = mutation.payload[1];
                 }
             }
         });
@@ -498,18 +504,31 @@ export default class UDPC extends AbstractDashboard {
         const today = new Date();
         const currentYear = `${today.getFullYear()}`;
         const currentMonth = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
-        const sliderOptionsYear = { min: '2014', max: currentYear, unit: 'year'};
-        const sliderOptionsMonth = { min: '2014-09', max: currentMonth, unit: 'month'};
 
         switch (tab) {
-            case 'tab-downloads-year':
+            case 'tab-downloads-year': {
+                const sliderOptionsYear = { min: '2014', max: currentYear, unit: 'year'};
                 this.sliderOptions.downloads = sliderOptionsYear;
-                this.fetchDownloads(sliderOptionsYear);
+                this.fetchDownloadsRange(sliderOptionsYear);
                 break;
-            case 'tab-downloads-month':
+            }
+            case 'tab-downloads-month': {
+                const sliderOptionsMonth = { min: '2014-09', max: currentMonth, unit: 'month'};
                 this.sliderOptions.downloads = sliderOptionsMonth;
-                this.fetchDownloads(sliderOptionsMonth);
+                this.fetchDownloadsRange(sliderOptionsMonth);
                 break;
+            }
+            case 'tab-datasets-year': {
+                const sliderOptionsYear = { min: '2018', max: currentYear, unit: 'year'};
+                this.sliderOptions.datasets = sliderOptionsYear;
+                this.fetchDatasetsRange(sliderOptionsYear);
+                break;
+            }
+            case 'tab-datasets-month': {
+                const sliderOptionsMonth = { min: '2018-11', max: currentMonth, unit: 'month'};
+                this.sliderOptions.datasets = sliderOptionsMonth;
+                this.fetchDatasetsRange(sliderOptionsMonth);
+            }
         }
     }
 
@@ -518,7 +537,10 @@ export default class UDPC extends AbstractDashboard {
 
         switch (chartId) {
             case 'downloads':
-                this.fetchDownloads({ min, max, unit });
+                this.fetchDownloadsRange({ min, max, unit });
+                break;
+            case 'datasets':
+                this.fetchDatasetsRange({ min, max, unit });
                 break;
         }
     }
@@ -535,8 +557,12 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloads(params: { min: string, max: string, unit: string }) {
+    async fetchDownloadsRange(params: { min: string, max: string, unit: string }) {
         await this.$store.dispatch('fetchDownloads', params);
+    }
+
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string }) {
+        await this.$store.dispatch('fetchDatasets', params);
     }
 
     testSnackBar() {
