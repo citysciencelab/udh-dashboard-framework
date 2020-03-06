@@ -39,9 +39,6 @@ export default class RangeSlider extends Vue {
         }
 
         // parse min/max values
-        let [minY, minM] = this.options.min.split('-');
-        let [maxY, maxM] = this.options.max.split('-');
-
         switch (this.options.unit) {
             case 'year':
                 // assume date format 'YYYY'
@@ -49,14 +46,16 @@ export default class RangeSlider extends Vue {
                 this.maxYear = parseInt(this.options.max, 10);
                 this.max = this.maxYear - this.minYear;
                 break;
-            case 'month':
+            case 'month': {
                 // assume date format 'YYYY-MM'
+                let [minY, minM] = this.options.min.split('-');
+                let [maxY, maxM] = this.options.max.split('-');
                 this.minYear = parseInt(minY, 10);
                 this.minMonth = parseInt(minM, 10);
                 this.maxYear = parseInt(maxY, 10);
                 this.maxMonth = parseInt(maxM, 10);
                 this.max = (this.maxYear - this.minYear) * 12 + this.maxMonth - this.minMonth;
-                break;
+            }
         }
 
         // adjust step size, build axis
@@ -69,16 +68,15 @@ export default class RangeSlider extends Vue {
         this.marks = {};
 
         for (let i = 0; i <= this.max; i += this.step) {
-            let year = this.minYear + Math.floor((this.minMonth - 1 + i) / 12);
-            let month = (this.minMonth + i - 1) % 12 + 1;
-
             switch (this.options.unit) {
                 case 'year':
                     this.marks[i] = (this.minYear + i).toString();
                     break;
-                case 'month':
+                case 'month': {
+                    let year = this.minYear + Math.floor((this.minMonth - 1 + i) / 12);
+                    let month = (this.minMonth + i - 1) % 12 + 1;
                     this.marks[i] = `${year}-${month < 10 ? '0' + month : month}`;
-                    break;
+                }
             }
         }
 
