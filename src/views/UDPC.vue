@@ -247,12 +247,12 @@
                     </div>
                     <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
                         <div class="row">
-                            <div class="offset-lg-6 col-lg-3 col-6 image-col">
+                            <div class="offset-lg-6 col-lg-3 col-6 image-col align-self-center">
                                 <a href="#" target="_blank">
                                     <img src="../assets/images/nl-lgv-logo@2x.png" alt="LGV">
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-6 image-col">
+                            <div class="col-lg-3 col-6 image-col align-self-center">
                                 <a href="#" target="_blank" onclick="window.open('http://www.urbandataplatform.hamburg/', '_blank').focus();">
                                     <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
                                 </a>
@@ -804,23 +804,6 @@ i {
     }
 
     .images-bottom-right {
-        @media (min-width: 459px) {
-            .image-col {
-                padding-top: 24px;
-                text-align: right;
-            }
-        }
-
-        @media (max-width: 458px) {
-            .image-col {
-                text-align: center;
-            }
-            img {
-                width: 180px;
-                padding-top: 20px;
-            }
-        }
-
         a {
             color: $hamburg-blue;
 
