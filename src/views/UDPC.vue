@@ -631,9 +631,10 @@ i {
 }
 
 .navbar {
-    height: 100px;
-    border-bottom: 30px solid $hamburg-blue-dark;
-    margin-bottom: 10px;
+    height: 120px;
+    border-bottom: 48px solid $hamburg-blue-dark;
+    margin-bottom: 35px;
+
     background-color: white;
 
     .navbar-brand {
@@ -781,6 +782,7 @@ i {
     margin-top: 15px;
     background-color: $hamburg-grey-background !important;
     color: $hamburg-blue-dark;
+    box-shadow: 0px -3px 6px #00000029;
 
     .row {
         min-height: 116px;
