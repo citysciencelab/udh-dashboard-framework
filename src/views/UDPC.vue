@@ -453,12 +453,12 @@ export default class UDPC extends AbstractDashboard {
                             break;
                         case 'totalDatasetsRangeTop':
                             mutationData.datasets[0]['label'] = 'Zugriffe';
-                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            mutationData.datasets[0]['backgroundColor'] = '#196CB1';
                             this.chartData.dataSetsTopX = mutationData;
                             break;
                         case 'totalDatasetsCount':
                             mutationData.datasets[0]['label'] = 'Anzahl';
-                            mutationData.datasets[0]['backgroundColor'] = '#f87979';
+                            mutationData.datasets[0]['backgroundColor'] = '#003063';
                             this.chartData.dataSetsByType = mutationData;
                             break;
                     }
