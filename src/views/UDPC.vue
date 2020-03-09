@@ -689,10 +689,16 @@ i {
         height: 44px;
         font-size: 11px;
         text-transform: none;
+        text-align: left;
         width: 50%;
         max-width: none;
 
+        .md-ripple {
+            padding: 0 10px;
+        }
+
         .md-button-content {
+            width: 100%;
             font-size: 16px;
             color: $hamburg-blue;
             font-weight: bold;
