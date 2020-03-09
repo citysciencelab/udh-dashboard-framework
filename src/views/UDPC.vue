@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg">
             <img class="hh-logo" src="../assets/images/_HH_Logo_2016.svg" alt="Hamburg Logo">
             <img class="hh-bug" src="../assets/images/Hamburg_Bug_NEU_RGB.png" alt="Hamburg Bug">
-            <span class="navbar-brand">Urban Data Platform</span>
+            <span class="navbar-brand">Urban Data Platform Cockpit</span>
         </nav>
 
         <div class="container-fluid">
@@ -621,7 +621,7 @@ export default class UDPC extends AbstractDashboard {
 @import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
 
 * {
-    font-family: 'HamburgSans';
+    font-family: 'Roboto';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -638,6 +638,7 @@ i {
 
     .navbar-brand {
         font-size: 26px;
+        font-weight: 300;
         color: $hamburg-blue-dark;
         padding-left: 5px;
         padding-top: 8px;

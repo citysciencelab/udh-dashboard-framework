@@ -1,26 +1,23 @@
-$font_path_hh: '~@/assets/fonts/HamburgSans/';
+$font_path_hh: '~@/assets/fonts/';
 
 @font-face {
-  font-family: 'HamburgSans';
-  src: url($font_path_hh + 'HamburgSans-Regular/HamburgSans-Regular.eot?');
-  src: url($font_path_hh + 'HamburgSans-Regular/HamburgSans-Regular.eot?#iefix') format('embedded-opentype'),
-  url($font_path_hh + 'HamburgSans-Regular/HamburgSans-Regular.woff') format('woff'),
-  url($font_path_hh + 'HamburgSans-Regular/HamburgSans-Regular.woff2') format('woff2'),
-  url($font_path_hh + 'HamburgSans-Regular/HamburgSans-Regular.ttf') format('truetype'),
-  url($font_path_hh + 'HamburgSans-Regular/HamburgSans-Regular.svg#HamburgSans-Regular') format('svg');
+  font-family: 'Roboto';
+  src: url($font_path_hh + 'Roboto/Roboto-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'HamburgSans';
-  src: url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.eot?');
-  src: url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.eot?#iefix') format('embedded-opentype'),
-  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.woff') format('woff'),
-  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.woff2') format('woff2'),
-  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.ttf') format('truetype'),
-  url($font_path_hh + 'HamburgSans-Bold/HamburgSans-Bold.svg#HamburgSans-Bold') format('svg');
+  font-family: 'Roboto';
+  src: url($font_path_hh + 'Roboto/Roboto-Bold.ttf') format('truetype');
   font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url($font_path_hh + 'Roboto/Roboto-Thin.ttf') format('truetype');
+  font-weight: 100;
   font-style: normal;
 }
 
