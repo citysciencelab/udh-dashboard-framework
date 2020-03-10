@@ -253,7 +253,7 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-6 image-col">
-                                <a href="#" target="_blank" onclick="window.open('http://www.urbandataplatform.hamburg/', '_blank').focus();">
+                                <a href="http://www.urbandataplatform.hamburg/" target="_blank">
                                     <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
                                 </a>
                             </div>
