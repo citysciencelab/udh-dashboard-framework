@@ -468,14 +468,15 @@ export default class UDPC extends AbstractDashboard {
                         mutationData.datasets[0]['borderWidth'] = 0.5;
                         mutationData.datasets[0]['fontColor'] = 'white';
                         mutationData.datasets[0]['fontSize'] = 11;
-                        mutationData.datasets[0]['backgroundColor'] = function(ctx: Datum) {
+                        mutationData.datasets[0]['backgroundColor'] = function(ctx: CTX) {
                             let colorMap = [
                                 "#003063",  "#9FB1C4", "#40648B",
                                 "#7F97B0", "#7FADD4", "#BFD6E9",
                                 "#2B88D8", "#005CA9", "#BFD6E9",
                                 "#FFF4CE", "#DFF6DD",
                             ];
-                            let index:number = ctx['dataIndex'];
+
+                            let index:number = ctx.dataIndex ? ctx.dataIndex : 0;
                             if (index > colorMap.length - 1) {
                                 let colorIdx = index % colorMap.length;
                                 let quotient = Math.floor(index/colorMap.length);
