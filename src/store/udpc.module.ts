@@ -66,51 +66,18 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_LOADING', false);
         },
-        fetchDownloads: async (context, params: { min: string, max: string, unit: string }) => {
+        fetchRangefulData: async (context, params: { min: string, max: string, unit: string, category: string, chartId: string }) => {
             sanitizeRangefulParams(params);
 
-            const aggregations = await elastic.getRangeful('', '', params.min, params.max, 'downloads', undefined, params.unit);
+            const aggregations = await elastic.getRangeful('', '', params.min, params.max, params.category, undefined, params.unit);
 
-            context.commit('SET_FILTERED_DATA', ['totalDownloads', {
+            context.commit('SET_FILTERED_DATA', [params.chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
                     return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
                 }),
                 datasets: [{
                     data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
-                    label: 'Anzahl',
-                    backgroundColor: '#7F97B0'
-                }]
-            }]);
-        },
-        fetchDatasets: async (context, params: { min: string, max: string, unit: string }) => {
-            sanitizeRangefulParams(params);
-
-            const aggregations = await elastic.getRangeful('', '', params.min, params.max, 'datasets', undefined, params.unit);
-
-            context.commit('SET_FILTERED_DATA', ['totalDatasets', {
-                labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
-                    return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
-                }),
-                datasets: [{
-                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
-                    label: 'Anzahl',
-                    backgroundColor: '#196CB1'
-                }]
-            }]);
-        },
-        fetchApps: async (context, params: { min: string, max: string, unit: string }) => {
-            sanitizeRangefulParams(params);
-
-            const aggregations = await elastic.getRangeful('', '', params.min, params.max, 'apps', undefined, params.unit);
-
-            context.commit('SET_FILTERED_DATA', ['totalApps', {
-                labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
-                    return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
-                }),
-                datasets: [{
-                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
-                    label: 'Anzahl',
-                    backgroundColor: '#40648B'
+                    label: 'Anzahl'
                 }]
             }]);
         },

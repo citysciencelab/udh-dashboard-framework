@@ -452,9 +452,16 @@ export default class UDPC extends AbstractDashboard {
                         this.chartData.dataSetsByType = mutationData;
                         break;
                     case 'totalDownloads':
+                        mutationData.datasets[0].backgroundColor = '#7F97B0';
+                        this.chartData.totalDownloads = mutationData;
+                        break;
                     case 'totalDatasets':
+                        mutationData.datasets[0].backgroundColor = '#196CB1';
+                        this.chartData.totalDatasets = mutationData;
+                        break;
                     case 'totalApps':
-                        this.chartData[mutation.payload[0]] = mutation.payload[1];
+                        mutationData.datasets[0].backgroundColor = '#40648B';
+                        this.chartData.totalApps = mutationData;
                 }
             }
         });
@@ -548,16 +555,22 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange(params: { min: string, max: string, unit: string }) {
-        await this.$store.dispatch('fetchDownloads', params);
+    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+        params.chartId = 'totalDownloads';
+        params.category = 'downloads';
+        await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string }) {
-        await this.$store.dispatch('fetchDatasets', params);
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+        params.chartId = 'totalDatasets';
+        params.category = 'datasets';
+        await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange(params: { min: string, max: string, unit: string }) {
-        await this.$store.dispatch('fetchApps', params);
+    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+        params.chartId = 'totalApps';
+        params.category = 'apps';
+        await this.$store.dispatch('fetchRangefulData', params);
     }
 
     testSnackBar() {
