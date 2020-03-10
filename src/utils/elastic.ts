@@ -32,7 +32,7 @@ const elastic = {
         "top": 2,
         "interval": "year"
      */
-    async getRangeful(theme: string, org: string, from: string, to: string, category: string, top: number, interval: string) {
+    async getRangeful(theme: string, org: string, from: string, to: string, category: string, top?: number, interval?: string) {
         elastic.validateDate(from);
         elastic.validateDate(to);
         elastic.validateCategory(category);
@@ -57,8 +57,8 @@ const elastic = {
         }
     },
 
-    validateInterval: (category: string) => {
-        if (['month', 'year'].indexOf(category) === -1) {
+    validateInterval: (interval?: string) => {
+        if (interval && ['month', 'year'].indexOf(interval) === -1) {
             throw new Error(`Invalid interval. Must be 'month' or 'year'.`);
         }
     }
