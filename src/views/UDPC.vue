@@ -247,12 +247,12 @@
                     </div>
                     <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
                         <div class="row">
-                            <div class="offset-lg-6 col-lg-3 col-6 image-col align-self-center">
+                            <div class="offset-lg-6 col-lg-3 col-6 image-col">
                                 <a href="#" target="_blank">
                                     <img src="../assets/images/nl-lgv-logo@2x.png" alt="LGV">
                                 </a>
                             </div>
-                            <div class="col-lg-3 col-6 image-col align-self-center">
+                            <div class="col-lg-3 col-6 image-col">
                                 <a href="#" target="_blank" onclick="window.open('http://www.urbandataplatform.hamburg/', '_blank').focus();">
                                     <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
                                 </a>
@@ -809,12 +809,12 @@ i {
     box-shadow: 0px -3px 6px #00000029;
 
     .row {
-        min-height: 116px;
+        min-height: 122px;
     }
 
     .links-bottom-left {
         text-align: left;
-        padding-bottom: 10px;
+        padding-bottom: 22px;
 
         > a {
             padding-right: 30px !important;
@@ -828,11 +828,29 @@ i {
     }
 
     .images-bottom-right {
+
+        @media (min-width: 459px) {
+            .image-col {
+                padding-bottom: 22px;
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 458px) {
+            .image-col {
+                text-align: center;
+            }
+            img {
+                width: 180px;
+                padding-top: 20px;
+            }
+        }
+
         a {
             color: $hamburg-blue;
 
             img {
-                max-height: 70px;
+                max-height: 62px;
             }
         }
     }
