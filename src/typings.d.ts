@@ -55,7 +55,7 @@ interface IUtils {
 }
 
 interface DateRangeSliderOptions {
-  unit: 'month' | 'year';
+  unit: string;
   min: string;
   max: string;
 }
