@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import * as d3 from 'd3';
 import AbstractChart from './AbstractChart.vue';
 
@@ -31,10 +31,10 @@ export default class LineChart extends AbstractChart {
         let y = d3.scaleLinear()
             .domain([minVal, maxVal])
             .range([this.height, 0]);
-        let yAxis = d3.axisLeft(y);
+        // let yAxis = d3.axisLeft(y);
         let x = this.$utils.chart.timeScale(this.ds, this.options.dim2, this.width);
-        let xAxis = d3.axisBottom<Date>(x)
-            .tickFormat(d3.timeFormat('%y-%b')).tickValues(this.ds.map(d => d.date));
+        // let xAxis = d3.axisBottom<Date>(x)
+        //     .tickFormat(d3.timeFormat('%y-%b')).tickValues(this.ds.map(d => d.date));
 
         svg.selectAll('path').remove();
         svg.selectAll('g').remove();

@@ -335,7 +335,7 @@ export default class UDPC extends AbstractDashboard {
             { label: 'Fact 2', link: '' },
             { label: 'Fact 3', link: '' },
             { label: 'Fact 4', link: '' },
-            { label: 'Fact 5', link: '' },        
+            { label: 'Fact 5', link: '' },
         ],
         action: null
     };
@@ -462,7 +462,7 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
-        this.$store.subscribe((mutation, state) => {
+        this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
                 return;
             }
@@ -654,7 +654,7 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
-    dialogResult(isPositive: boolean) {
+    dialogResult() {
         this.agreeDialogActive = false;
     }
 

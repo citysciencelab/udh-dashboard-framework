@@ -1,7 +1,12 @@
 {
   "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:vue/essential",
     "@vue/typescript"
+  ],
+  "plugins": [
+    "@typescript-eslint"
   ],
   "parser": "vue-eslint-parser",
   "parserOptions": {

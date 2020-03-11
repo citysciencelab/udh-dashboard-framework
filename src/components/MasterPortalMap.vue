@@ -7,8 +7,8 @@
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
     import * as mpapi from "masterportalAPI";
-    import {Layer} from 'ol/layer';
-    import {Map} from 'ol';
+    import {Layer} from 'ol/layer'; // eslint-disable-line no-unused-vars
+    import {Map} from 'ol';         // eslint-disable-line no-unused-vars
 
     @Component({})
     export default class MasterPortalMap extends Vue {

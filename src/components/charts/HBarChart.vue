@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import * as d3 from 'd3';
 import _d3tip from 'd3-tip';
-import { Tooltip } from 'd3/types/d3';
+import { Tooltip } from 'd3/types/d3';  // eslint-disable-line no-unused-vars
 import AbstractChart from './AbstractChart.vue';
 
 const d3tip = _d3tip as () => Tooltip;

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Vue } from 'vue-property-decorator';
 
 export default abstract class AbstractDashboard extends Vue {
 

@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { TimeInterval } from 'd3';
 
 @Component({})
 export default class DidYouKnow extends Vue {

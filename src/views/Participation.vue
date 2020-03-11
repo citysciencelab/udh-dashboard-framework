@@ -161,7 +161,7 @@ export default class Participation extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
 
         this.$store.registerModule('participation', partStore);
-        this.$store.subscribe((mutation, state) => {
+        this.$store.subscribe((mutation) => {
 
             switch (mutation.type) {
                 case 'SET_INITIAL_DATA':
@@ -202,7 +202,7 @@ export default class Participation extends AbstractDashboard {
     *   Vuex store ist set from the MultiSelect itself
     *   @param the selected elements - not used in this dashboard
     */
-    filterChanged(eventData: string[]) {
+    filterChanged() {
         this.recalculate();
     }
 

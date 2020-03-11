@@ -5,10 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import * as d3 from 'd3';
 import AbstractChart from './AbstractChart.vue';
-import { HierarchyNode } from 'd3';
 
 @Component({})
 export default class TreeMapChart extends AbstractChart {
@@ -40,15 +39,13 @@ export default class TreeMapChart extends AbstractChart {
 
         let root = <d3.HierarchyRectangularNode<Datum>>d3.stratify<Datum>()
             .id(d => d[this.descriptor])
-            .parentId(d => d[parentName])
-            (dsClone);
+            .parentId(d => d[parentName])(dsClone);
         root.sum(d => d[this.metric]);
 
         d3.treemap<Datum>()
             .size([this.width, this.height])
             .padding(4)
-            .round(true)
-            (root);
+            .round(true)(root);
 
         svg.selectAll('rect')
             .data(root.leaves())

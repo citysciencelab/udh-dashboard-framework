@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import * as d3 from 'd3';
 import AbstractChart from './AbstractChart.vue';
 
@@ -35,13 +35,13 @@ export default class ScatterPlot extends AbstractChart {
             .domain([minVal, maxVal])
             .range([this.height, 0]);
 
-        let yAxis = d3.axisLeft(yScale);
+        // let yAxis = d3.axisLeft(yScale);
 
         let xScale = d3.scaleLinear()
             .domain([minVal2, maxVal2])
             .range([0, this.width]);
 
-        let xAxis = d3.axisBottom(xScale);
+        // let xAxis = d3.axisBottom(xScale);
 
         svg.selectAll('g').remove();
 
