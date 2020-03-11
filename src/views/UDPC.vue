@@ -182,12 +182,16 @@
                                 <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')"></md-tab>
                                 <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')"></md-tab>
                             </md-tabs>
-                            <bar-chart :chartData="chartData.totalDownloads"
-                                       :chartOptions="chartOptions.totalDownloads"/>
+                            <div class="chart-holder">
+                                <bar-chart :chartData="chartData.totalDownloads"
+                                           :chartOptions="chartOptions.totalDownloads"/>
+                            </div>
                         </template>
                         <template slot="footer">
+                            <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
                             <range-slider :options="sliderOptions.downloads"
                                           @rangeChange="rangeForChartChanged('downloads', $event)"/>
+                            <span class="right">{{ $t('udpc.sliderLater') }}</span>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -204,12 +208,16 @@
                                 <md-tab id="tab-datasets-year" :md-label="$t('udpc.tabYear')"></md-tab>
                                 <md-tab id="tab-datasets-month" :md-label="$t('udpc.tabMonth')"></md-tab>
                             </md-tabs>
-                            <bar-chart :chartData="chartData.totalDatasets"
-                                       :chartOptions="chartOptions.totalDatasets"/>
+                            <div class="chart-holder">
+                                <bar-chart :chartData="chartData.totalDatasets"
+                                           :chartOptions="chartOptions.totalDatasets"/>
+                            </div>
                         </template>
                         <template slot="footer">
+                            <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
                             <range-slider :options="sliderOptions.datasets"
                                           @rangeChange="rangeForChartChanged('datasets', $event)"/>
+                            <span class="right">{{ $t('udpc.sliderLater') }}</span>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -226,12 +234,16 @@
                                 <md-tab id="tab-apps-year" :md-label="$t('udpc.tabYear')"></md-tab>
                                 <md-tab id="tab-apps-month" :md-label="$t('udpc.tabMonth')"></md-tab>
                             </md-tabs>
-                            <bar-chart :chartData="chartData.totalApps"
-                                       :chartOptions="chartOptions.totalApps"/>
+                            <div class="chart-holder">
+                                <bar-chart :chartData="chartData.totalApps"
+                                           :chartOptions="chartOptions.totalApps"/>
+                            </div>
                         </template>
                         <template slot="footer">
+                            <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
                             <range-slider :options="sliderOptions.apps"
                                           @rangeChange="rangeForChartChanged('apps', $event)"/>
+                            <span class="right">{{ $t('udpc.sliderLater') }}</span>
                         </template>
                     </dashboard-tile>
                 </div>
@@ -602,21 +614,24 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, isShowMarks: boolean }) {
         params.chartId = 'totalDownloads';
         params.category = 'downloads';
+        params.isShowMarks = false;
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, isShowMarks: boolean }) {
         params.chartId = 'totalDatasets';
         params.category = 'datasets';
+        params.isShowMarks = false;
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, isShowMarks: boolean }) {
         params.chartId = 'totalApps';
         params.category = 'apps';
+        params.isShowMarks = false;
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
@@ -813,10 +828,38 @@ i {
             padding-top: 15px;
         }
     }
+
+    .md-card-actions {
+        .range-display {
+            color: $hamburg-chart !important;
+        }
+        span {
+            width: 80px;
+            margin: 17px 10px 0 10px;
+            font-size: 14px;
+            color: $hamburg-chart;
+        }
+    }
+}
+
+.ant-slider {
+    width: auto;
+    margin: 0;
+
+    .ant-slider-rail, .ant-slider-track {
+        background-color: #707070 !important;
+    }
+
+    .ant-slider-handle {
+        border-radius: 0 !important;
+        width: 2px !important;
+        border-color: $hamburg-red !important;
+        margin-left: -3px !important;
+    }
 }
 
 .udpc-bottom-bar {
-    margin-top: 15px;
+    margin-top: 40px;
     background-color: $hamburg-grey-background !important;
     color: $hamburg-blue-dark;
     box-shadow: 0px -3px 6px #00000029;

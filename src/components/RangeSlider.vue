@@ -1,12 +1,17 @@
 <template>
-    <a-slider range
-              v-model="defaults"
-              :step="step"
-              :max="max"
-              :min="min"
-              :marks="marks"
-              :tip-formatter="tipFormat"
-              @afterChange="onAfterChange" />
+    <div style="width: 100%">
+        <div v-if="!isShowMarks" class="range-display">
+            {{currentValues[0]}} - {{currentValues[1]}}
+        </div>
+        <a-slider range
+                  v-model="defaults"
+                  :step="step"
+                  :max="max"
+                  :min="min"
+                  :marks="isShowMarks ? marks : {}"
+                  :tip-formatter="tipFormat"
+                  @afterChange="onAfterChange" />
+    </div>
 </template>
 
 <script lang="ts">
@@ -27,6 +32,8 @@ export default class RangeSlider extends Vue {
     max = 1; // difference between first and last year/month
     step = 1;
     defaults: number[] = [];
+    currentValues: string[] = [];
+    isShowMarks = true;
     marks: { [key: number]: string } = {};
 
     mounted() {
@@ -38,7 +45,7 @@ export default class RangeSlider extends Vue {
             return;
         }
 
-        // parse min/max values
+        // parse min/max currentValues
         switch (this.options.unit) {
             case 'year':
                 // assume date format 'YYYY'
@@ -65,6 +72,7 @@ export default class RangeSlider extends Vue {
             this.step *= 2;
             numberOfTicks = Math.floor(this.max / this.step);
         }
+        this.isShowMarks = this.options.isShowMarks;
         this.marks = {};
 
         for (let i = 0; i <= this.max; i += this.step) {
@@ -81,6 +89,7 @@ export default class RangeSlider extends Vue {
         }
 
         this.defaults = [this.min, this.max];
+        this.currentValues = [this.tipFormat(this.min), this.tipFormat(this.max)]
     }
 
     private tipFormat(value: number) {
@@ -88,6 +97,7 @@ export default class RangeSlider extends Vue {
     }
 
     private onAfterChange(values: number[]) {
+        this.currentValues = [this.tipFormat(values[0]), this.tipFormat(values[1])]
         // return string representations of the selected dates
         this.$emit('rangeChange', values.map(value => this.marks[value]));
     }
