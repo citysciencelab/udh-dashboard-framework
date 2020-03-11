@@ -12,6 +12,13 @@ export default class HorizontalBarChart extends Vue {
     @Watch('chartData') onChartDataChanged() {
         this.renderChart(this.chartData, this.chartOptions);
     }
-
+    mounted () {
+        this.addPlugin({
+            id: 'my-plugin',
+            beforeInit: function (chart: any) {
+                console.log("Maybe a plugin can solve the problem?")
+            }
+        })
+    }
 }
 </script>

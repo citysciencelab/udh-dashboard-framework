@@ -19,6 +19,7 @@ declare module 'vue/types/vue' {
     interface Vue {
       $utils: IUtils
       renderChart(chartData: Chart.ChartData, options?: Chart.ChartOptions): void
+      addPlugin (plugin?: object): void
     }
   }
 

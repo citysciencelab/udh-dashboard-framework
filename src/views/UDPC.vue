@@ -382,6 +382,45 @@ export default class UDPC extends AbstractDashboard {
             },
             legend: {
                 display: false
+            },
+            animation: {
+                duration: 0,
+                onComplete: function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+                    ctx.textBaseline = 'bottom';
+                    console.log("tree")
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function (bar, index) {
+                            var data = dataset.data[index];
+                            let text = data.g;
+
+                            if (data.w < 80) {
+                                text = '...';
+                            } else {
+                                let isLabelCut = false;
+                                while (ctx.measureText(text).width > data.w - 60) {
+                                    text = text.substr(0, text.length -1);
+                                    if (text.length < 5) {
+                                        text = '...';
+                                        isLabelCut = false;
+                                        break;
+                                    }
+                                    isLabelCut = true;
+                                }
+
+                                if (isLabelCut) text = text + '...';
+                            }
+
+
+                            ctx.fillText(text, bar._model.x, bar._model.y + 15 - bar._model.height / 2);
+                        });
+                    });
+                }
             }
         },
         dataSetsByType: {
@@ -426,9 +465,9 @@ export default class UDPC extends AbstractDashboard {
                         display: false
                     },
                     ticks: {
+                        mirror: true,
                         display: false,
                         beginAtZero: true,
-                        fontColor: '#707070'
                     }
                 }],
                 xAxes: [{
@@ -439,6 +478,22 @@ export default class UDPC extends AbstractDashboard {
                         beginAtZero: true
                     }
                 }]
+            },
+            animation: {
+                duration: 0,
+                onComplete: function () {
+                    let chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+                    ctx.textBaseline = 'bottom';
+
+                    let meta = chartInstance.controller.getDatasetMeta(0);
+                    meta.data.forEach(function (bar, index) {
+                        let textWidth = ctx.measureText(bar._model.label).width;
+                        ctx.fillText(bar._model.label, 16 + textWidth/2, bar._model.y - 13);
+                    });
+                }
             }
         },
         totalDownloads: this.barChartConfigDefaults,
