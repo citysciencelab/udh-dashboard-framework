@@ -1,5 +1,3 @@
-import {ChartDataSets} from "chart.js";
-
 type Datum = { [key: string]: any };
 
 interface TreeDatum extends Datum {
@@ -30,7 +28,7 @@ type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
 type CTX = {
   chart?: Chart;
   dataIndex?: number;
-  dataset?: ChartDataSets
+  dataset?: Chart.ChartDataSets
   datasetIndex?: number;
 }
 
