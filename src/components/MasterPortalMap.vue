@@ -1,5 +1,5 @@
 <template>
-    <div id="map-div-id" v-bind:style="mapStyle"></div>
+    <div id="map-div-id" v-bind:style="mapStyle" ref="map"></div>
 </template>
 
 <script lang="ts">
@@ -53,6 +53,13 @@
                 ...this.portal,
                 layerConf: this.services
             });
+
+            window.addEventListener('resize', this.onResize.bind(this));
+            this.onResize();
+        }
+
+        destroyed() {
+            window.removeEventListener('resize', this.onResize.bind(this));
         }
 
         showFeaturesInMap() {
@@ -82,12 +89,18 @@
         @Watch('md_id') onMdIdChanged() {
             this.createLayerByMdId();
         }
+
+        onResize() {
+            this.map.setSize([0, 0]);
+            setTimeout(() => {
+                 this.map.setSize([(this.$refs.map as Element).clientWidth, (this.$refs.map as Element).clientHeight]);
+            }, 5);
+        }
     }
 </script>
 
 <style scoped>
     #map-div-id {
-        height: 100% !important;
-        width: 100% !important;
+        height: 100%;
     }
 </style>
