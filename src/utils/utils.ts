@@ -165,17 +165,12 @@ export function aggregateData(ds: Dataset, descriptor: string, metric: string): 
 }
 
 export function countData(ds: Dataset, descriptor: string): Dataset {
-    let countData = [];
-    for (const item of ds) {
-        const key = item[descriptor];
-        let existingElement: Datum = countData.find((data: Datum) => data[descriptor] === key) as Datum;
-        if (existingElement) {
-            existingElement.count++;
-        } else {
-            const newElement: { [key: string]: any } = {'count' : 1};
-            newElement[descriptor] = key;
-            countData.push(newElement);
+    return ds.reduce((countData: Dataset, datum: Datum) => {
+        const match: any = countData.find((item: Datum) => item[descriptor] === datum[descriptor]);
+        if (match) {
+            match.count += 1;
+            return countData;
         }
-    }
-    return countData;
+        return [...countData,  {[descriptor]: datum[descriptor], count: 1}];
+    }, [])
 }

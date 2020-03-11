@@ -20,6 +20,11 @@ Create a new vuex storage module in the store folder.
 The storage module should handle your view specific data request and processing.
 The storage module should be lazy loaded in the corresponding view - this way it will only be loaded when used.
 
+## MasterportalAPI
+
+Uses the lightweight [MasterportalAPI](https://bitbucket.org/geowerkstatt-hamburg/masterportalapi.git) to create maps inside the dashboard, that visualize data and allow for interaction between dashboard and map.
+Vue Dashboard uses the MasterportalAPI fork from [CityScienceLab](https://bitbucket.org/dasc3290/masterportalapi-csl.git).
+A full documentation of all MasterportalAPI features and their interaction with the vue dashboard can be found there.
 
 ### Compiles and hot-reloads for development
 ```

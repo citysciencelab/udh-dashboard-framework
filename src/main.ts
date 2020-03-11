@@ -12,6 +12,7 @@ import VueMaterial from 'vue-material';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
+import { messages } from './messages/messages.module';
 import utils from './utils/utils';
 
 // Module augmentations for Vue
@@ -47,6 +48,7 @@ Vue.component('country-flag', CountryFlag);
 const i18n = new VueI18n({
     locale: 'en', // set locale
     fallbackLocale: 'de',
+    messages, // set locale messages
 });
 
 new Vue({

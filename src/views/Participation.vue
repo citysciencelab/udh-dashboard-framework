@@ -72,6 +72,10 @@
                         <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
                     </template>
                     <template slot="content">
+                        <master-portal-map v-bind:services="services"
+                            v-bind:portal="portal"
+                            v-bind:featureData="dataAsFeatures"
+                        />
                     </template>
                     <template slot="footer">
                         <div class="notice">this data is supported the JBe foundation</div>
@@ -95,6 +99,10 @@ import TreeMapChart from '../components/charts/chartjs/TreeMap.vue';
 import partStore from '@/store/participation.module';
 import AbstractDashboard from '@/views/AbstractDashboard.vue';
 import { messages } from '@/messages/messages.participation.module';
+import MasterPortalMap from "@/components/MasterPortalMap.vue";
+import portalConfig from "@/assets/map-config/portal.json";
+import servicesConfig from "@/assets/map-config/services.json";
+import { FeatureSet } from '../utils/wfs';
 
 @Component({
     components: {
@@ -102,7 +110,8 @@ import { messages } from '@/messages/messages.participation.module';
         MultiSelect,
         BarChart,
         HorizontalBarChart,
-        TreeMapChart
+        TreeMapChart,
+        MasterPortalMap
     }
 })
 export default class Participation extends AbstractDashboard {
@@ -138,6 +147,9 @@ export default class Participation extends AbstractDashboard {
             maintainAspectRatio: false
         }
     };
+    dataAsFeatures: FeatureSet = new FeatureSet();
+    portal: object = portalConfig;
+    services: object = servicesConfig;
 
     async mounted() {
         // fetch the initial dashboard data
@@ -154,12 +166,7 @@ export default class Participation extends AbstractDashboard {
             switch (mutation.type) {
                 case 'SET_INITIAL_DATA':
                     if (mutation.payload[0] === 'participationData') {
-                        if (this.$refs['districtSelect']) {
-                            (this.$refs['districtSelect'] as any).updateComponent();
-                        }
-                        if (this.$refs['originatorSelect']) {
-                            (this.$refs['originatorSelect'] as any).updateComponent();
-                        }
+                        this.dataAsFeatures = mutation.payload[1];
                     }
                     break;
                 case 'SET_FILTERED_DATA':
@@ -201,12 +208,6 @@ export default class Participation extends AbstractDashboard {
 
     resetFilters() {
         this.$store.commit('SET_FILTERS_NONE');
-        if (this.$refs['districtSelect']) {
-            (this.$refs['districtSelect'] as any).resetComponent();
-        }
-        if (this.$refs['originatorSelect']) {
-            (this.$refs['originatorSelect'] as any).resetComponent();
-        }
         this.recalculate();
     }
 

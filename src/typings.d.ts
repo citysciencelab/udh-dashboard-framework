@@ -1,5 +1,3 @@
-import {ChartDataSets} from "chart.js";
-
 type Datum = { [key: string]: any };
 
 interface TreeDatum extends Datum {
@@ -11,6 +9,18 @@ interface TreeDatum extends Datum {
 
 type Dataset = Datum[];
 
+declare class FeatureSet extends Array {
+  getProperties(): Dataset
+}
+
+interface MapData {
+  services: { [key: string]: any },
+  portal: { [key: string]: any },
+  features?: FeatureSet,
+  geoJson?: GeoJSON.GeoJSON,
+  md_id?: string
+}
+
 type ChartOptions = { dim: string, dim2: string };
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
@@ -18,12 +28,12 @@ type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
 type CTX = {
   chart?: Chart;
   dataIndex?: number;
-  dataset?: ChartDataSets
+  dataset?: Chart.ChartDataSets
   datasetIndex?: number;
 }
 
 interface DashboardState {
-  dashboardData: { [key: string]: Dataset };
+  dashboardData: { [key: string]: Dataset | FeatureSet};
   filteredData: { [key: string]: Chart.ChartData };
   filters: { [key: string]: any };
   loading: boolean;
@@ -69,3 +79,7 @@ interface DateRangeSliderOptions {
   max: string;
 }
 
+interface DidYouKnowData {
+  items: { label: string, link: string }[],
+  action: string|null
+}
