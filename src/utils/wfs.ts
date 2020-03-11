@@ -1,6 +1,5 @@
 import WFS from 'ol/format/WFS';
 import {registerProjections} from './projections';
-import * as mpapi from "masterportalAPI";
 
 export default {
     get: (wfsUrl: string, wfsTypename: string, options: { [key: string]: string|string[]  }) => {
