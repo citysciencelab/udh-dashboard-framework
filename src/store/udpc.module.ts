@@ -67,6 +67,21 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_LOADING', false);
         },
+        fetchRangefulData: async (context, params: { min: string, max: string, unit: string, category: string, chartId: string }) => {
+            sanitizeRangefulParams(params);
+
+            const aggregations = await elastic.getRangeful('', '', params.min, params.max, params.category, undefined, params.unit);
+
+            context.commit('SET_FILTERED_DATA', [params.chartId, {
+                labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
+                    return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
+                }),
+                datasets: [{
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
+                    label: 'Anzahl'
+                }]
+            }]);
+        },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
             const filteredData = context.state.dashboardData[id].filter(filterFunction);
@@ -78,3 +93,15 @@ const udpcModule: Module<UDPCState, RootState> = {
 };
 
 export default udpcModule;
+
+function sanitizeRangefulParams(params: { min: string, max: string, unit: string }) {
+    // API requires 'YYYY-MM' format
+    if (params.unit === 'year') {
+        if (params.min.length === 4) {
+            params.min += '-01';
+        }
+        if (params.max.length === 4) {
+            params.max += '-01';
+        }
+    }
+}

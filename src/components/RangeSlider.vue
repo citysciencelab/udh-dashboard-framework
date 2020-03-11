@@ -5,7 +5,7 @@
               :max="max"
               :min="min"
               :marks="marks"
-              :tipFormatter="tipFormat"
+              :tip-formatter="tipFormat"
               @afterChange="onAfterChange" />
 </template>
 
@@ -34,6 +34,10 @@ export default class RangeSlider extends Vue {
     }
 
     @Watch('options') onOptionsChanged() {
+        if (!this.options) {
+            return;
+        }
+
         // parse min/max values
         switch (this.options.unit) {
             case 'year':
@@ -42,7 +46,7 @@ export default class RangeSlider extends Vue {
                 this.maxYear = parseInt(this.options.max, 10);
                 this.max = this.maxYear - this.minYear;
                 break;
-            case 'month':
+            case 'month': {
                 // assume date format 'YYYY-MM'
                 let [minY, minM] = this.options.min.split('-');
                 let [maxY, maxM] = this.options.max.split('-');
@@ -51,21 +55,28 @@ export default class RangeSlider extends Vue {
                 this.maxYear = parseInt(maxY, 10);
                 this.maxMonth = parseInt(maxM, 10);
                 this.max = (this.maxYear - this.minYear) * 12 + this.maxMonth - this.minMonth;
-                break;
+            }
         }
 
-        // build scale and marks
+        // adjust step size, build axis
+        this.step = 1;
+        let numberOfTicks = this.max + 1;
+        while (numberOfTicks > 12) {
+            this.step *= 2;
+            numberOfTicks = Math.floor(this.max / this.step);
+        }
         this.marks = {};
-        for (let i = 0; i <= this.max - this.min; i += this.step) {
+
+        for (let i = 0; i <= this.max; i += this.step) {
             switch (this.options.unit) {
                 case 'year':
                     this.marks[i] = (this.minYear + i).toString();
                     break;
-                case 'month':
+                case 'month': {
                     let year = this.minYear + Math.floor((this.minMonth - 1 + i) / 12);
                     let month = (this.minMonth + i - 1) % 12 + 1;
                     this.marks[i] = `${year}-${month < 10 ? '0' + month : month}`;
-                    break;
+                }
             }
         }
 

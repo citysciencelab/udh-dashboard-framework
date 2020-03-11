@@ -1,3 +1,5 @@
+import {ChartDataSets} from "chart.js";
+
 type Datum = { [key: string]: any };
 
 interface TreeDatum extends Datum {
@@ -24,6 +26,13 @@ interface MapData {
 type ChartOptions = { dim: string, dim2: string };
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
+
+type CTX = {
+  chart?: Chart;
+  dataIndex?: number;
+  dataset?: ChartDataSets
+  datasetIndex?: number;
+}
 
 interface DashboardState {
   dashboardData: { [key: string]: Dataset | FeatureSet};
@@ -67,7 +76,7 @@ interface IUtils {
 }
 
 interface DateRangeSliderOptions {
-  unit: 'month' | 'year';
+  unit: string;
   min: string;
   max: string;
 }
