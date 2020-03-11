@@ -97,9 +97,12 @@ export default class RangeSlider extends Vue {
     }
 
     private onAfterChange(values: number[]) {
-        this.currentValues = [this.tipFormat(values[0]), this.tipFormat(values[1])]
-        // return string representations of the selected dates
-        this.$emit('rangeChange', values.map(value => this.marks[value]));
+        let newValues = [this.tipFormat(values[0]), this.tipFormat(values[1])];
+        if (newValues[0] !== this.currentValues[0] || newValues[1] !== this.currentValues[1] ) {
+            this.currentValues = newValues;
+            // return string representations of the selected dates
+            this.$emit('rangeChange', values.map(value => this.marks[value]));
+        }
     }
 }
 </script>
