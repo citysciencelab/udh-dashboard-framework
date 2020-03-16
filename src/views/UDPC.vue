@@ -867,6 +867,8 @@ i {
     margin: 0;
 
     .ant-slider-rail, .ant-slider-track {
+        width: calc(100% + 20px);
+        margin-left: -10px;
         background-color: #707070 !important;
     }
 
