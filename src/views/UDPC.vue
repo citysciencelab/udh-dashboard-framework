@@ -578,27 +578,27 @@ export default class UDPC extends AbstractDashboard {
 
         switch (tab) {
             case 'tab-downloads-year':
-                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year'};
+                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
             case 'tab-downloads-month':
-                this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month'};
+                this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
             case 'tab-datasets-year':
-                this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year'};
+                this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
             case 'tab-datasets-month':
-                this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month'};
+                this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
             case 'tab-apps-year':
-                this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year'};
+                this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchAppsRange(this.sliderOptions.apps);
                 break;
             case 'tab-apps-month':
-                this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month'};
+                this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchAppsRange(this.sliderOptions.apps);
         }
     }
@@ -630,24 +630,21 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, isShowMarks: boolean }) {
+    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
         params.chartId = 'totalDownloads';
         params.category = 'downloads';
-        params.isShowMarks = false;
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, isShowMarks: boolean }) {
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
         params.chartId = 'totalDatasets';
         params.category = 'datasets';
-        params.isShowMarks = false;
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, isShowMarks: boolean }) {
+    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
         params.chartId = 'totalApps';
         params.category = 'apps';
-        params.isShowMarks = false;
         await this.$store.dispatch('fetchRangefulData', params);
     }
 

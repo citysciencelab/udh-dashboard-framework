@@ -77,6 +77,7 @@ interface DateRangeSliderOptions {
   unit: string;
   min: string;
   max: string;
+  isShowMarks: boolean;
 }
 
 interface DidYouKnowData {
