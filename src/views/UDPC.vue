@@ -874,7 +874,12 @@ i {
         border-radius: 0 !important;
         width: 2px !important;
         border-color: $hamburg-red !important;
+        background-color: $hamburg-red !important;
         margin-left: -3px !important;
+    }
+
+    .ant-slider-handle:focus {
+        box-shadow: none !important;
     }
 }
 
