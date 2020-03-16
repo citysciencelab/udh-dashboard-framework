@@ -855,9 +855,10 @@ i {
         }
         span {
             width: 80px;
-            margin: 17px 10px 0 10px;
+            margin: 17px 15px 0 15px;
             font-size: 14px;
             color: $hamburg-chart;
+            white-space: nowrap;
         }
     }
 }
