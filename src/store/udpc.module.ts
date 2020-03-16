@@ -44,7 +44,8 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
                 labels: topX.map((item: any) => item.key),
                 datasets: [{
-                    data: topX.map((item: any) => item.total_hits.value)
+                    data: topX.map((item: any) => item.total_hits.value),
+                    md_id: topX.map((item: any) => item.md_id.buckets[0].key)
                 }]
             }]);
             context.commit('SET_LOADING', false);

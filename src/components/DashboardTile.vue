@@ -25,9 +25,11 @@ export default class DashboardTile extends Vue {
 
 <style scoped lang="scss">
 .md-card /deep/ {
-    padding: 15px 26px;
+    padding: 15px 26px 0 26px;
     margin: 0;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .md-card-header {
         padding: 0 !important;
@@ -50,9 +52,14 @@ export default class DashboardTile extends Vue {
 
     .md-card-content {
         padding: 15px 0 0 0;
+        height: 100%;
     }
 
     .md-card-actions {
+        margin: 0;
+        width: 100%;
+        padding: 8px 0;
+
         .notice {
             width: 100%;
             text-align: left;

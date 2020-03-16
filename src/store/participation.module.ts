@@ -1,20 +1,18 @@
 import { Module } from 'vuex';
 import {countData} from '@/utils/utils';
+import {FeatureSet} from "@/utils/wfs";
 import wfs from "@/utils/wfs";
 
 const wfsUrl: string = 'HH_WFS_Beteiligungsverfahren';
 const wfsTypename = 'beteiligungsverfahren';
-const dataPropertyNames = ['ebene', 'absender', 'bezirk', 'bezeichnung', 'zustaendigkeit', 'gebiet', 'planverfahren', 'beteiligungsformate', 'status', 'start',
-    'ende', 'online___zahl_der_beitraege', 'link', 'kontaktpersonen'];
-const prefix = 'de.hh.up';
-const baseNodes = ['wfs:FeatureCollection', 'gml:featureMember'];
 
 const initialState: ParticipationState = {
     dashboardData: {
-        participationData: []
+        participationData: [],
     },
     filteredData: {
-        participationDistrictCount: {}
+        participationDistrictCount: {},
+        participationDistrictCountTree: {}
     },
     filters: {},
     loading: false
@@ -25,19 +23,16 @@ const participationModule: Module<ParticipationState, RootState> = {
     mutations: {    },
     actions: {
         fetchParticipationStats: async (context) => {
-            const results = await wfs.get(wfsUrl, wfsTypename, []);
-            const resultExtract = wfs.getDataFromWFSJson(results as Object[], wfsTypename, dataPropertyNames, prefix, baseNodes);
+            const results: FeatureSet = await wfs.get(wfsUrl, wfsTypename, {}) as FeatureSet;
 
-            context.commit('SET_INITIAL_DATA', ['participationData', resultExtract]);
-
-            context.dispatch('recalculateChartData', resultExtract);
+            context.dispatch('recalculateChartData', results.getProperties());
+            context.commit('SET_INITIAL_DATA', ['participationData', results]);
         },
         recalculateChartData: (context, filteredData) => {
             if (!filteredData) {
                 return;
             }
             const countdata = countData(filteredData, 'bezirk');
-
             context.commit('SET_FILTERED_DATA', ['participationDistrictCount', {
                 labels: countdata.map(item => item.bezirk),
                 datasets: [{

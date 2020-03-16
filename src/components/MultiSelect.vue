@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue} from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 @Component({})
 export default class MultiSelect extends Vue {
@@ -43,7 +43,7 @@ export default class MultiSelect extends Vue {
         this.$forceUpdate();
     }
 
-    public updateComponent() {
+    @Watch('selectData') onDataChanged() {
         this.$forceUpdate();
     }
 }

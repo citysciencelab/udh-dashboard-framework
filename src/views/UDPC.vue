@@ -17,7 +17,7 @@
                             <div class="card-header-text">{{ $t('udpc.didYouKNow') }}</div>
                         </template>
                         <template slot="content">
-                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
+                            <did-you-know v-bind:data="didYouKnow" v-bind:interval="5000"></did-you-know>
                         </template>
                         <template slot="footer">
                         </template>
@@ -32,7 +32,7 @@
                             <div class="card-header-text">{{ $t('udpc.newDatassets') }}</div>
                         </template>
                         <template slot="content">
-                            <did-you-know v-bind:items="dataSets" v-bind:interval="5000"></did-you-know>
+                            <did-you-know v-bind:data="dataSets" v-bind:interval="7500" v-on:show-in-map="showDataInMap"></did-you-know>
                         </template>
                         <template slot="footer">
                         </template>
@@ -138,7 +138,7 @@
                             <div class="card-header-text">{{ $t('udpc.map') }}</div>
                         </template>
                         <template slot="content">
-                            <span>MasterportalAPI</span>
+                            <master-portal-map v-bind:services="mapData.services" v-bind:portal="mapData.portal" v-bind:md_id="mapData.md_id"/>
                         </template>
                         <template slot="footer">
                         </template>
@@ -309,6 +309,9 @@ import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
 import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 import Color from "color";
+import MasterPortalMap from '../components/MasterPortalMap.vue'
+import portalConfig from "@/assets/map-config/portal.json";
+import servicesConfig from "@/assets/map-config/services.json";
 
 
 @Component({
@@ -321,7 +324,8 @@ import Color from "color";
         InfoOverlay,
         BarChart,
         BarChartHorizontal,
-        TreeMapChart
+        TreeMapChart,
+        MasterPortalMap
     }
 })
 export default class UDPC extends AbstractDashboard {
@@ -329,22 +333,28 @@ export default class UDPC extends AbstractDashboard {
     countGroupedWithPlans = false;
     agreeDialogActive = false;
 
+    mapData: MapData = {
+        services: servicesConfig,
+        portal: portalConfig,
+        md_id: ''
+    };
+
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {};
 
-    didYouKnow = [
-        'Fact 1',
-        'Fact 2',
-        'Fact 3',
-        'Fact 4',
-        'Fact 5'
-    ];
-    dataSets = [
-        'New Dataset 1',
-        'New Dataset 2',
-        'New Dataset 3',
-        'New Dataset 4',
-        'New Dataset 5'
-    ];
+    didYouKnow: DidYouKnowData = {
+        items: [
+            { label: 'Fact 1', link: '' },
+            { label: 'Fact 2', link: '' },
+            { label: 'Fact 3', link: '' },
+            { label: 'Fact 4', link: '' },
+            { label: 'Fact 5', link: '' },        
+        ],
+        action: null
+    };
+    dataSets: DidYouKnowData = {
+        items: [],
+        action: 'map'
+    };
 
     chartData: { [key: string]: Chart.ChartData } = {
         dataSetsByTopic: {},
@@ -504,6 +514,12 @@ export default class UDPC extends AbstractDashboard {
                         mutationData.datasets[0]['label'] = 'Zugriffe';
                         mutationData.datasets[0]['backgroundColor'] = '#196CB1';
                         this.chartData.dataSetsTopX = mutationData;
+                        this.dataSets = {
+                            items: mutationData.labels
+                                .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
+                                .filter((d: any, i: number) => i > 4 && i < 9), // demo: filter for sensible sets
+                            action: 'map'
+                        }
                         break;
                     case 'totalDatasetsCount':
                         mutationData.datasets[0]['label'] = 'Anzahl';
@@ -659,6 +675,10 @@ export default class UDPC extends AbstractDashboard {
 
     changeLanguage(lang: string) {
         this.$i18n.locale = lang
+    }
+
+    showDataInMap(md_id: string) {
+        this.mapData.md_id = md_id;
     }
 }
 </script>
