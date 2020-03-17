@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <div
+      v-if="loading"
       class="loading-overlay"
-      v-if="this.loading"
     >
       <md-progress-spinner md-mode="indeterminate" />
     </div>

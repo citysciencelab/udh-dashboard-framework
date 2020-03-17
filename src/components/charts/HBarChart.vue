@@ -4,8 +4,8 @@
     :style="style"
   >
     <svg
-      class="chart"
       :id="selector"
+      class="chart"
     />
   </div>
 </template>

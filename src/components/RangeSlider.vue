@@ -7,8 +7,8 @@
       {{ currentValues[0] }} - {{ currentValues[1] }}
     </div>
     <a-slider
-      range
       v-model="defaults"
+      range
       :step="step"
       :max="max"
       :min="min"

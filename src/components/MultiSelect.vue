@@ -4,9 +4,9 @@
       <md-field>
         <label :for="identifier">{{ label }}</label>
         <md-select
+          :id="identifier"
           v-model="selectedData"
           name="multiselect"
-          :id="identifier"
           multiple
           @md-closed="closed"
           @md-selected="setSelected"

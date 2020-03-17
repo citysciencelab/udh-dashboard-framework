@@ -493,50 +493,50 @@
     </md-bottom-bar>
 
     <info-overlay
+      ref="tooltip-did-you-know"
       :content="$t('udpc.tooltipDidYouKnow')"
       :header="'Did your whaaaat'"
       :footer="'Footer zeugs'"
-      ref="tooltip-did-you-know"
     />
     <info-overlay
-      :content="$t('udpc.tooltipLatestDataSets')"
       ref="tooltip-latest-datasets"
+      :content="$t('udpc.tooltipLatestDataSets')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipSensors')"
       ref="tooltip-sensors"
+      :content="$t('udpc.tooltipSensors')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipVisitorsToday')"
       ref="tooltip-visitors-today"
+      :content="$t('udpc.tooltipVisitorsToday')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipDatasetsBy')"
       ref="tooltip-datasets-by"
+      :content="$t('udpc.tooltipDatasetsBy')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipCountTotal')"
       ref="tooltip-count-total"
+      :content="$t('udpc.tooltipCountTotal')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipMap')"
       ref="tooltip-map"
+      :content="$t('udpc.tooltipMap')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipTopX')"
       ref="tooltip-top-x"
+      :content="$t('udpc.tooltipTopX')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipDownloads')"
       ref="tooltip-downloads"
+      :content="$t('udpc.tooltipDownloads')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipAccessData')"
       ref="tooltip-access-data"
+      :content="$t('udpc.tooltipAccessData')"
     />
     <info-overlay
-      :content="$t('udpc.tooltipAccessApps')"
       ref="tooltip-access-apps"
+      :content="$t('udpc.tooltipAccessApps')"
     />
   </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
   <div
     id="map-div-id"
-    :style="mapStyle"
     ref="map"
+    :style="mapStyle"
   />
 </template>
 

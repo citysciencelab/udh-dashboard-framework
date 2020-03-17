@@ -3,20 +3,20 @@
     <div class="row align-items-center">
       <div class="col-sm">
         <multi-select
+          ref="districtSelect"
           :select-data="getFilterOptions('participationData', 'bezirk')"
           :label="$t('participation.district')"
-          @new_selection="filterChanged"
           identifier="bezirk"
-          ref="districtSelect"
+          @new_selection="filterChanged"
         />
       </div>
       <div class="col-sm">
         <multi-select
+          ref="originatorSelect"
           :select-data="getFilterOptions('participationData', 'absender')"
           :label="$t('participation.sender')"
-          @new_selection="filterChanged"
           identifier="absender"
-          ref="originatorSelect"
+          @new_selection="filterChanged"
         />
       </div>
       <div class="col-sm">
@@ -36,8 +36,8 @@
         >
           <template slot="header">
             <md-icon
-              class="info-icon"
               id="tooltip-os-data"
+              class="info-icon"
             >
               info_outline
             </md-icon>
@@ -99,8 +99,8 @@
         >
           <template slot="header">
             <md-icon
-              class="info-icon"
               id="tooltip-os-data-3"
+              class="info-icon"
             >
               info_outline
             </md-icon>
@@ -158,8 +158,8 @@
 
     <!--Tooltips-->
     <b-tooltip
-      target="tooltip-os-data"
       ref="tooltip-os-data"
+      target="tooltip-os-data"
       triggers="hover"
       custom-class="udpc-tooltip"
     >
