@@ -1,8 +1,7 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:vue/essential",
+    "plugin:vue/strongly-recommended",
     "@vue/typescript"
   ],
   "plugins": [

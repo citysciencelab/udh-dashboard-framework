@@ -1,17 +1,17 @@
 <template>
-    <md-card>
-        <md-card-header :data-background-color="dataBackgroundColor">
-            <slot name="header"></slot>
-        </md-card-header>
+  <md-card>
+    <md-card-header :data-background-color="dataBackgroundColor">
+      <slot name="header" />
+    </md-card-header>
 
-        <md-card-content>
-            <slot name="content"></slot>
-        </md-card-content>
+    <md-card-content>
+      <slot name="content" />
+    </md-card-content>
 
-        <md-card-actions>
-            <slot name="footer"></slot>
-        </md-card-actions>
-    </md-card>
+    <md-card-actions>
+      <slot name="footer" />
+    </md-card-actions>
+  </md-card>
 </template>
 
 <script lang="ts">

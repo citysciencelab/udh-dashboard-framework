@@ -1,7 +1,13 @@
 <template>
-    <div class="chart-wrapper" :style="style">
-        <svg class="chart" v-bind:id="selector"></svg>
-    </div>
+  <div
+    class="chart-wrapper"
+    :style="style"
+  >
+    <svg
+      class="chart"
+      :id="selector"
+    />
+  </div>
 </template>
 
 <script lang="ts">

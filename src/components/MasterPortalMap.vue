@@ -1,5 +1,9 @@
 <template>
-    <div id="map-div-id" v-bind:style="mapStyle" ref="map"></div>
+  <div
+    id="map-div-id"
+    :style="mapStyle"
+    ref="map"
+  />
 </template>
 
 <script lang="ts">
