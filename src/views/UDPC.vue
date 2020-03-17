@@ -199,19 +199,19 @@
                   id="tab-datasets"
                   :md-label="$t('udpc.tabDatasets')"
                 >
-&nbsp;
+                  &nbsp;
                 </md-tab>
                 <md-tab
                   id="tab-apps"
                   :md-label="$t('udpc.tabApps')"
                 >
-&nbsp;
+                  &nbsp;
                 </md-tab>
                 <md-tab
                   id="tab-sensordatasets"
                   :md-label="$t('udpc.tabSensors')"
                 >
-&nbsp;
+                  &nbsp;
                 </md-tab>
               </md-tabs>
               <div class="chart-holder">
@@ -286,19 +286,19 @@
                   id="tab-top5-datasets"
                   :md-label="$t('udpc.tabDatasets')"
                 >
-&nbsp;
+                  &nbsp;
                 </md-tab>
                 <md-tab
                   id="tab-top5-apps"
                   :md-label="$t('udpc.tabApps')"
                 >
-&nbsp;
+                  &nbsp;
                 </md-tab>
                 <md-tab
                   id="tab-top5-downloads"
                   :md-label="$t('udpc.tabDownloads')"
                 >
-&nbsp;
+                  &nbsp;
                 </md-tab>
               </md-tabs>
               <div class="chart-holder">
