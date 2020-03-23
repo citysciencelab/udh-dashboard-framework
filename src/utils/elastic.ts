@@ -46,13 +46,13 @@ const elastic = {
 
     validateDate(date: string) {
         // it is trivial, but better than nothing
-        if (!date.match(/^[0-9]{4}-[0-9]{2}$/)) {
+        if (date && !date.match(/^[0-9]{4}-[0-9]{2}$/)) {
             throw new Error('`Invalid date format. Must be YYYY-MM.');
         }
     },
 
     validateCategory: (category: string) => {
-        if (['datasets', 'apps', 'downloads'].indexOf(category) === -1) {
+        if (category && ['datasets', 'apps', 'downloads'].indexOf(category) === -1) {
             throw new Error(`Invalid category. Must be 'datasets', 'apps' or 'downloads'.`);
         }
     },
