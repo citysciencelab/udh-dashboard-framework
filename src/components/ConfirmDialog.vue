@@ -1,12 +1,13 @@
 <template>
-    <md-dialog-confirm
-        :md-active="active"
-        :md-title="title"
-        :md-content="content"
-        :md-confirm-text="dConfirmText"
-        :md-cancel-text="dCancelText"
-        @md-cancel="onCancel"
-        @md-confirm="onConfirm"/>
+  <md-dialog-confirm
+    :md-active="active"
+    :md-title="title"
+    :md-content="content"
+    :md-confirm-text="dConfirmText"
+    :md-cancel-text="dCancelText"
+    @md-cancel="onCancel"
+    @md-confirm="onConfirm"
+  />
 </template>
 
 <script lang="ts">

@@ -1,17 +1,22 @@
 <template>
-    <div style="width: 100%">
-        <div v-if="!isShowMarks" class="range-display">
-            {{currentValues[0]}} - {{currentValues[1]}}
-        </div>
-        <a-slider range
-                  v-model="defaults"
-                  :step="step"
-                  :max="max"
-                  :min="min"
-                  :marks="isShowMarks ? marks : {}"
-                  :tip-formatter="tipFormat"
-                  @afterChange="onAfterChange" />
+  <div style="width: 100%">
+    <div
+      v-if="!isShowMarks"
+      class="range-display"
+    >
+      {{ currentValues[0] }} - {{ currentValues[1] }}
     </div>
+    <a-slider
+      v-model="defaults"
+      range
+      :step="step"
+      :max="max"
+      :min="min"
+      :marks="isShowMarks ? marks : {}"
+      :tip-formatter="tipFormat"
+      @afterChange="onAfterChange"
+    />
+  </div>
 </template>
 
 <script lang="ts">

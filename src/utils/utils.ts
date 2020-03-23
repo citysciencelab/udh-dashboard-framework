@@ -152,7 +152,7 @@ export default class Utils implements IUtils {
 export function aggregateData(ds: Dataset, descriptor: string, metric: string): Dataset {
     const aggregated = ds.reduce((results, item) => {
         const key = item[descriptor];
-        if (results.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(results, key)) {
             results[key][metric] += item[metric];
         } else {
             results[key] = {};

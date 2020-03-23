@@ -1,5 +1,9 @@
 <template>
-    <div id="map-div-id" v-bind:style="mapStyle" ref="map"></div>
+  <div
+    id="map-div-id"
+    ref="map"
+    :style="mapStyle"
+  />
 </template>
 
 <script lang="ts">
@@ -7,8 +11,6 @@
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
     import * as mpapi from "masterportalAPI";
-    import {Layer} from 'ol/layer';
-    import {Map} from 'ol';
 
     @Component({})
     export default class MasterPortalMap extends Vue {

@@ -1,6 +1,5 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import Chart from 'chart.js'
 import { generateChart } from 'vue-chartjs';
 import 'chartjs-chart-treemap'
 

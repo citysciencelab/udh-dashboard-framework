@@ -16,7 +16,7 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
 
-            let aggregations = context.getters.dashboardData.hasOwnProperty('totalTopicDatasets') ?
+            let aggregations = Object.prototype.hasOwnProperty.call(context.getters.dashboardData, 'totalTopicDatasets') ?
                 context.getters.dashboardData['totalTopicDatasets'] : null;
 
             if (!aggregations) {

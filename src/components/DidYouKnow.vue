@@ -1,17 +1,18 @@
 <template v-if="data">
-    <span class="list-item">
-        <template v-if="data.items.length > 0">
-            <a v-on:click="onClick($event)"
-                :href="data.items[currentIndex].link">
-                {{ this.prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
-            </a>
-        </template>
-    </span>
+  <span class="list-item">
+    <template v-if="data.items.length > 0">
+      <a
+        :href="data.items[currentIndex].link"
+        @click="onClick($event)"
+      >
+        {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
+      </a>
+    </template>
+  </span>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { TimeInterval } from 'd3';
 
 @Component({})
 export default class DidYouKnow extends Vue {
