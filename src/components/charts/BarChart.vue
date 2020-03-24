@@ -1,12 +1,8 @@
 <template>
-  <div
-    class="chart-wrapper"
-    :style="style"
-  >
-    <svg
-      :id="selector"
-      class="chart"
-    />
+  <div class="chart-wrapper"
+       :style="style">
+    <svg :id="selector"
+         class="chart" />
   </div>
 </template>
 

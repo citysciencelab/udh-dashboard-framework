@@ -1,12 +1,8 @@
 <template>
-  <md-dialog
-    :md-active.sync="active"
-    :md-click-outside-to-close="true"
-  >
-    <span
-      class="close-button"
-      @click="hide()"
-    >
+  <md-dialog :md-active.sync="active"
+             :md-click-outside-to-close="true">
+    <span class="close-button"
+          @click="hide()">
       <md-icon>close</md-icon>
     </span>
 

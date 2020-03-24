@@ -1,17 +1,13 @@
 <template>
   <div class="page">
-    <div
-      v-if="loading"
-      class="loading-overlay"
-    >
+    <div v-if="loading"
+         class="loading-overlay">
       <md-progress-spinner md-mode="indeterminate" />
     </div>
 
-    <md-app
-      class="md-app-scroll-fix"
-      md-waterfall
-      md-mode="fixed"
-    >
+    <md-app class="md-app-scroll-fix"
+            md-waterfall
+            md-mode="fixed">
       <md-app-content>
         <router-view />
       </md-app-content>

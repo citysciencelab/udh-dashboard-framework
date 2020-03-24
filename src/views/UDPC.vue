@@ -1,31 +1,23 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg">
-      <img
-        class="hh-logo"
-        src="../assets/images/_HH_Logo_2016.svg"
-        alt="Hamburg Logo"
-      >
-      <img
-        class="hh-bug"
-        src="../assets/images/Hamburg_Bug_NEU_RGB.png"
-        alt="Hamburg Bug"
-      >
+      <img class="hh-logo"
+           src="../assets/images/_HH_Logo_2016.svg"
+           alt="Hamburg Logo">
+      <img class="hh-bug"
+           src="../assets/images/Hamburg_Bug_NEU_RGB.png"
+           alt="Hamburg Bug">
       <span class="navbar-brand">Urban Data Platform Cockpit</span>
     </nav>
 
     <div class="container-fluid">
       <div class="row ">
         <div class="col-lg-4 col-md-6 py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-did-you-know'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-did-you-know'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -33,24 +25,18 @@
               </div>
             </template>
             <template slot="content">
-              <did-you-know
-                :data="didYouKnow"
-                :interval="5000"
-              />
+              <did-you-know :data="didYouKnow"
+                            :interval="5000" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-6 py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-latest-datasets'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-latest-datasets'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -58,11 +44,9 @@
               </div>
             </template>
             <template slot="content">
-              <did-you-know
-                :data="dataSets"
-                :interval="7500"
-                @show-in-map="showDataInMap"
-              />
+              <did-you-know :data="dataSets"
+                            :interval="7500"
+                            @show-in-map="showDataInMap" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -70,15 +54,11 @@
         <div class="col-lg-4 col-md-12">
           <div class="row">
             <div class="col-lg-6 col-6 py-2">
-              <dashboard-tile
-                data-background-color="blue"
-                class="chart-card"
-              >
+              <dashboard-tile data-background-color="blue"
+                              class="chart-card">
                 <template slot="header">
-                  <div
-                    class="info-icon-holder"
-                    @click="$refs['tooltip-sensors'].show()"
-                  >
+                  <div class="info-icon-holder"
+                       @click="$refs['tooltip-sensors'].show()">
                     <md-icon>help</md-icon>
                   </div>
                   <div class="card-header-text">
@@ -94,15 +74,11 @@
               </dashboard-tile>
             </div>
             <div class="col-lg-6 col-6 py-2">
-              <dashboard-tile
-                data-background-color="blue"
-                class="chart-card"
-              >
+              <dashboard-tile data-background-color="blue"
+                              class="chart-card">
                 <template slot="header">
-                  <div
-                    class="info-icon-holder"
-                    @click="$refs['tooltip-visitors-today'].show()"
-                  >
+                  <div class="info-icon-holder"
+                       @click="$refs['tooltip-visitors-today'].show()">
                     <md-icon>help</md-icon>
                   </div>
                   <div class="card-header-text">
@@ -122,15 +98,11 @@
       </div>
       <div class="row ">
         <div class="col-lg-4 col-md-6  py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-datasets-by'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-datasets-by'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -138,52 +110,38 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs
-                class="dashboard-tabs"
-                @md-changed="onSwitchTab"
-              >
-                <md-tab
-                  id="tab-topics"
-                  :md-label="$t('udpc.tabTopics')"
-                >
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchTab">
+                <md-tab id="tab-topics"
+                        :md-label="$t('udpc.tabTopics')">
                   &nbsp;
                 </md-tab>
-                <md-tab
-                  id="tab-organisations"
-                  :md-label="$t('udpc.tabOrganisations')"
-                >
+                <md-tab id="tab-organisations"
+                        :md-label="$t('udpc.tabOrganisations')">
                   &nbsp;
                 </md-tab>
               </md-tabs>
               <div class="chart-holder">
-                <tree-map-chart
-                  :chart-data="chartData.dataSetsByTopic"
-                  :chart-options="chartOptions.dataSetsByTopic"
-                />
+                <tree-map-chart :chart-data="chartData.dataSetsByTopic"
+                                :chart-options="chartOptions.dataSetsByTopic" />
               </div>
             </template>
             <template slot="footer">
               <div class="notice">
-                <md-switch
-                  v-model="countGroupedWithPlans"
-                  class="dashboard-switch"
-                >
+                <md-switch v-model="countGroupedWithPlans"
+                           class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-4 col-md-6  py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-count-total'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-count-total'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -191,42 +149,30 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs
-                class="dashboard-tabs"
-                @md-changed="onSwitchTab"
-              >
-                <md-tab
-                  id="tab-datasets"
-                  :md-label="$t('udpc.tabDatasets')"
-                >
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchTab">
+                <md-tab id="tab-datasets"
+                        :md-label="$t('udpc.tabDatasets')">
                   &nbsp;
                 </md-tab>
-                <md-tab
-                  id="tab-apps"
-                  :md-label="$t('udpc.tabApps')"
-                >
+                <md-tab id="tab-apps"
+                        :md-label="$t('udpc.tabApps')">
                   &nbsp;
                 </md-tab>
-                <md-tab
-                  id="tab-sensordatasets"
-                  :md-label="$t('udpc.tabSensors')"
-                >
+                <md-tab id="tab-sensordatasets"
+                        :md-label="$t('udpc.tabSensors')">
                   &nbsp;
                 </md-tab>
               </md-tabs>
               <div class="chart-holder">
-                <bar-chart
-                  :chart-data="chartData.dataSetsByType"
-                  :chart-options="chartOptions.dataSetsByType"
-                />
+                <bar-chart :chart-data="chartData.dataSetsByType"
+                           :chart-options="chartOptions.dataSetsByType" />
               </div>
             </template>
             <template slot="footer">
               <div class="notice">
-                <md-switch
-                  v-model="countTotalWithPlans"
-                  class="dashboard-switch"
-                >
+                <md-switch v-model="countTotalWithPlans"
+                           class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
@@ -234,15 +180,11 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-12 py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-map'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-map'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -250,11 +192,9 @@
               </div>
             </template>
             <template slot="content">
-              <master-portal-map
-                :services="mapData.services"
-                :portal="mapData.portal"
-                :md_id="mapData.md_id"
-              />
+              <master-portal-map :services="mapData.services"
+                                 :portal="mapData.portal"
+                                 :md_id="mapData.md_id" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -262,15 +202,11 @@
       </div>
       <div class="row ">
         <div class="col-lg-3 col-md-6 py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-top-x'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-top-x'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -278,49 +214,35 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs
-                class="dashboard-tabs"
-                @md-changed="onSwitchTab"
-              >
-                <md-tab
-                  id="tab-top5-datasets"
-                  :md-label="$t('udpc.tabDatasets')"
-                >
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchTab">
+                <md-tab id="tab-top5-datasets"
+                        :md-label="$t('udpc.tabDatasets')">
                   &nbsp;
                 </md-tab>
-                <md-tab
-                  id="tab-top5-apps"
-                  :md-label="$t('udpc.tabApps')"
-                >
+                <md-tab id="tab-top5-apps"
+                        :md-label="$t('udpc.tabApps')">
                   &nbsp;
                 </md-tab>
-                <md-tab
-                  id="tab-top5-downloads"
-                  :md-label="$t('udpc.tabDownloads')"
-                >
+                <md-tab id="tab-top5-downloads"
+                        :md-label="$t('udpc.tabDownloads')">
                   &nbsp;
                 </md-tab>
               </md-tabs>
               <div class="chart-holder">
-                <bar-chart-horizontal
-                  :chart-data="chartData.dataSetsTopX"
-                  :chart-options="chartOptions.dataSetsTopX"
-                />
+                <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
+                                      :chart-options="chartOptions.dataSetsTopX" />
               </div>
             </template>
             <template slot="footer" />
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-downloads'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-downloads'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -328,46 +250,32 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs
-                class="dashboard-tabs"
-                @md-changed="onSwitchYearMonthTab"
-              >
-                <md-tab
-                  id="tab-downloads-year"
-                  :md-label="$t('udpc.tabYear')"
-                />
-                <md-tab
-                  id="tab-downloads-month"
-                  :md-label="$t('udpc.tabMonth')"
-                />
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchYearMonthTab">
+                <md-tab id="tab-downloads-year"
+                        :md-label="$t('udpc.tabYear')" />
+                <md-tab id="tab-downloads-month"
+                        :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
               <div class="chart-holder">
-                <bar-chart
-                  :chart-data="chartData.totalDownloads"
-                  :chart-options="chartOptions.totalDownloads"
-                />
+                <bar-chart :chart-data="chartData.totalDownloads"
+                           :chart-options="chartOptions.totalDownloads" />
               </div>
             </template>
             <template slot="footer">
               <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider
-                :options="sliderOptions.downloads"
-                @rangeChange="rangeForChartChanged('downloads', $event)"
-              />
+              <range-slider :options="sliderOptions.downloads"
+                            @rangeChange="rangeForChartChanged('downloads', $event)" />
               <span class="right">{{ $t('udpc.sliderLater') }}</span>
             </template>
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-access-data'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-access-data'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -375,46 +283,32 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs
-                class="dashboard-tabs"
-                @md-changed="onSwitchYearMonthTab"
-              >
-                <md-tab
-                  id="tab-datasets-year"
-                  :md-label="$t('udpc.tabYear')"
-                />
-                <md-tab
-                  id="tab-datasets-month"
-                  :md-label="$t('udpc.tabMonth')"
-                />
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchYearMonthTab">
+                <md-tab id="tab-datasets-year"
+                        :md-label="$t('udpc.tabYear')" />
+                <md-tab id="tab-datasets-month"
+                        :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
               <div class="chart-holder">
-                <bar-chart
-                  :chart-data="chartData.totalDatasets"
-                  :chart-options="chartOptions.totalDatasets"
-                />
+                <bar-chart :chart-data="chartData.totalDatasets"
+                           :chart-options="chartOptions.totalDatasets" />
               </div>
             </template>
             <template slot="footer">
               <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider
-                :options="sliderOptions.datasets"
-                @rangeChange="rangeForChartChanged('datasets', $event)"
-              />
+              <range-slider :options="sliderOptions.datasets"
+                            @rangeChange="rangeForChartChanged('datasets', $event)" />
               <span class="right">{{ $t('udpc.sliderLater') }}</span>
             </template>
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
-          <dashboard-tile
-            data-background-color="blue"
-            class="chart-card"
-          >
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
             <template slot="header">
-              <div
-                class="info-icon-holder"
-                @click="$refs['tooltip-access-apps'].show()"
-              >
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-access-apps'].show()">
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
@@ -422,32 +316,22 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs
-                class="dashboard-tabs"
-                @md-changed="onSwitchYearMonthTab"
-              >
-                <md-tab
-                  id="tab-apps-year"
-                  :md-label="$t('udpc.tabYear')"
-                />
-                <md-tab
-                  id="tab-apps-month"
-                  :md-label="$t('udpc.tabMonth')"
-                />
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchYearMonthTab">
+                <md-tab id="tab-apps-year"
+                        :md-label="$t('udpc.tabYear')" />
+                <md-tab id="tab-apps-month"
+                        :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
               <div class="chart-holder">
-                <bar-chart
-                  :chart-data="chartData.totalApps"
-                  :chart-options="chartOptions.totalApps"
-                />
+                <bar-chart :chart-data="chartData.totalApps"
+                           :chart-options="chartOptions.totalApps" />
               </div>
             </template>
             <template slot="footer">
               <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider
-                :options="sliderOptions.apps"
-                @rangeChange="rangeForChartChanged('apps', $event)"
-              />
+              <range-slider :options="sliderOptions.apps"
+                            @rangeChange="rangeForChartChanged('apps', $event)" />
               <span class="right">{{ $t('udpc.sliderLater') }}</span>
             </template>
           </dashboard-tile>
@@ -465,25 +349,17 @@
           <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
             <div class="row">
               <div class="offset-lg-6 col-lg-3 col-6 image-col">
-                <a
-                  href="#"
-                  target="_blank"
-                >
-                  <img
-                    src="../assets/images/nl-lgv-logo@2x.png"
-                    alt="LGV"
-                  >
+                <a href="#"
+                   target="_blank">
+                  <img src="../assets/images/nl-lgv-logo@2x.png"
+                       alt="LGV">
                 </a>
               </div>
               <div class="col-lg-3 col-6 image-col">
-                <a
-                  href="http://www.urbandataplatform.hamburg/"
-                  target="_blank"
-                >
-                  <img
-                    src="../assets/images/UrbanDataPlatform_RGB@2x.png"
-                    alt="UDP"
-                  >
+                <a href="http://www.urbandataplatform.hamburg/"
+                   target="_blank">
+                  <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
+                       alt="UDP">
                 </a>
               </div>
             </div>
@@ -492,52 +368,30 @@
       </div>
     </md-bottom-bar>
 
-    <info-overlay
-      ref="tooltip-did-you-know"
-      :content="$t('udpc.tooltipDidYouKnow')"
-      :header="'Did your whaaaat'"
-      :footer="'Footer zeugs'"
-    />
-    <info-overlay
-      ref="tooltip-latest-datasets"
-      :content="$t('udpc.tooltipLatestDataSets')"
-    />
-    <info-overlay
-      ref="tooltip-sensors"
-      :content="$t('udpc.tooltipSensors')"
-    />
-    <info-overlay
-      ref="tooltip-visitors-today"
-      :content="$t('udpc.tooltipVisitorsToday')"
-    />
-    <info-overlay
-      ref="tooltip-datasets-by"
-      :content="$t('udpc.tooltipDatasetsBy')"
-    />
-    <info-overlay
-      ref="tooltip-count-total"
-      :content="$t('udpc.tooltipCountTotal')"
-    />
-    <info-overlay
-      ref="tooltip-map"
-      :content="$t('udpc.tooltipMap')"
-    />
-    <info-overlay
-      ref="tooltip-top-x"
-      :content="$t('udpc.tooltipTopX')"
-    />
-    <info-overlay
-      ref="tooltip-downloads"
-      :content="$t('udpc.tooltipDownloads')"
-    />
-    <info-overlay
-      ref="tooltip-access-data"
-      :content="$t('udpc.tooltipAccessData')"
-    />
-    <info-overlay
-      ref="tooltip-access-apps"
-      :content="$t('udpc.tooltipAccessApps')"
-    />
+    <info-overlay ref="tooltip-did-you-know"
+                  :content="$t('udpc.tooltipDidYouKnow')"
+                  :header="'Did your whaaaat'"
+                  :footer="'Footer zeugs'" />
+    <info-overlay ref="tooltip-latest-datasets"
+                  :content="$t('udpc.tooltipLatestDataSets')" />
+    <info-overlay ref="tooltip-sensors"
+                  :content="$t('udpc.tooltipSensors')" />
+    <info-overlay ref="tooltip-visitors-today"
+                  :content="$t('udpc.tooltipVisitorsToday')" />
+    <info-overlay ref="tooltip-datasets-by"
+                  :content="$t('udpc.tooltipDatasetsBy')" />
+    <info-overlay ref="tooltip-count-total"
+                  :content="$t('udpc.tooltipCountTotal')" />
+    <info-overlay ref="tooltip-map"
+                  :content="$t('udpc.tooltipMap')" />
+    <info-overlay ref="tooltip-top-x"
+                  :content="$t('udpc.tooltipTopX')" />
+    <info-overlay ref="tooltip-downloads"
+                  :content="$t('udpc.tooltipDownloads')" />
+    <info-overlay ref="tooltip-access-data"
+                  :content="$t('udpc.tooltipAccessData')" />
+    <info-overlay ref="tooltip-access-apps"
+                  :content="$t('udpc.tooltipAccessApps')" />
   </div>
 </template>
 

@@ -1,9 +1,7 @@
 <template>
-  <div
-    id="map-div-id"
-    ref="map"
-    :style="mapStyle"
-  />
+  <div id="map-div-id"
+       ref="map"
+       :style="mapStyle" />
 </template>
 
 <script lang="ts">

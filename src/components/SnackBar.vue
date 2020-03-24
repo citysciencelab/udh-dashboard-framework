@@ -1,11 +1,9 @@
 <template>
   <div>
-    <md-snackbar
-      :md-position="position"
-      :md-duration="duration"
-      :md-active.sync="snackBar"
-      md-persistent
-    >
+    <md-snackbar :md-position="position"
+                 :md-duration="duration"
+                 :md-active.sync="snackBar"
+                 md-persistent>
       <span>{{ message }}</span>
     </md-snackbar>
   </div>

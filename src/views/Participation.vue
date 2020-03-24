@@ -2,57 +2,43 @@
   <div class="container-fluid">
     <div class="row align-items-center">
       <div class="col-sm">
-        <multi-select
-          ref="districtSelect"
-          :select-data="getFilterOptions('participationData', 'bezirk')"
-          :label="$t('participation.district')"
-          identifier="bezirk"
-          @new_selection="filterChanged"
-        />
+        <multi-select ref="districtSelect"
+                      :select-data="getFilterOptions('participationData', 'bezirk')"
+                      :label="$t('participation.district')"
+                      identifier="bezirk"
+                      @new_selection="filterChanged" />
       </div>
       <div class="col-sm">
-        <multi-select
-          ref="originatorSelect"
-          :select-data="getFilterOptions('participationData', 'absender')"
-          :label="$t('participation.sender')"
-          identifier="absender"
-          @new_selection="filterChanged"
-        />
+        <multi-select ref="originatorSelect"
+                      :select-data="getFilterOptions('participationData', 'absender')"
+                      :label="$t('participation.sender')"
+                      identifier="absender"
+                      @new_selection="filterChanged" />
       </div>
       <div class="col-sm">
-        <md-chip
-          md-clickable
-          @click="resetFilters"
-        >
+        <md-chip md-clickable
+                 @click="resetFilters">
           {{ $t('participation.reset') }}
         </md-chip>
       </div>
     </div>
     <div class="row py-3">
       <div class="col-sm">
-        <dashboard-tile
-          data-background-color="blue"
-          class="chart-holder"
-        >
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
           <template slot="header">
-            <md-icon
-              id="tooltip-os-data"
-              class="info-icon"
-            >
+            <md-icon id="tooltip-os-data"
+                     class="info-icon">
               info_outline
             </md-icon>
-            <div
-              class="tool-tip-header"
-              @click="openToolTip('tooltip-os-data')"
-            >
+            <div class="tool-tip-header"
+                 @click="openToolTip('tooltip-os-data')">
               Participation Data
             </div>
           </template>
           <template slot="content">
-            <bar-chart
-              :chart-data="chartData.participationDistrictCount"
-              :chart-options="chartOptions.participationDistrictCount"
-            />
+            <bar-chart :chart-data="chartData.participationDistrictCount"
+                       :chart-options="chartOptions.participationDistrictCount" />
           </template>
           <template slot="footer">
             <div class="notice">
@@ -62,26 +48,20 @@
         </dashboard-tile>
       </div>
       <div class="col-sm">
-        <dashboard-tile
-          data-background-color="blue"
-          class="chart-holder"
-        >
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
           <template slot="header">
             <md-icon class="info-icon">
               info_outline
             </md-icon>
-            <div
-              class="tool-tip-header"
-              @click="openToolTip('')"
-            >
+            <div class="tool-tip-header"
+                 @click="openToolTip('')">
               Other chart
             </div>
           </template>
           <template slot="content">
-            <horizontal-bar-chart
-              :chart-data="chartData.participationDistrictCount"
-              :chart-options="chartOptions.participationDistrictCount"
-            />
+            <horizontal-bar-chart :chart-data="chartData.participationDistrictCount"
+                                  :chart-options="chartOptions.participationDistrictCount" />
           </template>
           <template slot="footer">
             <div class="notice">
@@ -93,29 +73,21 @@
     </div>
     <div class="row py-3">
       <div class="col-sm">
-        <dashboard-tile
-          data-background-color="blue"
-          class="chart-holder"
-        >
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
           <template slot="header">
-            <md-icon
-              id="tooltip-os-data-3"
-              class="info-icon"
-            >
+            <md-icon id="tooltip-os-data-3"
+                     class="info-icon">
               info_outline
             </md-icon>
-            <div
-              class="tool-tip-header"
-              @click="openToolTip('tooltip-os-data-3')"
-            >
+            <div class="tool-tip-header"
+                 @click="openToolTip('tooltip-os-data-3')">
               Participation Data
             </div>
           </template>
           <template slot="content">
-            <tree-map-chart
-              :chart-data="chartData.participationDistrictCountTree"
-              :chart-options="chartOptions.participationDistrictCountTree"
-            />
+            <tree-map-chart :chart-data="chartData.participationDistrictCountTree"
+                            :chart-options="chartOptions.participationDistrictCountTree" />
           </template>
           <template slot="footer">
             <div class="notice">
@@ -125,27 +97,21 @@
         </dashboard-tile>
       </div>
       <div class="col-sm">
-        <dashboard-tile
-          data-background-color="blue"
-          class="chart-holder"
-        >
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
           <template slot="header">
             <md-icon class="info-icon">
               info_outline
             </md-icon>
-            <div
-              class="tool-tip-header"
-              @click="openToolTip('')"
-            >
+            <div class="tool-tip-header"
+                 @click="openToolTip('')">
               Other chart
             </div>
           </template>
           <template slot="content">
-            <master-portal-map
-              :services="services"
-              :portal="portal"
-              :feature-data="dataAsFeatures"
-            />
+            <master-portal-map :services="services"
+                               :portal="portal"
+                               :feature-data="dataAsFeatures" />
           </template>
           <template slot="footer">
             <div class="notice">
@@ -157,12 +123,10 @@
     </div>
 
     <!--Tooltips-->
-    <b-tooltip
-      ref="tooltip-os-data"
-      target="tooltip-os-data"
-      triggers="hover"
-      custom-class="udpc-tooltip"
-    >
+    <b-tooltip ref="tooltip-os-data"
+               target="tooltip-os-data"
+               triggers="hover"
+               custom-class="udpc-tooltip">
       I am tooltip component content!
     </b-tooltip>
   </div>

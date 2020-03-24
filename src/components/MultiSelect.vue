@@ -3,19 +3,15 @@
     <div class="md-layout-item">
       <md-field>
         <label :for="identifier">{{ label }}</label>
-        <md-select
-          :id="identifier"
-          v-model="selectedData"
-          name="multiselect"
-          multiple
-          @md-closed="closed"
-          @md-selected="setSelected"
-        >
-          <md-option
-            v-for="(item, index) in selectData"
-            :key="index"
-            :value="item"
-          >
+        <md-select :id="identifier"
+                   v-model="selectedData"
+                   name="multiselect"
+                   multiple
+                   @md-closed="closed"
+                   @md-selected="setSelected">
+          <md-option v-for="(item, index) in selectData"
+                     :key="index"
+                     :value="item">
             {{ item }}
           </md-option>
         </md-select>
