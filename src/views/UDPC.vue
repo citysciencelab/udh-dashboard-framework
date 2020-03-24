@@ -53,7 +53,7 @@
         </div>
         <div class="col-lg-4 col-md-12">
           <div class="row">
-            <div class="col-lg-6 col-6 py-2">
+            <div class="col-lg-4 col-4 py-2">
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -73,7 +73,7 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-6 col-6 py-2">
+            <div class="col-lg-4 col-4 py-2">
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -88,6 +88,26 @@
                 <template slot="content">
                   <span class="dashboard-kpi">
                     893
+                  </span>
+                </template>
+                <template slot="footer" />
+              </dashboard-tile>
+            </div>
+            <div class="col-lg-4 col-4 py-2">
+              <dashboard-tile data-background-color="blue"
+                              class="chart-card">
+                <template slot="header">
+                  <div class="info-icon-holder"
+                       @click="$refs['tooltip-background-access'].show()">
+                    <md-icon>help</md-icon>
+                  </div>
+                  <div class="card-header-text">
+                    {{ $t('udpc.access') }}
+                  </div>
+                </template>
+                <template slot="content">
+                  <span class="dashboard-kpi">
+                    12345
                   </span>
                 </template>
                 <template slot="footer" />
@@ -378,6 +398,8 @@
                   :content="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
                   :content="$t('udpc.tooltipVisitorsToday')" />
+    <info-overlay ref="tooltip-background-access"
+                  :content="$t('udpc.tooltipBackgroundAccess')" />
     <info-overlay ref="tooltip-datasets-by"
                   :content="$t('udpc.tooltipDatasetsBy')" />
     <info-overlay ref="tooltip-count-total"
