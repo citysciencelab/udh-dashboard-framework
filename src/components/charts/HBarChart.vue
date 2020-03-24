@@ -14,6 +14,8 @@
 import { Component } from 'vue-property-decorator';
 import * as d3 from 'd3';
 import _d3tip from 'd3-tip';
+// eslint-disable-next-line no-unused-vars
+import { Tooltip } from 'd3/types/d3';
 import AbstractChart from './AbstractChart.vue';
 
 const d3tip = _d3tip as () => Tooltip;

@@ -10,6 +10,8 @@
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
+    // eslint-disable-next-line no-unused-vars
+    import { Layer } from 'ol/layer';
     import * as mpapi from "masterportalAPI";
 
     @Component({})
