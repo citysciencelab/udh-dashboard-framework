@@ -16,10 +16,6 @@
 </template>
 
 <script lang="ts">
-/*
-*   Documentation found here:
-*   https://www.antdv.com/components/slider/
-*/
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({})
@@ -71,7 +67,7 @@ export default class RangeSlider extends Vue {
         let numberOfTicks = this.max + 1;
         while (numberOfTicks > 12) {
             this.step *= 2;
-            numberOfTicks = Math.floor(this.max / this.step);
+            numberOfTicks = Math.ceil(this.max / this.step);
         }
         this.isShowMarks = this.options.isShowMarks;
         this.marks = {};
@@ -88,6 +84,9 @@ export default class RangeSlider extends Vue {
                 }
             }
         }
+
+        const marksIndices = Object.keys(this.marks);
+        this.max = parseInt(marksIndices[marksIndices.length - 1]);
 
         this.defaults = [this.min, this.max];
         this.currentValues = [this.tipFormat(this.min), this.tipFormat(this.max)]
