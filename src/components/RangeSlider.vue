@@ -19,7 +19,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({})
-export default class RangeSlider extends Vue {
+export default class RangeSlider extends Vue implements RangeSliderMethods {
     @Prop() options!: DateRangeSliderOptions;
     minYear!: number;
     minMonth!: number;
@@ -88,6 +88,10 @@ export default class RangeSlider extends Vue {
 
     private tipFormat(value: number) {
         return this.marks[value];
+    }
+
+    public getCurrentValues() {
+        return this.currentValues;
     }
 
     private onAfterChange(values: number[]) {

@@ -67,17 +67,17 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_LOADING', false);
         },
-        fetchRangefulData: async (context, params: { min: string, max: string, unit: string, category: string, chartId: string }) => {
+        fetchRangefulData: async (context, params: { min: string, max: string, unit: string, category: string, chartId: string, tag_not?: string }) => {
             sanitizeRangefulParams(params);
 
-            const aggregations = await elastic.getRangeful('', '', params.min, params.max, params.category, undefined, params.unit);
+            const aggregations = await elastic.getRangeful('', '', params.min, params.max, params.category, undefined, params.unit, params.tag_not);
 
             context.commit('SET_FILTERED_DATA', [params.chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
                     return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
                 }),
                 datasets: [{
-                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value),
                     label: 'Anzahl'
                 }]
             }]);

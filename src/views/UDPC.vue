@@ -170,6 +170,7 @@
             </template>
             <template slot="content">
               <md-tabs class="dashboard-tabs"
+                       ref="count-total-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-datasets"
                         :md-label="$t('udpc.tabDatasets')">
@@ -190,7 +191,8 @@
               </div>
             </template>
             <template slot="footer">
-              <div class="notice">
+              <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
+                   class="notice">
                 <md-switch v-model="countTotalWithPlans"
                            class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
@@ -283,10 +285,13 @@
               </div>
             </template>
             <template slot="footer">
-              <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider :options="sliderOptions.downloads"
-                            @rangeChange="rangeForChartChanged('downloads', $event)" />
-              <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              <div>
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider class="slider"
+                              :options="sliderOptions.downloads"
+                              @rangeChange="rangeForChartChanged('downloads', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
             </template>
           </dashboard-tile>
         </div>
@@ -316,10 +321,22 @@
               </div>
             </template>
             <template slot="footer">
-              <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider :options="sliderOptions.datasets"
-                            @rangeChange="rangeForChartChanged('datasets', $event)" />
-              <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              <div>
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider class="slider"
+                              ref="totalDatasetsSlider"
+                              :options="sliderOptions.datasets"
+                              @rangeChange="rangeForChartChanged('datasets', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
+              <div class="notice" style="width: 100%; display: flex">
+                <md-switch
+                        v-model="accessWithBackgroundMaps"
+                        class="dashboard-switch"
+                        @change="onSwitchIncludeMaps('datasets')">
+                  {{ $t('udpc.includeMapHits') }}
+                </md-switch>
+              </div>
             </template>
           </dashboard-tile>
         </div>
@@ -349,10 +366,13 @@
               </div>
             </template>
             <template slot="footer">
-              <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider :options="sliderOptions.apps"
-                            @rangeChange="rangeForChartChanged('apps', $event)" />
-              <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              <div>
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider class="slider"
+                              :options="sliderOptions.apps"
+                              @rangeChange="rangeForChartChanged('apps', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
             </template>
           </dashboard-tile>
         </div>
@@ -456,7 +476,12 @@ import servicesConfig from "@/assets/map-config/services.json";
 export default class UDPC extends AbstractDashboard {
     countTotalWithPlans = false;
     countGroupedWithPlans = false;
+    accessWithBackgroundMaps = true;
     agreeDialogActive = false;
+
+    $refs!: {
+      totalDatasetsSlider: RangeSlider & RangeSliderMethods
+    }
 
     mapData: MapData = {
         services: servicesConfig,
@@ -743,6 +768,15 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
+    onSwitchIncludeMaps(chartId: string) {
+      const minMax: string[] = (this.$refs['totalDatasetsSlider'] as RangeSliderMethods).getCurrentValues();
+      const min = minMax[0];
+      const max = minMax[1];
+      const unit = this.sliderOptions[chartId].unit;
+      this.fetchDatasetsRange({min, max, unit});
+
+    }
+
     async fetchTotalsByTopic(topic: string) {
         await this.$store.dispatch('fetchTotalsByTopic', topic);
     }
@@ -761,9 +795,12 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, tag_not?: string }) {
         params.chartId = 'totalDatasets';
         params.category = 'datasets';
+        if (!this.accessWithBackgroundMaps) {
+          params.tag_not = 'basemap';
+        }
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
@@ -972,15 +1009,37 @@ i {
     }
 
     .md-card-actions {
+        flex-wrap: wrap;
+
+        > div {
+          display: flex;
+          flex-basis: 100%;
+        }
+
         .range-display {
             color: $hamburg-chart !important;
         }
+
         span {
+            flex-basis: 10%;
             width: 80px;
             margin: 17px 15px 0 15px;
             font-size: 14px;
             color: $hamburg-chart;
             white-space: nowrap;
+        }
+
+        .left {
+          order: 1;
+        }
+
+        .slider {
+          order: 2;
+          flex-basis: 80%;
+        }
+
+        .right {
+          order: 3;
         }
     }
 }

@@ -84,3 +84,7 @@ interface DidYouKnowData {
   items: { label: string, link: string }[],
   action: string|null
 }
+
+export default interface RangeSliderMethods {
+  getCurrentValues(): string[]
+}
