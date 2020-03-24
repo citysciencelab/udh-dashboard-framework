@@ -62,13 +62,7 @@ export default class RangeSlider extends Vue {
             }
         }
 
-        // adjust step size, build axis
-        this.step = 1;
-        let numberOfTicks = this.max + 1;
-        while (numberOfTicks > 12) {
-            this.step *= 2;
-            numberOfTicks = Math.ceil(this.max / this.step);
-        }
+        // build axis
         this.isShowMarks = this.options.isShowMarks;
         this.marks = {};
 
