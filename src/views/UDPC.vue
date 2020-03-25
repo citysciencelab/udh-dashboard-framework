@@ -1024,17 +1024,27 @@ i {
   position: absolute;
   z-index: 100;
   padding: 10px 15px;
+  left: 0;
+  top: 0;
+
   &.left {
       left: 0;
+      right: initial;
   }
   &.right {
       right: 0;
+      left: initial;
   }
   &.top {
       top: 15px;
+      bottom: initial;
   }
   &.bottom {
       bottom: 0;
+      top: initial;
+  }
+  &.banner {
+    background: rgba(255, 255, 255 , 0.8);
   }
   i {
       color: $hamburg-blue !important;
