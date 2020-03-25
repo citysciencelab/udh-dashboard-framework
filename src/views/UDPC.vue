@@ -288,7 +288,7 @@
               </div>
             </template>
             <template slot="footer">
-              <div>
+              <div class="slider-holder">
                 <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
                 <range-slider class="slider"
                               :options="sliderOptions.downloads"
@@ -325,7 +325,7 @@
               </div>
             </template>
             <template slot="footer">
-              <div>
+              <div class="slider-holder">
                 <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
                 <range-slider class="slider"
                               ref="totalDatasetsSlider"
@@ -371,7 +371,7 @@
               </div>
             </template>
             <template slot="footer">
-              <div>
+              <div class="slider-holder">
                 <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
                 <range-slider class="slider"
                               :options="sliderOptions.apps"
@@ -1018,6 +1018,11 @@ i {
           flex-basis: 100%;
         }
 
+        .slider-holder {
+          justify-content: center;
+          padding-bottom: 10px;
+        }
+
         .range-display {
             color: $hamburg-chart !important;
         }
@@ -1033,15 +1038,17 @@ i {
 
         .left {
           order: 1;
+          display: none;
         }
 
         .slider {
           order: 2;
-          flex-basis: 80%;
+          flex-basis: 90%;
         }
 
         .right {
           order: 3;
+          display: none;
         }
     }
 }
