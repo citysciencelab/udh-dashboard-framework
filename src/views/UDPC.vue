@@ -396,10 +396,10 @@
                   :content="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
                   :content="$t('udpc.tooltipAccessApps')" />
-    <info-overlay v-bind:html="fullscreenContent.html"
-                  @closed="onCloseFullscreen"
-                  ref="fullscreen-content"
-                  style="width:95%; height:95%;"/>
+    <info-overlay ref="fullscreen-content"
+                  style="width:95%; height:95%;"
+                  :html="fullscreenContent.html"
+                  @closed="onCloseFullscreen" />
   </div>
 </template>
 
@@ -659,7 +659,9 @@ export default class UDPC extends AbstractDashboard {
     }
 
     mounted() {
+      if (this.$refs['master-portal-map']) {
         (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
+      }
     }
 
     onSwitchTab(tab: string) {
