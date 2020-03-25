@@ -104,5 +104,7 @@
 <style scoped>
     #map-div-id {
         height: 100%;
+        width: 100%;
+        min-height: 240px;
     }
 </style>

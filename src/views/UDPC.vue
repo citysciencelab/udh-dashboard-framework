@@ -12,45 +12,6 @@
 
     <div class="container-fluid">
       <div class="row ">
-        <div class="col-lg-4 col-md-6 py-2">
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
-            <template slot="header">
-              <div class="info-icon-holder"
-                   @click="$refs['tooltip-did-you-know'].show()">
-                <md-icon>help</md-icon>
-              </div>
-              <div class="card-header-text">
-                {{ $t('udpc.didYouKNow') }}
-              </div>
-            </template>
-            <template slot="content">
-              <did-you-know :data="didYouKnow"
-                            :interval="5000" />
-            </template>
-            <template slot="footer" />
-          </dashboard-tile>
-        </div>
-        <div class="col-lg-4 col-md-6 py-2">
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
-            <template slot="header">
-              <div class="info-icon-holder"
-                   @click="$refs['tooltip-latest-datasets'].show()">
-                <md-icon>help</md-icon>
-              </div>
-              <div class="card-header-text">
-                {{ $t('udpc.newDatassets') }}
-              </div>
-            </template>
-            <template slot="content">
-              <did-you-know :data="dataSets"
-                            :interval="7500"
-                            @show-in-map="showDataInMap" />
-            </template>
-            <template slot="footer" />
-          </dashboard-tile>
-        </div>
         <div class="col-lg-4 col-md-12">
           <div class="row">
             <div class="col-lg-6 col-6 py-2">
@@ -94,6 +55,45 @@
               </dashboard-tile>
             </div>
           </div>
+        </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-did-you-know'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.didYouKNow') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="didYouKnow"
+                            :interval="5000" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-latest-datasets'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.newDatassets') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="dataSets"
+                            :interval="7500"
+                            @show-in-map="showDataInMap" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
         </div>
       </div>
       <div class="row ">
@@ -192,6 +192,9 @@
               </div>
             </template>
             <template slot="content">
+              <div class="overlay top right" @click="onOpenFullscreen($event, 'master-portal-map')">
+                <md-icon>aspect_ratio</md-icon>
+              </div>
               <master-portal-map ref="master-portal-map" 
                                  :services="mapData.services"
                                  :portal="mapData.portal"
@@ -729,8 +732,9 @@ export default class UDPC extends AbstractDashboard {
     }
 
     onCloseFullscreen() {
-        console.log(this.fullscreenContent.ref);
-        // this.fullscreenContent.ref?.append(this.fullscreenContent.html as Element);
+        if (this.fullscreenContent.ref) {
+          this.fullscreenContent.ref.append(this.fullscreenContent.html as Element);
+        }
         (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
