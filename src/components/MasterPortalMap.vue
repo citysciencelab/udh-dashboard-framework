@@ -80,7 +80,6 @@
                 }
                 this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
                     this.tempLayers = layers;
-                    console.log(this.tempLayers);
                 });
             }
         }

@@ -192,7 +192,8 @@
               </div>
             </template>
             <template slot="content">
-              <master-portal-map :services="mapData.services"
+              <master-portal-map ref="master-portal-map" 
+                                 :services="mapData.services"
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id" />
             </template>
@@ -728,7 +729,8 @@ export default class UDPC extends AbstractDashboard {
     }
 
     onCloseFullscreen() {
-        this.fullscreenContent.ref?.append(this.fullscreenContent.html as Element);
+        console.log(this.fullscreenContent.ref);
+        // this.fullscreenContent.ref?.append(this.fullscreenContent.html as Element);
         (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
