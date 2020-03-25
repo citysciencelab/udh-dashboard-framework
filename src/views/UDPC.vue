@@ -187,7 +187,8 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.dataSetsByType"
-                           :chart-options="chartOptions.dataSetsByType" />
+                           :chart-options="chartOptions.dataSetsByType"
+                           :isStandardTooltips="true" />
               </div>
             </template>
             <template slot="footer">
@@ -253,7 +254,8 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
-                                      :chart-options="chartOptions.dataSetsTopX" />
+                                      :chart-options="chartOptions.dataSetsTopX"
+                                      :isStandardTooltips="true" />
               </div>
             </template>
             <template slot="footer" />
@@ -281,7 +283,8 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDownloads"
-                           :chart-options="chartOptions.totalDownloads" />
+                           :chart-options="chartOptions.totalDownloads"
+                           :isStandardTooltips="true" />
               </div>
             </template>
             <template slot="footer">
@@ -317,7 +320,8 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDatasets"
-                           :chart-options="chartOptions.totalDatasets" />
+                           :chart-options="chartOptions.totalDatasets"
+                           :isStandardTooltips="true" />
               </div>
             </template>
             <template slot="footer">
@@ -362,7 +366,8 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalApps"
-                           :chart-options="chartOptions.totalApps" />
+                           :chart-options="chartOptions.totalApps"
+                           :isStandardTooltips="true" />
               </div>
             </template>
             <template slot="footer">
@@ -517,7 +522,7 @@ export default class UDPC extends AbstractDashboard {
 
     barChartConfigDefaults = {
         title: {
-            display: false,
+            display: false
         },
         legend: {
             display: false
@@ -544,8 +549,6 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
-    // TODO: 1. make this more generic - 2. font-color und border-color direkt aus der scss laden?
-    // TODO: Alle grid lines auch color: '#707070'
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
             maintainAspectRatio: true,
@@ -672,7 +675,6 @@ export default class UDPC extends AbstractDashboard {
                         }
                         break;
                     case 'totalDatasetsCount':
-                        mutationData.datasets[0]['label'] = 'Anzahl';
                         mutationData.datasets[0]['backgroundColor'] = '#003063';
                         this.chartData.dataSetsByType = mutationData;
                         break;

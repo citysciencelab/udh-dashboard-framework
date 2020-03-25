@@ -77,8 +77,7 @@ const udpcModule: Module<UDPCState, RootState> = {
                     return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
                 }),
                 datasets: [{
-                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value),
-                    label: 'Anzahl'
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value)
                 }]
             }]);
         },
