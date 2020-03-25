@@ -1,28 +1,36 @@
 <template>
-  <md-dialog :md-active.sync="active"
-             :md-click-outside-to-close="true">
-    <span class="close-button"
-          @click="hide()">
-      <md-icon>close</md-icon>
-    </span>
+    <md-dialog
+        :md-active.sync="active"
+        :md-click-outside-to-close="true"
+        @md-opened="renderHtmlContent"
+        ref="dialog">
 
-    <div class="heading">
-      {{ header }}
-    </div>
-    <div class="content">
-      {{ content }}
-    </div>
-    <div class="footer">
-      {{ footer }}
-    </div>
-  </md-dialog>
+        <span class="close-button" @click="hide()">
+            <md-icon>close</md-icon>
+        </span>
+
+        <div class="heading">
+            {{header}}
+        </div>
+        <div v-if="html"
+            class="html"
+            ref="html">
+        </div>
+        <div class="content">
+            {{content}}
+        </div>
+        <div class="footer">
+            {{footer}}
+        </div>
+    </md-dialog>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({})
 export default class InfoOverlay extends Vue {
+    @Prop() html!: Element;
     @Prop() content!: string;
     @Prop() header!: string;
     @Prop() footer!: string;
@@ -34,15 +42,16 @@ export default class InfoOverlay extends Vue {
 
     hide() {
         this.active = false;
+        this.$emit('closed');
     }
+
+    renderHtmlContent() {
+        if (this.html) {
+            (this.$refs.html as Element).append(this.html);
+        }
+    };
 }
 </script>
-
-<style lang="scss">
-    .md-overlay {
-        background: rgba(125, 125, 125, 1);
-    }
-</style>
 
 <style scoped lang="scss">
     @import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
@@ -50,6 +59,8 @@ export default class InfoOverlay extends Vue {
     .md-dialog {
         color: black;
         padding: 45px 49px;
+        max-width: 90%;
+        max-height: 90%;
 
         .close-button {
             position: absolute;
@@ -67,6 +78,10 @@ export default class InfoOverlay extends Vue {
         }
         .content {
             font-size: 18px;
+        }
+        .html {
+            height: 100%;
+            width: 100%;
         }
         .footer {
             padding-top: 20px;

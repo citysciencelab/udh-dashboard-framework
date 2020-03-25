@@ -392,6 +392,10 @@
                   :content="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
                   :content="$t('udpc.tooltipAccessApps')" />
+    <info-overlay v-bind:html="fullscreenContent.html"
+                  @closed="onCloseFullscreen"
+                  ref="fullscreen-content"
+                  style="width:95%; height:95%;"/>
   </div>
 </template>
 
@@ -415,6 +419,7 @@ import Color from "color";
 import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
+import FullscreenContent from "../components/FullscreenContent.vue";
 
 
 @Component({
@@ -428,7 +433,8 @@ import servicesConfig from "@/assets/map-config/services.json";
         BarChart,
         BarChartHorizontal,
         TreeMapChart,
-        MasterPortalMap
+        MasterPortalMap,
+        FullscreenContent
     }
 })
 export default class UDPC extends AbstractDashboard {
@@ -571,6 +577,11 @@ export default class UDPC extends AbstractDashboard {
         totalApps: this.barChartConfigDefaults
     };
 
+    fullscreenContent: { [key: string]: Element|null } = {
+        html: document.createElement('div'),
+        parent: document.createElement('div')
+    };
+
     created() {
         this.$i18n.locale = 'de';
         this.$i18n.mergeLocaleMessage('en', messages.en);
@@ -645,6 +656,10 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
+    mounted() {
+        (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
+    }
+
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-organisations':
@@ -704,6 +719,19 @@ export default class UDPC extends AbstractDashboard {
                 this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchAppsRange(this.sliderOptions.apps);
         }
+    }
+
+    onOpenFullscreen(evt: Event, ref: string) {
+        this.fullscreenContent.html = (this.$refs[ref] as Vue).$el;
+        this.fullscreenContent.ref = this.fullscreenContent.html.parentElement;
+
+        (this.$refs['fullscreen-content'] as InfoOverlay).show();
+        (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
+    }
+
+    onCloseFullscreen() {
+        this.fullscreenContent.ref?.append(this.fullscreenContent.html as Element);
+        (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
@@ -938,7 +966,7 @@ i {
     .md-card-content {
         font-size: 18px;
         text-align: left;
-
+        position: relative;
         span {
             position: relative;
             top: 10px;
@@ -983,6 +1011,27 @@ i {
 
     .ant-slider-handle:focus {
         box-shadow: none !important;
+    .overlay {
+        position: absolute;
+        z-index: 100;
+        padding: 10px 15px;
+        &.left {
+            left: 0;
+        }
+        &.right {
+            right: 0;
+        }
+        &.top {
+            top: 15px;
+        }
+        &.bottom {
+            bottom: 0;
+        }
+        i {
+            color: $hamburg-blue !important;
+            font-size: 2em !important;
+            cursor: pointer;
+        }
     }
 }
 
