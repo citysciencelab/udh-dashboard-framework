@@ -81,6 +81,12 @@ const udpcModule: Module<UDPCState, RootState> = {
                 }]
             }]);
         },
+        fetchVisitorsKPI: async (context) => {
+            const aggregations = await elastic.getRangeful('', '', '2020-02', '2020-03', 'datasets', undefined, 'month', undefined);
+            console.log(aggregations)
+            context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+
+        },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
             const filteredData = context.state.dashboardData[id].filter(filterFunction);

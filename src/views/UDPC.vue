@@ -67,7 +67,7 @@
                 </template>
                 <template slot="content">
                   <span class="dashboard-kpi">
-                    386
+                    {{kpiData.sensorCount}}
                   </span>
                 </template>
                 <template slot="footer" />
@@ -87,7 +87,7 @@
                 </template>
                 <template slot="content">
                   <span class="dashboard-kpi">
-                    893
+                    {{kpiData.visitorsMonth}}
                   </span>
                 </template>
                 <template slot="footer" />
@@ -107,7 +107,7 @@
                 </template>
                 <template slot="content">
                   <span class="dashboard-kpi">
-                    12345
+                    {{kpiData.mapAccess}}
                   </span>
                 </template>
                 <template slot="footer" />
@@ -506,9 +506,16 @@ export default class UDPC extends AbstractDashboard {
         ],
         action: null
     };
+
     dataSets: DidYouKnowData = {
         items: [],
         action: 'map'
+    };
+
+    kpiData: { [key: string]: number } = {
+      sensorCount: 123,
+      visitorsMonth: 123,
+      mapAccess: 123
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
@@ -627,6 +634,8 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
+        this.fetchVisitorsKPI();
+
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
                 return;
@@ -689,6 +698,9 @@ export default class UDPC extends AbstractDashboard {
                     case 'totalApps':
                         mutationData.datasets[0].backgroundColor = '#40648B';
                         this.chartData.totalApps = mutationData;
+                        break;
+                    case 'visitorsKPI':
+                        this.kpiData.visitorsMonth = mutationData;
                 }
             }
         });
@@ -777,6 +789,10 @@ export default class UDPC extends AbstractDashboard {
       const unit = this.sliderOptions[chartId].unit;
       this.fetchDatasetsRange({min, max, unit});
 
+    }
+
+    async fetchVisitorsKPI() {
+        await this.$store.dispatch('fetchVisitorsKPI');
     }
 
     async fetchTotalsByTopic(topic: string) {
