@@ -1,32 +1,30 @@
 <template>
-    <md-dialog
-        :md-active.sync="active"
-        :md-click-outside-to-close="true"
-        @md-opened="renderHtmlContent"
-        ref="dialog">
+  <md-dialog
+    ref="dialog"
+    :md-active.sync="active"
+    :md-click-outside-to-close="true"
+    @md-opened="renderHtmlContent">
+    <span class="close-button" @click="hide()">
+      <md-icon>close</md-icon>
+    </span>
 
-        <span class="close-button" @click="hide()">
-            <md-icon>close</md-icon>
-        </span>
-
-        <div class="heading">
-            {{header}}
-        </div>
-        <div v-if="html"
-            class="html"
-            ref="html">
-        </div>
-        <div class="content">
-            {{content}}
-        </div>
-        <div class="footer">
-            {{footer}}
-        </div>
-    </md-dialog>
+    <div class="heading">
+      {{ header }}
+    </div>
+    <div v-if="html"
+         ref="html"
+         class="html" />
+    <div class="content">
+      {{ content }}
+    </div>
+    <div class="footer">
+      {{ footer }}
+    </div>
+  </md-dialog>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class InfoOverlay extends Vue {
@@ -49,7 +47,7 @@ export default class InfoOverlay extends Vue {
         if (this.html) {
             (this.$refs.html as Element).append(this.html);
         }
-    };
+    }
 }
 </script>
 

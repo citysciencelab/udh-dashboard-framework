@@ -14,11 +14,13 @@ import router from './router/router';
 import store from './store/store';
 import { messages } from './messages/messages.module';
 import utils from './utils/utils';
+import { Store } from 'vuex';
 
 // Module augmentations for Vue
 declare module 'vue/types/vue' {
     interface Vue {
       $utils: IUtils
+      $store: Store<any>
       renderChart(chartData: Chart.ChartData, options?: Chart.ChartOptions): void
     }
   }

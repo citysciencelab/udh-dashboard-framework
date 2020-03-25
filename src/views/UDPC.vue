@@ -419,7 +419,6 @@ import Color from "color";
 import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
-import FullscreenContent from "../components/FullscreenContent.vue";
 
 
 @Component({
@@ -433,8 +432,7 @@ import FullscreenContent from "../components/FullscreenContent.vue";
         BarChart,
         BarChartHorizontal,
         TreeMapChart,
-        MasterPortalMap,
-        FullscreenContent
+        MasterPortalMap
     }
 })
 export default class UDPC extends AbstractDashboard {
@@ -1011,28 +1009,30 @@ i {
 
     .ant-slider-handle:focus {
         box-shadow: none !important;
-    .overlay {
-        position: absolute;
-        z-index: 100;
-        padding: 10px 15px;
-        &.left {
-            left: 0;
-        }
-        &.right {
-            right: 0;
-        }
-        &.top {
-            top: 15px;
-        }
-        &.bottom {
-            bottom: 0;
-        }
-        i {
-            color: $hamburg-blue !important;
-            font-size: 2em !important;
-            cursor: pointer;
-        }
     }
+}
+
+.overlay {
+  position: absolute;
+  z-index: 100;
+  padding: 10px 15px;
+  &.left {
+      left: 0;
+  }
+  &.right {
+      right: 0;
+  }
+  &.top {
+      top: 15px;
+  }
+  &.bottom {
+      bottom: 0;
+  }
+  i {
+      color: $hamburg-blue !important;
+      font-size: 2em !important;
+      cursor: pointer;
+  }
 }
 
 .udpc-bottom-bar {
