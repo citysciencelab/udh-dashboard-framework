@@ -50,11 +50,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByType: async (context, totalsType) => {
-            context.commit('SET_LOADING', true);
-
+        fetchTotalsByType: async (context, params: { totalsType: string, theme: string, org: string }) => {
             let yearMonth = new Utils().date.getYearMonthStringFromDate(new Date());
-            let aggregations = await elastic.getRangeful('', '', '2000-01', yearMonth, totalsType, 100, 'year');
+            let aggregations = await elastic.getRangeful(params.theme, params.org, '2000-01', yearMonth, params.totalsType, 100, 'year');
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
@@ -64,8 +62,6 @@ const udpcModule: Module<UDPCState, RootState> = {
                     data: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.doc_count)
                 }]
             }]);
-
-            context.commit('SET_LOADING', false);
         },
         fetchRangefulData: async (context, params: { min: string, max: string, unit: string, category: string, chartId: string }) => {
             sanitizeRangefulParams(params);

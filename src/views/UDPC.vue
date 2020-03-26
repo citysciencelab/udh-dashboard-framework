@@ -112,18 +112,15 @@
             <template slot="content">
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
-                <md-tab id="tab-topics"
-                        :md-label="$t('udpc.tabTopics')">
-                  &nbsp;
-                </md-tab>
-                <md-tab id="tab-organisations"
-                        :md-label="$t('udpc.tabOrganisations')">
-                  &nbsp;
-                </md-tab>
+                <md-tab id="tab-theme"
+                        :md-label="$t('udpc.tabTopics')" />
+                <md-tab id="tab-organization"
+                        :md-label="$t('udpc.tabOrganisations')" />
               </md-tabs>
               <div class="chart-holder">
                 <tree-map-chart :chart-data="chartData.dataSetsByTopic"
-                                :chart-options="chartOptions.dataSetsByTopic" />
+                                :chart-options="chartOptions.dataSetsByTopic"
+                                @click="onTopicSelect($event)" />
               </div>
             </template>
             <template slot="footer">
@@ -164,6 +161,12 @@
                   &nbsp;
                 </md-tab>
               </md-tabs>
+              <div v-if="globalThemeFilter.isset" style="margin: 10px 0; font-size: 16px">
+                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
+              </div>
+              <div v-if="globalOrgFilter.isset" style="margin: 10px 0; font-size: 16px">
+                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
+              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.dataSetsByType"
                            :chart-options="chartOptions.dataSetsByType" />
@@ -416,7 +419,6 @@ import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 
-
 @Component({
     components: {
         DashboardTile,
@@ -467,6 +469,14 @@ export default class UDPC extends AbstractDashboard {
         totalDatasets: {},
         totalApps: {}
     };
+
+    activeTabs: { [key: string]: string } = {
+        dataSetsByTopic: '',
+        dataSetsByType: ''
+    };
+
+    globalThemeFilter: { isset: boolean, topic?: string } = { isset: false };
+    globalOrgFilter: { isset: boolean, topic?: string } = { isset: false };
 
     barChartConfigDefaults = {
         title: {
@@ -647,19 +657,26 @@ export default class UDPC extends AbstractDashboard {
 
     onSwitchTab(tab: string) {
         switch (tab) {
-            case 'tab-organisations':
-                this.fetchTotalsByTopic('organization');
-                break;
-            case 'tab-topics':
+            case 'tab-theme':
+                this.activeTabs.dataSetsByTopic = tab;
+                this.globalOrgFilter.isset = false;
                 this.fetchTotalsByTopic('theme');
                 break;
+            case 'tab-organization':
+                this.activeTabs.dataSetsByTopic = tab;
+                this.globalThemeFilter.isset = false;
+                this.fetchTotalsByTopic('organization');
+                break;
             case 'tab-datasets':
+                this.activeTabs.dataSetsByType = tab;
                 this.fetchTotalsByType('datasets');
                 break;
             case 'tab-apps':
+                this.activeTabs.dataSetsByType = tab;
                 this.fetchTotalsByType('apps');
                 break;
             case 'tab-sensordatasets':
+                this.activeTabs.dataSetsByType = tab;
                 // this.fetchTotalsByType('sensors');
                 break;
             case 'tab-top5-apps':
@@ -725,8 +742,8 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTotalsByTopic', topic);
     }
 
-    async fetchTotalsByType(type: string) {
-        await this.$store.dispatch('fetchTotalsByType', type);
+    async fetchTotalsByType(type: string, theme?: string, org?: string) {
+        await this.$store.dispatch('fetchTotalsByType', { totalsType: type, theme, org });
     }
 
     async fetchTops(topic: string ) {
@@ -749,6 +766,28 @@ export default class UDPC extends AbstractDashboard {
         params.chartId = 'totalApps';
         params.category = 'apps';
         await this.$store.dispatch('fetchRangefulData', params);
+    }
+
+    onTopicSelect(event: { _datasetIndex: number, _index: number }[]) {
+      if (event.length && this.chartData.dataSetsByTopic.datasets) {
+        const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
+        const datum = dataset.tree[event[0]._index];
+
+        let filter = this.activeTabs.dataSetsByTopic === 'tab-theme' ? this.globalThemeFilter : this.globalOrgFilter;
+
+        // Filter can be cleared by clicking on the same element again
+        const unset = filter.isset && filter.topic === datum.key;
+        filter.isset = !unset;
+        filter.topic = datum.key;
+
+        const type = this.activeTabs.dataSetsByType === 'tab-datasets' ? 'datasets' :
+          this.activeTabs.dataSetsByType === 'tab-apps' ? 'apps' : 'sensordatasets';
+        this.fetchTotalsByType(
+          type,
+          this.globalThemeFilter.isset ? this.globalThemeFilter.topic : '',
+          this.globalOrgFilter.isset ? this.globalOrgFilter.topic: ''
+        );
+      }
     }
 
     testSnackBar() {
@@ -1012,7 +1051,6 @@ i {
     }
 
     .images-bottom-right {
-
         @media (min-width: 459px) {
             .image-col {
                 padding-bottom: 22px;
@@ -1044,5 +1082,9 @@ i {
     height: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+#tree-map {
+    cursor: pointer;
 }
 </style>
