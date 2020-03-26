@@ -31,14 +31,15 @@ const elastic = {
         "category": "datasets",
         "top": 2,
         "interval": "year"
-        "tag_not": "basemap"
+        "tag_not": "basemap",
+        "tag": "basemap"
      */
-    async getRangeful(theme: string, org: string, from: string, to: string, category: string, top?: number, interval?: string, tag_not?: string) {
+    async getRangeful(theme: string, org: string, from: string, to: string, category: string, top?: number, interval?: string, tag_not?: string, tag?: string) {
         elastic.validateDate(from);
         elastic.validateDate(to);
         elastic.validateCategory(category);
         elastic.validateInterval(interval);
-        const params = { theme, org, from, to, category, top, interval, tag_not };
+        const params = { theme, org, tag, from, to, category, top, interval, tag_not };
         const source = JSON.stringify({ id: 'test_rangeful', params: params });
         const url = encodeURI(`${baseUrl}/template?source=${source}&source_content_type=application/json`);
         const response = await Axios.get(url);
@@ -53,7 +54,7 @@ const elastic = {
     },
 
     validateCategory: (category: string) => {
-        if (category && ['datasets', 'apps', 'downloads'].indexOf(category) === -1) {
+        if (category && ['datasets', 'apps', 'downloads', 'visitors'].indexOf(category) === -1) {
             throw new Error(`Invalid category. Must be 'datasets', 'apps' or 'downloads'.`);
         }
     },

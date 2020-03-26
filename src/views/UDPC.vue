@@ -634,6 +634,7 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
+        this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
 
@@ -703,8 +704,11 @@ export default class UDPC extends AbstractDashboard {
                     case 'visitorsKPI':
                         this.kpiData.visitorsMonth = mutationData;
                         break;
-                    case 'sensorsKPI':
-                        this.kpiData.sensorCount = mutationData;
+                  case 'sensorsKPI':
+                    this.kpiData.sensorCount = mutationData;
+                        break;
+                  case 'baseMapKPI':
+                    this.kpiData.mapAccess = mutationData;
                 }
             }
         });
@@ -793,6 +797,10 @@ export default class UDPC extends AbstractDashboard {
       const unit = this.sliderOptions[chartId].unit;
       this.fetchDatasetsRange({min, max, unit});
 
+    }
+
+    async fetchBaseMapKPI() {
+        await this.$store.dispatch('fetchBaseMapKPI');
     }
 
     async fetchVisitorsKPI() {
