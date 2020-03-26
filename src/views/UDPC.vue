@@ -462,6 +462,7 @@ import Color from "color";
 import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
+import Utils from "@/utils/utils";
 
 
 @Component({
@@ -746,7 +747,7 @@ export default class UDPC extends AbstractDashboard {
     onSwitchYearMonthTab(tab: string) {
         const today = new Date();
         const currentYear = `${today.getFullYear()}`;
-        const currentMonth = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+        const currentMonth = new Utils().date.getLastMonth();
 
         switch (tab) {
             case 'tab-downloads-year':

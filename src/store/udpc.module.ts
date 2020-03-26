@@ -21,8 +21,8 @@ const udpcModule: Module<UDPCState, RootState> = {
                 context.getters.dashboardData['totalTopicDatasets'] : null;
 
             if (!aggregations) {
-                //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
-                aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
+                const month = new Utils().date.getLastMonth();
+                aggregations = await elastic.getRangeless('', '', month, 'datasets');
                 context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
             }
 
@@ -37,8 +37,8 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTops: async (context, topTopic) => {
             context.commit('SET_LOADING', true);
 
-            //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
-            const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', topTopic, 10, 'month');
+            const month = new Utils().date.getLastMonth();
+            const aggregations = await elastic.getRangeful('', '', month, month, topTopic, 10, 'month', 'basemap');
             const topX = aggregations.top_x.buckets;
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
@@ -54,8 +54,8 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTotalsByType: async (context, totalsType) => {
             context.commit('SET_LOADING', true);
 
-            let yearMonth = new Utils().date.getYearMonthStringFromDate(new Date());
-            let aggregations = await elastic.getRangeful('', '', '2000-01', yearMonth, totalsType, 100, 'year');
+            let currentMonth = new Utils().date.getCurrentMonth();
+            let aggregations = await elastic.getRangeful('', '', '2000-01', currentMonth, totalsType, 100, 'year');
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
@@ -83,8 +83,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
         },
         fetchVisitorsKPI: async (context) => {
-            const today = new Date();
-            const month = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+            const month = new Utils().date.getLastMonth();
             const aggregations = await elastic.getRangeful('', '', month, month, 'visitors', undefined, 'month', undefined);
             context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
         },
@@ -93,8 +92,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_FILTERED_DATA', ['sensorsKPI', response.data['@iot.count']]);
         },
         fetchBaseMapKPI: async (context) => {
-            const today = new Date();
-            const month = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+            const month = new Utils().date.getLastMonth();
             const aggregations = await elastic.getRangeful('', '', month, month, '', undefined, 'month', undefined, 'basemap');
             context.commit('SET_FILTERED_DATA', ['baseMapKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
         },

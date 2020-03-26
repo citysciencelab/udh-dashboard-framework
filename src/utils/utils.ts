@@ -132,15 +132,20 @@ export default class Utils implements IUtils {
     };
 
     date = {
-        getYearMonthStringFromDate(date: Date) {
-            return date.getFullYear() + `-` + (date.getMonth() < 9 ? '0': '') + (date.getMonth() + 1);
-        },
         getDateStringFromDate(date: Date) {
             return date.getDate() + `.` + date.getMonth() + `.` + date.getFullYear();
         },
         getDateStringFromMillis(dateMillis: number) {
             let date = new Date(dateMillis);
             return this.getDateStringFromDate(date);
+        },
+        getLastMonth(): string {
+            const today = new Date();
+            return `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+        },
+        getCurrentMonth(): string {
+            const today = new Date();
+            return `${today.getFullYear()}-${today.getMonth() + 1 < 10 ? '0' : ''}${today.getMonth() + 1}`;
         }
     };
 
