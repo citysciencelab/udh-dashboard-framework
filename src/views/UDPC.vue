@@ -635,6 +635,7 @@ export default class UDPC extends AbstractDashboard {
         this.$store.registerModule('udpc', udpcStore);
 
         this.fetchVisitorsKPI();
+        this.fetchSensorsKPI();
 
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
@@ -701,6 +702,9 @@ export default class UDPC extends AbstractDashboard {
                         break;
                     case 'visitorsKPI':
                         this.kpiData.visitorsMonth = mutationData;
+                        break;
+                    case 'sensorsKPI':
+                        this.kpiData.sensorCount = mutationData;
                 }
             }
         });
@@ -753,7 +757,7 @@ export default class UDPC extends AbstractDashboard {
                 this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
-            case 'tab-datasets-month':
+            case 'tab-datasetfetchVisitorsKPIs-month':
                 this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
@@ -793,6 +797,10 @@ export default class UDPC extends AbstractDashboard {
 
     async fetchVisitorsKPI() {
         await this.$store.dispatch('fetchVisitorsKPI');
+    }
+
+    async fetchSensorsKPI() {
+        await this.$store.dispatch('fetchSensorsKPI');
     }
 
     async fetchTotalsByTopic(topic: string) {

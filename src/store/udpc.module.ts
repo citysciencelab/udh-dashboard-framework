@@ -1,6 +1,7 @@
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
 import Utils from '@/utils/utils'
+import Axios from "axios";
 
 const initialState: UDPCState = {
     dashboardData: {},
@@ -86,6 +87,10 @@ const udpcModule: Module<UDPCState, RootState> = {
             const month = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
             const aggregations = await elastic.getRangeful('', '', month, month, 'datasets', undefined, 'month', undefined);
             context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+        },
+        fetchSensorsKPI: async (context) => {
+            const response = await Axios.get('https://iot.hamburg.de/v1.0/Datastreams?$filter=not%20substringof(%27E-Roller%27,description)&$count=true');
+            context.commit('SET_FILTERED_DATA', ['sensorsKPI', response.data['@iot.count']]);
         },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
