@@ -10,15 +10,18 @@ const elastic = {
         "org": "Landesbetrieb Geoinformation und Vermessung",
         "date": "2019-11",
         "category": "datasets"
+        "limit": 20,
+        "sortBy": "change_date"
      */
-    async getRangeless(theme: string, org: string, date: string, category: string) {
+    async getRangeless(theme: string, org: string, date: string, category: string, limit?: number, sortBy?: string) {
         elastic.validateDate(date);
         elastic.validateCategory(category);
-        const params = { theme, org, date, category };
+        elastic.validateSortBy(sortBy);
+        const params = { theme, org, date, category, limit, sortBy };
         const source = JSON.stringify({ id: 'test_rangeless', params: params });
         const url = encodeURI(`${baseUrl}/template?source=${source}&source_content_type=application/json`);
         const response = await Axios.get(url);
-        return response.data.aggregations;
+        return response.data;
     },
 
     /*
@@ -55,13 +58,19 @@ const elastic = {
 
     validateCategory: (category: string) => {
         if (category && ['datasets', 'apps', 'downloads', 'visitors'].indexOf(category) === -1) {
-            throw new Error(`Invalid category. Must be 'datasets', 'apps' or 'downloads'.`);
+            throw new Error(`Invalid category. Must be 'datasets', 'apps', 'downloads' or 'visitors'.`);
         }
     },
 
     validateInterval: (interval?: string) => {
         if (interval && ['month', 'year'].indexOf(interval) === -1) {
             throw new Error(`Invalid interval. Must be 'month' or 'year'.`);
+        }
+    },
+
+    validateSortBy: (sortBy?: string) => {
+        if (sortBy && ['create_date', 'change_date', 'date'].indexOf(sortBy) === -1) {
+            throw new Error(`Invalid interval. Must be 'create_date', 'change_date' or 'date'.`);
         }
     }
 };

@@ -44,7 +44,7 @@
               </div>
             </template>
             <template slot="content">
-              <did-you-know :data="dataSets"
+              <did-you-know :data="recentDataSets"
                             :interval="7500"
                             @show-in-map="showDataInMap" />
             </template>
@@ -508,7 +508,7 @@ export default class UDPC extends AbstractDashboard {
         action: null
     };
 
-    dataSets: DidYouKnowData = {
+    recentDataSets: DidYouKnowData = {
         items: [],
         action: 'map'
     };
@@ -638,6 +638,7 @@ export default class UDPC extends AbstractDashboard {
         this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
+        this.fetchRecentDataset();
 
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
@@ -679,12 +680,6 @@ export default class UDPC extends AbstractDashboard {
                         mutationData.datasets[0]['label'] = 'Zugriffe';
                         mutationData.datasets[0]['backgroundColor'] = '#196CB1';
                         this.chartData.dataSetsTopX = mutationData;
-                        this.dataSets = {
-                            items: mutationData.labels
-                                .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
-                                .filter((d: any, i: number) => i > 4 && i < 9), // demo: filter for sensible sets
-                            action: 'map'
-                        }
                         break;
                     case 'totalDatasetsCount':
                         mutationData.datasets[0]['backgroundColor'] = '#003063';
@@ -710,6 +705,9 @@ export default class UDPC extends AbstractDashboard {
                         break;
                   case 'baseMapKPI':
                     this.kpiData.mapAccess = mutationData;
+                        break;
+                  case 'recentDatasets':
+                    this.recentDataSets = mutationData;
                 }
             }
         });
@@ -810,6 +808,10 @@ export default class UDPC extends AbstractDashboard {
 
     async fetchSensorsKPI() {
         await this.$store.dispatch('fetchSensorsKPI');
+    }
+
+    async fetchRecentDataset() {
+        await this.$store.dispatch('fetchRecentDataset');
     }
 
     async fetchTotalsByTopic(topic: string) {

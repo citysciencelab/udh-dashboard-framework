@@ -14,6 +14,18 @@ const udpcModule: Module<UDPCState, RootState> = {
     state: initialState,
     mutations: {},
     actions: {
+        fetchRecentDataset: async (context) => {
+            context.commit('SET_LOADING', true);
+
+            let aggregations = await elastic.getRangeless('', '', '', 'datasets', 10, 'change_date');
+            context.commit('SET_FILTERED_DATA', ['recentDatasets', {
+                items: aggregations.hits.hits
+                 .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
+                action: 'map'
+            }]);
+
+            context.commit('SET_LOADING', false);
+        },
         fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
 
@@ -23,6 +35,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             if (!aggregations) {
                 const month = new Utils().date.getLastMonth();
                 aggregations = await elastic.getRangeless('', '', month, 'datasets');
+                aggregations = aggregations['aggregations'];
                 context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
             }
 
