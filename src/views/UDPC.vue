@@ -161,10 +161,10 @@
                   &nbsp;
                 </md-tab>
               </md-tabs>
-              <div v-if="globalThemeFilter.isset" style="margin: 10px 0; font-size: 16px">
+              <div v-if="globalThemeFilter.isset" class="filter-notice">
                 Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
               </div>
-              <div v-if="globalOrgFilter.isset" style="margin: 10px 0; font-size: 16px">
+              <div v-if="globalOrgFilter.isset" class="filter-notice">
                 Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
               </div>
               <div class="chart-holder">
@@ -260,6 +260,12 @@
                 <md-tab id="tab-downloads-month"
                         :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
+              <div v-if="globalThemeFilter.isset" class="filter-notice">
+                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
+              </div>
+              <div v-if="globalOrgFilter.isset" class="filter-notice">
+                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
+              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDownloads"
                            :chart-options="chartOptions.totalDownloads" />
@@ -293,6 +299,12 @@
                 <md-tab id="tab-datasets-month"
                         :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
+              <div v-if="globalThemeFilter.isset" class="filter-notice">
+                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
+              </div>
+              <div v-if="globalOrgFilter.isset" class="filter-notice">
+                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
+              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDatasets"
                            :chart-options="chartOptions.totalDatasets" />
@@ -326,6 +338,12 @@
                 <md-tab id="tab-apps-month"
                         :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
+              <div v-if="globalThemeFilter.isset" class="filter-notice">
+                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
+              </div>
+              <div v-if="globalOrgFilter.isset" class="filter-notice">
+                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
+              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalApps"
                            :chart-options="chartOptions.totalApps" />
@@ -472,7 +490,10 @@ export default class UDPC extends AbstractDashboard {
 
     activeTabs: { [key: string]: string } = {
         dataSetsByTopic: '',
-        dataSetsByType: ''
+        dataSetsByType: '',
+        totalDownloads: '',
+        totalDatasets: '',
+        totalApps: ''
     };
 
     globalThemeFilter: { isset: boolean, topic?: string } = { isset: false };
@@ -698,43 +719,50 @@ export default class UDPC extends AbstractDashboard {
 
         switch (tab) {
             case 'tab-downloads-year':
+                this.activeTabs.totalDownloads = tab;
                 this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchDownloadsRange(this.sliderOptions.downloads);
+                this.fetchDownloadsRange();
                 break;
             case 'tab-downloads-month':
+                this.activeTabs.totalDownloads = tab;
                 this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchDownloadsRange(this.sliderOptions.downloads);
+                this.fetchDownloadsRange();
                 break;
             case 'tab-datasets-year':
+                this.activeTabs.totalDatasets = tab;
                 this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchDatasetsRange(this.sliderOptions.datasets);
+                this.fetchDatasetsRange();
                 break;
             case 'tab-datasets-month':
+                this.activeTabs.totalDatasets = tab;
                 this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchDatasetsRange(this.sliderOptions.datasets);
+                this.fetchDatasetsRange();
                 break;
             case 'tab-apps-year':
+                this.activeTabs.totalApps = tab;
                 this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchAppsRange(this.sliderOptions.apps);
+                this.fetchAppsRange();
                 break;
             case 'tab-apps-month':
+                this.activeTabs.totalApps = tab;
                 this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchAppsRange(this.sliderOptions.apps);
+                this.fetchAppsRange();
         }
     }
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
-        const unit = this.sliderOptions[chartId].unit;
+        this.sliderOptions[chartId].min = min;
+        this.sliderOptions[chartId].max = max;
 
         switch (chartId) {
             case 'downloads':
-                this.fetchDownloadsRange({ min, max, unit });
+                this.fetchDownloadsRange();
                 break;
             case 'datasets':
-                this.fetchDatasetsRange({ min, max, unit });
+                this.fetchDatasetsRange();
                 break;
             case 'apps':
-                this.fetchAppsRange({ min, max, unit });
+                this.fetchAppsRange();
         }
     }
 
@@ -750,21 +778,42 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
-        params.chartId = 'totalDownloads';
-        params.category = 'downloads';
+    async fetchDownloadsRange(theme?: string, org?: string) {
+        const params = {
+            chartId: 'totalDownloads',
+            category: 'downloads',
+            min: this.sliderOptions.downloads.min,
+            max: this.sliderOptions.downloads.max,
+            unit: this.sliderOptions.downloads.unit,
+            theme: theme,
+            org: org
+        };
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
-        params.chartId = 'totalDatasets';
-        params.category = 'datasets';
+    async fetchDatasetsRange(theme?: string, org?: string) {
+        const params = {
+            chartId: 'totalDatasets',
+            category: 'datasets',
+            min: this.sliderOptions.datasets.min,
+            max: this.sliderOptions.datasets.max,
+            unit: this.sliderOptions.datasets.unit,
+            theme: theme,
+            org: org
+        };
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
-        params.chartId = 'totalApps';
-        params.category = 'apps';
+    async fetchAppsRange(theme?: string, org?: string) {
+        const params = {
+            chartId: 'totalApps',
+            category: 'apps',
+            min: this.sliderOptions.apps.min,
+            max: this.sliderOptions.apps.max,
+            unit: this.sliderOptions.apps.unit,
+            theme: theme,
+            org: org
+        };
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
@@ -773,20 +822,22 @@ export default class UDPC extends AbstractDashboard {
         const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
         const datum = dataset.tree[event[0]._index];
 
+        // Set the filter value
         let filter = this.activeTabs.dataSetsByTopic === 'tab-theme' ? this.globalThemeFilter : this.globalOrgFilter;
-
-        // Filter can be cleared by clicking on the same element again
         const unset = filter.isset && filter.topic === datum.key;
         filter.isset = !unset;
         filter.topic = datum.key;
 
-        const type = this.activeTabs.dataSetsByType === 'tab-datasets' ? 'datasets' :
+        // Let the filter take effect on other charts
+        const totalsType = this.activeTabs.dataSetsByType === 'tab-datasets' ? 'datasets' :
           this.activeTabs.dataSetsByType === 'tab-apps' ? 'apps' : 'sensordatasets';
-        this.fetchTotalsByType(
-          type,
-          this.globalThemeFilter.isset ? this.globalThemeFilter.topic : '',
-          this.globalOrgFilter.isset ? this.globalOrgFilter.topic: ''
-        );
+        const theme = this.globalThemeFilter.isset ? this.globalThemeFilter.topic : '';
+        const org = this.globalOrgFilter.isset ? this.globalOrgFilter.topic: '';
+
+        this.fetchTotalsByType(totalsType, theme, org);
+        this.fetchDownloadsRange(theme, org);
+        this.fetchDatasetsRange(theme, org);
+        this.fetchAppsRange(theme, org);
       }
     }
 
@@ -966,6 +1017,7 @@ i {
 .md-card {
     box-shadow: none !important;
     border: 1px solid $hamburg-blue-dark25;
+
     .md-card-header {
         .card-header-text {
             font-size: 24px !important;
@@ -974,6 +1026,7 @@ i {
             color: $hamburg-blue;
         }
     }
+
     .md-card-content {
         font-size: 18px;
         text-align: left;
@@ -999,6 +1052,11 @@ i {
             color: $hamburg-chart;
             white-space: nowrap;
         }
+    }
+
+    .filter-notice {
+        margin: 10px 0;
+        font-size: 16px;
     }
 }
 
