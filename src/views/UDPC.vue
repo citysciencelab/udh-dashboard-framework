@@ -149,17 +149,11 @@
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-datasets"
-                        :md-label="$t('udpc.tabDatasets')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabDatasets')" />
                 <md-tab id="tab-apps"
-                        :md-label="$t('udpc.tabApps')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabApps')" />
                 <md-tab id="tab-sensordatasets"
-                        :md-label="$t('udpc.tabSensors')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabSensors')" />
               </md-tabs>
               <div v-if="globalThemeFilter.isset" class="filter-notice">
                 Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
@@ -220,17 +214,11 @@
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-top5-datasets"
-                        :md-label="$t('udpc.tabDatasets')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabDatasets')" />
                 <md-tab id="tab-top5-apps"
-                        :md-label="$t('udpc.tabApps')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabApps')" />
                 <md-tab id="tab-top5-downloads"
-                        :md-label="$t('udpc.tabDownloads')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabDownloads')" />
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
