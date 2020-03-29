@@ -85,6 +85,6 @@ interface DidYouKnowData {
   action: string|null
 }
 
-export default interface RangeSliderMethods {
+interface RangeSliderMethods {
   getCurrentValues(): string[]
 }
