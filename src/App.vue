@@ -29,7 +29,7 @@ import CountryFlag from 'vue-country-flag';
 })
 export default class App extends Vue {
     get loading(): boolean {
-        return this.$store.getters.loading;
+        return this.$store.getters.loading();
     }
 }
 </script>

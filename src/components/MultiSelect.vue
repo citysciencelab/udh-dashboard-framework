@@ -5,10 +5,7 @@
         <label :for="identifier">{{ label }}</label>
         <md-select :id="identifier"
                    v-model="selectedData"
-                   name="multiselect"
-                   multiple
-                   @md-closed="closed"
-                   @md-selected="setSelected">
+                   multiple>
           <md-option v-for="(item, index) in selectData"
                      :key="index"
                      :value="item">
@@ -21,37 +18,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class MultiSelect extends Vue {
     @Prop() identifier!: string;
     @Prop() selectData!: Dataset;
     @Prop() label!: string;
-    selectedData = [];
-    isOnceSelected: boolean = false;
 
-    /*
-    *   Closed vent fires on init with empty selectData. Need to make sure that value emit is on purpose.
-    */
-    setSelected() {
-        this.isOnceSelected = true;
+    get selectedData() {
+        /*
+         * Uncommenting the following two lines will cause an infinite loop in the browser
+         * as soon as an item is selected from the list. How to solve this? Somehow there
+         * must be a way to set the filters from outside the component ...
+         */
+        // const filters = this.$store.getters.filters();
+        // return filters[this.identifier] || [];
+        return [];
     }
 
-    closed() {
-        if (this.isOnceSelected) {
-            this.$store.commit('SET_FILTERS', [this.identifier, this.selectedData]);
-            this.$emit('new_selection', this.selectedData);
-        }
-    }
-
-    public resetComponent() {
-        this.selectedData = [];
-        this.$forceUpdate();
-    }
-
-    @Watch('selectData') onDataChanged() {
-        this.$forceUpdate();
+    set selectedData(data) {
+        this.$emit('new_selection', [this.identifier, data]);
     }
 }
 </script>

@@ -23,6 +23,8 @@ export const messages = {
             tabDatasets: 'Datensätze',
             tabApps: 'Apps',
             tabDownloads: 'Downloads',
+            themeFilter: 'Nach Thema filtern',
+            orgFilter: 'Nach Organisation filtern',
 
             sliderEarlier: '< früher',
             sliderLater: 'später >',
@@ -64,6 +66,8 @@ export const messages = {
             tabDatasets: 'Datasets',
             tabApps: 'Apps',
             tabDownloads: 'Downloads',
+            themeFilter: 'Filter by theme',
+            orgFilter: 'Filter by organization',
 
             sliderEarlier: '< earlier',
             sliderLater: 'later >',

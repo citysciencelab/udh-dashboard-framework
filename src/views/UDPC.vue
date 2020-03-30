@@ -11,7 +11,28 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="row ">
+      <div class="row">
+        <div class="col-lg-12 py-2">
+          <dashboard-tile class="chart-card">
+            <template slot="content">
+              <div class="container-fluid">
+                <div class="row">
+                  <multi-select identifier="theme"
+                                :select-data="getThemeFilterOptions()"
+                                :label="$t('udpc.themeFilter')"
+                                style="padding-right: 50px"
+                                @new_selection="applyFilters" />
+                  <multi-select identifier="organization"
+                                :select-data="getOrgFilterOptions()"
+                                :label="$t('udpc.orgFilter')"
+                                @new_selection="applyFilters" />
+                </div>
+              </div>
+            </template>
+          </dashboard-tile>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-lg-4 col-md-6 py-2">
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
@@ -120,7 +141,7 @@
               <div class="chart-holder">
                 <tree-map-chart :chart-data="chartData.dataSetsByTopic"
                                 :chart-options="chartOptions.dataSetsByTopic"
-                                @click="onTopicSelect($event)" />
+                                @click="onTopicSelectFromTreeMap($event)" />
               </div>
             </template>
             <template slot="footer">
@@ -155,12 +176,6 @@
                 <md-tab id="tab-sensordatasets"
                         :md-label="$t('udpc.tabSensors')" />
               </md-tabs>
-              <div v-if="globalThemeFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
-              </div>
-              <div v-if="globalOrgFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
-              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.dataSetsByType"
                            :chart-options="chartOptions.dataSetsByType" />
@@ -281,12 +296,6 @@
                 <md-tab id="tab-datasets-month"
                         :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
-              <div v-if="globalThemeFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
-              </div>
-              <div v-if="globalOrgFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
-              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDatasets"
                            :chart-options="chartOptions.totalDatasets" />
@@ -320,12 +329,6 @@
                 <md-tab id="tab-apps-month"
                         :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
-              <div v-if="globalThemeFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
-              </div>
-              <div v-if="globalOrgFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
-              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalApps"
                            :chart-options="chartOptions.totalApps" />
@@ -477,9 +480,6 @@ export default class UDPC extends AbstractDashboard {
         totalDatasets: '',
         totalApps: ''
     };
-
-    globalThemeFilter: { isset: boolean, topic?: string } = { isset: false };
-    globalOrgFilter: { isset: boolean, topic?: string } = { isset: false };
 
     barChartConfigDefaults = {
         title: {
@@ -662,12 +662,10 @@ export default class UDPC extends AbstractDashboard {
         switch (tab) {
             case 'tab-theme':
                 this.activeTabs.dataSetsByTopic = tab;
-                this.globalOrgFilter.isset = false;
                 this.fetchTotalsByTopic('theme');
                 break;
             case 'tab-organization':
                 this.activeTabs.dataSetsByTopic = tab;
-                this.globalThemeFilter.isset = false;
                 this.fetchTotalsByTopic('organization');
                 break;
             case 'tab-datasets':
@@ -797,27 +795,44 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    onTopicSelect(event: { _datasetIndex: number, _index: number }[]) {
-      if (event.length && this.chartData.dataSetsByTopic.datasets) {
-        const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
-        const datum = dataset.tree[event[0]._index];
+    getThemeFilterOptions() {
+        return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'theme');
+    }
 
-        // Set the filter value
-        let filter = this.activeTabs.dataSetsByTopic === 'tab-theme' ? this.globalThemeFilter : this.globalOrgFilter;
-        const unset = filter.isset && filter.topic === datum.key;
-        filter.isset = !unset;
-        filter.topic = datum.key;
+    getOrgFilterOptions() {
+        return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'organization');
+    }
 
-        // Let the filter take effect on other charts
+    get filters() {
+        return this.$store.getters.filters();
+    }
+
+    applyFilters(event: [string, string[]] ) {
+        this.$store.dispatch('setFilters', event);
+
         const totalsType = this.activeTabs.dataSetsByType === 'tab-datasets' ? 'datasets' :
-          this.activeTabs.dataSetsByType === 'tab-apps' ? 'apps' : 'sensordatasets';
-        const theme = this.globalThemeFilter.isset ? this.globalThemeFilter.topic : '';
-        const org = this.globalOrgFilter.isset ? this.globalOrgFilter.topic: '';
+            this.activeTabs.dataSetsByType === 'tab-apps' ? 'apps' : 'sensordatasets';
+
+        // As long as multiple selections are not supported, only the first element is considered!
+        const theme = (this.filters.theme || [])[0];
+        const org = (this.filters.org || [])[0];
 
         this.fetchTotalsByType(totalsType, theme, org);
         this.fetchDatasetsRange(theme, org);
         this.fetchAppsRange(theme, org);
-      }
+    }
+
+    onTopicSelectFromTreeMap(event: { _datasetIndex: number, _index: number }[]) {
+        if (!event.length || !this.chartData.dataSetsByTopic.datasets) {
+            return;
+        }
+
+        const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
+        const datum = dataset.tree[event[0]._index];
+
+        const type = this.activeTabs.dataSetsByTopic === 'tab-theme' ? 'theme' : 'organization';
+
+        this.applyFilters([type, [datum.key]]);
     }
 
     testSnackBar() {
@@ -1031,11 +1046,6 @@ i {
             color: $hamburg-chart;
             white-space: nowrap;
         }
-    }
-
-    .filter-notice {
-        margin: 10px 0;
-        font-size: 16px;
     }
 }
 
