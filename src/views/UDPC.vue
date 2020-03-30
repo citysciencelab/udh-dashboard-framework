@@ -67,7 +67,7 @@
                 </template>
                 <template slot="content">
                   <span class="dashboard-kpi">
-                    {{kpiData.sensorCount}}
+                    {{ kpiData.sensorCount }}
                   </span>
                 </template>
                 <template slot="footer" />
@@ -87,7 +87,7 @@
                 </template>
                 <template slot="content">
                   <span class="dashboard-kpi">
-                    {{kpiData.visitorsMonth}}
+                    {{ kpiData.visitorsMonth }}
                   </span>
                 </template>
                 <template slot="footer" />
@@ -107,7 +107,7 @@
                 </template>
                 <template slot="content">
                   <span class="dashboard-kpi">
-                    {{kpiData.mapAccess}}
+                    {{ kpiData.mapAccess }}
                   </span>
                 </template>
                 <template slot="footer" />
@@ -169,8 +169,8 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs class="dashboard-tabs"
-                       ref="count-total-tabs"
+              <md-tabs ref="count-total-tabs"
+                       class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-datasets"
                         :md-label="$t('udpc.tabDatasets')">
@@ -188,7 +188,7 @@
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.dataSetsByType"
                            :chart-options="chartOptions.dataSetsByType"
-                           :isStandardTooltips="true" />
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
@@ -255,7 +255,7 @@
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
                                       :chart-options="chartOptions.dataSetsTopX"
-                                      :isStandardTooltips="true" />
+                                      :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer" />
@@ -284,7 +284,7 @@
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDownloads"
                            :chart-options="chartOptions.totalDownloads"
-                           :isStandardTooltips="true" />
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
@@ -321,23 +321,23 @@
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDatasets"
                            :chart-options="chartOptions.totalDatasets"
-                           :isStandardTooltips="true" />
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
               <div class="slider-holder">
                 <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-                <range-slider class="slider"
-                              ref="totalDatasetsSlider"
+                <range-slider ref="totalDatasetsSlider"
+                              class="slider"
                               :options="sliderOptions.datasets"
                               @rangeChange="rangeForChartChanged('datasets', $event)" />
                 <span class="right">{{ $t('udpc.sliderLater') }}</span>
               </div>
               <div class="notice" style="width: 100%; display: flex">
                 <md-switch
-                        v-model="accessWithBackgroundMaps"
-                        class="dashboard-switch"
-                        @change="onSwitchIncludeMaps('datasets')">
+                  v-model="accessWithBackgroundMaps"
+                  class="dashboard-switch"
+                  @change="onSwitchIncludeMaps('datasets')">
                   {{ $t('udpc.includeMapHits') }}
                 </md-switch>
               </div>
@@ -367,7 +367,7 @@
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalApps"
                            :chart-options="chartOptions.totalApps"
-                           :isStandardTooltips="true" />
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
