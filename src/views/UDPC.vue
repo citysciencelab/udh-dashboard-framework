@@ -248,12 +248,6 @@
                 <md-tab id="tab-downloads-month"
                         :md-label="$t('udpc.tabMonth')" />
               </md-tabs>
-              <div v-if="globalThemeFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten aus dem Bereich "{{ globalThemeFilter.topic }}"
-              </div>
-              <div v-if="globalOrgFilter.isset" class="filter-notice">
-                Zeige nur Werte für Daten von "{{ globalOrgFilter.topic }}"
-              </div>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDownloads"
                            :chart-options="chartOptions.totalDownloads" />
@@ -766,15 +760,13 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange(theme?: string, org?: string) {
+    async fetchDownloadsRange() {
         const params = {
             chartId: 'totalDownloads',
             category: 'downloads',
             min: this.sliderOptions.downloads.min,
             max: this.sliderOptions.downloads.max,
-            unit: this.sliderOptions.downloads.unit,
-            theme: theme,
-            org: org
+            unit: this.sliderOptions.downloads.unit
         };
         await this.$store.dispatch('fetchRangefulData', params);
     }
@@ -823,7 +815,6 @@ export default class UDPC extends AbstractDashboard {
         const org = this.globalOrgFilter.isset ? this.globalOrgFilter.topic: '';
 
         this.fetchTotalsByType(totalsType, theme, org);
-        this.fetchDownloadsRange(theme, org);
         this.fetchDatasetsRange(theme, org);
         this.fetchAppsRange(theme, org);
       }
