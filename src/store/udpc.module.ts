@@ -1,6 +1,7 @@
 import { Module } from 'vuex';
 import elastic from '../utils/elastic';
 import Utils from '@/utils/utils'
+import Axios from "axios";
 
 const initialState: UDPCState = {
     dashboardData: {},
@@ -13,6 +14,18 @@ const udpcModule: Module<UDPCState, RootState> = {
     state: initialState,
     mutations: {},
     actions: {
+        fetchRecentDataset: async (context) => {
+            context.commit('SET_LOADING', true);
+
+            let aggregations = await elastic.getRangeless('', '', '', 'datasets', 10, 'change_date');
+            context.commit('SET_FILTERED_DATA', ['recentDatasets', {
+                items: aggregations.hits.hits
+                 .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
+                action: 'map'
+            }]);
+
+            context.commit('SET_LOADING', false);
+        },
         fetchTotalsByTopic: async (context, totalsTopic) => {
             context.commit('SET_LOADING', true);
 
@@ -20,8 +33,9 @@ const udpcModule: Module<UDPCState, RootState> = {
                 context.getters.dashboardData['totalTopicDatasets'] : null;
 
             if (!aggregations) {
-                //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
-                aggregations = await elastic.getRangeless('', '', '2020-01', 'datasets');
+                const month = new Utils().date.getLastMonth();
+                aggregations = await elastic.getRangeless('', '', month, 'datasets');
+                aggregations = aggregations['aggregations'];
                 context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
             }
 
@@ -36,8 +50,8 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchTops: async (context, topTopic) => {
             context.commit('SET_LOADING', true);
 
-            //TODO: Datum muss noch gesetzt werden - wahrscheinlich nach aktuellem Monat
-            const aggregations = await elastic.getRangeful('', '', '2019-01', '2019-12', topTopic, 10, 'month');
+            const month = new Utils().date.getLastMonth();
+            const aggregations = await elastic.getRangeful('', '', month, month, topTopic, 10, 'month', 'basemap');
             const topX = aggregations.top_x.buckets;
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
@@ -51,8 +65,8 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', false);
         },
         fetchTotalsByType: async (context, params: { totalsType: string, theme: string, org: string }) => {
-            let yearMonth = new Utils().date.getYearMonthStringFromDate(new Date());
-            let aggregations = await elastic.getRangeful(params.theme, params.org, '2000-01', yearMonth, params.totalsType, 100, 'year');
+            let currentMonth = new Utils().date.getCurrentMonth();
+            let aggregations = await elastic.getRangeful(params.theme, params.org, '2000-01', currentMonth, params.totalsType, 100, 'year');
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
@@ -63,20 +77,33 @@ const udpcModule: Module<UDPCState, RootState> = {
                 }]
             }]);
         },
-        fetchRangefulData: async (context, params: { theme: string, org: string, min: string, max: string, unit: string, category: string, chartId: string }) => {
+        fetchRangefulData: async (context, params: { theme: string, org: string, min: string, max: string, unit: string, category: string, chartId: string, tag_not?: string }) => {
             sanitizeRangefulParams(params);
 
-            const aggregations = await elastic.getRangeful(params.theme, params.org, params.min, params.max, params.category, undefined, params.unit);
+            const aggregations = await elastic.getRangeful(params.theme, params.org, params.min, params.max, params.category, undefined, params.unit, params.tag_not);
 
             context.commit('SET_FILTERED_DATA', [params.chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
                     return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
                 }),
                 datasets: [{
-                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.doc_count),
-                    label: 'Anzahl'
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value)
                 }]
             }]);
+        },
+        fetchVisitorsKPI: async (context) => {
+            const month = new Utils().date.getLastMonth();
+            const aggregations = await elastic.getRangeful('', '', month, month, 'visitors', undefined, 'month', undefined);
+            context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+        },
+        fetchSensorsKPI: async (context) => {
+            const response = await Axios.get('https://iot.hamburg.de/v1.0/Datastreams?$filter=not%20substringof(%27E-Roller%27,description)&$count=true');
+            context.commit('SET_FILTERED_DATA', ['sensorsKPI', response.data['@iot.count']]);
+        },
+        fetchBaseMapKPI: async (context) => {
+            const month = new Utils().date.getLastMonth();
+            const aggregations = await elastic.getRangeful('', '', month, month, '', undefined, 'month', undefined, 'basemap');
+            context.commit('SET_FILTERED_DATA', ['baseMapKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
         },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
