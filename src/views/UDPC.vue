@@ -14,7 +14,7 @@
       <div class="row ">
         <div class="col-lg-4 col-md-12">
           <div class="row">
-            <div class="col-lg-6 col-6 py-2">
+            <div class="col-lg-4 col-4 py-2">
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -27,14 +27,14 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <span class="dashboard-kpi">
-                    386
-                  </span>
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.sensorCount">
+                    {{ kpiData.sensorCount }}
+                  </p>
                 </template>
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-6 col-6 py-2">
+            <div class="col-lg-4 col-4 py-2">
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -47,9 +47,29 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <span class="dashboard-kpi">
-                    893
-                  </span>
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.visitorsMonth">
+                    {{ kpiData.visitorsMonth }}
+                  </p>
+                </template>
+                <template slot="footer" />
+              </dashboard-tile>
+            </div>
+            <div class="col-lg-4 col-4 py-2">
+              <dashboard-tile data-background-color="blue"
+                              class="chart-card">
+                <template slot="header">
+                  <div class="info-icon-holder"
+                       @click="$refs['tooltip-background-access'].show()">
+                    <md-icon>help</md-icon>
+                  </div>
+                  <div class="card-header-text">
+                    {{ $t('udpc.access') }}
+                  </div>
+                </template>
+                <template slot="content">
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.mapAccess">
+                    {{ kpiData.mapAccess }}
+                  </p>
                 </template>
                 <template slot="footer" />
               </dashboard-tile>
@@ -88,7 +108,7 @@
               </div>
             </template>
             <template slot="content">
-              <did-you-know :data="dataSets"
+              <did-you-know :data="recentDataSets"
                             :interval="7500"
                             :store-id="'udpc'"
                             @show-in-map="showDataInMap" />
@@ -150,7 +170,8 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs class="dashboard-tabs"
+              <md-tabs ref="count-total-tabs"
+                       class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-datasets"
                         :md-label="$t('udpc.tabDatasets')">
@@ -167,11 +188,13 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.dataSetsByType"
-                           :chart-options="chartOptions.dataSetsByType" />
+                           :chart-options="chartOptions.dataSetsByType"
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
-              <div class="notice">
+              <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
+                   class="notice">
                 <md-switch v-model="countTotalWithPlans"
                            class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
@@ -236,7 +259,8 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
-                                      :chart-options="chartOptions.dataSetsTopX" />
+                                      :chart-options="chartOptions.dataSetsTopX"
+                                      :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer" />
@@ -264,14 +288,18 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDownloads"
-                           :chart-options="chartOptions.totalDownloads" />
+                           :chart-options="chartOptions.totalDownloads"
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
-              <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider :options="sliderOptions.downloads"
-                            @rangeChange="rangeForChartChanged('downloads', $event)" />
-              <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              <div class="slider-holder">
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider class="slider"
+                              :options="sliderOptions.downloads"
+                              @rangeChange="rangeForChartChanged('downloads', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
             </template>
           </dashboard-tile>
         </div>
@@ -297,14 +325,27 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalDatasets"
-                           :chart-options="chartOptions.totalDatasets" />
+                           :chart-options="chartOptions.totalDatasets"
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
-              <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider :options="sliderOptions.datasets"
-                            @rangeChange="rangeForChartChanged('datasets', $event)" />
-              <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              <div class="slider-holder">
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider ref="totalDatasetsSlider"
+                              class="slider"
+                              :options="sliderOptions.datasets"
+                              @rangeChange="rangeForChartChanged('datasets', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
+              <div class="notice" style="width: 100%; display: flex">
+                <md-switch
+                  v-model="accessWithBackgroundMaps"
+                  class="dashboard-switch"
+                  @change="onSwitchIncludeMaps('datasets')">
+                  {{ $t('udpc.includeMapHits') }}
+                </md-switch>
+              </div>
             </template>
           </dashboard-tile>
         </div>
@@ -330,14 +371,18 @@
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.totalApps"
-                           :chart-options="chartOptions.totalApps" />
+                           :chart-options="chartOptions.totalApps"
+                           :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
-              <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-              <range-slider :options="sliderOptions.apps"
-                            @rangeChange="rangeForChartChanged('apps', $event)" />
-              <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              <div class="slider-holder">
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider class="slider"
+                              :options="sliderOptions.apps"
+                              @rangeChange="rangeForChartChanged('apps', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
             </template>
           </dashboard-tile>
         </div>
@@ -383,6 +428,8 @@
                   :content="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
                   :content="$t('udpc.tooltipVisitorsToday')" />
+    <info-overlay ref="tooltip-background-access"
+                  :content="$t('udpc.tooltipBackgroundAccess')" />
     <info-overlay ref="tooltip-datasets-by"
                   :content="$t('udpc.tooltipDatasetsBy')" />
     <info-overlay ref="tooltip-count-total"
@@ -424,6 +471,7 @@ import Color from "color";
 import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
+import Utils from "@/utils/utils";
 
 
 @Component({
@@ -443,7 +491,12 @@ import servicesConfig from "@/assets/map-config/services.json";
 export default class UDPC extends AbstractDashboard {
     countTotalWithPlans = false;
     countGroupedWithPlans = false;
+    accessWithBackgroundMaps = true;
     agreeDialogActive = false;
+
+    $refs!: {
+      totalDatasetsSlider: RangeSlider & RangeSliderMethods
+    }
 
     mapData: MapData = {
         services: servicesConfig,
@@ -463,9 +516,16 @@ export default class UDPC extends AbstractDashboard {
         ],
         action: null
     };
-    dataSets: DidYouKnowData = {
+
+    recentDataSets: DidYouKnowData = {
         items: [],
         action: 'md_id'
+    };
+
+    kpiData: { [key: string]: string } = {
+      sensorCount: '',
+      visitorsMonth: '',
+      mapAccess: ''
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
@@ -479,7 +539,7 @@ export default class UDPC extends AbstractDashboard {
 
     barChartConfigDefaults = {
         title: {
-            display: false,
+            display: false
         },
         legend: {
             display: false
@@ -506,8 +566,6 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
-    // TODO: 1. make this more generic - 2. font-color und border-color direkt aus der scss laden?
-    // TODO: Alle grid lines auch color: '#707070'
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
             maintainAspectRatio: true,
@@ -591,6 +649,11 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
+        this.fetchBaseMapKPI();
+        this.fetchVisitorsKPI();
+        this.fetchSensorsKPI();
+        this.fetchRecentDataset();
+
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
                 return;
@@ -631,15 +694,17 @@ export default class UDPC extends AbstractDashboard {
                         mutationData.datasets[0]['label'] = 'Zugriffe';
                         mutationData.datasets[0]['backgroundColor'] = '#196CB1';
                         this.chartData.dataSetsTopX = mutationData;
+<<<<<<< HEAD
                         this.dataSets = {
                             items: mutationData.labels
                                 .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
                                 .filter((d: any, i: number) => i > 4 && i < 9), // demo: filter for sensible sets
                             action: 'md_id'
                         }
+=======
+>>>>>>> dev
                         break;
                     case 'totalDatasetsCount':
-                        mutationData.datasets[0]['label'] = 'Anzahl';
                         mutationData.datasets[0]['backgroundColor'] = '#003063';
                         this.chartData.dataSetsByType = mutationData;
                         break;
@@ -654,6 +719,18 @@ export default class UDPC extends AbstractDashboard {
                     case 'totalApps':
                         mutationData.datasets[0].backgroundColor = '#40648B';
                         this.chartData.totalApps = mutationData;
+                        break;
+                    case 'visitorsKPI':
+                        this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'sensorsKPI':
+                    this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'baseMapKPI':
+                    this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'recentDatasets':
+                    this.recentDataSets = mutationData;
                 }
             }
         });
@@ -697,7 +774,7 @@ export default class UDPC extends AbstractDashboard {
     onSwitchYearMonthTab(tab: string) {
         const today = new Date();
         const currentYear = `${today.getFullYear()}`;
-        const currentMonth = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+        const currentMonth = new Utils().date.getLastMonth();
 
         switch (tab) {
             case 'tab-downloads-year':
@@ -712,7 +789,7 @@ export default class UDPC extends AbstractDashboard {
                 this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
-            case 'tab-datasets-month':
+            case 'tab-datasetfetchVisitorsKPIs-month':
                 this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
@@ -756,6 +833,31 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
+    onSwitchIncludeMaps(chartId: string) {
+      const minMax: string[] = (this.$refs['totalDatasetsSlider'] as RangeSliderMethods).getCurrentValues();
+      const min = minMax[0];
+      const max = minMax[1];
+      const unit = this.sliderOptions[chartId].unit;
+      this.fetchDatasetsRange({min, max, unit});
+
+    }
+
+    async fetchBaseMapKPI() {
+        await this.$store.dispatch('fetchBaseMapKPI');
+    }
+
+    async fetchVisitorsKPI() {
+        await this.$store.dispatch('fetchVisitorsKPI');
+    }
+
+    async fetchSensorsKPI() {
+        await this.$store.dispatch('fetchSensorsKPI');
+    }
+
+    async fetchRecentDataset() {
+        await this.$store.dispatch('fetchRecentDataset');
+    }
+
     async fetchTotalsByTopic(topic: string) {
         await this.$store.dispatch('fetchTotalsByTopic', topic);
     }
@@ -774,9 +876,12 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, tag_not?: string }) {
         params.chartId = 'totalDatasets';
         params.category = 'datasets';
+        if (!this.accessWithBackgroundMaps) {
+          params.tag_not = 'basemap';
+        }
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
@@ -878,6 +983,10 @@ i {
     font-size: 30px;
     font-weight: bold;
     color: $hamburg-blue;
+    padding: 2px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 0 !important;
 }
 
 .dashboard-tabs {
@@ -985,15 +1094,44 @@ i {
     }
 
     .md-card-actions {
+        flex-wrap: wrap;
+
+        > div {
+          display: flex;
+          flex-basis: 100%;
+        }
+
+        .slider-holder {
+          justify-content: center;
+          padding-bottom: 10px;
+        }
+
         .range-display {
             color: $hamburg-chart !important;
         }
+
         span {
+            flex-basis: 10%;
             width: 80px;
             margin: 17px 15px 0 15px;
             font-size: 14px;
             color: $hamburg-chart;
             white-space: nowrap;
+        }
+
+        .left {
+          order: 1;
+          display: none;
+        }
+
+        .slider {
+          order: 2;
+          flex-basis: 90%;
+        }
+
+        .right {
+          order: 3;
+          display: none;
         }
     }
 }
@@ -1109,7 +1247,6 @@ i {
 }
 
 .tooltip-inner {
-    height: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
