@@ -7,11 +7,11 @@ Vue Dashboard is a generic dashboard tool currently containing two example imple
 ## Developer Documentation
 
 ### Project setup
+
 ```
 npm install
 ```
 
-<<<<<<< HEAD
 =======
 ## Create a new dashboad
 

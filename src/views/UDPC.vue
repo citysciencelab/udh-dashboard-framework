@@ -193,7 +193,7 @@
               </div>
             </template>
             <template slot="content">
-              <div class="overlay top right" @click="onOpenFullscreen($event, 'master-portal-map')">
+              <div class="overlay top right" @click="onOpenFullscreenMap">
                 <md-icon>aspect_ratio</md-icon>
               </div>
               <master-portal-map ref="master-portal-map" 
@@ -582,7 +582,7 @@ export default class UDPC extends AbstractDashboard {
 
     fullscreenContent: { [key: string]: Element|null } = {
         html: document.createElement('div'),
-        parent: document.createElement('div')
+        ref: document.createElement('div')
     };
 
     created() {
@@ -726,15 +726,15 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
-    onOpenFullscreen(evt: Event, ref: string) {
-        this.fullscreenContent.html = (this.$refs[ref] as Vue).$el;
+    onOpenFullscreenMap() {
+        this.fullscreenContent.html = (this.$refs['master-portal-map'] as Vue).$el;
         this.fullscreenContent.ref = this.fullscreenContent.html.parentElement;
 
         (this.$refs['fullscreen-content'] as InfoOverlay).show();
         (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
-    onCloseFullscreen() {
+    onCloseFullscreenMap() {
         if (this.fullscreenContent.ref) {
           this.fullscreenContent.ref.append(this.fullscreenContent.html as Element);
         }
