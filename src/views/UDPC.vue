@@ -90,6 +90,7 @@
             <template slot="content">
               <did-you-know :data="dataSets"
                             :interval="7500"
+                            :store-id="'udpc'"
                             @show-in-map="showDataInMap" />
             </template>
             <template slot="footer" />
@@ -464,7 +465,7 @@ export default class UDPC extends AbstractDashboard {
     };
     dataSets: DidYouKnowData = {
         items: [],
-        action: 'map'
+        action: 'md_id'
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
@@ -634,7 +635,7 @@ export default class UDPC extends AbstractDashboard {
                             items: mutationData.labels
                                 .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
                                 .filter((d: any, i: number) => i > 4 && i < 9), // demo: filter for sensible sets
-                            action: 'map'
+                            action: 'md_id'
                         }
                         break;
                     case 'totalDatasetsCount':

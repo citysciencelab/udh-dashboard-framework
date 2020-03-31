@@ -6,7 +6,8 @@ const initialState: UDPCState = {
     dashboardData: {},
     filteredData: {},
     filters: {},
-    loading: false
+    loading: false,
+    hmdkUrl: 'https://metaver.de/trefferanzeige?docuuid='
 };
 
 const udpcModule: Module<UDPCState, RootState> = {
