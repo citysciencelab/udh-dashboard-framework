@@ -149,6 +149,12 @@ export default class Utils implements IUtils {
         }
     };
 
+    number = {
+        getDecimalSeparatedNumber(value: string) {
+            return new Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true }).format(Number.parseInt(value));
+        }
+    };
+
     install() {
         Vue.prototype.$utils = this;
     }

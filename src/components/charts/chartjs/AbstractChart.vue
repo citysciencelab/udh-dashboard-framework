@@ -1,5 +1,6 @@
 <script lang="ts">
  import { Prop, Vue, Watch } from 'vue-property-decorator';
+ import Utils from "@/utils/utils";
 
 
 export default abstract class AbstractChart extends Vue {
@@ -13,7 +14,7 @@ export default abstract class AbstractChart extends Vue {
     callbacks: {
      label: function(tooltipItem: any, data: any) {
       let label = Object.prototype.hasOwnProperty.call(data.datasets[0], 'label') ? data.datasets[0]['label'] : null;
-      let value = new Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true }).format(Number.parseInt(tooltipItem.value));
+      let value = new Utils().number.getDecimalSeparatedNumber(tooltipItem.value);
       if (label) {
        return ' ' + label + ': ' + value;
       } else {

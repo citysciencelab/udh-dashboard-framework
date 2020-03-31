@@ -513,10 +513,10 @@ export default class UDPC extends AbstractDashboard {
         action: 'map'
     };
 
-    kpiData: { [key: string]: number } = {
-      sensorCount: 123,
-      visitorsMonth: 123,
-      mapAccess: 123
+    kpiData: { [key: string]: string } = {
+      sensorCount: '',
+      visitorsMonth: '',
+      mapAccess: ''
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
@@ -698,13 +698,13 @@ export default class UDPC extends AbstractDashboard {
                         this.chartData.totalApps = mutationData;
                         break;
                     case 'visitorsKPI':
-                        this.kpiData.visitorsMonth = mutationData;
+                        this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
                         break;
                   case 'sensorsKPI':
-                    this.kpiData.sensorCount = mutationData;
+                    this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
                         break;
                   case 'baseMapKPI':
-                    this.kpiData.mapAccess = mutationData;
+                    this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
                         break;
                   case 'recentDatasets':
                     this.recentDataSets = mutationData;
