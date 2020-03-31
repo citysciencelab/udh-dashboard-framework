@@ -66,9 +66,9 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <span class="dashboard-kpi">
+                  <p class="dashboard-kpi" v-b-tooltip.hover :title="kpiData.sensorCount">
                     {{ kpiData.sensorCount }}
-                  </span>
+                  </p>
                 </template>
                 <template slot="footer" />
               </dashboard-tile>
@@ -86,9 +86,9 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <span class="dashboard-kpi">
+                  <p class="dashboard-kpi" v-b-tooltip.hover :title="kpiData.visitorsMonth">
                     {{ kpiData.visitorsMonth }}
-                  </span>
+                  </p>
                 </template>
                 <template slot="footer" />
               </dashboard-tile>
@@ -106,9 +106,9 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <span class="dashboard-kpi">
+                  <p class="dashboard-kpi" v-b-tooltip.hover :title="kpiData.mapAccess">
                     {{ kpiData.mapAccess }}
-                  </span>
+                  </p>
                 </template>
                 <template slot="footer" />
               </dashboard-tile>
@@ -939,6 +939,10 @@ i {
     font-size: 30px;
     font-weight: bold;
     color: $hamburg-blue;
+    padding: 2px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 0 !important;
 }
 
 .dashboard-tabs {
@@ -1166,7 +1170,6 @@ i {
 }
 
 .tooltip-inner {
-    height: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
