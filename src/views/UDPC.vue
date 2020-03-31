@@ -66,7 +66,7 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <p class="dashboard-kpi" v-b-tooltip.hover :title="kpiData.sensorCount">
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.sensorCount">
                     {{ kpiData.sensorCount }}
                   </p>
                 </template>
@@ -86,7 +86,7 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <p class="dashboard-kpi" v-b-tooltip.hover :title="kpiData.visitorsMonth">
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.visitorsMonth">
                     {{ kpiData.visitorsMonth }}
                   </p>
                 </template>
@@ -106,7 +106,7 @@
                   </div>
                 </template>
                 <template slot="content">
-                  <p class="dashboard-kpi" v-b-tooltip.hover :title="kpiData.mapAccess">
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.mapAccess">
                     {{ kpiData.mapAccess }}
                   </p>
                 </template>
