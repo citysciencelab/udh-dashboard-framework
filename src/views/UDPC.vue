@@ -333,8 +333,7 @@
             <template slot="footer">
               <div class="slider-holder">
                 <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-                <range-slider ref="totalDatasetsSlider"
-                              class="slider"
+                <range-slider class="slider"
                               :options="sliderOptions.datasets"
                               @rangeChange="rangeForChartChanged('datasets', $event)" />
                 <span class="right">{{ $t('udpc.sliderLater') }}</span>
@@ -489,10 +488,6 @@ export default class UDPC extends AbstractDashboard {
     countGroupedWithPlans = false;
     accessWithBackgroundMaps = true;
     agreeDialogActive = false;
-
-    $refs!: {
-      totalDatasetsSlider: RangeSlider & RangeSliderMethods
-    }
 
     mapData: MapData = {
         services: servicesConfig,
@@ -814,10 +809,7 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
-    onSwitchIncludeMaps(chartId: string) {
-      const minMax: string[] = (this.$refs['totalDatasetsSlider'] as RangeSliderMethods).getCurrentValues();
-      this.sliderOptions[chartId].min = minMax[0];
-      this.sliderOptions[chartId].max = minMax[1];
+    onSwitchIncludeMaps() {
       this.fetchDatasetsRange();
     }
 
