@@ -22,7 +22,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_FILTERED_DATA', ['recentDatasets', {
                 items: aggregations.hits.hits
                  .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
-                action: 'map'
+                action: 'md_id'
             }]);
 
             context.commit('SET_LOADING', false);

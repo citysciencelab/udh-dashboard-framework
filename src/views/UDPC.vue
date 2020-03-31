@@ -219,7 +219,7 @@
               <div class="overlay top right" @click="onOpenFullscreenMap">
                 <md-icon>aspect_ratio</md-icon>
               </div>
-              <master-portal-map ref="master-portal-map" 
+              <master-portal-map ref="masterPortalMap" 
                                  :services="mapData.services"
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id" />
@@ -444,10 +444,10 @@
                   :content="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
                   :content="$t('udpc.tooltipAccessApps')" />
-    <info-overlay ref="fullscreen-content"
+    <info-overlay ref="fullscreenContent"
                   style="width:95%; height:95%;"
                   :html="fullscreenContent.html"
-                  @closed="onCloseFullscreen" />
+                  @closed="onCloseFullscreenMap" />
   </div>
 </template>
 
@@ -495,7 +495,9 @@ export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
 
     $refs!: {
-      totalDatasetsSlider: RangeSlider & RangeSliderMethods
+      totalDatasetsSlider: RangeSlider & RangeSliderMethods,
+      masterPortalMap: MasterPortalMap,
+      fullscreenContent: InfoOverlay
     }
 
     mapData: MapData = {
@@ -694,15 +696,6 @@ export default class UDPC extends AbstractDashboard {
                         mutationData.datasets[0]['label'] = 'Zugriffe';
                         mutationData.datasets[0]['backgroundColor'] = '#196CB1';
                         this.chartData.dataSetsTopX = mutationData;
-<<<<<<< HEAD
-                        this.dataSets = {
-                            items: mutationData.labels
-                                .map((datum: any, i: number) => ({ label: datum, link: mutationData.datasets[0].md_id[i]}))
-                                .filter((d: any, i: number) => i > 4 && i < 9), // demo: filter for sensible sets
-                            action: 'md_id'
-                        }
-=======
->>>>>>> dev
                         break;
                     case 'totalDatasetsCount':
                         mutationData.datasets[0]['backgroundColor'] = '#003063';
@@ -737,8 +730,8 @@ export default class UDPC extends AbstractDashboard {
     }
 
     mounted() {
-      if (this.$refs['master-portal-map']) {
-        (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
+      if (this.$refs['masterPortalMap']) {
+        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
       }
     }
 
@@ -804,10 +797,10 @@ export default class UDPC extends AbstractDashboard {
     }
 
     onOpenFullscreenMap() {
-        this.fullscreenContent.html = (this.$refs['master-portal-map'] as Vue).$el;
+        this.fullscreenContent.html = (this.$refs['masterPortalMap'] as Vue).$el;
         this.fullscreenContent.ref = this.fullscreenContent.html.parentElement;
 
-        (this.$refs['fullscreen-content'] as InfoOverlay).show();
+        (this.$refs['fullscreenContent'] as InfoOverlay).show();
         (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
@@ -815,7 +808,7 @@ export default class UDPC extends AbstractDashboard {
         if (this.fullscreenContent.ref) {
           this.fullscreenContent.ref.append(this.fullscreenContent.html as Element);
         }
-        (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
+        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
