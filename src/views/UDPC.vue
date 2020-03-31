@@ -17,12 +17,14 @@
             <template slot="content">
               <div class="container-fluid">
                 <div class="row">
-                  <multi-select identifier="theme"
+                  <multi-select ref="themeSelect"
+                                identifier="theme"
                                 :select-data="getThemeFilterOptions()"
                                 :label="$t('udpc.themeFilter')"
                                 style="padding-right: 50px"
                                 @new_selection="applyFilters" />
-                  <multi-select identifier="organization"
+                  <multi-select ref="organizationSelect"
+                                identifier="organization"
                                 :select-data="getOrgFilterOptions()"
                                 :label="$t('udpc.orgFilter')"
                                 @new_selection="applyFilters" />
@@ -899,7 +901,7 @@ export default class UDPC extends AbstractDashboard {
 
         // As long as multiple selections are not supported, only the first element is considered!
         const theme = (this.filters.theme || [])[0];
-        const org = (this.filters.org || [])[0];
+        const org = (this.filters.organization || [])[0];
 
         this.fetchTotalsByType(totalsType, theme, org);
         this.fetchDatasetsRange(theme, org);
@@ -916,7 +918,14 @@ export default class UDPC extends AbstractDashboard {
 
         const type = this.activeTabs.dataSetsByTopic === 'tab-theme' ? 'theme' : 'organization';
 
-        this.applyFilters([type, [datum.key]]);
+        // Synchronize MultiSelects (updating them will trigger 'applyFilters')
+        switch (type) {
+            case 'theme':
+                (this.$refs.themeSelect as MultiSelect).selectedData = [datum.key];
+                break;
+            case 'organization':
+                (this.$refs.organizationSelect as MultiSelect).selectedData = [datum.key];
+        }
     }
 
     testSnackBar() {

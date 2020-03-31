@@ -19,22 +19,11 @@ const chartsModule: Module<DashboardState, RootState> = {
             state.filteredData[id] = data;
         },
         SET_FILTERS: (state, [id, values]) => {
-            // Must instantiate a new object because otherwise Vuex change detection will not work
-            const newFilters: { [key: string]: any } = {};
-
-            // Copy previous filters
-            for (const [k, v] of Object.entries(state.filters)) {
-                newFilters[k] = v;
-            }
-
-            // Update filter
             if (values.length > 0) {
-                newFilters[id] = values;
+                state.filters[id] = values;
             } else {
-                delete newFilters[id];
+                delete state.filters[id];
             }
-
-            state.filters = newFilters;
         },
         SET_FILTERS_NONE: (state) => {
             state.filters = {}
