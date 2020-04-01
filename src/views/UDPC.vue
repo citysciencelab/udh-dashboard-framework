@@ -543,7 +543,10 @@ export default class UDPC extends AbstractDashboard {
                 },
                 ticks: {
                     display: true,
-                    beginAtZero: true
+                    beginAtZero: true,
+                    callback: function(value: string) {
+                      return new Utils().number.getDecimalSeparatedNumber(value);
+                    }
                 }
             }],
             xAxes: [{
@@ -582,7 +585,10 @@ export default class UDPC extends AbstractDashboard {
                     },
                     ticks: {
                         display: true,
-                        beginAtZero: true
+                        beginAtZero: true,
+                        callback: function(value: string) {
+                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        }
                     }
                 }],
                 xAxes: [{
@@ -619,7 +625,10 @@ export default class UDPC extends AbstractDashboard {
                         drawOnChartArea: false
                     },
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        callback: function(value: string) {
+                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        }
                     }
                 }]
             }
