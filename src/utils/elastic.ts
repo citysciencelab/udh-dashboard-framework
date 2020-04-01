@@ -37,12 +37,13 @@ const elastic = {
         "tag_not": "basemap",
         "tag": "basemap"
      */
-    async getRangeful(theme: string, org: string, from: string, to: string, category: string, top?: number, interval?: string, tag_not?: string, tag?: string) {
+    async getRangeful(theme: string, org: string, from: string, to: string, category: string, top?: number, interval?: string, tag_not?: string, tag?: string, sortBy?: string) {
         elastic.validateDate(from);
         elastic.validateDate(to);
         elastic.validateCategory(category);
         elastic.validateInterval(interval);
-        const params = { theme, org, tag, from, to, category, top, interval, tag_not };
+        elastic.validateSortBy(sortBy);
+        const params = { theme, org, tag, from, to, category, top, interval, tag_not, sortBy };
         const source = JSON.stringify({ id: 'test_rangeful', params: params });
         const url = encodeURI(`${baseUrl}/template?source=${source}&source_content_type=application/json`);
         const response = await Axios.get(url);

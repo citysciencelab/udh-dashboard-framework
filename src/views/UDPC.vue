@@ -148,7 +148,8 @@
             </template>
             <template slot="footer">
               <div class="notice">
-                <md-switch v-model="countGroupedWithPlans"
+                <md-switch v-model="chartSwitches.countGroupedWithPlans"
+                           @change="fetchTotalsByTopic()"
                            class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
@@ -194,7 +195,8 @@
             <template slot="footer">
               <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
                    class="notice">
-                <md-switch v-model="countTotalWithPlans"
+                <md-switch v-model="chartSwitches.countTotalWithPlans"
+                           @change="fetchTotalsByType()"
                            class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
@@ -335,7 +337,7 @@
               </div>
               <div class="notice" style="width: 100%; display: flex">
                 <md-switch
-                  v-model="accessWithBackgroundMaps"
+                  v-model="chartSwitches.accessWithBackgroundMaps"
                   class="dashboard-switch"
                   @change="onSwitchIncludeMaps('datasets')">
                   {{ $t('udpc.includeMapHits') }}
@@ -480,14 +482,11 @@ import Utils from "@/utils/utils";
     }
 })
 export default class UDPC extends AbstractDashboard {
-    countTotalWithPlans = false;
-    countGroupedWithPlans = false;
-    accessWithBackgroundMaps = true;
     agreeDialogActive = false;
 
     $refs!: {
       totalDatasetsSlider: RangeSlider & RangeSliderMethods
-    }
+    };
 
     mapData: MapData = {
         services: servicesConfig,
@@ -517,6 +516,17 @@ export default class UDPC extends AbstractDashboard {
       sensorCount: '',
       visitorsMonth: '',
       mapAccess: ''
+    };
+
+    activeTabs: { [key: string]: string } = {
+      dataSetsByTopic: '',
+      dataSetsByType: ''
+    };
+
+    chartSwitches: { [key: string]: boolean } = {
+      accessWithBackgroundMaps: true,
+      countGroupedWithPlans: false,
+      countTotalWithPlans: false
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
@@ -725,19 +735,24 @@ export default class UDPC extends AbstractDashboard {
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-organisations':
-                this.fetchTotalsByTopic('organization');
+                this.activeTabs.dataSetsByTopic = 'organization';
+                this.fetchTotalsByTopic();
                 break;
             case 'tab-topics':
-                this.fetchTotalsByTopic('theme');
+                this.activeTabs.dataSetsByTopic = 'theme';
+                this.fetchTotalsByTopic();
                 break;
             case 'tab-datasets':
-                this.fetchTotalsByType('datasets');
+                this.activeTabs.dataSetsByType = 'datasets';
+                this.fetchTotalsByType();
                 break;
             case 'tab-apps':
-                this.fetchTotalsByType('apps');
+                this.activeTabs.dataSetsByType = 'apps';
+                this.fetchTotalsByType();
                 break;
             case 'tab-sensordatasets':
-                // this.fetchTotalsByType('sensors');
+                this.activeTabs.dataSetsByType = 'sensors';
+                // this.fetchTotalsByType();
                 break;
             case 'tab-top5-apps':
                 this.fetchTops('apps');
@@ -804,7 +819,6 @@ export default class UDPC extends AbstractDashboard {
       const max = minMax[1];
       const unit = this.sliderOptions[chartId].unit;
       this.fetchDatasetsRange({min, max, unit});
-
     }
 
     async fetchBaseMapKPI() {
@@ -823,12 +837,18 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRecentDataset');
     }
 
-    async fetchTotalsByTopic(topic: string) {
-        await this.$store.dispatch('fetchTotalsByTopic', topic);
+    async fetchTotalsByTopic() {
+        await this.$store.dispatch('fetchTotalsByTopic', {
+          totalsTopic: this.activeTabs.dataSetsByTopic,
+          isIncludeBuildPlans: this.chartSwitches.countGroupedWithPlans
+        });
     }
 
-    async fetchTotalsByType(type: string) {
-        await this.$store.dispatch('fetchTotalsByType', type);
+    async fetchTotalsByType() {
+        await this.$store.dispatch('fetchTotalsByType', {
+          totalsType: this.activeTabs.dataSetsByType,
+          isIncludeBuildPlans: this.activeTabs.dataSetsByType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false
+        });
     }
 
     async fetchTops(topic: string ) {
@@ -844,7 +864,7 @@ export default class UDPC extends AbstractDashboard {
     async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, tag_not?: string }) {
         params.chartId = 'totalDatasets';
         params.category = 'datasets';
-        if (!this.accessWithBackgroundMaps) {
+        if (!this.chartSwitches.accessWithBackgroundMaps) {
           params.tag_not = 'basemap';
         }
         await this.$store.dispatch('fetchRangefulData', params);
