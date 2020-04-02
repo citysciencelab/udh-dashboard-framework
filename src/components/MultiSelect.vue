@@ -6,7 +6,8 @@
         <md-select :id="identifier"
                    v-model="selectedData"
                    multiple
-                   @md-closed="setSelected">
+                   @md-closed="closed"
+                   @md-selected="setSelected">
           <md-option v-for="(item, index) in selectData"
                      :key="index"
                      :value="item">
@@ -27,9 +28,19 @@ export default class MultiSelect extends Vue {
     @Prop() selectData!: Dataset;
     @Prop() label!: string;
     selectedData: string[] = [];
+    isOnceSelected: boolean = false;
 
+    /*
+     * Closed event fires on init with empty selectData. Need to make sure that value emit is on purpose.
+     */
     setSelected() {
-        this.$emit('new_selection', [this.identifier, this.selectedData]);
+        this.isOnceSelected = true;
+    }
+
+    closed() {
+        if (this.isOnceSelected) {
+            this.$emit('new_selection', [this.identifier, this.selectedData]);
+        }
     }
 }
 </script>
