@@ -37,8 +37,8 @@ export default class MultiSelect extends Vue {
         this.isOnceSelected = true;
     }
 
-    closed() {
-        if (this.isOnceSelected) {
+    closed(force: boolean) {
+        if (this.isOnceSelected || force) {
             this.$emit('new_selection', [this.identifier, this.selectedData]);
         }
     }

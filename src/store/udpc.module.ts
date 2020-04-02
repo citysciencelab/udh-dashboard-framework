@@ -26,7 +26,7 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByTopic: async (context, totalsTopic) => {
+        fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string, org: string }) => {
             context.commit('SET_LOADING', true);
 
             let aggregations = Object.prototype.hasOwnProperty.call(context.getters.dashboardData, 'totalTopicDatasets') ?
@@ -34,14 +34,14 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             if (!aggregations) {
                 const month = new Utils().date.getLastMonth();
-                aggregations = await elastic.getRangeless('', '', month, 'datasets');
+                aggregations = await elastic.getRangeless(params.theme, params.org, month, 'datasets');
                 aggregations = aggregations['aggregations'];
                 context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
             }
 
             context.commit('SET_FILTERED_DATA', ['totalTopicDatasets', {
                 datasets: [{
-                    tree: aggregations[totalsTopic].buckets
+                    tree: aggregations[params.totalsTopic].buckets
                 }]
             }]);
 

@@ -831,8 +831,8 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRecentDataset');
     }
 
-    async fetchTotalsByTopic(topic: string) {
-        await this.$store.dispatch('fetchTotalsByTopic', topic);
+    async fetchTotalsByTopic(topic: string, theme?: string, org?: string) {
+        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic: topic, theme, org });
     }
 
     async fetchTotalsByType(type: string, theme?: string, org?: string) {
@@ -896,6 +896,7 @@ export default class UDPC extends AbstractDashboard {
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
 
+        const totalsTopic = this.activeTabs.dataSetsByTopic === 'tab-theme' ? 'theme' : 'organization';
         const totalsType = this.activeTabs.dataSetsByType === 'tab-datasets' ? 'datasets' :
             this.activeTabs.dataSetsByType === 'tab-apps' ? 'apps' : 'sensordatasets';
 
@@ -903,6 +904,7 @@ export default class UDPC extends AbstractDashboard {
         const theme = (this.filters.theme || [])[0];
         const org = (this.filters.organization || [])[0];
 
+        this.fetchTotalsByTopic(totalsTopic, theme, org);
         this.fetchTotalsByType(totalsType, theme, org);
         this.fetchDatasetsRange(theme, org);
         this.fetchAppsRange(theme, org);
@@ -921,11 +923,17 @@ export default class UDPC extends AbstractDashboard {
 
         // Synchronize MultiSelects (updating them will trigger 'applyFilters')
         switch (type) {
-            case 'theme':
-                (this.$refs.themeSelect as MultiSelect).selectedData = topics;
+            case 'theme': {
+                const select = (this.$refs.themeSelect as MultiSelect);
+                select.selectedData = topics;
+                select.closed(true);
                 break;
-            case 'organization':
-                (this.$refs.organizationSelect as MultiSelect).selectedData = topics;
+            }
+            case 'organization': {
+                const select = (this.$refs.organizationSelect as MultiSelect);
+                select.selectedData = topics;
+                select.closed(true);
+            }
         }
     }
 
