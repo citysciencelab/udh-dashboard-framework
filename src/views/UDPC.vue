@@ -13,6 +13,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12 py-2">
+          <!-- Filter -->
           <dashboard-tile class="chart-card">
             <template slot="content">
               <div class="container-fluid">
@@ -36,6 +37,7 @@
       </div>
       <div class="row">
         <div class="col-lg-4 col-md-6 py-2">
+          <!-- Wussten Sie schon? -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -55,6 +57,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-6 py-2">
+          <!-- Neueste Datensätze -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -77,6 +80,7 @@
         <div class="col-lg-4 col-md-12">
           <div class="row">
             <div class="col-lg-4 col-4 py-2">
+              <!-- KPI Sensoren -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -97,6 +101,7 @@
               </dashboard-tile>
             </div>
             <div class="col-lg-4 col-4 py-2">
+              <!-- KPI Besucher -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -117,6 +122,7 @@
               </dashboard-tile>
             </div>
             <div class="col-lg-4 col-4 py-2">
+              <!-- KPI Karte -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -140,7 +146,8 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-lg-4 col-md-6  py-2">
+        <div class="col-lg-4 col-md-6 py-2">
+          <!-- Anzahl nach -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -177,6 +184,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-6 py-2">
+          <!-- Anzahl total -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -217,6 +225,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-12 py-2">
+          <!-- Karte -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -239,6 +248,7 @@
       </div>
       <div class="row ">
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Top 5 des Monats -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -270,6 +280,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Downloads -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -307,6 +318,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Zugriffe Fachdaten -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -352,6 +364,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Zugriffe Apps -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">

@@ -13,7 +13,10 @@ const chartsModule: Module<DashboardState, RootState> = {
     state: initialState,
     mutations: {
         SET_INITIAL_DATA: (state, [id, data]: [string, FeatureSet|Dataset]) => {
-            state.dashboardData[id] = data;
+            // It's initial data, so setting it once is enough
+            if (!state.dashboardData[id]) {
+                state.dashboardData[id] = data;
+            }
         },
         SET_FILTERED_DATA: (state, [id, data]: [string, Chart.ChartData]) => {
             state.filteredData[id] = data;
