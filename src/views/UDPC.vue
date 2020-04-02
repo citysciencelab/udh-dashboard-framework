@@ -913,18 +913,19 @@ export default class UDPC extends AbstractDashboard {
             return;
         }
 
+        const type = this.activeTabs.dataSetsByTopic === 'tab-theme' ? 'theme' : 'organization';
+
         const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
         const datum = dataset.tree[event[0]._index];
-
-        const type = this.activeTabs.dataSetsByTopic === 'tab-theme' ? 'theme' : 'organization';
+        const topics = [datum.key] as string[];
 
         // Synchronize MultiSelects (updating them will trigger 'applyFilters')
         switch (type) {
             case 'theme':
-                (this.$refs.themeSelect as MultiSelect).selectedData = [datum.key];
+                (this.$refs.themeSelect as MultiSelect).selectedData = topics;
                 break;
             case 'organization':
-                (this.$refs.organizationSelect as MultiSelect).selectedData = [datum.key];
+                (this.$refs.organizationSelect as MultiSelect).selectedData = topics;
         }
     }
 

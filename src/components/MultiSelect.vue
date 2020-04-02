@@ -6,7 +6,7 @@
         <md-select :id="identifier"
                    v-model="selectedData"
                    multiple
-                   @md-selected="setSelected">
+                   @md-closed="setSelected">
           <md-option v-for="(item, index) in selectData"
                      :key="index"
                      :value="item">
