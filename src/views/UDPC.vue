@@ -175,8 +175,9 @@
             </template>
             <template slot="footer">
               <div class="notice">
-                <md-switch v-model="countGroupedWithPlans"
-                           class="dashboard-switch">
+                <md-switch v-model="chartSwitches.countGroupedWithPlans"
+                           class="dashboard-switch"
+                           @change="fetchTotalsByTopic()">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
@@ -216,8 +217,9 @@
             <template slot="footer">
               <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
                    class="notice">
-                <md-switch v-model="countTotalWithPlans"
-                           class="dashboard-switch">
+                <md-switch v-model="chartSwitches.countTotalWithPlans"
+                           class="dashboard-switch"
+                           @change="fetchTotalsByType()">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
@@ -354,7 +356,7 @@
               </div>
               <div class="notice" style="width: 100%; display: flex">
                 <md-switch
-                  v-model="accessWithBackgroundMaps"
+                  v-model="chartSwitches.accessWithBackgroundMaps"
                   class="dashboard-switch"
                   @change="onSwitchIncludeMaps('datasets')">
                   {{ $t('udpc.includeMapHits') }}
@@ -499,9 +501,6 @@ import Utils from "@/utils/utils";
     }
 })
 export default class UDPC extends AbstractDashboard {
-    countTotalWithPlans = false;
-    countGroupedWithPlans = false;
-    accessWithBackgroundMaps = true;
     agreeDialogActive = false;
 
     mapData: MapData = {
@@ -532,6 +531,12 @@ export default class UDPC extends AbstractDashboard {
       sensorCount: '',
       visitorsMonth: '',
       mapAccess: ''
+    };
+
+    chartSwitches: { [key: string]: boolean } = {
+      accessWithBackgroundMaps: true,
+      countGroupedWithPlans: false,
+      countTotalWithPlans: false
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
@@ -566,7 +571,10 @@ export default class UDPC extends AbstractDashboard {
                 },
                 ticks: {
                     display: true,
-                    beginAtZero: true
+                    beginAtZero: true,
+                    callback: function(value: string) {
+                      return new Utils().number.getDecimalSeparatedNumber(value);
+                    }
                 }
             }],
             xAxes: [{
@@ -605,7 +613,10 @@ export default class UDPC extends AbstractDashboard {
                     },
                     ticks: {
                         display: true,
-                        beginAtZero: true
+                        beginAtZero: true,
+                        callback: function(value: string) {
+                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        }
                     }
                 }],
                 xAxes: [{
@@ -642,7 +653,10 @@ export default class UDPC extends AbstractDashboard {
                         drawOnChartArea: false
                     },
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        callback: function(value: string) {
+                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        }
                     }
                 }]
             }
@@ -739,24 +753,24 @@ export default class UDPC extends AbstractDashboard {
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-theme':
-                this.activeTabs.dataSetsByTopic = tab;
-                this.fetchTotalsByTopic('theme');
+                this.activeTabs.dataSetsByTopic = 'theme';
+                this.fetchTotalsByTopic();
                 break;
             case 'tab-organization':
-                this.activeTabs.dataSetsByTopic = tab;
-                this.fetchTotalsByTopic('organization');
+                this.activeTabs.dataSetsByTopic = 'organization';
+                this.fetchTotalsByTopic();
                 break;
             case 'tab-datasets':
-                this.activeTabs.dataSetsByType = tab;
-                this.fetchTotalsByType('datasets');
+                this.activeTabs.dataSetsByType = 'datasets';
+                this.fetchTotalsByType();
                 break;
             case 'tab-apps':
-                this.activeTabs.dataSetsByType = tab;
-                this.fetchTotalsByType('apps');
+                this.activeTabs.dataSetsByType = 'apps';
+                this.fetchTotalsByType();
                 break;
             case 'tab-sensordatasets':
-                this.activeTabs.dataSetsByType = tab;
-                // this.fetchTotalsByType('sensors');
+                this.activeTabs.dataSetsByType = 'sensordatasets';
+                this.fetchTotalsByType();
                 break;
             case 'tab-top5-apps':
                 this.fetchTops('apps');
@@ -844,12 +858,18 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRecentDataset');
     }
 
-    async fetchTotalsByTopic(topic: string, theme?: string, org?: string) {
-        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic: topic, theme, org });
+    async fetchTotalsByTopic(theme?: string, org?: string) {
+        const topic = this.activeTabs.dataSetsByTopic;
+        const isIncludeBuildPlans = this.chartSwitches.countGroupedWithPlans;
+
+        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic: topic, theme, org, isIncludeBuildPlans });
     }
 
-    async fetchTotalsByType(type: string, theme?: string, org?: string) {
-        await this.$store.dispatch('fetchTotalsByType', { totalsType: type, theme, org });
+    async fetchTotalsByType(theme?: string, org?: string) {
+        const type = this.activeTabs.dataSetsByType;
+        const isIncludeBuildPlans = type === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
+
+        await this.$store.dispatch('fetchTotalsByType', { totalsType: type, theme, org, isIncludeBuildPlans });
     }
 
     async fetchTops(topic: string ) {
@@ -874,7 +894,7 @@ export default class UDPC extends AbstractDashboard {
             min: this.sliderOptions.datasets.min,
             max: this.sliderOptions.datasets.max,
             unit: this.sliderOptions.datasets.unit,
-            tag_not: this.accessWithBackgroundMaps ? '' : 'basemap',
+            tag_not: this.chartSwitches.accessWithBackgroundMaps ? '' : 'basemap',
             theme: theme,
             org: org
         };
@@ -909,16 +929,12 @@ export default class UDPC extends AbstractDashboard {
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
 
-        const totalsTopic = this.activeTabs.dataSetsByTopic === 'tab-theme' ? 'theme' : 'organization';
-        const totalsType = this.activeTabs.dataSetsByType === 'tab-datasets' ? 'datasets' :
-            this.activeTabs.dataSetsByType === 'tab-apps' ? 'apps' : 'sensordatasets';
-
         // As long as multiple selections are not supported, only the first element is considered!
         const theme = (this.filters.theme || [])[0];
         const org = (this.filters.organization || [])[0];
 
-        this.fetchTotalsByTopic(totalsTopic, theme, org);
-        this.fetchTotalsByType(totalsType, theme, org);
+        this.fetchTotalsByTopic(theme, org);
+        this.fetchTotalsByType(theme, org);
         this.fetchDatasetsRange(theme, org);
         this.fetchAppsRange(theme, org);
     }
@@ -928,14 +944,12 @@ export default class UDPC extends AbstractDashboard {
             return;
         }
 
-        const type = this.activeTabs.dataSetsByTopic === 'tab-theme' ? 'theme' : 'organization';
-
         const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
         const datum = dataset.tree[event[0]._index];
         const topics = [datum.key] as string[];
 
         // Synchronize MultiSelects (updating them will trigger 'applyFilters')
-        switch (type) {
+        switch (this.activeTabs.dataSetsByTopic) {
             case 'theme': {
                 const select = (this.$refs.themeSelect as MultiSelect);
                 select.selectedData = topics;
