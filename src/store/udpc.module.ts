@@ -17,7 +17,9 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchRecentDataset: async (context) => {
             context.commit('SET_LOADING', true);
 
-            let aggregations = await elastic.getRangeless('', '', '', 'datasets', 10, 'change_date');
+            // geht noch nicht mit top
+           const aggregations = await elastic.getRangeful('', '', '', '', 'datasets', undefined, '', '', '', 'change_date', 10);
+            // let aggregations = await elastic.getRangeless('', '', '', 'datasets', 10, 'change_date');
             context.commit('SET_FILTERED_DATA', ['recentDatasets', {
                 items: aggregations.hits.hits
                  .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
@@ -26,32 +28,28 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByTopic: async (context, totalsTopic) => {
+        fetchTotalsByTopic: async (context, params: { totalsTopic: string, isIncludeBuildPlans: boolean}) => {
             context.commit('SET_LOADING', true);
 
-            let aggregations = Object.prototype.hasOwnProperty.call(context.getters.dashboardData, 'totalTopicDatasets') ?
-                context.getters.dashboardData['totalTopicDatasets'] : null;
-
-            if (!aggregations) {
-                const month = new Utils().date.getLastMonth();
-                aggregations = await elastic.getRangeless('', '', month, 'datasets');
-                aggregations = aggregations['aggregations'];
-                context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
-            }
-
+            const tagNot = params.isIncludeBuildPlans ? '' : 'bplan';
+            const month = new Utils().date.getLastMonth();
+            let aggregations = await elastic.getRangeful('', '', month, month, 'datasets', undefined, '', tagNot);
+            aggregations = aggregations['aggregations'];
+            context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalTopicDatasets', {
                 datasets: [{
-                    tree: aggregations[totalsTopic].buckets
+                    tree: aggregations[params.totalsTopic].buckets
                 }]
             }]);
 
             context.commit('SET_LOADING', false);
         },
-        fetchTops: async (context, topTopic) => {
+        fetchTops: async (context, topTopic: string) => {
             context.commit('SET_LOADING', true);
 
             const month = new Utils().date.getLastMonth();
-            const aggregations = await elastic.getRangeful('', '', month, month, topTopic, 10, 'month', 'basemap');
+            let aggregations = await elastic.getRangeful('', '', month, month, topTopic, 10, 'month', 'basemap');
+            aggregations = aggregations['aggregations'];
             const topX = aggregations.top_x.buckets;
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
@@ -59,23 +57,25 @@ const udpcModule: Module<UDPCState, RootState> = {
                 labels: topX.map((item: any) => item.key),
                 datasets: [{
                     data: topX.map((item: any) => item.total_hits.value),
-                    md_id: topX.map((item: any) => item.md_id.buckets[0].key)
+                    md_id: topX.map((item: any) => item.md_id.buckets[0] ? item.md_id.buckets[0].key : undefined)
                 }]
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByType: async (context, totalsType) => {
+        fetchTotalsByType: async (context, params: { totalsType: string, isIncludeBuildPlans: boolean}) => {
             context.commit('SET_LOADING', true);
 
+            const tagNot = params.isIncludeBuildPlans ? '' : 'bplan';
             let currentMonth = new Utils().date.getCurrentMonth();
-            let aggregations = await elastic.getRangeful('', '', '2000-01', currentMonth, totalsType, 100, 'year');
+            let aggregations = await elastic.getRangeful('', '', '2000-01', currentMonth, params.totalsType, 100, 'year', tagNot);
+            aggregations = aggregations['aggregations'];
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
                 labels: aggregations['total_entities_and_hits'].buckets.map((item: any) =>
                     item.key_as_string.substr(0, item.key_as_string.indexOf('-'))),
                 datasets: [{
-                    data: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.doc_count)
+                    data: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.entities_unique.value)
                 }]
             }]);
 
@@ -84,7 +84,8 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchRangefulData: async (context, params: { min: string, max: string, unit: string, category: string, chartId: string, tag_not?: string }) => {
             sanitizeRangefulParams(params);
 
-            const aggregations = await elastic.getRangeful('', '', params.min, params.max, params.category, undefined, params.unit, params.tag_not);
+            let aggregations = await elastic.getRangeful('', '', params.min, params.max, params.category, undefined, params.unit, params.tag_not);
+            aggregations = aggregations['aggregations'];
 
             context.commit('SET_FILTERED_DATA', [params.chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
@@ -97,17 +98,31 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchVisitorsKPI: async (context) => {
             const month = new Utils().date.getLastMonth();
-            const aggregations = await elastic.getRangeful('', '', month, month, 'visitors', undefined, 'month', undefined);
-            context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+            let aggregations = await elastic.getRangeful('', '', month, month, 'visitors', undefined, 'month', undefined);
+            aggregations = aggregations['aggregations'];
+            try {
+                context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+            } catch (e) {
+                context.commit('SET_FILTERED_DATA', ['visitorsKPI', null]);
+            }
         },
         fetchSensorsKPI: async (context) => {
             const response = await Axios.get('https://iot.hamburg.de/v1.0/Datastreams?$filter=not%20substringof(%27E-Roller%27,description)&$count=true');
-            context.commit('SET_FILTERED_DATA', ['sensorsKPI', response.data['@iot.count']]);
+            try {
+                context.commit('SET_FILTERED_DATA', ['sensorsKPI', response.data['@iot.count']]);
+            } catch (e) {
+                context.commit('SET_FILTERED_DATA', ['sensorsKPI', null]);
+            }
         },
         fetchBaseMapKPI: async (context) => {
             const month = new Utils().date.getLastMonth();
-            const aggregations = await elastic.getRangeful('', '', month, month, '', undefined, 'month', undefined, 'basemap');
-            context.commit('SET_FILTERED_DATA', ['baseMapKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+            let aggregations = await elastic.getRangeful('', '', month, month, '', undefined, 'month', undefined, 'basemap');
+            aggregations = aggregations['aggregations'];
+            try {
+                context.commit('SET_FILTERED_DATA', ['baseMapKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+            } catch (e) {
+                context.commit('SET_FILTERED_DATA', ['baseMapKPI', null]);
+            }
         },
         applyFilter: (context, [id, accessor]) => {
             const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
