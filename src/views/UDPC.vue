@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-lg-12 py-2">
           <!-- Filter -->
-          <dashboard-tile class="chart-card">
+          <dashboard-tile class="filter-card">
             <template slot="content">
               <div class="container-fluid">
                 <div class="row">
@@ -22,12 +22,13 @@
                                 identifier="theme"
                                 :select-data="getThemeFilterOptions()"
                                 :label="$t('udpc.themeFilter')"
-                                style="padding-right: 50px"
+                                class="multiselect"
                                 @new_selection="applyFilters" />
                   <multi-select ref="organizationSelect"
                                 identifier="organization"
                                 :select-data="getOrgFilterOptions()"
                                 :label="$t('udpc.orgFilter')"
+                                class="multiselect"
                                 @new_selection="applyFilters" />
                 </div>
               </div>
@@ -1208,6 +1209,19 @@ i {
           order: 3;
           display: none;
         }
+    }
+
+    &.filter-card {
+      padding: 0 15px;
+
+      .md-card-content,
+      .md-card-actions {
+        padding: 0;
+      }
+
+      .multiselect {
+        padding-right: 50px;
+      }
     }
 }
 
