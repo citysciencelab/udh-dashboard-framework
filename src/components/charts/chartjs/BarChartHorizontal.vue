@@ -8,7 +8,7 @@ import AbstractChart from "@/components/charts/chartjs/AbstractChart.vue";
 })
 export default class HorizontalBarChart extends AbstractChart {
  @Watch('chartData') onChartDataChanged() {
-   if (this.chartData && this.chartData.datasets[0].data.length === 0) {
+   if (!this.chartData || !this.chartData.datasets || !this.chartData.datasets[0] || !this.chartData.datasets[0].data || this.chartData.datasets[0].data.length === 0) {
      console.log('No data for this chart')
      // Show some message? Append warning to canvas?
      // this.$refs['canvas'];

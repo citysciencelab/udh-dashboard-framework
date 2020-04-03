@@ -57,7 +57,7 @@ const udpcModule: Module<UDPCState, RootState> = {
                 labels: topX.map((item: any) => item.key),
                 datasets: [{
                     data: topX.map((item: any) => item.total_hits.value),
-                    md_id: topX.map((item: any) => item.md_id.buckets[0].key)
+                    md_id: topX.map((item: any) => item.md_id.buckets[0] ? item.md_id.buckets[0].key : undefined)
                 }]
             }]);
             context.commit('SET_LOADING', false);

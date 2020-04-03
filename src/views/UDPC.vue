@@ -149,8 +149,8 @@
             <template slot="footer">
               <div class="notice">
                 <md-switch v-model="chartSwitches.countGroupedWithPlans"
-                           @change="fetchTotalsByTopic()"
-                           class="dashboard-switch">
+                           class="dashboard-switch"
+                           @change="fetchTotalsByTopic()">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
@@ -196,8 +196,8 @@
               <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
                    class="notice">
                 <md-switch v-model="chartSwitches.countTotalWithPlans"
-                           @change="fetchTotalsByType()"
-                           class="dashboard-switch">
+                           class="dashboard-switch"
+                           @change="fetchTotalsByType()">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
