@@ -219,7 +219,7 @@
               <div class="overlay top right" @click="onOpenFullscreenMap">
                 <md-icon>aspect_ratio</md-icon>
               </div>
-              <master-portal-map ref="masterPortalMap" 
+              <master-portal-map ref="masterPortalMap"
                                  :services="mapData.services"
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id" />
@@ -801,7 +801,7 @@ export default class UDPC extends AbstractDashboard {
         this.fullscreenContent.ref = this.fullscreenContent.html.parentElement;
 
         (this.$refs['fullscreenContent'] as InfoOverlay).show();
-        (this.$refs['master-portal-map'] as MasterPortalMap).onResize(); // resize Map after render
+        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
     onCloseFullscreenMap() {

@@ -5,7 +5,7 @@
          :style="mapStyle" />
     <div class="overlay bottom left banner">
       {{ overlayText }}
-    </div>  
+    </div>
   </div>
 </template>
 
@@ -87,7 +87,7 @@
                 }
                 this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
                     this.tempLayers = layers;
-                    this.overlayText = layers[0].get('name');
+                    this.overlayText = layers[0] ? layers[0].get('name') : '';
                 });
             }
         }
