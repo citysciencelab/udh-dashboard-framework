@@ -1,283 +1,447 @@
 <template>
-    <div>
-        <nav class="navbar navbar-expand-lg">
-            <img class="hh-logo" src="../assets/images/_HH_Logo_2016.svg" alt="Hamburg Logo">
-            <img class="hh-bug" src="../assets/images/Hamburg_Bug_NEU_RGB.png" alt="Hamburg Bug">
-            <span class="navbar-brand">Urban Data Platform Cockpit</span>
-        </nav>
+  <div>
+    <nav class="navbar navbar-expand-lg">
+      <img class="hh-logo"
+           src="../assets/images/_HH_Logo_2016.svg"
+           alt="Hamburg Logo">
+      <img class="hh-bug"
+           src="../assets/images/Hamburg_Bug_NEU_RGB.png"
+           alt="Hamburg Bug">
+      <span class="navbar-brand">Urban Data Platform Cockpit</span>
+    </nav>
 
-        <div class="container-fluid">
-            <div class="row ">
-                <div class="col-lg-4 col-md-6 py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-did-you-know'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.didYouKNow') }}</div>
-                        </template>
-                        <template slot="content">
-                            <did-you-know v-bind:items="didYouKnow" v-bind:interval="5000"></did-you-know>
-                        </template>
-                        <template slot="footer">
-                        </template>
-                    </dashboard-tile>
-                </div>
-                <div class="col-lg-4 col-md-6 py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-latest-datasets'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.newDatassets') }}</div>
-                        </template>
-                        <template slot="content">
-                            <did-you-know v-bind:items="dataSets" v-bind:interval="5000"></did-you-know>
-                        </template>
-                        <template slot="footer">
-                        </template>
-                    </dashboard-tile>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="row">
-                        <div class="col-lg-6 col-6 py-2">
-                            <dashboard-tile data-background-color="blue" class="chart-card">
-                                <template slot="header">
-                                    <div class="info-icon-holder" @click="$refs['tooltip-sensors'].show()">
-                                        <md-icon>help</md-icon>
-                                    </div>
-                                    <div class="card-header-text">{{ $t('udpc.sensors') }}</div>
-                                </template>
-                                <template slot="content">
-                                    <span class="dashboard-kpi">
-                                        386
-                                    </span>
-                                </template>
-                                <template slot="footer">
-                                </template>
-                            </dashboard-tile>
-                        </div>
-                        <div class="col-lg-6 col-6 py-2">
-                            <dashboard-tile data-background-color="blue" class="chart-card">
-                                <template slot="header">
-                                    <div class="info-icon-holder" @click="$refs['tooltip-visitors-today'].show()">
-                                        <md-icon>help</md-icon>
-                                    </div>
-                                    <div class="card-header-text">{{ $t('udpc.visitors') }}</div>
-                                </template>
-                                <template slot="content">
-                                    <span class="dashboard-kpi">
-                                        893
-                                    </span>
-                                </template>
-                                <template slot="footer">
-                                </template>
-                            </dashboard-tile>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-lg-4 col-md-6  py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-datasets-by'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.countBy') }}</div>
-                        </template>
-                        <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchTab">
-                                <md-tab id="tab-topics" :md-label="$t('udpc.tabTopics')">&nbsp;</md-tab>
-                                <md-tab id="tab-organisations" :md-label="$t('udpc.tabOrganisations')">&nbsp;</md-tab>
-                            </md-tabs>
-                            <div class="chart-holder">
-                                <tree-map-chart :chartData="chartData.dataSetsByTopic"
-                                                :chartOptions="chartOptions.dataSetsByTopic"/>
-                            </div>
-                        </template>
-                        <template slot="footer">
-                            <div class="notice">
-                                <md-switch v-model="countGroupedWithPlans" class="dashboard-switch">{{ $t('udpc.includeDevPlan') }}</md-switch>
-                            </div>
-                        </template>
-                    </dashboard-tile>
-                </div>
-                <div class="col-lg-4 col-md-6  py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-count-total'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.countTotal') }}</div>
-                        </template>
-                        <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchTab">
-                                <md-tab id="tab-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
-                                <md-tab id="tab-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
-                                <md-tab id="tab-sensordatasets" :md-label="$t('udpc.tabSensors')">&nbsp;</md-tab>
-                            </md-tabs>
-                            <div class="chart-holder">
-                                <bar-chart :chartData="chartData.dataSetsByType"
-                                           :chartOptions="chartOptions.dataSetsByType"/>
-                            </div>
-                        </template>
-                        <template slot="footer">
-                            <div class="notice">
-                                <md-switch v-model="countTotalWithPlans" class="dashboard-switch">{{ $t('udpc.includeDevPlan') }}</md-switch>
-                            </div>
-                        </template>
-                    </dashboard-tile>
-                </div>
-                <div class="col-lg-4 col-md-12 py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-map'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.map') }}</div>
-                        </template>
-                        <template slot="content">
-                            <span>MasterportalAPI</span>
-                        </template>
-                        <template slot="footer">
-                        </template>
-                    </dashboard-tile>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-lg-3 col-md-6 py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-top-x'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.top5') }}</div>
-                        </template>
-                        <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchTab">
-                                <md-tab id="tab-top5-datasets" :md-label="$t('udpc.tabDatasets')">&nbsp;</md-tab>
-                                <md-tab id="tab-top5-apps" :md-label="$t('udpc.tabApps')">&nbsp;</md-tab>
-                                <md-tab id="tab-top5-downloads" :md-label="$t('udpc.tabDownloads')">&nbsp;</md-tab>
-                            </md-tabs>
-                            <div class="chart-holder">
-                                <bar-chart-horizontal :chartData="chartData.dataSetsTopX"
-                                                      :chartOptions="chartOptions.dataSetsTopX"/>
-                            </div>
-                        </template>
-                        <template slot="footer">
-                        </template>
-                    </dashboard-tile>
-                </div>
-                <div class="col-lg-3 col-md-6 py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-downloads'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.download') }}</div>
-                        </template>
-                        <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
-                                <md-tab id="tab-downloads-year" :md-label="$t('udpc.tabYear')"></md-tab>
-                                <md-tab id="tab-downloads-month" :md-label="$t('udpc.tabMonth')"></md-tab>
-                            </md-tabs>
-                            <bar-chart :chartData="chartData.totalDownloads"
-                                       :chartOptions="chartOptions.totalDownloads"/>
-                        </template>
-                        <template slot="footer">
-                            <range-slider :options="sliderOptions.downloads"
-                                          @rangeChange="rangeForChartChanged('downloads', $event)"/>
-                        </template>
-                    </dashboard-tile>
-                </div>
-                <div class="col-lg-3 col-md-6 py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-access-data'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.accessTopicData') }}</div>
-                        </template>
-                        <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
-                                <md-tab id="tab-datasets-year" :md-label="$t('udpc.tabYear')"></md-tab>
-                                <md-tab id="tab-datasets-month" :md-label="$t('udpc.tabMonth')"></md-tab>
-                            </md-tabs>
-                            <bar-chart :chartData="chartData.totalDatasets"
-                                       :chartOptions="chartOptions.totalDatasets"/>
-                        </template>
-                        <template slot="footer">
-                            <range-slider :options="sliderOptions.datasets"
-                                          @rangeChange="rangeForChartChanged('datasets', $event)"/>
-                        </template>
-                    </dashboard-tile>
-                </div>
-                <div class="col-lg-3 col-md-6 py-2">
-                    <dashboard-tile data-background-color="blue" class="chart-card">
-                        <template slot="header">
-                            <div class="info-icon-holder" @click="$refs['tooltip-access-apps'].show()">
-                                <md-icon>help</md-icon>
-                            </div>
-                            <div class="card-header-text">{{ $t('udpc.accessApps') }}</div>
-                        </template>
-                        <template slot="content">
-                            <md-tabs class="dashboard-tabs" @md-changed="onSwitchYearMonthTab">
-                                <md-tab id="tab-apps-year" :md-label="$t('udpc.tabYear')"></md-tab>
-                                <md-tab id="tab-apps-month" :md-label="$t('udpc.tabMonth')"></md-tab>
-                            </md-tabs>
-                            <bar-chart :chartData="chartData.totalApps"
-                                       :chartOptions="chartOptions.totalApps"/>
-                        </template>
-                        <template slot="footer">
-                            <range-slider :options="sliderOptions.apps"
-                                          @rangeChange="rangeForChartChanged('apps', $event)"/>
-                        </template>
-                    </dashboard-tile>
-                </div>
-            </div>
+    <div class="container-fluid">
+      <div class="row ">
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-did-you-know'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.didYouKNow') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="didYouKnow"
+                            :interval="5000" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
         </div>
-
-        <md-bottom-bar class="udpc-bottom-bar">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
-                        <a href="">Datenschutz</a>
-                        <a href="">Impressum</a>
-                    </div>
-                    <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
-                        <div class="row">
-                            <div class="offset-lg-6 col-lg-3 col-6 image-col">
-                                <a href="#" target="_blank">
-                                    <img src="../assets/images/nl-lgv-logo@2x.png" alt="LGV">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 image-col">
-                                <a href="http://www.urbandataplatform.hamburg/" target="_blank">
-                                    <img src="../assets/images/UrbanDataPlatform_RGB@2x.png" alt="UDP">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-latest-datasets'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.newDatassets') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="recentDataSets"
+                            :interval="7500"
+                            @show-in-map="showDataInMap" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <div class="row">
+            <div class="col-lg-4 col-4 py-2">
+              <dashboard-tile data-background-color="blue"
+                              class="chart-card">
+                <template slot="header">
+                  <div class="info-icon-holder"
+                       @click="$refs['tooltip-sensors'].show()">
+                    <md-icon>help</md-icon>
+                  </div>
+                  <div class="card-header-text">
+                    {{ $t('udpc.sensors') }}
+                  </div>
+                </template>
+                <template slot="content">
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.sensorCount">
+                    {{ kpiData.sensorCount }}
+                  </p>
+                </template>
+                <template slot="footer" />
+              </dashboard-tile>
             </div>
-        </md-bottom-bar>
-
-        <info-overlay v-bind:content="$t('udpc.tooltipDidYouKnow')"
-                      v-bind:header="'Did your whaaaat'"
-                      v-bind:footer="'Footer zeugs'"
-                      ref="tooltip-did-you-know"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipLatestDataSets')" ref="tooltip-latest-datasets"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipSensors')" ref="tooltip-sensors"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipVisitorsToday')" ref="tooltip-visitors-today"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipDatasetsBy')" ref="tooltip-datasets-by"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipCountTotal')" ref="tooltip-count-total"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipMap')" ref="tooltip-map"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipTopX')" ref="tooltip-top-x"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipDownloads')" ref="tooltip-downloads"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipAccessData')" ref="tooltip-access-data"/>
-        <info-overlay v-bind:content="$t('udpc.tooltipAccessApps')" ref="tooltip-access-apps"/>
+            <div class="col-lg-4 col-4 py-2">
+              <dashboard-tile data-background-color="blue"
+                              class="chart-card">
+                <template slot="header">
+                  <div class="info-icon-holder"
+                       @click="$refs['tooltip-visitors-today'].show()">
+                    <md-icon>help</md-icon>
+                  </div>
+                  <div class="card-header-text">
+                    {{ $t('udpc.visitors') }}
+                  </div>
+                </template>
+                <template slot="content">
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.visitorsMonth">
+                    {{ kpiData.visitorsMonth }}
+                  </p>
+                </template>
+                <template slot="footer" />
+              </dashboard-tile>
+            </div>
+            <div class="col-lg-4 col-4 py-2">
+              <dashboard-tile data-background-color="blue"
+                              class="chart-card">
+                <template slot="header">
+                  <div class="info-icon-holder"
+                       @click="$refs['tooltip-background-access'].show()">
+                    <md-icon>help</md-icon>
+                  </div>
+                  <div class="card-header-text">
+                    {{ $t('udpc.access') }}
+                  </div>
+                </template>
+                <template slot="content">
+                  <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.mapAccess">
+                    {{ kpiData.mapAccess }}
+                  </p>
+                </template>
+                <template slot="footer" />
+              </dashboard-tile>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-lg-4 col-md-6  py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-datasets-by'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.countBy') }}
+              </div>
+            </template>
+            <template slot="content">
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchTab">
+                <md-tab id="tab-topics"
+                        :md-label="$t('udpc.tabTopics')">
+                  &nbsp;
+                </md-tab>
+                <md-tab id="tab-organisations"
+                        :md-label="$t('udpc.tabOrganisations')">
+                  &nbsp;
+                </md-tab>
+              </md-tabs>
+              <div class="chart-holder">
+                <tree-map-chart :chart-data="chartData.dataSetsByTopic"
+                                :chart-options="chartOptions.dataSetsByTopic" />
+              </div>
+            </template>
+            <template slot="footer">
+              <div class="notice">
+                <md-switch v-model="chartSwitches.countGroupedWithPlans"
+                           class="dashboard-switch"
+                           @change="fetchTotalsByTopic()">
+                  {{ $t('udpc.includeDevPlan') }}
+                </md-switch>
+              </div>
+            </template>
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-count-total'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.countTotal') }}
+              </div>
+            </template>
+            <template slot="content">
+              <md-tabs ref="count-total-tabs"
+                       class="dashboard-tabs"
+                       @md-changed="onSwitchTab">
+                <md-tab id="tab-datasets"
+                        :md-label="$t('udpc.tabDatasets')">
+                  &nbsp;
+                </md-tab>
+                <md-tab id="tab-apps"
+                        :md-label="$t('udpc.tabApps')">
+                  &nbsp;
+                </md-tab>
+                <md-tab id="tab-sensordatasets"
+                        :md-label="$t('udpc.tabSensors')">
+                  &nbsp;
+                </md-tab>
+              </md-tabs>
+              <div class="chart-holder">
+                <bar-chart :chart-data="chartData.dataSetsByType"
+                           :chart-options="chartOptions.dataSetsByType"
+                           :is-standard-tooltips="true" />
+              </div>
+            </template>
+            <template slot="footer">
+              <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
+                   class="notice">
+                <md-switch v-model="chartSwitches.countTotalWithPlans"
+                           class="dashboard-switch"
+                           @change="fetchTotalsByType()">
+                  {{ $t('udpc.includeDevPlan') }}
+                </md-switch>
+              </div>
+            </template>
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-4 col-md-12 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-map'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.map') }}
+              </div>
+            </template>
+            <template slot="content">
+              <master-portal-map :services="mapData.services"
+                                 :portal="mapData.portal"
+                                 :md_id="mapData.md_id" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-lg-3 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-top-x'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.top5') }}
+              </div>
+            </template>
+            <template slot="content">
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchTab">
+                <md-tab id="tab-top5-datasets"
+                        :md-label="$t('udpc.tabDatasets')">
+                  &nbsp;
+                </md-tab>
+                <md-tab id="tab-top5-apps"
+                        :md-label="$t('udpc.tabApps')">
+                  &nbsp;
+                </md-tab>
+                <md-tab id="tab-top5-downloads"
+                        :md-label="$t('udpc.tabDownloads')">
+                  &nbsp;
+                </md-tab>
+              </md-tabs>
+              <div class="chart-holder">
+                <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
+                                      :chart-options="chartOptions.dataSetsTopX"
+                                      :is-standard-tooltips="true" />
+              </div>
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-3 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-downloads'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.download') }}
+              </div>
+            </template>
+            <template slot="content">
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchYearMonthTab">
+                <md-tab id="tab-downloads-year"
+                        :md-label="$t('udpc.tabYear')" />
+                <md-tab id="tab-downloads-month"
+                        :md-label="$t('udpc.tabMonth')" />
+              </md-tabs>
+              <div class="chart-holder">
+                <bar-chart :chart-data="chartData.totalDownloads"
+                           :chart-options="chartOptions.totalDownloads"
+                           :is-standard-tooltips="true" />
+              </div>
+            </template>
+            <template slot="footer">
+              <div class="slider-holder">
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider class="slider"
+                              :options="sliderOptions.downloads"
+                              @rangeChange="rangeForChartChanged('downloads', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
+            </template>
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-3 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-access-data'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.accessTopicData') }}
+              </div>
+            </template>
+            <template slot="content">
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchYearMonthTab">
+                <md-tab id="tab-datasets-year"
+                        :md-label="$t('udpc.tabYear')" />
+                <md-tab id="tab-datasets-month"
+                        :md-label="$t('udpc.tabMonth')" />
+              </md-tabs>
+              <div class="chart-holder">
+                <bar-chart :chart-data="chartData.totalDatasets"
+                           :chart-options="chartOptions.totalDatasets"
+                           :is-standard-tooltips="true" />
+              </div>
+            </template>
+            <template slot="footer">
+              <div class="slider-holder">
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider ref="totalDatasetsSlider"
+                              class="slider"
+                              :options="sliderOptions.datasets"
+                              @rangeChange="rangeForChartChanged('datasets', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
+              <div class="notice" style="width: 100%; display: flex">
+                <md-switch
+                  v-model="chartSwitches.accessWithBackgroundMaps"
+                  class="dashboard-switch"
+                  @change="onSwitchIncludeMaps('datasets')">
+                  {{ $t('udpc.includeMapHits') }}
+                </md-switch>
+              </div>
+            </template>
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-3 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-access-apps'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.accessApps') }}
+              </div>
+            </template>
+            <template slot="content">
+              <md-tabs class="dashboard-tabs"
+                       @md-changed="onSwitchYearMonthTab">
+                <md-tab id="tab-apps-year"
+                        :md-label="$t('udpc.tabYear')" />
+                <md-tab id="tab-apps-month"
+                        :md-label="$t('udpc.tabMonth')" />
+              </md-tabs>
+              <div class="chart-holder">
+                <bar-chart :chart-data="chartData.totalApps"
+                           :chart-options="chartOptions.totalApps"
+                           :is-standard-tooltips="true" />
+              </div>
+            </template>
+            <template slot="footer">
+              <div class="slider-holder">
+                <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
+                <range-slider class="slider"
+                              :options="sliderOptions.apps"
+                              @rangeChange="rangeForChartChanged('apps', $event)" />
+                <span class="right">{{ $t('udpc.sliderLater') }}</span>
+              </div>
+            </template>
+          </dashboard-tile>
+        </div>
+      </div>
     </div>
+
+    <md-bottom-bar class="udpc-bottom-bar">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
+            <a href="">Datenschutz</a>
+            <a href="">Impressum</a>
+          </div>
+          <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
+            <div class="row">
+              <div class="offset-lg-6 col-lg-3 col-6 image-col">
+                <a href="#"
+                   target="_blank">
+                  <img src="../assets/images/nl-lgv-logo@2x.png"
+                       alt="LGV">
+                </a>
+              </div>
+              <div class="col-lg-3 col-6 image-col">
+                <a href="http://www.urbandataplatform.hamburg/"
+                   target="_blank">
+                  <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
+                       alt="UDP">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-bottom-bar>
+
+    <info-overlay ref="tooltip-did-you-know"
+                  :content="$t('udpc.tooltipDidYouKnow')"
+                  :header="'Did your whaaaat'"
+                  :footer="'Footer zeugs'" />
+    <info-overlay ref="tooltip-latest-datasets"
+                  :content="$t('udpc.tooltipLatestDataSets')" />
+    <info-overlay ref="tooltip-sensors"
+                  :content="$t('udpc.tooltipSensors')" />
+    <info-overlay ref="tooltip-visitors-today"
+                  :content="$t('udpc.tooltipVisitorsToday')" />
+    <info-overlay ref="tooltip-background-access"
+                  :content="$t('udpc.tooltipBackgroundAccess')" />
+    <info-overlay ref="tooltip-datasets-by"
+                  :content="$t('udpc.tooltipDatasetsBy')" />
+    <info-overlay ref="tooltip-count-total"
+                  :content="$t('udpc.tooltipCountTotal')" />
+    <info-overlay ref="tooltip-map"
+                  :content="$t('udpc.tooltipMap')" />
+    <info-overlay ref="tooltip-top-x"
+                  :content="$t('udpc.tooltipTopX')" />
+    <info-overlay ref="tooltip-downloads"
+                  :content="$t('udpc.tooltipDownloads')" />
+    <info-overlay ref="tooltip-access-data"
+                  :content="$t('udpc.tooltipAccessData')" />
+    <info-overlay ref="tooltip-access-apps"
+                  :content="$t('udpc.tooltipAccessApps')" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -297,6 +461,10 @@ import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
 import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 import Color from "color";
+import MasterPortalMap from '../components/MasterPortalMap.vue'
+import portalConfig from "@/assets/map-config/portal.json";
+import servicesConfig from "@/assets/map-config/services.json";
+import Utils from "@/utils/utils";
 
 
 @Component({
@@ -309,30 +477,57 @@ import Color from "color";
         InfoOverlay,
         BarChart,
         BarChartHorizontal,
-        TreeMapChart
+        TreeMapChart,
+        MasterPortalMap
     }
 })
 export default class UDPC extends AbstractDashboard {
-    countTotalWithPlans = false;
-    countGroupedWithPlans = false;
     agreeDialogActive = false;
+
+    $refs!: {
+      totalDatasetsSlider: RangeSlider & RangeSliderMethods
+    };
+
+    mapData: MapData = {
+        services: servicesConfig,
+        portal: portalConfig,
+        md_id: ''
+    };
 
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {};
 
-    didYouKnow = [
-        'Fact 1',
-        'Fact 2',
-        'Fact 3',
-        'Fact 4',
-        'Fact 5'
-    ];
-    dataSets = [
-        'New Dataset 1',
-        'New Dataset 2',
-        'New Dataset 3',
-        'New Dataset 4',
-        'New Dataset 5'
-    ];
+    didYouKnow: DidYouKnowData = {
+        items: [
+            { label: 'Fact 1', link: '' },
+            { label: 'Fact 2', link: '' },
+            { label: 'Fact 3', link: '' },
+            { label: 'Fact 4', link: '' },
+            { label: 'Fact 5', link: '' },
+        ],
+        action: null
+    };
+
+    recentDataSets: DidYouKnowData = {
+        items: [],
+        action: 'map'
+    };
+
+    kpiData: { [key: string]: string } = {
+      sensorCount: '',
+      visitorsMonth: '',
+      mapAccess: ''
+    };
+
+    activeTabs: { [key: string]: string } = {
+      dataSetsByTopic: '',
+      dataSetsByType: ''
+    };
+
+    chartSwitches: { [key: string]: boolean } = {
+      accessWithBackgroundMaps: true,
+      countGroupedWithPlans: false,
+      countTotalWithPlans: false
+    };
 
     chartData: { [key: string]: Chart.ChartData } = {
         dataSetsByTopic: {},
@@ -345,7 +540,7 @@ export default class UDPC extends AbstractDashboard {
 
     barChartConfigDefaults = {
         title: {
-            display: false,
+            display: false
         },
         legend: {
             display: false
@@ -358,7 +553,10 @@ export default class UDPC extends AbstractDashboard {
                 },
                 ticks: {
                     display: true,
-                    beginAtZero: true
+                    beginAtZero: true,
+                    callback: function(value: string) {
+                      return new Utils().number.getDecimalSeparatedNumber(value);
+                    }
                 }
             }],
             xAxes: [{
@@ -372,8 +570,6 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
-    // TODO: 1. make this more generic - 2. font-color und border-color direkt aus der scss laden?
-    // TODO: Alle grid lines auch color: '#707070'
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
             maintainAspectRatio: true,
@@ -438,7 +634,10 @@ export default class UDPC extends AbstractDashboard {
                     },
                     ticks: {
                         display: true,
-                        beginAtZero: true
+                        beginAtZero: true,
+                        callback: function(value: string) {
+                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        }
                     }
                 }],
                 xAxes: [{
@@ -475,7 +674,10 @@ export default class UDPC extends AbstractDashboard {
                         drawOnChartArea: false
                     },
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        callback: function(value: string) {
+                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        }
                     }
                 }]
             },
@@ -507,7 +709,12 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
-        this.$store.subscribe((mutation, state) => {
+        this.fetchBaseMapKPI();
+        this.fetchVisitorsKPI();
+        this.fetchSensorsKPI();
+        this.fetchRecentDataset();
+
+        this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
                 return;
             }
@@ -549,7 +756,6 @@ export default class UDPC extends AbstractDashboard {
                         this.chartData.dataSetsTopX = mutationData;
                         break;
                     case 'totalDatasetsCount':
-                        mutationData.datasets[0]['label'] = 'Anzahl';
                         mutationData.datasets[0]['backgroundColor'] = '#003063';
                         this.chartData.dataSetsByType = mutationData;
                         break;
@@ -564,6 +770,18 @@ export default class UDPC extends AbstractDashboard {
                     case 'totalApps':
                         mutationData.datasets[0].backgroundColor = '#40648B';
                         this.chartData.totalApps = mutationData;
+                        break;
+                    case 'visitorsKPI':
+                        this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'sensorsKPI':
+                    this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'baseMapKPI':
+                    this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'recentDatasets':
+                    this.recentDataSets = mutationData;
                 }
             }
         });
@@ -572,19 +790,24 @@ export default class UDPC extends AbstractDashboard {
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-organisations':
-                this.fetchTotalsByTopic('organization');
+                this.activeTabs.dataSetsByTopic = 'organization';
+                this.fetchTotalsByTopic();
                 break;
             case 'tab-topics':
-                this.fetchTotalsByTopic('theme');
+                this.activeTabs.dataSetsByTopic = 'theme';
+                this.fetchTotalsByTopic();
                 break;
             case 'tab-datasets':
-                this.fetchTotalsByType('datasets');
+                this.activeTabs.dataSetsByType = 'datasets';
+                this.fetchTotalsByType();
                 break;
             case 'tab-apps':
-                this.fetchTotalsByType('apps');
+                this.activeTabs.dataSetsByType = 'apps';
+                this.fetchTotalsByType();
                 break;
             case 'tab-sensordatasets':
-                // this.fetchTotalsByType('sensors');
+                this.activeTabs.dataSetsByType = 'sensors';
+                // this.fetchTotalsByType();
                 break;
             case 'tab-top5-apps':
                 this.fetchTops('apps');
@@ -601,31 +824,31 @@ export default class UDPC extends AbstractDashboard {
     onSwitchYearMonthTab(tab: string) {
         const today = new Date();
         const currentYear = `${today.getFullYear()}`;
-        const currentMonth = `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+        const currentMonth = new Utils().date.getLastMonth();
 
         switch (tab) {
             case 'tab-downloads-year':
-                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year'};
+                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
             case 'tab-downloads-month':
-                this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month'};
+                this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
             case 'tab-datasets-year':
-                this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year'};
+                this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
-            case 'tab-datasets-month':
-                this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month'};
+            case 'tab-datasetfetchVisitorsKPIs-month':
+                this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
             case 'tab-apps-year':
-                this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year'};
+                this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchAppsRange(this.sliderOptions.apps);
                 break;
             case 'tab-apps-month':
-                this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month'};
+                this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchAppsRange(this.sliderOptions.apps);
         }
     }
@@ -645,31 +868,64 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
-    async fetchTotalsByTopic(topic: string) {
-        await this.$store.dispatch('fetchTotalsByTopic', topic);
+    onSwitchIncludeMaps(chartId: string) {
+      const minMax: string[] = (this.$refs['totalDatasetsSlider'] as RangeSliderMethods).getCurrentValues();
+      const min = minMax[0];
+      const max = minMax[1];
+      const unit = this.sliderOptions[chartId].unit;
+      this.fetchDatasetsRange({min, max, unit});
     }
 
-    async fetchTotalsByType(type: string) {
-        await this.$store.dispatch('fetchTotalsByType', type);
+    async fetchBaseMapKPI() {
+        await this.$store.dispatch('fetchBaseMapKPI');
+    }
+
+    async fetchVisitorsKPI() {
+        await this.$store.dispatch('fetchVisitorsKPI');
+    }
+
+    async fetchSensorsKPI() {
+        await this.$store.dispatch('fetchSensorsKPI');
+    }
+
+    async fetchRecentDataset() {
+        await this.$store.dispatch('fetchRecentDataset');
+    }
+
+    async fetchTotalsByTopic() {
+        await this.$store.dispatch('fetchTotalsByTopic', {
+          totalsTopic: this.activeTabs.dataSetsByTopic,
+          isIncludeBuildPlans: this.chartSwitches.countGroupedWithPlans
+        });
+    }
+
+    async fetchTotalsByType() {
+        await this.$store.dispatch('fetchTotalsByType', {
+          totalsType: this.activeTabs.dataSetsByType,
+          isIncludeBuildPlans: this.activeTabs.dataSetsByType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false
+        });
     }
 
     async fetchTops(topic: string ) {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
         params.chartId = 'totalDownloads';
         params.category = 'downloads';
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, tag_not?: string }) {
         params.chartId = 'totalDatasets';
         params.category = 'datasets';
+        if (!this.chartSwitches.accessWithBackgroundMaps) {
+          params.tag_not = 'basemap';
+        }
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string }) {
+    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
         params.chartId = 'totalApps';
         params.category = 'apps';
         await this.$store.dispatch('fetchRangefulData', params);
@@ -693,12 +949,16 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
-    dialogResult(isPositive: boolean) {
+    dialogResult() {
         this.agreeDialogActive = false;
     }
 
     changeLanguage(lang: string) {
         this.$i18n.locale = lang
+    }
+
+    showDataInMap(md_id: string) {
+        this.mapData.md_id = md_id;
     }
 }
 </script>
@@ -763,6 +1023,10 @@ i {
     font-size: 30px;
     font-weight: bold;
     color: $hamburg-blue;
+    padding: 2px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 0 !important;
 }
 
 .dashboard-tabs {
@@ -868,10 +1132,75 @@ i {
             padding-top: 15px;
         }
     }
+
+    .md-card-actions {
+        flex-wrap: wrap;
+
+        > div {
+          display: flex;
+          flex-basis: 100%;
+        }
+
+        .slider-holder {
+          justify-content: center;
+          padding-bottom: 10px;
+        }
+
+        .range-display {
+            color: $hamburg-chart !important;
+        }
+
+        span {
+            flex-basis: 10%;
+            width: 80px;
+            margin: 17px 15px 0 15px;
+            font-size: 14px;
+            color: $hamburg-chart;
+            white-space: nowrap;
+        }
+
+        .left {
+          order: 1;
+          display: none;
+        }
+
+        .slider {
+          order: 2;
+          flex-basis: 90%;
+        }
+
+        .right {
+          order: 3;
+          display: none;
+        }
+    }
+}
+
+.ant-slider {
+    width: auto;
+    margin: 0;
+
+    .ant-slider-rail, .ant-slider-track {
+        width: calc(100% + 20px);
+        margin-left: -10px;
+        background-color: #707070 !important;
+    }
+
+    .ant-slider-handle {
+        border-radius: 0 !important;
+        width: 2px !important;
+        border-color: $hamburg-red !important;
+        background-color: $hamburg-red !important;
+        margin-left: -3px !important;
+    }
+
+    .ant-slider-handle:focus {
+        box-shadow: none !important;
+    }
 }
 
 .udpc-bottom-bar {
-    margin-top: 15px;
+    margin-top: 40px;
     background-color: $hamburg-grey-background !important;
     color: $hamburg-blue-dark;
     box-shadow: 0px -3px 6px #00000029;
@@ -925,7 +1254,6 @@ i {
 }
 
 .tooltip-inner {
-    height: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

@@ -1,17 +1,20 @@
 <template>
-    <div class="page">
-        <div class="loading-overlay" v-if="this.loading">
-            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-        </div>
-
-        <md-app class="md-app-scroll-fix" md-waterfall md-mode="fixed">
-            <md-app-content>
-                <router-view/>
-            </md-app-content>
-        </md-app>
-
-        <div id="snack"></div>
+  <div class="page">
+    <div v-if="loading"
+         class="loading-overlay">
+      <md-progress-spinner md-mode="indeterminate" />
     </div>
+
+    <md-app class="md-app-scroll-fix"
+            md-waterfall
+            md-mode="fixed">
+      <md-app-content>
+        <router-view />
+      </md-app-content>
+    </md-app>
+
+    <div id="snack" />
+  </div>
 </template>
 
 <script lang="ts">

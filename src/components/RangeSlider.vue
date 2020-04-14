@@ -1,23 +1,25 @@
 <template>
-    <a-slider range
-              v-model="defaults"
+  <div style="width: 100%">
+    <div v-if="!isShowMarks"
+         class="range-display">
+      {{ currentValues[0] }} - {{ currentValues[1] }}
+    </div>
+    <a-slider v-model="defaults"
+              range
               :step="step"
               :max="max"
               :min="min"
-              :marks="marks"
+              :marks="isShowMarks ? marks : {}"
               :tip-formatter="tipFormat"
               @afterChange="onAfterChange" />
+  </div>
 </template>
 
 <script lang="ts">
-/*
-*   Documentation found here:
-*   https://www.antdv.com/components/slider/
-*/
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({})
-export default class RangeSlider extends Vue {
+export default class RangeSlider extends Vue implements RangeSliderMethods {
     @Prop() options!: DateRangeSliderOptions;
     minYear!: number;
     minMonth!: number;
@@ -27,6 +29,8 @@ export default class RangeSlider extends Vue {
     max = 1; // difference between first and last year/month
     step = 1;
     defaults: number[] = [];
+    currentValues: string[] = [];
+    isShowMarks = true;
     marks: { [key: number]: string } = {};
 
     mounted() {
@@ -38,7 +42,7 @@ export default class RangeSlider extends Vue {
             return;
         }
 
-        // parse min/max values
+        // parse min/max currentValues
         switch (this.options.unit) {
             case 'year':
                 // assume date format 'YYYY'
@@ -58,13 +62,8 @@ export default class RangeSlider extends Vue {
             }
         }
 
-        // adjust step size, build axis
-        this.step = 1;
-        let numberOfTicks = this.max + 1;
-        while (numberOfTicks > 12) {
-            this.step *= 2;
-            numberOfTicks = Math.floor(this.max / this.step);
-        }
+        // build axis
+        this.isShowMarks = this.options.isShowMarks;
         this.marks = {};
 
         for (let i = 0; i <= this.max; i += this.step) {
@@ -80,16 +79,28 @@ export default class RangeSlider extends Vue {
             }
         }
 
+        const marksIndices = Object.keys(this.marks);
+        this.max = parseInt(marksIndices[marksIndices.length - 1]);
+
         this.defaults = [this.min, this.max];
+        this.currentValues = [this.tipFormat(this.min), this.tipFormat(this.max)]
     }
 
     private tipFormat(value: number) {
         return this.marks[value];
     }
 
+    public getCurrentValues() {
+        return this.currentValues;
+    }
+
     private onAfterChange(values: number[]) {
-        // return string representations of the selected dates
-        this.$emit('rangeChange', values.map(value => this.marks[value]));
+        let newValues = [this.tipFormat(values[0]), this.tipFormat(values[1])];
+        if (newValues[0] !== this.currentValues[0] || newValues[1] !== this.currentValues[1] ) {
+            this.currentValues = newValues;
+            // return string representations of the selected dates
+            this.$emit('rangeChange', values.map(value => this.marks[value]));
+        }
     }
 }
 </script>

@@ -1,6 +1,5 @@
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import * as d3 from 'd3';
+import { Prop, Vue, Watch } from 'vue-property-decorator';
 import $ from 'jquery';
 
 export default abstract class AbstractChart extends Vue {

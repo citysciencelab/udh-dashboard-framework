@@ -1,13 +1,16 @@
 <template>
-    <div class="chart-wrapper" :style="style">
-        <svg class="chart" v-bind:id="selector"></svg>
-    </div>
+  <div class="chart-wrapper"
+       :style="style">
+    <svg :id="selector"
+         class="chart" />
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 import * as d3 from 'd3';
 import _d3tip from 'd3-tip';
+// eslint-disable-next-line no-unused-vars
 import { Tooltip } from 'd3/types/d3';
 import AbstractChart from './AbstractChart.vue';
 

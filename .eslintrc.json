@@ -1,7 +1,11 @@
 {
   "extends": [
-    "plugin:vue/essential",
+    "eslint:recommended",
+    "plugin:vue/recommended",
     "@vue/typescript"
+  ],
+  "plugins": [
+    "@typescript-eslint"
   ],
   "parser": "vue-eslint-parser",
   "parserOptions": {
@@ -10,5 +14,9 @@
     "ecmaFeatures": {
       "jsx": false
     }
+  },
+  "rules": {
+    "vue/html-closing-bracket-newline": "off",
+    "vue/max-attributes-per-line": "off"
   }
 }

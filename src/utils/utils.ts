@@ -132,15 +132,26 @@ export default class Utils implements IUtils {
     };
 
     date = {
-        getYearMonthStringFromDate(date: Date) {
-            return date.getFullYear() + `-` + (date.getMonth() < 9 ? '0': '') + (date.getMonth() + 1);
-        },
         getDateStringFromDate(date: Date) {
             return date.getDate() + `.` + date.getMonth() + `.` + date.getFullYear();
         },
         getDateStringFromMillis(dateMillis: number) {
             let date = new Date(dateMillis);
             return this.getDateStringFromDate(date);
+        },
+        getLastMonth(): string {
+            const today = new Date();
+            return `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+        },
+        getCurrentMonth(): string {
+            const today = new Date();
+            return `${today.getFullYear()}-${today.getMonth() + 1 < 10 ? '0' : ''}${today.getMonth() + 1}`;
+        }
+    };
+
+    number = {
+        getDecimalSeparatedNumber(value: string) {
+            return new Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true }).format(Number.parseInt(value));
         }
     };
 
@@ -152,7 +163,7 @@ export default class Utils implements IUtils {
 export function aggregateData(ds: Dataset, descriptor: string, metric: string): Dataset {
     const aggregated = ds.reduce((results, item) => {
         const key = item[descriptor];
-        if (results.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(results, key)) {
             results[key][metric] += item[metric];
         } else {
             results[key] = {};
@@ -165,17 +176,12 @@ export function aggregateData(ds: Dataset, descriptor: string, metric: string): 
 }
 
 export function countData(ds: Dataset, descriptor: string): Dataset {
-    let countData = [];
-    for (const item of ds) {
-        const key = item[descriptor];
-        let existingElement: Datum = countData.find((data: Datum) => data[descriptor] === key) as Datum;
-        if (existingElement) {
-            existingElement.count++;
-        } else {
-            const newElement: { [key: string]: any } = {'count' : 1};
-            newElement[descriptor] = key;
-            countData.push(newElement);
+    return ds.reduce((countData: Dataset, datum: Datum) => {
+        const match: any = countData.find((item: Datum) => item[descriptor] === datum[descriptor]);
+        if (match) {
+            match.count += 1;
+            return countData;
         }
-    }
-    return countData;
+        return [...countData,  {[descriptor]: datum[descriptor], count: 1}];
+    }, [])
 }

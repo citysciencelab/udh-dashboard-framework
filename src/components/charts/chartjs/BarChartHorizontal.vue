@@ -1,24 +1,29 @@
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import { HorizontalBar } from 'vue-chartjs'
+import AbstractChart from "@/components/charts/chartjs/AbstractChart.vue";
 
 @Component({
     extends: HorizontalBar
 })
-export default class HorizontalBarChart extends Vue {
-    @Prop() chartData!: Chart.ChartData;
-    @Prop() chartOptions!: Chart.ChartOptions;
-
-    @Watch('chartData') onChartDataChanged() {
-        this.renderChart(this.chartData, this.chartOptions);
-    }
-    mounted () {
-        this.addPlugin({
-            id: 'my-plugin',
-            beforeInit: function (chart: any) {
-                console.log("Maybe a plugin can solve the problem?")
-            }
-        })
-    }
+export default class HorizontalBarChart extends AbstractChart {
+ @Watch('chartData') onChartDataChanged() {
+   if (!this.chartData || !this.chartData.datasets || !this.chartData.datasets[0] || !this.chartData.datasets[0].data || this.chartData.datasets[0].data.length === 0) {
+     console.log('No data for this chart')
+     // Show some message? Append warning to canvas?
+     // this.$refs['canvas'];
+     // Maybe add this to canvas: <md-icon class="no-data">block</md-icon>
+   } else {
+     this.renderChart(this.chartData, this.chartOptions);
+   }
+ }
+ mounted () {
+    this.addPlugin({
+      id: 'my-plugin',
+      beforeInit: function (chart: any) {
+        console.log("Maybe a plugin can solve the problem?")
+      }
+    })
+  }
 }
 </script>

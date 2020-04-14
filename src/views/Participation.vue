@@ -1,88 +1,135 @@
 <template>
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-sm">
-                <multi-select :selectData="getFilterOptions('participationData', 'bezirk')"
-                              :label="$t('participation.district')"
-                              @new_selection="filterChanged"
-                              identifier="bezirk" ref="districtSelect"/>
-            </div>
-            <div class="col-sm">
-                <multi-select :selectData="getFilterOptions('participationData', 'absender')"
-                              :label="$t('participation.sender')"
-                              @new_selection="filterChanged"
-                              identifier="absender" ref="originatorSelect"/>
-            </div>
-            <div class="col-sm">
-                <md-chip md-clickable @click="resetFilters">{{$t('participation.reset')}}</md-chip>
-            </div>
-        </div>
-        <div class="row py-3">
-            <div class="col-sm">
-                <dashboard-tile data-background-color="blue" class="chart-holder">
-                    <template slot="header">
-                        <md-icon class="info-icon" id="tooltip-os-data">info_outline</md-icon>
-                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data')">Participation Data</div>
-                    </template>
-                    <template slot="content">
-                        <bar-chart :chartData="chartData.participationDistrictCount"
-                                   :chartOptions="chartOptions.participationDistrictCount"/>
-                    </template>
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </dashboard-tile>
-            </div>
-            <div class="col-sm">
-                <dashboard-tile data-background-color="blue" class="chart-holder">
-                    <template slot="header">
-                        <md-icon class="info-icon">info_outline</md-icon>
-                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
-                    </template>
-                    <template slot="content">
-                        <horizontal-bar-chart :chartData="chartData.participationDistrictCount"
-                                              :chartOptions="chartOptions.participationDistrictCount"/>
-                    </template>
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </dashboard-tile>
-            </div>
-        </div>
-        <div class="row py-3">
-            <div class="col-sm">
-                <dashboard-tile data-background-color="blue" class="chart-holder">
-                    <template slot="header">
-                        <md-icon class="info-icon" id="tooltip-os-data-3">info_outline</md-icon>
-                        <div class="tool-tip-header" @click="openToolTip('tooltip-os-data-3')">Participation Data</div>
-                    </template>
-                    <template slot="content">
-                        <tree-map-chart :chartData="chartData.participationDistrictCountTree"
-                                        :chartOptions="chartOptions.participationDistrictCountTree"/>
-                    </template>
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </dashboard-tile>
-            </div>
-            <div class="col-sm">
-                <dashboard-tile data-background-color="blue" class="chart-holder">
-                    <template slot="header">
-                        <md-icon class="info-icon">info_outline</md-icon>
-                        <div class="tool-tip-header" @click="openToolTip('')">Other chart</div>
-                    </template>
-                    <template slot="content">
-                    </template>
-                    <template slot="footer">
-                        <div class="notice">this data is supported the JBe foundation</div>
-                    </template>
-                </dashboard-tile>
-            </div>
-        </div>
-
-        <!--Tooltips-->
-        <b-tooltip target="tooltip-os-data" ref="tooltip-os-data" triggers="hover" custom-class="udpc-tooltip">I am tooltip component content!</b-tooltip>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-sm">
+        <multi-select ref="districtSelect"
+                      :select-data="getFilterOptions('participationData', 'bezirk')"
+                      :label="$t('participation.district')"
+                      identifier="bezirk"
+                      @new_selection="filterChanged" />
+      </div>
+      <div class="col-sm">
+        <multi-select ref="originatorSelect"
+                      :select-data="getFilterOptions('participationData', 'absender')"
+                      :label="$t('participation.sender')"
+                      identifier="absender"
+                      @new_selection="filterChanged" />
+      </div>
+      <div class="col-sm">
+        <md-chip md-clickable
+                 @click="resetFilters">
+          {{ $t('participation.reset') }}
+        </md-chip>
+      </div>
     </div>
+    <div class="row py-3">
+      <div class="col-sm">
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
+          <template slot="header">
+            <md-icon id="tooltip-os-data"
+                     class="info-icon">
+              info_outline
+            </md-icon>
+            <div class="tool-tip-header"
+                 @click="openToolTip('tooltip-os-data')">
+              Participation Data
+            </div>
+          </template>
+          <template slot="content">
+            <bar-chart :chart-data="chartData.participationDistrictCount"
+                       :chart-options="chartOptions.participationDistrictCount" />
+          </template>
+          <template slot="footer">
+            <div class="notice">
+              this data is supported the JBe foundation
+            </div>
+          </template>
+        </dashboard-tile>
+      </div>
+      <div class="col-sm">
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
+          <template slot="header">
+            <md-icon class="info-icon">
+              info_outline
+            </md-icon>
+            <div class="tool-tip-header"
+                 @click="openToolTip('')">
+              Other chart
+            </div>
+          </template>
+          <template slot="content">
+            <horizontal-bar-chart :chart-data="chartData.participationDistrictCount"
+                                  :chart-options="chartOptions.participationDistrictCount" />
+          </template>
+          <template slot="footer">
+            <div class="notice">
+              this data is supported the JBe foundation
+            </div>
+          </template>
+        </dashboard-tile>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-sm">
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
+          <template slot="header">
+            <md-icon id="tooltip-os-data-3"
+                     class="info-icon">
+              info_outline
+            </md-icon>
+            <div class="tool-tip-header"
+                 @click="openToolTip('tooltip-os-data-3')">
+              Participation Data
+            </div>
+          </template>
+          <template slot="content">
+            <tree-map-chart :chart-data="chartData.participationDistrictCountTree"
+                            :chart-options="chartOptions.participationDistrictCountTree" />
+          </template>
+          <template slot="footer">
+            <div class="notice">
+              this data is supported the JBe foundation
+            </div>
+          </template>
+        </dashboard-tile>
+      </div>
+      <div class="col-sm">
+        <dashboard-tile data-background-color="blue"
+                        class="chart-holder">
+          <template slot="header">
+            <md-icon class="info-icon">
+              info_outline
+            </md-icon>
+            <div class="tool-tip-header"
+                 @click="openToolTip('')">
+              Other chart
+            </div>
+          </template>
+          <template slot="content">
+            <master-portal-map :services="services"
+                               :portal="portal"
+                               :feature-data="dataAsFeatures" />
+          </template>
+          <template slot="footer">
+            <div class="notice">
+              this data is supported the JBe foundation
+            </div>
+          </template>
+        </dashboard-tile>
+      </div>
+    </div>
+
+    <!--Tooltips-->
+    <b-tooltip ref="tooltip-os-data"
+               target="tooltip-os-data"
+               triggers="hover"
+               custom-class="udpc-tooltip">
+      I am tooltip component content!
+    </b-tooltip>
+  </div>
 </template>
 
 <script lang="ts">
@@ -95,6 +142,10 @@ import TreeMapChart from '../components/charts/chartjs/TreeMap.vue';
 import partStore from '@/store/participation.module';
 import AbstractDashboard from '@/views/AbstractDashboard.vue';
 import { messages } from '@/messages/messages.participation.module';
+import MasterPortalMap from "@/components/MasterPortalMap.vue";
+import portalConfig from "@/assets/map-config/portal.json";
+import servicesConfig from "@/assets/map-config/services.json";
+import { FeatureSet } from '../utils/wfs';
 
 @Component({
     components: {
@@ -102,7 +153,8 @@ import { messages } from '@/messages/messages.participation.module';
         MultiSelect,
         BarChart,
         HorizontalBarChart,
-        TreeMapChart
+        TreeMapChart,
+        MasterPortalMap
     }
 })
 export default class Participation extends AbstractDashboard {
@@ -138,6 +190,9 @@ export default class Participation extends AbstractDashboard {
             maintainAspectRatio: false
         }
     };
+    dataAsFeatures: FeatureSet = new FeatureSet();
+    portal: object = portalConfig;
+    services: object = servicesConfig;
 
     async mounted() {
         // fetch the initial dashboard data
@@ -149,17 +204,12 @@ export default class Participation extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
 
         this.$store.registerModule('participation', partStore);
-        this.$store.subscribe((mutation, state) => {
+        this.$store.subscribe((mutation) => {
 
             switch (mutation.type) {
                 case 'SET_INITIAL_DATA':
                     if (mutation.payload[0] === 'participationData') {
-                        if (this.$refs['districtSelect']) {
-                            (this.$refs['districtSelect'] as any).updateComponent();
-                        }
-                        if (this.$refs['originatorSelect']) {
-                            (this.$refs['originatorSelect'] as any).updateComponent();
-                        }
+                        this.dataAsFeatures = mutation.payload[1];
                     }
                     break;
                 case 'SET_FILTERED_DATA':
@@ -195,18 +245,12 @@ export default class Participation extends AbstractDashboard {
     *   Vuex store ist set from the MultiSelect itself
     *   @param the selected elements - not used in this dashboard
     */
-    filterChanged(eventData: string[]) {
+    filterChanged() {
         this.recalculate();
     }
 
     resetFilters() {
         this.$store.commit('SET_FILTERS_NONE');
-        if (this.$refs['districtSelect']) {
-            (this.$refs['districtSelect'] as any).resetComponent();
-        }
-        if (this.$refs['originatorSelect']) {
-            (this.$refs['originatorSelect'] as any).resetComponent();
-        }
         this.recalculate();
     }
 

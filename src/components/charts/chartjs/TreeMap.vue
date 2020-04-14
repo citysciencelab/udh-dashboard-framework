@@ -1,17 +1,15 @@
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import Chart from 'chart.js'
+import { Component, Watch } from 'vue-property-decorator';
 import { generateChart } from 'vue-chartjs';
 import 'chartjs-chart-treemap'
+import AbstractChart from "@/components/charts/chartjs/AbstractChart.vue";
 
 const TreeMap = generateChart('tree-map', 'treemap');
 
 @Component({
     extends: TreeMap
 })
-export default class TreeMapChart extends Vue {
-    @Prop() chartData!: Chart.ChartData;
-    @Prop() chartOptions!: Chart.ChartOptions;
+export default class TreeMapChart extends AbstractChart {
 
     @Watch('chartData') onChartDataChanged() {
         this.chartOptions['tooltips'] = {

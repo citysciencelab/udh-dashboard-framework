@@ -1,17 +1,17 @@
 <template>
-    <md-card>
-        <md-card-header :data-background-color="dataBackgroundColor">
-            <slot name="header"></slot>
-        </md-card-header>
+  <md-card>
+    <md-card-header :data-background-color="dataBackgroundColor">
+      <slot name="header" />
+    </md-card-header>
 
-        <md-card-content>
-            <slot name="content"></slot>
-        </md-card-content>
+    <md-card-content>
+      <slot name="content" />
+    </md-card-content>
 
-        <md-card-actions>
-            <slot name="footer"></slot>
-        </md-card-actions>
-    </md-card>
+    <md-card-actions>
+      <slot name="footer" />
+    </md-card-actions>
+  </md-card>
 </template>
 
 <script lang="ts">
@@ -25,9 +25,11 @@ export default class DashboardTile extends Vue {
 
 <style scoped lang="scss">
 .md-card /deep/ {
-    padding: 15px 26px;
+    padding: 15px 15px 10px 15px;
     margin: 0;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .md-card-header {
         padding: 0 !important;
@@ -50,9 +52,14 @@ export default class DashboardTile extends Vue {
 
     .md-card-content {
         padding: 15px 0 0 0;
+        height: 100%;
     }
 
     .md-card-actions {
+        margin: 0;
+        width: 100%;
+        padding: 8px 0;
+
         .notice {
             width: 100%;
             text-align: left;
