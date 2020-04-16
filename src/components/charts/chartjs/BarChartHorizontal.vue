@@ -17,13 +17,5 @@ export default class HorizontalBarChart extends AbstractChart {
      this.renderChart(this.chartData, this.chartOptions);
    }
  }
- mounted () {
-    this.addPlugin({
-      id: 'my-plugin',
-      beforeInit: function (chart: any) {
-        console.log("Maybe a plugin can solve the problem?")
-      }
-    })
-  }
 }
 </script>
