@@ -1,3 +1,4 @@
+import {Tooltip} from "d3/types/d3";
 <template>
   <div class="chart-wrapper"
        :style="style">
@@ -9,12 +10,18 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import * as d3 from 'd3';
-import AbstractChart from './AbstractChart.vue';
+import AbstractChartD3 from './AbstractChartD3.vue';
+
+// eslint-disable-next-line no-unused-vars
+import { Tooltip } from 'd3/types/d3';
+import _d3tip from "d3-tip";
+const d3tip = _d3tip as () => Tooltip;
 
 @Component({})
-export default class TreeMapChart extends AbstractChart {
+export default class TreeMapChartD3 extends AbstractChartD3 {
 
     mounted() {
+        this.svg = <SVG>d3.select('#' + this.selector);
         window.addEventListener('resize', this.createChart);
     }
 
@@ -28,7 +35,9 @@ export default class TreeMapChart extends AbstractChart {
         // If no hierarchy exists - we need to artificially create one
         const parentName = 'parent';
         const parentValue = 'origin';
-        let dsClone = [...this.ds];
+
+        // TODO: das hier beim setten schon ändern!
+        let dsClone = [...this.ds.datasets[0].tree];
         for (const element of dsClone) {
             element[parentName] = parentValue
         }
@@ -45,9 +54,15 @@ export default class TreeMapChart extends AbstractChart {
         root.sum(d => d[this.metric]);
 
         d3.treemap<Datum>()
-            .size([this.width, this.height])
+            .size([this.svgWidth, this.svgHeight])
             .padding(4)
             .round(true)(root);
+
+        // Create tooltip
+        const tip = d3tip()
+                .attr('class', 'd3-tip')
+                .html((d: string[]) => d[0]);
+        svg.call(tip);
 
         svg.selectAll('rect')
             .data(root.leaves())
@@ -58,11 +73,9 @@ export default class TreeMapChart extends AbstractChart {
             .attr('label', d => d.id || '')
             .attr('width', d => d.x1 - d.x0)
             .attr('height', d => d.y1 - d.y0)
-            .style('stroke', 'black')
-            .style('fill', 'slateblue')
+            .style('stroke', d => d.data.color ? d.data.color : 'slateblue')
+            .style('fill', d => d.data.color ? d.data.color : 'slateblue')
             .attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
-
-        const labelPaddingY = 17;
 
         svg.selectAll('rect').each(function () {
             let content,
@@ -71,17 +84,20 @@ export default class TreeMapChart extends AbstractChart {
                 div;
 
             element = d3.select(this);
-
-            // extract our desired content from the single text element
             content =  element.attr('label');
+
+            let rectHeight = element["_groups"][0][0]["height"]["baseVal"]["valueInSpecifiedUnits"];
             // add foreign object and set dimensions, position, etc
             foreignObject = svg.append('foreignObject');
             foreignObject.attr('class', 'treeMapLabel')
                 .attr('width', element.attr('width'))
                 .attr('height', element.attr('height'))
-                .attr('transform', 'translate(' + xOffset + ',' + labelPaddingY + ')')
                 .attr('x', element.attr('x'))
-                .attr('y', parseInt(element.attr('y')) + labelPaddingY);
+                .attr('y', element.attr('y'))
+                    .on('mouseover', d => tip.show(
+                            [`${d}: ${d3.event.target}`], d3.event.target)
+                    )
+                    .on('mouseout', tip.hide);
 
             // insert an HTML div
             div = foreignObject.append('xhtml:div');
@@ -89,9 +105,17 @@ export default class TreeMapChart extends AbstractChart {
             // set div to same dimensions as foreign object
             div.style('height', element.attr('height'))
                 .style('width', element.attr('width'))
+                .style('top', (rectHeight/2)-10 + 'px')
                 // insert text content
                 .html(content);
-            return div;
+
+            const labelHeight = div["_groups"][0][0].clientHeight;
+            if (labelHeight > rectHeight * 0.8) {
+              div.html("...");
+            }
+            div.style('top', (rectHeight / 2) - (labelHeight / 2) + 'px');
+
+          return div;
         });
 
         if (this.title) {
@@ -105,11 +129,15 @@ export default class TreeMapChart extends AbstractChart {
     .treeMapLabel {
         font-size: 11px;
         text-overflow: ellipsis;
-        text-align: left;
+        text-align: center;
         word-wrap: break-word;
         color: white;
-        div {
-            padding-left: 5px;
-        }
+
+      div {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        padding: 0 10px;
+      }
     }
 </style>
