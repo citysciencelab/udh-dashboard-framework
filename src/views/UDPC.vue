@@ -142,8 +142,9 @@
                 </md-tab>
               </md-tabs>
               <div class="chart-holder">
-                <tree-map-chart :chart-data="chartData.dataSetsByTopic"
-                                :chart-options="chartOptions.dataSetsByTopic" />
+                  <tree-map-chart-d3 :ds="chartData.dataSetsByTopic" holder-element="chart-holder"
+                                     metric="doc_count" descriptor="key"
+                                     selector="chart-tree-d3" />
               </div>
             </template>
             <template slot="footer">
@@ -187,9 +188,9 @@
                 </md-tab>
               </md-tabs>
               <div class="chart-holder">
-                <tree-map-chart-d3 :ds="chartData.dataSetsByTopic" holder-element="chart-holder"
-                                   metric="doc_count" descriptor="key"
-                                   selector="chart-tree-d3" />
+                  <bar-chart :chart-data="chartData.dataSetsByType"
+                             :chart-options="chartOptions.dataSetsByType"
+                             :is-standard-tooltips="true" />
               </div>
             </template>
             <template slot="footer">
