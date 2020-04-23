@@ -542,6 +542,7 @@ export default class UDPC extends AbstractDashboard {
     };
 
     barChartConfigDefaults = {
+        maintainAspectRatio: false,
         title: {
             display: false
         },
@@ -575,7 +576,7 @@ export default class UDPC extends AbstractDashboard {
 
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             title: {
                 display: false
             },
@@ -584,6 +585,7 @@ export default class UDPC extends AbstractDashboard {
             }
         },
         dataSetsByType: {
+            maintainAspectRatio: false,
             title: {
                 display: false,
             },
@@ -615,6 +617,7 @@ export default class UDPC extends AbstractDashboard {
             }
         },
         dataSetsTopX: {
+            maintainAspectRatio: false,
             title: {
                 display: false,
             },
@@ -1108,8 +1111,11 @@ i {
         }
 
         .chart-holder {
-            padding-top: 15px;
-            height: 100%;
+          margin-top: 15px;
+        }
+
+        .chart-holder, .chart-holder >div {
+            height: 292px;
             width: 100%;
         }
     }

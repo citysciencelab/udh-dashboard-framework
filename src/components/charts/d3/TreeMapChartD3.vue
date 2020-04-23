@@ -62,6 +62,8 @@ import {Tooltip} from "d3/types/d3";
        .padding(4)
        .round(true)(root);
 
+      console.log(this.svgHeight)
+
       // Create tooltip
       const tip = d3tip()
        .attr("class", "d3-tip")

@@ -51,18 +51,11 @@
       if (!node) {
         throw new Error("Chart element is null")
       }
+      let container = node.parentElement;
       let heightOtherChildren = 0;
       if (this.holderElement) {
-        let container = this.parentHolder ? this.parentHolder.parentElement : null;
-        if (container !== null && container.childElementCount > 1) {
-          for (let child of container.children) {
-            if (child.className.indexOf(this.holderElement) < 0) {
-              heightOtherChildren = heightOtherChildren + child.clientHeight;
-            }
-          }
-        }
+        container = this.parentHolder;
       }
-      const container = node.parentElement;
       if (!container) {
         throw new Error("Chart's parent element is null")
       }
@@ -72,7 +65,7 @@
     get parentHolder() {
       const svg = this.svgElement;
       let parent = svg.parentElement;
-      while (parent && parent.className.indexOf(this.holderElement) < 0 && parent.parentElement != null) {
+      while (parent && parent.className.indexOf(this.holderElement) < 0) {
         parent = parent.parentElement;
       }
       return parent;
