@@ -558,8 +558,8 @@ export default class UDPC extends AbstractDashboard {
                 ticks: {
                     display: true,
                     beginAtZero: true,
-                    callback: function(value: string) {
-                      return new Utils().number.getDecimalSeparatedNumber(value);
+                    callback: function(value: number) {
+                      return new Utils().number.getAbbreviatedNumber(value);
                     }
                 }
             }],
@@ -601,8 +601,8 @@ export default class UDPC extends AbstractDashboard {
                     ticks: {
                         display: true,
                         beginAtZero: true,
-                        callback: function(value: string) {
-                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        callback: function(value: number) {
+                          return new Utils().number.getAbbreviatedNumber(value);
                         }
                     }
                 }],
@@ -642,8 +642,8 @@ export default class UDPC extends AbstractDashboard {
                     },
                     ticks: {
                         beginAtZero: true,
-                        callback: function(value: string) {
-                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        callback: function(value: number) {
+                          return new Utils().number.getAbbreviatedNumber(value);
                         }
                     }
                 }]
