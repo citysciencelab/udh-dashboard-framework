@@ -25,7 +25,7 @@
                                 class="multiselect"
                                 @new_selection="applyFilters" />
                   <multi-select ref="organizationSelect"
-                                identifier="organization"
+                                identifier="org"
                                 :select-data="getOrgFilterOptions()"
                                 :label="$t('udpc.orgFilter')"
                                 class="multiselect"
@@ -676,7 +676,7 @@ export default class UDPC extends AbstractDashboard {
         this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
-        this.fetchRecentDataset();
+        this.fetchRecentDatasets();
 
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
@@ -855,22 +855,26 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchSensorsKPI');
     }
 
-    async fetchRecentDataset() {
-        await this.$store.dispatch('fetchRecentDataset');
+    async fetchRecentDatasets() {
+        await this.$store.dispatch('fetchRecentDatasets');
     }
 
-    async fetchTotalsByTopic(theme?: string[], org?: string[]) {
-        const topic = this.activeTabs.dataSetsByTopic;
+    async fetchTotalsByTopic() {
+        const totalsTopic = this.activeTabs.dataSetsByTopic;
+        const theme = this.filters.theme;
+        const org = this.filters.org;
         const isIncludeBuildPlans = this.chartSwitches.countGroupedWithPlans;
 
-        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic: topic, theme, org, isIncludeBuildPlans });
+        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic, theme, org, isIncludeBuildPlans });
     }
 
-    async fetchTotalsByType(theme?: string[], org?: string[]) {
-        const type = this.activeTabs.dataSetsByType;
-        const isIncludeBuildPlans = type === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
+    async fetchTotalsByType() {
+        const totalsType = this.activeTabs.dataSetsByType;
+        const theme = this.filters.theme;
+        const org = this.filters.org;
+        const isIncludeBuildPlans = totalsType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
 
-        await this.$store.dispatch('fetchTotalsByType', { totalsType: type, theme, org, isIncludeBuildPlans });
+        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans });
     }
 
     async fetchTops(topic: string ) {
@@ -888,7 +892,7 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(theme?: string[], org?: string[]) {
+    async fetchDatasetsRange() {
         const params = {
             chartId: 'totalDatasets',
             category: 'datasets',
@@ -896,21 +900,21 @@ export default class UDPC extends AbstractDashboard {
             max: this.sliderOptions.datasets.max,
             unit: this.sliderOptions.datasets.unit,
             tag_not: this.chartSwitches.accessWithBackgroundMaps ? [''] : ['basemap'],
-            theme: theme,
-            org: org
+            theme: this.filters.theme,
+            org: this.filters.org
         };
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange(theme?: string[], org?: string[]) {
+    async fetchAppsRange() {
         const params = {
             chartId: 'totalApps',
             category: 'apps',
             min: this.sliderOptions.apps.min,
             max: this.sliderOptions.apps.max,
             unit: this.sliderOptions.apps.unit,
-            theme: theme,
-            org: org
+            theme: this.filters.theme,
+            org: this.filters.org
         };
         await this.$store.dispatch('fetchRangefulData', params);
     }
@@ -930,13 +934,10 @@ export default class UDPC extends AbstractDashboard {
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
 
-        const theme = this.filters.theme;
-        const org = this.filters.organization;
-
-        this.fetchTotalsByTopic(theme, org);
-        this.fetchTotalsByType(theme, org);
-        this.fetchDatasetsRange(theme, org);
-        this.fetchAppsRange(theme, org);
+        this.fetchTotalsByTopic();
+        this.fetchTotalsByType();
+        this.fetchDatasetsRange();
+        this.fetchAppsRange();
     }
 
     onTopicSelectFromTreeMap(event: { _datasetIndex: number, _index: number }[]) {

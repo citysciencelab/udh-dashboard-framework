@@ -14,7 +14,7 @@ const udpcModule: Module<UDPCState, RootState> = {
     state: initialState,
     mutations: {},
     actions: {
-        fetchRecentDataset: async (context) => {
+        fetchRecentDatasets: async (context) => {
             context.commit('SET_LOADING', true);
 
             const elasticResponse = await elastic.udpcQuery('', '', [], [], [], [], 'datasets', undefined, 10, 'change_date');
@@ -24,7 +24,6 @@ const udpcModule: Module<UDPCState, RootState> = {
                  .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
                 action: 'map'
             }]);
-
             context.commit('SET_LOADING', false);
         },
         fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
@@ -44,25 +43,6 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTops: async (context, topTopic: string) => {
-            context.commit('SET_LOADING', true);
-
-            const month = new Utils().date.getLastMonth();
-
-            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], ['basemap'], topTopic, 'month', 10);
-            const aggregations = elasticResponse.aggregations;
-            const topX = aggregations.top_x.buckets;
-
-            context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
-            context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
-                labels: topX.map((item: any) => item.key),
-                datasets: [{
-                    data: topX.map((item: any) => item.total_hits.value),
-                    md_id: topX.map((item: any) => item.md_id.buckets[0] ? item.md_id.buckets[0].key : undefined)
-                }]
-            }]);
-            context.commit('SET_LOADING', false);
-        },
         fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
             context.commit('SET_LOADING', true);
 
@@ -78,6 +58,25 @@ const udpcModule: Module<UDPCState, RootState> = {
                     item.key_as_string.substr(0, item.key_as_string.indexOf('-'))),
                 datasets: [{
                     data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.entities_unique.value)
+                }]
+            }]);
+            context.commit('SET_LOADING', false);
+        },
+        fetchTops: async (context, topTopic: string) => {
+            context.commit('SET_LOADING', true);
+
+            const month = new Utils().date.getLastMonth();
+
+            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], ['basemap'], topTopic, 'month', 10);
+            const aggregations = elasticResponse.aggregations;
+            const topX = aggregations.top_x.buckets;
+
+            context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
+            context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
+                labels: topX.map((item: any) => item.key),
+                datasets: [{
+                    data: topX.map((item: any) => item.total_hits.value),
+                    md_id: topX.map((item: any) => item.md_id.buckets[0] ? item.md_id.buckets[0].key : undefined)
                 }]
             }]);
             context.commit('SET_LOADING', false);
