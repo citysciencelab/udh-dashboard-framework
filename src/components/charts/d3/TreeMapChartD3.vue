@@ -1,10 +1,10 @@
 import {Tooltip} from "d3/types/d3";
 <template>
-  <div class="chart-wrapper"
-       :style="style">
-    <svg :id="selector"
-         class="chart" />
-  </div>
+    <div class="chart-wrapper"
+         :style="style">
+        <svg :id="selector"
+             class="chart"/>
+    </div>
 </template>
 
 <script lang="ts">
@@ -41,7 +41,7 @@ import {Tooltip} from "d3/types/d3";
       const parentValue = 'origin';
 
       // TODO: das hier beim setten schon ändern!
-      let dsClone = [...this.ds['datasets'][0].tree];
+      let dsClone = [...this.ds['datasets'][0]['tree']];
       for (const element of dsClone) {
         element[parentName] = parentValue
       }
@@ -62,8 +62,6 @@ import {Tooltip} from "d3/types/d3";
        .padding(4)
        .round(true)(root);
 
-      console.log(this.svgHeight)
-
       // Create tooltip
       const tip = d3tip()
        .attr("class", "d3-tip")
@@ -78,6 +76,7 @@ import {Tooltip} from "d3/types/d3";
        .enter().append("g")
        .attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
 
+      // Create the treemap elements
       cell.append("rect")
        .attr("id", function (d) {
          return d.data.id;
@@ -102,19 +101,34 @@ import {Tooltip} from "d3/types/d3";
          d3.select(this).attr("fill", d.data.color ? d.data.color : 'slateblue');
        });
 
+      const textMarginH = 12;
+      const textMarginW = 5;
+
+      // Create the labels
       cell.append("text")
        .attr("width", function (d) {
          return d.x1 - d.x0;
        })
-       .attr('x', d => d.x0 + 5)
-       .attr('y', d => d.y0 + 12)
+       .attr('x', d => d.x0 + textMarginW)
+       .attr('y', d => d.y0 + textMarginH)
        .attr('transform', 'translate(' + xOffset + ',' + yOffset + ')')
        .attr('class', 'treemap-label')
        .attr("font-size", "12px")
        .attr("fill", "white")
+
        .text(function (d): string {
          return d['id'] + '';
        });
+
+      svg.selectAll('text')
+       .style('display',
+        function () {
+          if (this) {
+            const rectBounds = this.parentNode.firstElementChild.getBBox();
+            const textWidth = this.getComputedTextLength();
+            return rectBounds['width'] > (textWidth + (textMarginW * 2)) ? 'inline' : 'none';
+          }
+        });
 
       if (this.title) {
         this.$utils.chart.addTitle(this.title, svg, this.$data.width);
