@@ -771,7 +771,7 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-sensordatasets':
                 this.activeTabs.dataSetsByType = 'sensordatasets';
-                this.fetchTotalsByType();
+                // this.fetchTotalsByType();  // not yet implemented in backend
                 break;
             case 'tab-top5-apps':
                 this.fetchTops('apps');
@@ -859,14 +859,14 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRecentDataset');
     }
 
-    async fetchTotalsByTopic(theme?: string, org?: string) {
+    async fetchTotalsByTopic(theme?: string[], org?: string[]) {
         const topic = this.activeTabs.dataSetsByTopic;
         const isIncludeBuildPlans = this.chartSwitches.countGroupedWithPlans;
 
         await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic: topic, theme, org, isIncludeBuildPlans });
     }
 
-    async fetchTotalsByType(theme?: string, org?: string) {
+    async fetchTotalsByType(theme?: string[], org?: string[]) {
         const type = this.activeTabs.dataSetsByType;
         const isIncludeBuildPlans = type === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
 
@@ -888,21 +888,21 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(theme?: string, org?: string) {
+    async fetchDatasetsRange(theme?: string[], org?: string[]) {
         const params = {
             chartId: 'totalDatasets',
             category: 'datasets',
             min: this.sliderOptions.datasets.min,
             max: this.sliderOptions.datasets.max,
             unit: this.sliderOptions.datasets.unit,
-            tag_not: this.chartSwitches.accessWithBackgroundMaps ? '' : 'basemap',
+            tag_not: this.chartSwitches.accessWithBackgroundMaps ? [''] : ['basemap'],
             theme: theme,
             org: org
         };
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange(theme?: string, org?: string) {
+    async fetchAppsRange(theme?: string[], org?: string[]) {
         const params = {
             chartId: 'totalApps',
             category: 'apps',
@@ -930,9 +930,8 @@ export default class UDPC extends AbstractDashboard {
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
 
-        // As long as multiple selections are not supported, only the first element is considered!
-        const theme = (this.filters.theme || [])[0];
-        const org = (this.filters.organization || [])[0];
+        const theme = this.filters.theme;
+        const org = this.filters.organization;
 
         this.fetchTotalsByTopic(theme, org);
         this.fetchTotalsByType(theme, org);
