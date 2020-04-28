@@ -5,7 +5,6 @@
         <label :for="identifier">{{ label }}</label>
         <md-select :id="identifier"
                    v-model="selectedData"
-                   name="multiselect"
                    multiple
                    @md-closed="closed"
                    @md-selected="setSelected">
@@ -21,37 +20,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class MultiSelect extends Vue {
     @Prop() identifier!: string;
     @Prop() selectData!: Dataset;
     @Prop() label!: string;
-    selectedData = [];
+    selectedData: string[] = [];
     isOnceSelected: boolean = false;
 
     /*
-    *   Closed vent fires on init with empty selectData. Need to make sure that value emit is on purpose.
-    */
+     * Closed event fires on init with empty selectData. Need to make sure that value emit is on purpose.
+     */
     setSelected() {
         this.isOnceSelected = true;
     }
 
-    closed() {
-        if (this.isOnceSelected) {
-            this.$store.commit('SET_FILTERS', [this.identifier, this.selectedData]);
-            this.$emit('new_selection', this.selectedData);
+    closed(force: boolean) {
+        if (this.isOnceSelected || force) {
+            this.$emit('new_selection', [this.identifier, this.selectedData]);
         }
-    }
-
-    public resetComponent() {
-        this.selectedData = [];
-        this.$forceUpdate();
-    }
-
-    @Watch('selectData') onDataChanged() {
-        this.$forceUpdate();
     }
 }
 </script>

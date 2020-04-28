@@ -13,7 +13,10 @@ const chartsModule: Module<DashboardState, RootState> = {
     state: initialState,
     mutations: {
         SET_INITIAL_DATA: (state, [id, data]: [string, FeatureSet|Dataset]) => {
-            state.dashboardData[id] = data;
+            // It's initial data, so setting it once is enough
+            if (!state.dashboardData[id]) {
+                state.dashboardData[id] = data;
+            }
         },
         SET_FILTERED_DATA: (state, [id, data]: [string, Chart.ChartData]) => {
             state.filteredData[id] = data;
@@ -22,7 +25,7 @@ const chartsModule: Module<DashboardState, RootState> = {
             if (values.length > 0) {
                 state.filters[id] = values;
             } else {
-                delete state.filters[id]
+                delete state.filters[id];
             }
         },
         SET_FILTERS_NONE: (state) => {
@@ -33,27 +36,26 @@ const chartsModule: Module<DashboardState, RootState> = {
         }
     },
     actions: {
+        setFilters: (context, [id, values]) => {
+            context.commit('SET_FILTERS', [id, values]);
+        }
     },
     getters: {
-        dashboardData: state => {
+        dashboardData: state => () => {
             return state.dashboardData;
         },
-        filteredData: state => {
+        filteredData: state => () => {
             return state.filteredData;
         },
-        filters: state => {
+        filters: state => () => {
             return state.filters;
         },
         distinctPropertyValues: state => (dataId: string, property: string) => {
-            if (state.dashboardData[dataId]) {
-                const data = (FeatureSet.from(state.dashboardData[dataId]) as FeatureSet).getProperties();
-
-                return data.reduce((result: string[], obj: Datum) => {
-                    return result.find((el: string) => el === obj[property]) ?
-                        result :
-                        [...result, obj[property]]
-                }, []);
+            if (!state.dashboardData[dataId]) {
+                return;
             }
+            const data = state.dashboardData[dataId] as any;
+            return data[property].buckets.map((bucket: { key: string, doc_count: number }) => bucket.key);
         },
         dataWithAppliedFilters: state => (dataId: string) => {
             const filters = state.filters,
@@ -70,7 +72,7 @@ const chartsModule: Module<DashboardState, RootState> = {
                 return initialData;
             }
         },
-        loading: state => {
+        loading: state => () => {
             return state.loading
         }
     }

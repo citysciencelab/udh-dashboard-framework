@@ -14,42 +14,61 @@ const udpcModule: Module<UDPCState, RootState> = {
     state: initialState,
     mutations: {},
     actions: {
-        fetchRecentDataset: async (context) => {
+        fetchRecentDatasets: async (context) => {
             context.commit('SET_LOADING', true);
 
-            // geht noch nicht mit top
-           const aggregations = await elastic.getRangeful('', '', '', '', 'datasets', undefined, '', '', '', 'change_date', 10);
-            // let aggregations = await elastic.getRangeless('', '', '', 'datasets', 10, 'change_date');
+            const elasticResponse = await elastic.udpcQuery('', '', [], [], [], [], 'datasets', undefined, 10, 'change_date');
+
             context.commit('SET_FILTERED_DATA', ['recentDatasets', {
-                items: aggregations.hits.hits
+                items: elasticResponse.hits.hits
                  .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
                 action: 'map'
             }]);
-
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByTopic: async (context, params: { totalsTopic: string, isIncludeBuildPlans: boolean}) => {
+        fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
             context.commit('SET_LOADING', true);
 
-            const tagNot = params.isIncludeBuildPlans ? '' : 'bplan';
+            const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
             const month = new Utils().date.getLastMonth();
-            let aggregations = await elastic.getRangeful('', '', month, month, 'datasets', undefined, '', tagNot);
-            aggregations = aggregations['aggregations'];
+
+            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], tagNot, 'datasets');
+            const aggregations = elasticResponse.aggregations;
+
             context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
             context.commit('SET_FILTERED_DATA', ['totalTopicDatasets', {
                 datasets: [{
                     tree: aggregations[params.totalsTopic].buckets
                 }]
             }]);
+            context.commit('SET_LOADING', false);
+        },
+        fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+            context.commit('SET_LOADING', true);
 
+            const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
+            const currentMonth = new Utils().date.getCurrentMonth();
+
+            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, [], tagNot, params.totalsType, 'year', 100);
+            const aggregations = elasticResponse.aggregations;
+
+            context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
+            context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
+                labels: aggregations.total_entities_and_hits.buckets.map((item: any) =>
+                    item.key_as_string.substr(0, item.key_as_string.indexOf('-'))),
+                datasets: [{
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.entities_unique.value)
+                }]
+            }]);
             context.commit('SET_LOADING', false);
         },
         fetchTops: async (context, topTopic: string) => {
             context.commit('SET_LOADING', true);
 
             const month = new Utils().date.getLastMonth();
-            let aggregations = await elastic.getRangeful('', '', month, month, topTopic, 10, 'month', 'basemap');
-            aggregations = aggregations['aggregations'];
+
+            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], ['basemap'], topTopic, 'month', 10);
+            const aggregations = elasticResponse.aggregations;
             const topX = aggregations.top_x.buckets;
 
             context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
@@ -62,30 +81,11 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByType: async (context, params: { totalsType: string, isIncludeBuildPlans: boolean}) => {
-            context.commit('SET_LOADING', true);
-
-            const tagNot = params.isIncludeBuildPlans ? '' : 'bplan';
-            let currentMonth = new Utils().date.getCurrentMonth();
-            let aggregations = await elastic.getRangeful('', '', '2000-01', currentMonth, params.totalsType, 100, 'year', tagNot);
-            aggregations = aggregations['aggregations'];
-
-            context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
-            context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
-                labels: aggregations['total_entities_and_hits'].buckets.map((item: any) =>
-                    item.key_as_string.substr(0, item.key_as_string.indexOf('-'))),
-                datasets: [{
-                    data: aggregations['total_entities_and_hits'].buckets.map((item: any) => item.entities_unique.value)
-                }]
-            }]);
-
-            context.commit('SET_LOADING', false);
-        },
-        fetchRangefulData: async (context, params: { min: string, max: string, unit: string, category: string, chartId: string, tag_not?: string }) => {
+        fetchRangefulData: async (context, params: { theme: string[], org: string[], min: string, max: string, unit: string, category: string, chartId: string, tag_not: string[] }) => {
             sanitizeRangefulParams(params);
 
-            let aggregations = await elastic.getRangeful('', '', params.min, params.max, params.category, undefined, params.unit, params.tag_not);
-            aggregations = aggregations['aggregations'];
+            const elasticResponse = await elastic.udpcQuery(params.min, params.max, params.theme, params.org, [], params.tag_not, params.category, params.unit);
+            const aggregations = elasticResponse.aggregations;
 
             context.commit('SET_FILTERED_DATA', [params.chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
@@ -98,8 +98,10 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchVisitorsKPI: async (context) => {
             const month = new Utils().date.getLastMonth();
-            let aggregations = await elastic.getRangeful('', '', month, month, 'visitors', undefined, 'month', undefined);
-            aggregations = aggregations['aggregations'];
+
+            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], [], 'visitors', 'month');
+            const aggregations = elasticResponse.aggregations;
+
             try {
                 context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
             } catch (e) {
@@ -108,6 +110,7 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchSensorsKPI: async (context) => {
             const response = await Axios.get('https://iot.hamburg.de/v1.0/Datastreams?$filter=not%20substringof(%27E-Roller%27,description)&$count=true');
+
             try {
                 context.commit('SET_FILTERED_DATA', ['sensorsKPI', response.data['@iot.count']]);
             } catch (e) {
@@ -116,8 +119,10 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchBaseMapKPI: async (context) => {
             const month = new Utils().date.getLastMonth();
-            let aggregations = await elastic.getRangeful('', '', month, month, '', undefined, 'month', undefined, 'basemap');
-            aggregations = aggregations['aggregations'];
+
+            const elasticResponse = await elastic.udpcQuery(month, month, [], [], ['basemap'], [], '', 'month');
+            const aggregations = elasticResponse.aggregations;
+
             try {
                 context.commit('SET_FILTERED_DATA', ['baseMapKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
             } catch (e) {
