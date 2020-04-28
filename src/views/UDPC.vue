@@ -11,8 +11,34 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="row ">
+      <div class="row">
+        <div class="col-lg-12 py-2">
+          <!-- Filter -->
+          <dashboard-tile class="filter-card">
+            <template slot="content">
+              <div class="container-fluid">
+                <div class="row">
+                  <multi-select ref="themeSelect"
+                                identifier="theme"
+                                :select-data="getThemeFilterOptions()"
+                                :label="$t('udpc.themeFilter')"
+                                class="multiselect"
+                                @new_selection="applyFilters" />
+                  <multi-select ref="organizationSelect"
+                                identifier="org"
+                                :select-data="getOrgFilterOptions()"
+                                :label="$t('udpc.orgFilter')"
+                                class="multiselect"
+                                @new_selection="applyFilters" />
+                </div>
+              </div>
+            </template>
+          </dashboard-tile>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-lg-4 col-md-6 py-2">
+          <!-- Wussten Sie schon? -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -32,6 +58,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-6 py-2">
+          <!-- Neueste Datensätze -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -54,6 +81,7 @@
         <div class="col-lg-4 col-md-12">
           <div class="row">
             <div class="col-lg-4 col-4 py-2">
+              <!-- KPI Sensoren -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -74,6 +102,7 @@
               </dashboard-tile>
             </div>
             <div class="col-lg-4 col-4 py-2">
+              <!-- KPI Besucher -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -94,6 +123,7 @@
               </dashboard-tile>
             </div>
             <div class="col-lg-4 col-4 py-2">
+              <!-- KPI Karte -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -117,7 +147,8 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-lg-4 col-md-6  py-2">
+        <div class="col-lg-4 col-md-6 py-2">
+          <!-- Anzahl nach -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -132,18 +163,15 @@
             <template slot="content">
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
-                <md-tab id="tab-topics"
-                        :md-label="$t('udpc.tabTopics')">
-                  &nbsp;
-                </md-tab>
-                <md-tab id="tab-organisations"
-                        :md-label="$t('udpc.tabOrganisations')">
-                  &nbsp;
-                </md-tab>
+                <md-tab id="tab-theme"
+                        :md-label="$t('udpc.tabTopics')" />
+                <md-tab id="tab-organization"
+                        :md-label="$t('udpc.tabOrganisations')" />
               </md-tabs>
               <div class="chart-holder">
                 <tree-map-chart :chart-data="chartData.dataSetsByTopic"
-                                :chart-options="chartOptions.dataSetsByTopic" />
+                                :chart-options="chartOptions.dataSetsByTopic"
+                                @click="onTopicSelectFromTreeMap($event)" />
               </div>
             </template>
             <template slot="footer">
@@ -158,6 +186,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-6 py-2">
+          <!-- Anzahl total -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -174,17 +203,11 @@
                        class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-datasets"
-                        :md-label="$t('udpc.tabDatasets')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabDatasets')" />
                 <md-tab id="tab-apps"
-                        :md-label="$t('udpc.tabApps')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabApps')" />
                 <md-tab id="tab-sensordatasets"
-                        :md-label="$t('udpc.tabSensors')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabSensors')" />
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.dataSetsByType"
@@ -205,6 +228,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-12 py-2">
+          <!-- Karte -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -227,6 +251,7 @@
       </div>
       <div class="row ">
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Top 5 des Monats -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -242,17 +267,11 @@
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-top5-datasets"
-                        :md-label="$t('udpc.tabDatasets')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabDatasets')" />
                 <md-tab id="tab-top5-apps"
-                        :md-label="$t('udpc.tabApps')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabApps')" />
                 <md-tab id="tab-top5-downloads"
-                        :md-label="$t('udpc.tabDownloads')">
-                  &nbsp;
-                </md-tab>
+                        :md-label="$t('udpc.tabDownloads')" />
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
@@ -264,6 +283,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Downloads -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -301,6 +321,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Zugriffe Fachdaten -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -329,8 +350,7 @@
             <template slot="footer">
               <div class="slider-holder">
                 <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-                <range-slider ref="totalDatasetsSlider"
-                              class="slider"
+                <range-slider class="slider"
                               :options="sliderOptions.datasets"
                               @rangeChange="rangeForChartChanged('datasets', $event)" />
                 <span class="right">{{ $t('udpc.sliderLater') }}</span>
@@ -347,6 +367,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
+          <!-- Zugriffe Apps -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -466,7 +487,6 @@ import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 import Utils from "@/utils/utils";
 
-
 @Component({
     components: {
         DashboardTile,
@@ -483,10 +503,6 @@ import Utils from "@/utils/utils";
 })
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
-
-    $refs!: {
-      totalDatasetsSlider: RangeSlider & RangeSliderMethods
-    };
 
     mapData: MapData = {
         services: servicesConfig,
@@ -518,11 +534,6 @@ export default class UDPC extends AbstractDashboard {
       mapAccess: ''
     };
 
-    activeTabs: { [key: string]: string } = {
-      dataSetsByTopic: '',
-      dataSetsByType: ''
-    };
-
     chartSwitches: { [key: string]: boolean } = {
       accessWithBackgroundMaps: true,
       countGroupedWithPlans: false,
@@ -536,6 +547,14 @@ export default class UDPC extends AbstractDashboard {
         totalDownloads: {},
         totalDatasets: {},
         totalApps: {}
+    };
+
+    activeTabs: { [key: string]: string } = {
+        dataSetsByTopic: '',
+        dataSetsByType: '',
+        totalDownloads: '',
+        totalDatasets: '',
+        totalApps: ''
     };
 
     barChartConfigDefaults = {
@@ -657,7 +676,7 @@ export default class UDPC extends AbstractDashboard {
         this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
-        this.fetchRecentDataset();
+        this.fetchRecentDatasets();
 
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
@@ -734,12 +753,12 @@ export default class UDPC extends AbstractDashboard {
 
     onSwitchTab(tab: string) {
         switch (tab) {
-            case 'tab-organisations':
-                this.activeTabs.dataSetsByTopic = 'organization';
+            case 'tab-theme':
+                this.activeTabs.dataSetsByTopic = 'theme';
                 this.fetchTotalsByTopic();
                 break;
-            case 'tab-topics':
-                this.activeTabs.dataSetsByTopic = 'theme';
+            case 'tab-organization':
+                this.activeTabs.dataSetsByTopic = 'organization';
                 this.fetchTotalsByTopic();
                 break;
             case 'tab-datasets':
@@ -751,8 +770,8 @@ export default class UDPC extends AbstractDashboard {
                 this.fetchTotalsByType();
                 break;
             case 'tab-sensordatasets':
-                this.activeTabs.dataSetsByType = 'sensors';
-                // this.fetchTotalsByType();
+                this.activeTabs.dataSetsByType = 'sensordatasets';
+                // this.fetchTotalsByType();  // not yet implemented in backend
                 break;
             case 'tab-top5-apps':
                 this.fetchTops('apps');
@@ -773,52 +792,55 @@ export default class UDPC extends AbstractDashboard {
 
         switch (tab) {
             case 'tab-downloads-year':
+                this.activeTabs.totalDownloads = tab;
                 this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchDownloadsRange(this.sliderOptions.downloads);
+                this.fetchDownloadsRange();
                 break;
             case 'tab-downloads-month':
+                this.activeTabs.totalDownloads = tab;
                 this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchDownloadsRange(this.sliderOptions.downloads);
+                this.fetchDownloadsRange();
                 break;
             case 'tab-datasets-year':
+                this.activeTabs.totalDatasets = tab;
                 this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchDatasetsRange(this.sliderOptions.datasets);
+                this.fetchDatasetsRange();
                 break;
-            case 'tab-datasetfetchVisitorsKPIs-month':
+            case 'tab-datasets-month':
+                this.activeTabs.totalDatasets = tab;
                 this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchDatasetsRange(this.sliderOptions.datasets);
+                this.fetchDatasetsRange();
                 break;
             case 'tab-apps-year':
+                this.activeTabs.totalApps = tab;
                 this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchAppsRange(this.sliderOptions.apps);
+                this.fetchAppsRange();
                 break;
             case 'tab-apps-month':
+                this.activeTabs.totalApps = tab;
                 this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchAppsRange(this.sliderOptions.apps);
+                this.fetchAppsRange();
         }
     }
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
-        const unit = this.sliderOptions[chartId].unit;
+        this.sliderOptions[chartId].min = min;
+        this.sliderOptions[chartId].max = max;
 
         switch (chartId) {
             case 'downloads':
-                this.fetchDownloadsRange({ min, max, unit });
+                this.fetchDownloadsRange();
                 break;
             case 'datasets':
-                this.fetchDatasetsRange({ min, max, unit });
+                this.fetchDatasetsRange();
                 break;
             case 'apps':
-                this.fetchAppsRange({ min, max, unit });
+                this.fetchAppsRange();
         }
     }
 
-    onSwitchIncludeMaps(chartId: string) {
-      const minMax: string[] = (this.$refs['totalDatasetsSlider'] as RangeSliderMethods).getCurrentValues();
-      const min = minMax[0];
-      const max = minMax[1];
-      const unit = this.sliderOptions[chartId].unit;
-      this.fetchDatasetsRange({min, max, unit});
+    onSwitchIncludeMaps() {
+      this.fetchDatasetsRange();
     }
 
     async fetchBaseMapKPI() {
@@ -833,47 +855,114 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchSensorsKPI');
     }
 
-    async fetchRecentDataset() {
-        await this.$store.dispatch('fetchRecentDataset');
+    async fetchRecentDatasets() {
+        await this.$store.dispatch('fetchRecentDatasets');
     }
 
     async fetchTotalsByTopic() {
-        await this.$store.dispatch('fetchTotalsByTopic', {
-          totalsTopic: this.activeTabs.dataSetsByTopic,
-          isIncludeBuildPlans: this.chartSwitches.countGroupedWithPlans
-        });
+        const totalsTopic = this.activeTabs.dataSetsByTopic;
+        const theme = this.filters.theme;
+        const org = this.filters.org;
+        const isIncludeBuildPlans = this.chartSwitches.countGroupedWithPlans;
+
+        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic, theme, org, isIncludeBuildPlans });
     }
 
     async fetchTotalsByType() {
-        await this.$store.dispatch('fetchTotalsByType', {
-          totalsType: this.activeTabs.dataSetsByType,
-          isIncludeBuildPlans: this.activeTabs.dataSetsByType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false
-        });
+        const totalsType = this.activeTabs.dataSetsByType;
+        const theme = this.filters.theme;
+        const org = this.filters.org;
+        const isIncludeBuildPlans = totalsType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
+
+        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans });
     }
 
     async fetchTops(topic: string ) {
         await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
-        params.chartId = 'totalDownloads';
-        params.category = 'downloads';
+    async fetchDownloadsRange() {
+        const params = {
+            chartId: 'totalDownloads',
+            category: 'downloads',
+            min: this.sliderOptions.downloads.min,
+            max: this.sliderOptions.downloads.max,
+            unit: this.sliderOptions.downloads.unit
+        };
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, tag_not?: string }) {
-        params.chartId = 'totalDatasets';
-        params.category = 'datasets';
-        if (!this.chartSwitches.accessWithBackgroundMaps) {
-          params.tag_not = 'basemap';
+    async fetchDatasetsRange() {
+        const params = {
+            chartId: 'totalDatasets',
+            category: 'datasets',
+            min: this.sliderOptions.datasets.min,
+            max: this.sliderOptions.datasets.max,
+            unit: this.sliderOptions.datasets.unit,
+            tag_not: this.chartSwitches.accessWithBackgroundMaps ? [''] : ['basemap'],
+            theme: this.filters.theme,
+            org: this.filters.org
+        };
+        await this.$store.dispatch('fetchRangefulData', params);
+    }
+
+    async fetchAppsRange() {
+        const params = {
+            chartId: 'totalApps',
+            category: 'apps',
+            min: this.sliderOptions.apps.min,
+            max: this.sliderOptions.apps.max,
+            unit: this.sliderOptions.apps.unit,
+            theme: this.filters.theme,
+            org: this.filters.org
+        };
+        await this.$store.dispatch('fetchRangefulData', params);
+    }
+
+    getThemeFilterOptions() {
+        return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'theme');
+    }
+
+    getOrgFilterOptions() {
+        return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'organization');
+    }
+
+    get filters() {
+        return this.$store.getters.filters();
+    }
+
+    applyFilters(event: [string, string[]] ) {
+        this.$store.dispatch('setFilters', event);
+
+        this.fetchTotalsByTopic();
+        this.fetchTotalsByType();
+        this.fetchDatasetsRange();
+        this.fetchAppsRange();
+    }
+
+    onTopicSelectFromTreeMap(event: { _datasetIndex: number, _index: number }[]) {
+        if (!event.length || !this.chartData.dataSetsByTopic.datasets) {
+            return;
         }
-        await this.$store.dispatch('fetchRangefulData', params);
-    }
 
-    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
-        params.chartId = 'totalApps';
-        params.category = 'apps';
-        await this.$store.dispatch('fetchRangefulData', params);
+        const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
+        const datum = dataset.tree[event[0]._index];
+        const topics = [datum.key] as string[];
+
+        // Synchronize MultiSelects (updating them will trigger 'applyFilters')
+        switch (this.activeTabs.dataSetsByTopic) {
+            case 'theme': {
+                const select = (this.$refs.themeSelect as MultiSelect);
+                select.selectedData = topics;
+                select.closed(true);
+                break;
+            }
+            case 'organization': {
+                const select = (this.$refs.organizationSelect as MultiSelect);
+                select.selectedData = topics;
+                select.closed(true);
+            }
+        }
     }
 
     testSnackBar() {
@@ -1056,6 +1145,7 @@ i {
 .md-card {
     box-shadow: none !important;
     border: 1px solid $hamburg-blue-dark25;
+
     .md-card-header {
         .card-header-text {
             font-size: 24px !important;
@@ -1064,6 +1154,7 @@ i {
             color: $hamburg-blue;
         }
     }
+
     .md-card-content {
         font-size: 18px;
         text-align: left;
@@ -1119,6 +1210,19 @@ i {
           display: none;
         }
     }
+
+    &.filter-card {
+      padding: 0 15px;
+
+      .md-card-content,
+      .md-card-actions {
+        padding: 0;
+      }
+
+      .multiselect {
+        padding-right: 50px;
+      }
+    }
 }
 
 .ant-slider {
@@ -1170,7 +1274,6 @@ i {
     }
 
     .images-bottom-right {
-
         @media (min-width: 459px) {
             .image-col {
                 padding-bottom: 22px;
@@ -1201,5 +1304,9 @@ i {
 .tooltip-inner {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+#tree-map {
+    cursor: pointer;
 }
 </style>

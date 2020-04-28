@@ -12,13 +12,13 @@ const TreeMap = generateChart('tree-map', 'treemap');
 export default class TreeMapChart extends AbstractChart {
 
     @Watch('chartData') onChartDataChanged() {
-        this.chartOptions['tooltips'] = {
+        this.chartOptions.tooltips = {
             callbacks: {
-                title: function(item: any, data: any) {
+                title: (item: any, data: any) => {
                     let titleItem = item[0];
                     return data.datasets[titleItem.datasetIndex].data[titleItem.index].g;
                 },
-                label: function(item: any, data: any) {
+                label: (item: any, data: any) => {
                     if (data.datasets && data.datasets.length > 0 && item.datasetIndex != null) {
                         let index = item.datasetIndex;
                         let dataset = data.datasets[index];
@@ -31,9 +31,11 @@ export default class TreeMapChart extends AbstractChart {
                 }
             }
         }
+        this.chartOptions.onClick = (event?: MouseEvent, activeElements?: Array<{}>) => {
+            this.$emit('click', activeElements);
+        };
 
         this.renderChart(this.chartData, this.chartOptions);
     }
-
 }
 </script>
