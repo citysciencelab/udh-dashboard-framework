@@ -16,7 +16,6 @@ import {Tooltip} from "d3/types/d3";
   import {Tooltip} from 'd3/types/d3';
   import _d3tip from 'd3-tip';
   import Color from 'color';
-  import $ from 'jquery';
 
   const d3tip = _d3tip as () => Tooltip;
 
@@ -25,8 +24,7 @@ import {Tooltip} from "d3/types/d3";
 
     mounted() {
       this.svg = <SVG>d3.select('#' + this.selector);
-      //window.addEventListener('resize', this.createChart);
-      $('.' + this.holderElement).on('resize', this.createChart);
+      window.addEventListener('resize', this.createChart);
     }
 
     createChart() {
