@@ -100,7 +100,7 @@ import {Tooltip} from "d3/types/d3";
          tip.hide();
          d3.select(this).attr("fill", d.data.color ? d.data.color : 'slateblue');
        })
-       .on("click", this.click) ;
+       .on("click", this.clickChartElement);
 
       const textMarginH = 12;
       const textMarginW = 5;
@@ -116,7 +116,7 @@ import {Tooltip} from "d3/types/d3";
        .attr('class', 'treemap-label')
        .attr("font-size", "12px")
        .attr("fill", "white")
-
+       .on("click", this.clickChartElement)
        .text(function (d): string {
          return d['id'] + '';
        });
@@ -136,25 +136,16 @@ import {Tooltip} from "d3/types/d3";
       }
     }
 
-    click(d) {
+    clickChartElement(d) {
       this.$emit('click', d);
     }
   }
 </script>
 
 <style lang='scss'>
-    .treeMapLabel {
-        font-size: 11px;
-        text-overflow: ellipsis;
-        text-align: center;
-        word-wrap: break-word;
+    .treemap-label {
+        font-size: 12px;
         color: white;
-
-        div {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            padding: 0 10px;
-        }
+        cursor: context-menu;
     }
 </style>
