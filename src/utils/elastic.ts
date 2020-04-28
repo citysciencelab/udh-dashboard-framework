@@ -20,10 +20,10 @@ const elastic = {
      * @param sortBy string, Feld, nach dem die raw features sortiert werden sollen, default: "change_date", {jedes feld der raw features}
      */
     async udpcQuery(from: string, to: string, theme: string[], org: string[], tag: string[], tag_not: string[], category?: string, interval?: string, limit?: number, sortBy?: string) {
-        theme = theme && theme.length ? theme : [''];
-        org = org && org.length ? org : [''];
-        tag = tag && tag.length ? tag : [''];
-        tag_not = tag_not && tag_not.length ? tag_not : [''];
+        theme = elastic.validateArray(theme);
+        org = elastic.validateArray(org);
+        tag = elastic.validateArray(tag);
+        tag_not = elastic.validateArray(tag_not);
         elastic.validateDate(from);
         elastic.validateDate(to);
         elastic.validateCategory(category);
@@ -60,6 +60,10 @@ const elastic = {
         if (sortBy && ['create_date', 'change_date', 'date'].indexOf(sortBy) === -1) {
             throw new Error(`Invalid interval. Must be 'create_date', 'change_date' or 'date'.`);
         }
+    },
+
+    validateArray(array: string[]) {
+        return array && array.length ? array : [''];
     }
 };
 
