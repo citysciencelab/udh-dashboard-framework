@@ -99,7 +99,8 @@ import {Tooltip} from "d3/types/d3";
        .on('mouseout', function (d) {
          tip.hide();
          d3.select(this).attr("fill", d.data.color ? d.data.color : 'slateblue');
-       });
+       })
+       .on("click", this.click) ;
 
       const textMarginH = 12;
       const textMarginW = 5;
@@ -133,6 +134,10 @@ import {Tooltip} from "d3/types/d3";
       if (this.title) {
         this.$utils.chart.addTitle(this.title, svg, this.$data.width);
       }
+    }
+
+    click(d) {
+      this.$emit('click', d);
     }
   }
 </script>

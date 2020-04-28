@@ -172,7 +172,7 @@
                 <tree-map-chart-d3 :ds="chartData.dataSetsByTopic"
                                    holder-element="chart-holder" metric="doc_count"
                                    descriptor="key" selector="chart-tree-d3"
-                                   @click="onTopicSelectFromTreeMap($event)"/>
+                                   @click="onFilterSelectFromTreeMap($event)"/>
               </div>
             </template>
             <template slot="footer">
@@ -977,14 +977,12 @@ export default class UDPC extends AbstractDashboard {
         this.fetchAppsRange();
     }
 
-    onTopicSelectFromTreeMap(event: { _datasetIndex: number, _index: number }[]) {
-        if (!event.length || !this.chartData.dataSetsByTopic.datasets) {
+    onFilterSelectFromTreeMap(event: Datum) {
+        if (!event.id) {
             return;
         }
 
-        const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
-        const datum = dataset.tree[event[0]._index];
-        const topics = [datum.key] as string[];
+        const topics = [event.id] as string[];
 
         // Synchronize MultiSelects (updating them will trigger 'applyFilters')
         switch (this.activeTabs.dataSetsByTopic) {
