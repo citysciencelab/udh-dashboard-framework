@@ -41,7 +41,7 @@ import {Tooltip} from "d3/types/d3";
       const parentValue = 'origin';
 
       // TODO: das hier beim setten schon ändern!
-      let dsClone = [...this.ds['datasets'][0]['tree']];
+      let dsClone = [...(this.ds as Datum)['datasets'][0]['tree']];
       for (const element of dsClone) {
         element[parentName] = parentValue
       }
@@ -123,12 +123,14 @@ import {Tooltip} from "d3/types/d3";
 
       svg.selectAll('text')
        .style('display',
-        function () {
+        function (): string {
           if (this) {
-            const rectBounds = this.parentNode.firstElementChild.getBBox();
-            const textWidth = this.getComputedTextLength();
+            const element = (this as Datum);
+            const rectBounds = element.parentNode.firstElementChild.getBBox();
+            const textWidth = element.getComputedTextLength();
             return rectBounds['width'] > (textWidth + (textMarginW * 2)) ? 'inline' : 'none';
           }
+          return 'inline';
         });
 
       if (this.title) {
@@ -136,7 +138,8 @@ import {Tooltip} from "d3/types/d3";
       }
     }
 
-    clickChartElement(d: Node) {
+    clickChartElement(d: Datum, i: number) {
+      console.log('clicked index: ' + i);
       this.$emit('click', d);
     }
   }
