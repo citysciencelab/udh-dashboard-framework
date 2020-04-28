@@ -172,7 +172,7 @@
                 <tree-map-chart-d3 :ds="chartData.dataSetsByTopic"
                                    holder-element="chart-holder" metric="doc_count"
                                    descriptor="key" selector="chart-tree-d3"
-                                   @click="onFilterSelectFromTreeMap($event)"/>
+                                   @click="onFilterSelectFromTreeMap($event)" />
               </div>
             </template>
             <template slot="footer">

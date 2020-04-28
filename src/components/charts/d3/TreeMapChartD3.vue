@@ -1,10 +1,10 @@
 import {Tooltip} from "d3/types/d3";
 <template>
-    <div class="chart-wrapper"
-         :style="style">
-        <svg :id="selector"
-             class="chart"/>
-    </div>
+  <div class="chart-wrapper"
+       :style="style">
+    <svg :id="selector"
+         class="chart" />
+  </div>
 </template>
 
 <script lang="ts">
