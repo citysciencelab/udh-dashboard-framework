@@ -3,7 +3,7 @@
     ref="dialog"
     :md-active.sync="active"
     :md-click-outside-to-close="true"
-    @md-opened="renderHtmlContent">
+    @md-opened="renderHtml">
     <span class="close-button" @click="hide()">
       <md-icon>close</md-icon>
     </span>
@@ -14,8 +14,8 @@
     <div v-if="html"
          ref="html"
          class="html" />
-    <div class="content">
-      {{ content }}
+    <div class="text">
+      {{ text }}
     </div>
     <div class="footer">
       {{ footer }}
@@ -29,7 +29,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component({})
 export default class InfoOverlay extends Vue {
     @Prop() html!: Element;
-    @Prop() content!: string;
+    @Prop() text!: string;
     @Prop() header!: string;
     @Prop() footer!: string;
     active:boolean = false;
@@ -43,7 +43,7 @@ export default class InfoOverlay extends Vue {
         this.$emit('closed');
     }
 
-    renderHtmlContent() {
+    renderHtml() {
         if (this.html) {
             (this.$refs.html as Element).append(this.html);
         }
@@ -74,7 +74,7 @@ export default class InfoOverlay extends Vue {
             font-size: 24px;
             padding-bottom: 20px;
         }
-        .content {
+        .text {
             font-size: 18px;
         }
         .html {

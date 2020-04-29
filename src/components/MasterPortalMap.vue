@@ -1,9 +1,13 @@
 <template>
   <div id="map-wrapper">
+    <!-- <div class="overlay top right" @click="onOpenFullscreenMap">
+      <md-icon>aspect_ratio</md-icon>
+    </div> -->
     <div id="map-div-id"
          ref="map"
          :style="mapStyle" />
-    <div class="overlay bottom left banner">
+    <div v-if="overlayText"
+         class="overlay bottom left banner">
       {{ overlayText }}
     </div>
   </div>
@@ -87,7 +91,8 @@
                 }
                 this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
                     this.tempLayers = layers;
-                    this.overlayText = layers[0] ? layers[0].get('name') : '';
+                    this.overlayText = layers[0] ? layers[0].get('name') : null;
+                    console.log(layers);
                 });
             }
         }
