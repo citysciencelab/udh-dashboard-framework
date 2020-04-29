@@ -251,7 +251,7 @@
       </div>
       <div class="row ">
         <div class="col-lg-3 col-md-6 py-2">
-          <!-- Top 5 des Monats -->
+          <!-- Top 10 des Monats -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
