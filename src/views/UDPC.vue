@@ -39,8 +39,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6 py-2">
           <!-- Wussten Sie schon? -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-did-you-know'].show()">
@@ -59,8 +58,7 @@
         </div>
         <div class="col-lg-4 col-md-6 py-2">
           <!-- Neueste Datensätze -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-latest-datasets'].show()">
@@ -80,10 +78,9 @@
         </div>
         <div class="col-lg-4 col-md-12">
           <div class="row">
-            <div class="col-lg-4 col-4 py-2">
+            <div class="col-lg-4 col-12 py-2">
               <!-- KPI Sensoren -->
-              <dashboard-tile data-background-color="blue"
-                              class="chart-card">
+              <dashboard-tile data-background-color="blue">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-sensors'].show()">
@@ -101,10 +98,9 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-4 col-4 py-2">
+            <div class="col-lg-4 col-12 py-2">
               <!-- KPI Besucher -->
-              <dashboard-tile data-background-color="blue"
-                              class="chart-card">
+              <dashboard-tile data-background-color="blue">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-visitors-today'].show()">
@@ -122,10 +118,9 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-4 col-4 py-2">
+            <div class="col-lg-4 col-12 py-2">
               <!-- KPI Karte -->
-              <dashboard-tile data-background-color="blue"
-                              class="chart-card">
+              <dashboard-tile data-background-color="blue">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-background-access'].show()">
@@ -149,8 +144,7 @@
       <div class="row ">
         <div class="col-lg-4 col-md-6 py-2">
           <!-- Anzahl nach -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-datasets-by'].show()">
@@ -187,8 +181,7 @@
         </div>
         <div class="col-lg-4 col-md-6 py-2">
           <!-- Anzahl total -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-count-total'].show()">
@@ -229,8 +222,7 @@
         </div>
         <div class="col-lg-4 col-md-12 py-2">
           <!-- Karte -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-map'].show()">
@@ -252,8 +244,7 @@
       <div class="row ">
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Top 10 des Monats -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-top-x'].show()">
@@ -284,8 +275,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Downloads -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-downloads'].show()">
@@ -322,8 +312,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Zugriffe Fachdaten -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-data'].show()">
@@ -368,8 +357,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Zugriffe Apps -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-apps'].show()">
