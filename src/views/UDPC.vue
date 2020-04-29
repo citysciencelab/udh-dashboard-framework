@@ -30,6 +30,11 @@
                                 :label="$t('udpc.orgFilter')"
                                 class="multiselect"
                                 @new_selection="applyFilters" />
+                  <div class="filter-icon-container">
+                    <a v-if="filters.theme && filters.theme.length || filters.org && filters.org.length"
+                       class="material-icons"
+                       @click="clearFilters()">delete</a>
+                  </div>
                 </div>
               </div>
             </template>
@@ -931,9 +936,29 @@ export default class UDPC extends AbstractDashboard {
         return this.$store.getters.filters();
     }
 
+    set filters(filters: { [key: string]: string[] }) {
+        for (const [k, v] of Object.entries(filters)) {
+            this.$store.dispatch('setFilters', [k, v]);
+        }
+    }
+
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
+        this.fetchAllFiltered();
+    }
 
+    clearFilters() {
+        this.filters = { theme: [], org: [] };
+        this.fetchAllFiltered();
+
+        // synchronize multiselects
+        for (const select of [this.$refs.themeSelect, this.$refs.organizationSelect] as MultiSelect[]) {
+            select.selectedData = [];
+            select.closed(true);
+        }
+    }
+
+    fetchAllFiltered() {
         this.fetchTotalsByTopic();
         this.fetchTotalsByType();
         this.fetchDatasetsRange();
@@ -1039,18 +1064,6 @@ i {
     .hh-logo {
         height: 43px;
     }
-}
-
-.filter-button {
-    background-color: transparent !important;
-    color: black !important;
-    height: 28px !important;
-    min-width: 80px !important;
-    padding-top: 4px !important;
-}
-
-.facts-holder span {
-    padding: 10px;
 }
 
 .dashboard-kpi {
@@ -1220,7 +1233,12 @@ i {
       }
 
       .multiselect {
-        padding-right: 50px;
+        padding-right: 40px;
+      }
+
+      .filter-icon-container {
+        margin-left: -10px;
+        padding: 22px 0;
       }
     }
 }
