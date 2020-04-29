@@ -1015,6 +1015,11 @@ i {
         @media (max-width: 380px) {
             font-size: 20px;
         }
+
+        @media (max-width: 489px) {
+          position: absolute;
+          left: 105px;
+        }
     }
 
     .hh-bug {
