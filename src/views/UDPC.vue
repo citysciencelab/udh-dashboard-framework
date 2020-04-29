@@ -813,12 +813,12 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-apps-year':
                 this.activeTabs.totalApps = tab;
-                this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year', isShowMarks: false};
+                this.sliderOptions.apps = { min: '2016', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchAppsRange();
                 break;
             case 'tab-apps-month':
                 this.activeTabs.totalApps = tab;
-                this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
+                this.sliderOptions.apps = { min: '2016-03', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchAppsRange();
         }
     }
