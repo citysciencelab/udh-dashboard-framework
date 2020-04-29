@@ -9,10 +9,10 @@
 <script lang="ts">
 import { Component, Prop } from 'vue-property-decorator';
 import * as d3 from 'd3';
-import AbstractChart from './AbstractChart.vue';
+import AbstractChartD3 from './AbstractChartD3.vue';
 
 @Component({})
-export default class LineChart extends AbstractChart {
+export default class LineChart extends AbstractChartD3 {
     @Prop() origins!: string[];
     @Prop() metric2!: string;
     horizontalOffset = 60;
