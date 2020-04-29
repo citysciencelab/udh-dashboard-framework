@@ -12,12 +12,12 @@ import * as d3 from 'd3';
 import _d3tip from 'd3-tip';
 // eslint-disable-next-line no-unused-vars
 import { Tooltip } from 'd3/types/d3';
-import AbstractChart from './AbstractChart.vue';
+import AbstractChartD3 from './AbstractChartD3.vue';
 
 const d3tip = _d3tip as () => Tooltip;
 
 @Component({})
-export default class HBarChart extends AbstractChart {
+export default class HBarChart extends AbstractChartD3 {
     axisPadding = 10; // px
 
     mounted() {
