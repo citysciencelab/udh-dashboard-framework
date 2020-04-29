@@ -816,16 +816,16 @@ export default class UDPC extends AbstractDashboard {
                 this.activeTabs.dataSetsByType = 'sensordatasets';
                 // this.fetchTotalsByType();  // not yet implemented in backend
                 break;
+            case 'tab-top5-datasets':
+                this.activeTabs.tops = 'datasets';
+                this.fetchTops();
+                break;
             case 'tab-top5-apps':
                 this.activeTabs.tops = 'apps';
                 this.fetchTops();
                 break;
             case 'tab-top5-downloads':
                 this.activeTabs.tops = 'downloads';
-                this.fetchTops();
-                break;
-            case 'tab-top5-datasets':
-                this.activeTabs.tops = 'datasets';
                 this.fetchTops();
                 break;
         }
@@ -928,7 +928,11 @@ export default class UDPC extends AbstractDashboard {
         const theme = this.filters.theme;
         const org = this.filters.org;
 
-        await this.$store.dispatch('fetchTops', { topTopic, theme, org });
+        if (topTopic === 'datasets') {
+            await this.$store.dispatch('fetchTops', { topTopic, theme, org });
+        } else {
+            await this.$store.dispatch('fetchTops', { topTopic });
+        }
     }
 
     async fetchDownloadsRange() {
