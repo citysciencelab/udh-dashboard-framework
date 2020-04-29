@@ -62,12 +62,12 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTops: async (context, topTopic: string) => {
+        fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[] }) => {
             context.commit('SET_LOADING', true);
 
             const month = new Utils().date.getLastMonth();
 
-            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], ['basemap'], topTopic, 'month', 10);
+            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], ['basemap'], params.topTopic, 'month', 10);
             const aggregations = elasticResponse.aggregations;
             const topX = aggregations.top_x.buckets;
 

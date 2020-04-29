@@ -559,7 +559,8 @@ export default class UDPC extends AbstractDashboard {
         dataSetsByType: '',
         totalDownloads: '',
         totalDatasets: '',
-        totalApps: ''
+        totalApps: '',
+        tops: ''
     };
 
     barChartConfigDefaults = {
@@ -779,13 +780,16 @@ export default class UDPC extends AbstractDashboard {
                 // this.fetchTotalsByType();  // not yet implemented in backend
                 break;
             case 'tab-top5-apps':
-                this.fetchTops('apps');
+                this.activeTabs.tops = 'apps';
+                this.fetchTops();
                 break;
             case 'tab-top5-downloads':
-                this.fetchTops('downloads');
+                this.activeTabs.tops = 'downloads';
+                this.fetchTops();
                 break;
             case 'tab-top5-datasets':
-                this.fetchTops('datasets');
+                this.activeTabs.tops = 'datasets';
+                this.fetchTops();
                 break;
         }
     }
@@ -882,8 +886,12 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans });
     }
 
-    async fetchTops(topic: string ) {
-        await this.$store.dispatch('fetchTops', topic);
+    async fetchTops() {
+        const topTopic = this.activeTabs.tops;
+        const theme = this.filters.theme;
+        const org = this.filters.org;
+
+        await this.$store.dispatch('fetchTops', { topTopic, theme, org });
     }
 
     async fetchDownloadsRange() {
@@ -961,8 +969,8 @@ export default class UDPC extends AbstractDashboard {
     fetchAllFiltered() {
         this.fetchTotalsByTopic();
         this.fetchTotalsByType();
+        this.fetchTops();
         this.fetchDatasetsRange();
-        this.fetchAppsRange();
     }
 
     onTopicSelectFromTreeMap(event: { _datasetIndex: number, _index: number }[]) {
