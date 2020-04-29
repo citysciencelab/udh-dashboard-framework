@@ -78,9 +78,9 @@
         </div>
         <div class="col-lg-4 col-md-12">
           <div class="row">
-            <div class="col-lg-4 col-12 py-2">
+            <div class="col-md-4 col-xs-12 py-2">
               <!-- KPI Sensoren -->
-              <dashboard-tile data-background-color="blue">
+              <dashboard-tile class="kpi-tile" data-background-color="blue">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-sensors'].show()">
@@ -98,9 +98,9 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-4 col-12 py-2">
+            <div class="col-md-4 col-xs-12 py-2">
               <!-- KPI Besucher -->
-              <dashboard-tile data-background-color="blue">
+              <dashboard-tile class="kpi-tile" data-background-color="blue">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-visitors-today'].show()">
@@ -118,9 +118,9 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-4 col-12 py-2">
+            <div class="col-md-4 col-xs-12 py-2">
               <!-- KPI Karte -->
-              <dashboard-tile data-background-color="blue">
+              <dashboard-tile class="kpi-tile" data-background-color="blue">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-background-access'].show()">
@@ -1046,6 +1046,19 @@ i {
     padding: 10px;
 }
 
+.kpi-tile.md-card  {
+  .md-card-header {
+    .card-header-text {
+      @media (max-width: 768px) {
+        font-size: 24px !important;
+      }
+      @media (min-width: 769px) {
+        font-size: 16px !important;
+      }
+    }
+  }
+}
+
 .dashboard-kpi {
     font-size: 30px;
     font-weight: bold;
@@ -1054,6 +1067,10 @@ i {
     text-overflow: ellipsis;
     overflow: hidden;
     margin-bottom: 0 !important;
+
+    @media (max-width: 767px) {
+      text-align: center;
+    }
 }
 
 .dashboard-tabs {
