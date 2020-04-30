@@ -1,27 +1,40 @@
 <template>
   <div id="map-wrapper">
-    <!-- <div class="overlay top right" @click="onOpenFullscreenMap">
+    <div class="overlay top right"
+         @click="onOpenFullscreen">
       <md-icon>aspect_ratio</md-icon>
-    </div> -->
-    <div id="map-div-id"
-         ref="map"
-         :style="mapStyle" />
-    <div v-if="overlayText"
-         class="overlay bottom left banner">
-      {{ overlayText }}
     </div>
+    <div id="map-wrapper"
+         ref="mapWrapper">
+      <div id="map-div-id"
+           ref="map"
+           :style="mapStyle" />
+      <div v-if="overlayText"
+           class="overlay bottom left banner">
+        {{ overlayText }}
+      </div>
+    </div>
+    <info-overlay ref="fullscreen"
+                  style="width:95%; height:95%;"
+                  :html="$refs.mapWrapper"
+                  @closed="onCloseFullscreen" />
   </div>
 </template>
 
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+    import InfoOverlay from './InfoOverlay.vue';
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
     // eslint-disable-next-line no-unused-vars
     import { Layer } from 'ol/layer';
     import * as mpapi from "masterportalAPI";
 
-    @Component({})
+    @Component({
+        components: {
+            InfoOverlay
+        }
+    })
     export default class MasterPortalMap extends Vue {
         @Prop({default: "dashboardData"}) customLayerId!: string;
         @Prop() overlay!: string;
@@ -30,15 +43,20 @@
         @Prop() mapStyle!: object;
         @Prop() featureData!: FeatureSet;
         @Prop() md_id!: string;
+
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
         overlayText: string = "GeoOnline | LGV Hamburg";
+        isFullscreen: boolean = false;
+
+        $refs!: {
+            fullscreen: InfoOverlay,
+            mapWrapper: Element,
+            map: Element
+        }
 
         mounted() {
-            this.overlayText = this.overlay;
-            // wait for the Tile To be rendered completely
-            // wait for DOM height to be adjusted
-            // TODO: make it event based
+            this.overlayText = this.overlay || this.overlayText;
             this.createMap();
             this.showFeaturesInMap();
             this.createLayerByMdId();
@@ -92,7 +110,6 @@
                 this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
                     this.tempLayers = layers;
                     this.overlayText = layers[0] ? layers[0].get('name') : null;
-                    console.log(layers);
                 });
             }
         }
@@ -110,6 +127,18 @@
             setTimeout(() => {
                  this.map.setSize([(this.$refs.map as Element).clientWidth, (this.$refs.map as Element).clientHeight]);
             }, 5);
+        }
+
+        onOpenFullscreen () {
+            (this.$refs.fullscreen as InfoOverlay).show();
+            this.onResize();
+            this.isFullscreen = true;
+        }
+
+        onCloseFullscreen () {
+            this.$el.append(this.$refs.mapWrapper);
+            this.onResize();
+            this.isFullscreen = false;
         }
     }
 </script>

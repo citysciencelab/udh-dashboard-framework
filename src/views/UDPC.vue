@@ -193,7 +193,7 @@
               </div>
             </template>
             <template slot="footer">
-              <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
+              <div v-if="$refs['count-total-tabs'] && $refs['count-total-tabs'].activeTab === 'tab-datasets'"
                    class="notice">
                 <md-switch v-model="countTotalWithPlans"
                            class="dashboard-switch">
@@ -216,9 +216,6 @@
               </div>
             </template>
             <template slot="content">
-              <div class="overlay top right" @click="onOpenFullscreenMap">
-                <md-icon>aspect_ratio</md-icon>
-              </div>
               <master-portal-map ref="masterPortalMap"
                                  :services="mapData.services"
                                  :portal="mapData.portal"
@@ -444,10 +441,6 @@
                   :text="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
                   :text="$t('udpc.tooltipAccessApps')" />
-    <info-overlay ref="fullscreenContent"
-                  style="width:95%; height:95%;"
-                  :html="fullscreenContent.html"
-                  @closed="onCloseFullscreenMap" />
   </div>
 </template>
 
@@ -496,8 +489,7 @@ export default class UDPC extends AbstractDashboard {
 
     $refs!: {
       totalDatasetsSlider: RangeSlider & RangeSliderMethods,
-      masterPortalMap: MasterPortalMap,
-      fullscreenContent: InfoOverlay
+      masterPortalMap: MasterPortalMap
     }
 
     mapData: MapData = {
@@ -640,11 +632,6 @@ export default class UDPC extends AbstractDashboard {
         totalApps: this.barChartConfigDefaults
     };
 
-    fullscreenContent: { [key: string]: Element|null } = {
-        html: document.createElement('div'),
-        ref: document.createElement('div')
-    };
-
     created() {
         this.$i18n.locale = 'de';
         this.$i18n.mergeLocaleMessage('en', messages.en);
@@ -729,12 +716,6 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
-    mounted() {
-      if (this.$refs['masterPortalMap']) {
-        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
-      }
-    }
-
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-organisations':
@@ -794,21 +775,6 @@ export default class UDPC extends AbstractDashboard {
                 this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchAppsRange(this.sliderOptions.apps);
         }
-    }
-
-    onOpenFullscreenMap() {
-        this.fullscreenContent.html = (this.$refs['masterPortalMap'] as Vue).$el;
-        this.fullscreenContent.ref = this.fullscreenContent.html.parentElement;
-
-        (this.$refs['fullscreenContent'] as InfoOverlay).show();
-        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
-    }
-
-    onCloseFullscreenMap() {
-        if (this.fullscreenContent.ref) {
-          this.fullscreenContent.ref.append(this.fullscreenContent.html as Element);
-        }
-        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
