@@ -92,7 +92,7 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.sensorCount">
-                    {{ kpiData.sensorCountAbbreviated }}
+                    {{ kpiData.sensorCount }}
                   </p>
                 </template>
                 <template slot="footer" />
