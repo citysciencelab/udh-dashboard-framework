@@ -92,7 +92,7 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.sensorCount">
-                    {{ kpiData.sensorCount }}
+                    {{ kpiData.sensorCountAbbreviated }}
                   </p>
                 </template>
                 <template slot="footer" />
@@ -112,7 +112,7 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.visitorsMonth">
-                    {{ kpiData.visitorsMonth }}
+                    {{ kpiData.visitorsMonthAbbreviated }}
                   </p>
                 </template>
                 <template slot="footer" />
@@ -132,7 +132,7 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.mapAccess">
-                    {{ kpiData.mapAccess }}
+                    {{ kpiData.mapAccessAbbreviated }}
                   </p>
                 </template>
                 <template slot="footer" />
@@ -521,8 +521,11 @@ export default class UDPC extends AbstractDashboard {
 
     kpiData: { [key: string]: string } = {
       sensorCount: '',
+      sensorCountAbbreviated: '',
       visitorsMonth: '',
-      mapAccess: ''
+      visitorsMonthAbbreviated: '',
+      mapAccess: '',
+      mapAccessAbbreviated: ''
     };
 
     chartSwitches: { [key: string]: boolean } = {
@@ -758,15 +761,18 @@ export default class UDPC extends AbstractDashboard {
                     }
                     case 'visitorsKPI': {
                       this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                      this.kpiData.visitorsMonthAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
                       break;
                     }
                     case 'sensorsKPI': {
-                     this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                        break;
+                      this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                      this.kpiData.sensorCountAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
+                      break;
                     }
                     case 'baseMapKPI': {
-                        this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                        break;
+                      this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                      this.kpiData.mapAccessAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
+                      break;
                     }
                     case 'recentDatasets': {
                         this.recentDataSets = mutationData;
