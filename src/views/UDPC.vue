@@ -163,9 +163,10 @@
                         :md-label="$t('udpc.tabOrganisations')" />
               </md-tabs>
               <div class="chart-holder">
-                <tree-map-chart :chart-data="chartData.dataSetsByTopic"
-                                :chart-options="chartOptions.dataSetsByTopic"
-                                @click="onTopicSelectFromTreeMap($event)" />
+                <tree-map-chart-d3 :ds="chartData.dataSetsByTopic"
+                                   holder-element="chart-holder" metric="doc_count"
+                                   descriptor="key" selector="chart-tree-d3"
+                                   @click="onFilterSelectFromTreeMap($event)" />
               </div>
             </template>
             <template slot="footer">
@@ -474,9 +475,11 @@ import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 import Utils from "@/utils/utils";
+import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 
 @Component({
     components: {
+      TreeMapChartD3,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
@@ -546,6 +549,7 @@ export default class UDPC extends AbstractDashboard {
     };
 
     barChartConfigDefaults = {
+        maintainAspectRatio: false,
         title: {
             display: false
         },
@@ -561,8 +565,8 @@ export default class UDPC extends AbstractDashboard {
                 ticks: {
                     display: true,
                     beginAtZero: true,
-                    callback: function(value: string) {
-                      return new Utils().number.getDecimalSeparatedNumber(value);
+                    callback: function(value: number) {
+                      return new Utils().number.getAbbreviatedNumber(value);
                     }
                 }
             }],
@@ -579,7 +583,7 @@ export default class UDPC extends AbstractDashboard {
 
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             title: {
                 display: false
             },
@@ -588,6 +592,7 @@ export default class UDPC extends AbstractDashboard {
             }
         },
         dataSetsByType: {
+            maintainAspectRatio: false,
             title: {
                 display: false,
             },
@@ -603,8 +608,8 @@ export default class UDPC extends AbstractDashboard {
                     ticks: {
                         display: true,
                         beginAtZero: true,
-                        callback: function(value: string) {
-                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        callback: function(value: number) {
+                          return new Utils().number.getAbbreviatedNumber(value);
                         }
                     }
                 }],
@@ -619,6 +624,7 @@ export default class UDPC extends AbstractDashboard {
             }
         },
         dataSetsTopX: {
+            maintainAspectRatio: false,
             title: {
                 display: false,
             },
@@ -632,9 +638,9 @@ export default class UDPC extends AbstractDashboard {
                         display: false
                     },
                     ticks: {
+                        mirror: true,
                         display: false,
                         beginAtZero: true,
-                        fontColor: '#707070'
                     }
                 }],
                 xAxes: [{
@@ -643,8 +649,8 @@ export default class UDPC extends AbstractDashboard {
                     },
                     ticks: {
                         beginAtZero: true,
-                        callback: function(value: string) {
-                          return new Utils().number.getDecimalSeparatedNumber(value);
+                        callback: function(value: number) {
+                          return new Utils().number.getAbbreviatedNumber(value);
                         }
                     }
                 }]
@@ -675,65 +681,96 @@ export default class UDPC extends AbstractDashboard {
                 const mutationData = mutation.payload[1];
 
                 switch (mutation.payload[0]) {
-                    case 'totalTopicDatasets':
-                        mutationData.datasets[0]['key'] = 'doc_count';
-                        mutationData.datasets[0]['groups'] = ['key'];
-                        mutationData.datasets[0]['spacing'] = 2;
-                        mutationData.datasets[0]['borderWidth'] = 0.5;
-                        mutationData.datasets[0]['fontColor'] = 'white';
-                        mutationData.datasets[0]['fontSize'] = 11;
-                        mutationData.datasets[0]['backgroundColor'] = function(ctx: CTX) {
-                            let colorMap = [
-                                "#003063",  "#9FB1C4", "#40648B",
-                                "#7F97B0", "#7FADD4", "#BFD6E9",
-                                "#2B88D8", "#005CA9", "#BFD6E9",
-                                "#FFF4CE", "#DFF6DD",
-                            ];
+                    case 'totalTopicDatasets': {
+                      mutationData.datasets[0]['key'] = 'doc_count';
+                      mutationData.datasets[0]['groups'] = ['key'];
+                      mutationData.datasets[0]['spacing'] = 2;
+                      mutationData.datasets[0]['borderWidth'] = 0.5;
+                      mutationData.datasets[0]['fontColor'] = 'white';
+                      mutationData.datasets[0]['fontSize'] = 11;
 
-                            let index:number = ctx.dataIndex ? ctx.dataIndex : 0;
-                            if (index > colorMap.length - 1) {
-                                let colorIdx = index % colorMap.length;
-                                let quotient = Math.floor(index/colorMap.length);
-                                if (quotient > 9) quotient = 9;
-                                return Color(colorMap[colorIdx]).alpha(1 - (0.1 * quotient));
-                            } else {
-                                return colorMap[index];
-                            }
-                        };
-                        this.chartData.dataSetsByTopic = mutationData;
+                      mutationData.datasets[0]['backgroundColor'] = function(ctx: CTX) {
+                        let colorMap = [
+                          "#003063",  "#9FB1C4", "#40648B",
+                          "#7F97B0", "#7FADD4", "#BFD6E9",
+                          "#2B88D8", "#005CA9", "#BFD6E9",
+                          "#FFF4CE", "#DFF6DD",
+                        ];
+
+                        let index:number = ctx.dataIndex ? ctx.dataIndex : 0;
+                        if (index > colorMap.length - 1) {
+                          let colorIdx = index % colorMap.length;
+                          let quotient = Math.floor(index/colorMap.length);
+                          if (quotient > 9) quotient = 9;
+                          return Color(colorMap[colorIdx]).alpha(1 - (0.1 * quotient));
+                        } else {
+                          return colorMap[index];
+                        }
+                      };
+
+                      const colorMap = [
+                        "#003063", "#9FB1C4", "#40648B",
+                        "#7F97B0", "#7FADD4", "#BFD6E9",
+                        "#2B88D8", "#005CA9", "#BFD6E9",
+                        "#FFF4CE", "#DFF6DD",
+                      ];
+
+                      let index:number = 0;
+                      for (const dataElement of mutationData.datasets[0].tree) {
+                        let color = null;
+                        if (index > colorMap.length - 1) {
+                          let colorIdx = index % colorMap.length;
+                          let quotient = Math.floor(index/colorMap.length);
+                          if (quotient > 9) quotient = 9;
+                          color = Color(colorMap[colorIdx]).alpha(1 - (0.1 * quotient)).hex();
+                        } else {
+                          color = colorMap[index];
+                        }
+                        dataElement['color'] = color;
+                        index++;
+                      }
+                      this.chartData.dataSetsByTopic = mutationData;
+                      break;
+                    }
+                    case 'totalDatasetsRangeTop': {
+                      mutationData.datasets[0]['label'] = 'Zugriffe';
+                      mutationData.datasets[0]['backgroundColor'] = '#196CB1';
+                      this.chartData.dataSetsTopX = mutationData;
+                      break;
+                    }
+                    case 'totalDatasetsCount': {
+                      mutationData.datasets[0]['backgroundColor'] = '#003063';
+                      this.chartData.dataSetsByType = mutationData;
+                      break;
+                    }
+                    case 'totalDownloads': {
+                      mutationData.datasets[0].backgroundColor = '#7F97B0';
+                      this.chartData.totalDownloads = mutationData;
+                      break;
+                    }
+                    case 'totalDatasets': {mutationData.datasets[0].backgroundColor = '#196CB1';
+                      this.chartData.totalDatasets = mutationData;
+                      break;
+                    }
+                    case 'totalApps': {mutationData.datasets[0].backgroundColor = '#40648B';
+                      this.chartData.totalApps = mutationData;
+                      break;
+                    }
+                    case 'visitorsKPI': {
+                      this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                      break;
+                    }
+                    case 'sensorsKPI': {
+                     this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
                         break;
-                    case 'totalDatasetsRangeTop':
-                        mutationData.datasets[0]['label'] = 'Zugriffe';
-                        mutationData.datasets[0]['backgroundColor'] = '#196CB1';
-                        this.chartData.dataSetsTopX = mutationData;
+                    }
+                    case 'baseMapKPI': {
+                        this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
                         break;
-                    case 'totalDatasetsCount':
-                        mutationData.datasets[0]['backgroundColor'] = '#003063';
-                        this.chartData.dataSetsByType = mutationData;
-                        break;
-                    case 'totalDownloads':
-                        mutationData.datasets[0].backgroundColor = '#7F97B0';
-                        this.chartData.totalDownloads = mutationData;
-                        break;
-                    case 'totalDatasets':
-                        mutationData.datasets[0].backgroundColor = '#196CB1';
-                        this.chartData.totalDatasets = mutationData;
-                        break;
-                    case 'totalApps':
-                        mutationData.datasets[0].backgroundColor = '#40648B';
-                        this.chartData.totalApps = mutationData;
-                        break;
-                    case 'visitorsKPI':
-                        this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                        break;
-                  case 'sensorsKPI':
-                    this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                        break;
-                  case 'baseMapKPI':
-                    this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                        break;
-                  case 'recentDatasets':
-                    this.recentDataSets = mutationData;
+                    }
+                    case 'recentDatasets': {
+                        this.recentDataSets = mutationData;
+                    }
                 }
             }
         });
@@ -928,14 +965,12 @@ export default class UDPC extends AbstractDashboard {
         this.fetchAppsRange();
     }
 
-    onTopicSelectFromTreeMap(event: { _datasetIndex: number, _index: number }[]) {
-        if (!event.length || !this.chartData.dataSetsByTopic.datasets) {
+    onFilterSelectFromTreeMap(event: Datum) {
+        if (!event.id) {
             return;
         }
 
-        const dataset = this.chartData.dataSetsByTopic.datasets[event[0]._datasetIndex] as any;
-        const datum = dataset.tree[event[0]._index];
-        const topics = [datum.key] as string[];
+        const topics = [event.id] as string[];
 
         // Synchronize MultiSelects (updating them will trigger 'applyFilters')
         switch (this.activeTabs.dataSetsByTopic) {
@@ -1175,7 +1210,12 @@ i {
         }
 
         .chart-holder {
-            padding-top: 15px;
+          margin-top: 15px;
+        }
+
+        .chart-holder, .chart-holder >div {
+            height: 292px;
+            width: 100%;
         }
     }
 
