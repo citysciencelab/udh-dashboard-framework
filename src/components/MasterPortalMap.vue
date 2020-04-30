@@ -9,9 +9,8 @@
       <div id="map-div-id"
            ref="map"
            :style="mapStyle" />
-      <div v-if="overlayText"
-           class="overlay bottom left banner">
-        {{ overlayText }}
+      <div class="overlay bottom left banner">
+        {{ overlayText || overlay }}
       </div>
     </div>
     <info-overlay ref="fullscreen"
@@ -37,7 +36,7 @@
     })
     export default class MasterPortalMap extends Vue {
         @Prop({default: "dashboardData"}) customLayerId!: string;
-        @Prop() overlay!: string;
+        @Prop({default: "GeoOnline | LGV Hamburg"}) overlay!: string;
         @Prop() portal!: { [key: string]: any };
         @Prop() services!: { [key: string]: any };
         @Prop() mapStyle!: object;
@@ -46,7 +45,7 @@
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
-        overlayText: string = "GeoOnline | LGV Hamburg";
+        overlayText: string | null = null;
         isFullscreen: boolean = false;
 
         $refs!: {
@@ -56,7 +55,6 @@
         }
 
         mounted() {
-            this.overlayText = this.overlay || this.overlayText;
             this.createMap();
             this.showFeaturesInMap();
             this.createLayerByMdId();
