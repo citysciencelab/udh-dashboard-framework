@@ -27,6 +27,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', false);
         },
         fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+            const changed = await context.dispatch('paramsChanged', ['totalDatasetsRangeTop', params]);
+            if (!changed) return;
+
             context.commit('SET_LOADING', true);
 
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
@@ -44,6 +47,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', false);
         },
         fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+            const changed = await context.dispatch('paramsChanged', ['totalDatasetsRangeTop', params]);
+            if (!changed) return;
+
             context.commit('SET_LOADING', true);
 
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
@@ -63,6 +69,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', false);
         },
         fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[] }) => {
+            const changed = await context.dispatch('paramsChanged', ['totalDatasetsRangeTop', params]);
+            if (!changed) return;
+
             context.commit('SET_LOADING', true);
 
             const month = new Utils().date.getLastMonth();
@@ -83,6 +92,9 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchRangefulData: async (context, params: { theme: string[], org: string[], min: string, max: string, unit: string, category: string, chartId: string, tag_not: string[] }) => {
             sanitizeRangefulParams(params);
+
+            const changed = await context.dispatch('paramsChanged', ['totalDatasetsRangeTop', params]);
+            if (!changed) return;
 
             const elasticResponse = await elastic.udpcQuery(params.min, params.max, params.theme, params.org, [], params.tag_not, params.category, params.unit);
             const aggregations = elasticResponse.aggregations;
@@ -129,11 +141,12 @@ const udpcModule: Module<UDPCState, RootState> = {
                 context.commit('SET_FILTERED_DATA', ['baseMapKPI', null]);
             }
         },
-        applyFilter: (context, [id, accessor]) => {
-            const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
-            const filteredData = context.state.dashboardData[id].filter(filterFunction);
-
-            context.commit('SET_FILTERED_DATA', [id, filteredData]);
+        paramsChanged: (context, args: [string, any]) => {
+            const id = args[0];
+            const params = JSON.stringify(args[1]);
+            const changed = params !== context.state.filters[id];
+            context.state.filters[id] = params;
+            return changed;
         }
     },
     getters: {}
