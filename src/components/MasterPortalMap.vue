@@ -10,7 +10,13 @@
            ref="map"
            :style="mapStyle" />
       <div class="overlay bottom left banner">
-        {{ overlayText || overlay }}
+        <a :href="linkUrl"
+           :title="linkTitle"
+           target="_blank"
+           class="layer-tag">
+          {{ overlayText || overlay }}
+          <md-icon v-if="linkUrl">launch</md-icon>
+        </a>
       </div>
     </div>
     <info-overlay ref="fullscreen"
@@ -25,9 +31,11 @@
     import InfoOverlay from './InfoOverlay.vue';
     import "ol/ol.css";
     import {Style, Stroke, Fill} from "ol/style";
+    import * as mpapi from "masterportalAPI";
     // eslint-disable-next-line no-unused-vars
     import { Layer } from 'ol/layer';
-    import * as mpapi from "masterportalAPI";
+    // eslint-disable-next-line no-unused-vars
+    import { LocaleMessage } from 'vue-i18n';
 
     @Component({
         components: {
@@ -42,6 +50,7 @@
         @Prop() mapStyle!: object;
         @Prop() featureData!: FeatureSet;
         @Prop() md_id!: string;
+        @Prop() storeId!: string;
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
@@ -52,6 +61,21 @@
             fullscreen: InfoOverlay,
             mapWrapper: Element,
             map: Element
+        }
+
+        get hmdkUrl(): string | undefined {
+            if (this.storeId) {
+                return this.$store.state[this.storeId].hmdkUrl;
+            }
+            return this.$store.state.hmdkUrl
+        }
+
+        get linkTitle(): LocaleMessage {
+            return this.md_id ? this.$t('udpc.tooltipHdmkLink') : this.$t('udpc.tooltipGeneralLink');
+        }
+
+        get linkUrl(): string {
+            return this.md_id ? this.hmdkUrl + this.md_id : "https://geoportal-hamburg.de/geo-online/";
         }
 
         mounted() {
@@ -141,7 +165,7 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     #map-div-id {
         height: 100%;
         width: 100%;

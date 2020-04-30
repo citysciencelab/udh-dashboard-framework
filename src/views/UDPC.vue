@@ -219,7 +219,8 @@
               <master-portal-map ref="masterPortalMap"
                                  :services="mapData.services"
                                  :portal="mapData.portal"
-                                 :md_id="mapData.md_id" />
+                                 :md_id="mapData.md_id"
+                                 :store-id="'udpc'" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -1144,7 +1145,7 @@ i {
   &.banner {
     background: rgba(255, 255, 255 , 0.8);
   }
-  i {
+  > i {
       color: $hamburg-blue !important;
       font-size: 2em !important;
       cursor: pointer;

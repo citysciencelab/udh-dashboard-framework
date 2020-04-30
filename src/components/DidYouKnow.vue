@@ -15,6 +15,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+// eslint-disable-next-line no-unused-vars
+import { LocaleMessage } from 'vue-i18n';
 
 @Component({})
 export default class DidYouKnow extends Vue {
@@ -25,14 +27,14 @@ export default class DidYouKnow extends Vue {
     timer!: number;
     currentIndex = 0;
 
-    get hmdkUrl() {
+    get hmdkUrl(): string | undefined {
         if (this.storeId) {
             return this.$store.state[this.storeId].hmdkUrl;
         }
         return this.$store.state.hmdkUrl
     }
 
-    get linkTitle() {
+    get linkTitle(): LocaleMessage | string {
         switch (this.data.action) {
             case 'md_id':
                 return this.$t('udpc.tooltipHdmkLink');
@@ -41,7 +43,7 @@ export default class DidYouKnow extends Vue {
         }
     }
 
-    get linkUrl() {
+    get linkUrl(): string | null {
         switch (this.data.action) {
             case 'md_id':
                 return this.hmdkUrl + this.data.items[this.currentIndex].link;
