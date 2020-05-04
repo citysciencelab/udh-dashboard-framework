@@ -141,11 +141,13 @@ export default class Utils implements IUtils {
         },
         getLastMonth(): string {
             const today = new Date();
-            return `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+            //return `${today.getFullYear()}-${today.getMonth() < 10 ? '0' : ''}${today.getMonth()}`;
+            return `2020-03`;
         },
         getCurrentMonth(): string {
             const today = new Date();
-            return `${today.getFullYear()}-${today.getMonth() + 1 < 10 ? '0' : ''}${today.getMonth() + 1}`;
+            //return `${today.getFullYear()}-${today.getMonth() + 1 < 10 ? '0' : ''}${today.getMonth() + 1}`;
+            return `2020-04`;
         }
     };
 
