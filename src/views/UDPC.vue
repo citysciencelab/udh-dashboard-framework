@@ -220,7 +220,8 @@
                                  :services="mapData.services"
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id"
-                                 :store-id="'udpc'" />
+                                 :store-id="'udpc'" 
+                                 @fullscreenMap="toggleRecentDatasetInterval" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -487,6 +488,7 @@ export default class UDPC extends AbstractDashboard {
     countGroupedWithPlans = false;
     accessWithBackgroundMaps = true;
     agreeDialogActive = false;
+    updateMapOnInterval = true;
 
     $refs!: {
       totalDatasetsSlider: RangeSlider & RangeSliderMethods,
@@ -878,7 +880,13 @@ export default class UDPC extends AbstractDashboard {
     }
 
     showDataInMap(md_id: string) {
+      if (this.updateMapOnInterval) {
         this.mapData.md_id = md_id;
+      }
+    }
+
+    toggleRecentDatasetInterval(state: boolean) {
+      this.updateMapOnInterval = !state; 
     }
 }
 </script>

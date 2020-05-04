@@ -19,9 +19,10 @@
         </a>
       </div>
     </div>
-    <info-overlay ref="fullscreen"
+    <info-overlay v-if="mapEl"
+                  ref="fullscreen"
                   style="width:95%; height:95%;"
-                  :html="$refs.mapWrapper"
+                  :html="mapEl"
                   @closed="onCloseFullscreen" />
   </div>
 </template>
@@ -56,6 +57,7 @@
         tempLayers!: Layer[];
         overlayText: string | null = null;
         isFullscreen: boolean = false;
+        mapEl: Element | null = null;
 
         $refs!: {
             fullscreen: InfoOverlay,
@@ -109,6 +111,9 @@
 
             window.addEventListener('resize', this.onResize.bind(this));
             this.onResize();
+
+            // set the Prop for the fullscreen container after map init
+            this.mapEl = this.$refs.mapWrapper;
         }
 
         destroyed() {
@@ -155,12 +160,14 @@
             (this.$refs.fullscreen as InfoOverlay).show();
             this.onResize();
             this.isFullscreen = true;
+            this.$emit('fullscreenMap', true);
         }
 
         onCloseFullscreen () {
             this.$el.append(this.$refs.mapWrapper);
             this.onResize();
             this.isFullscreen = false;
+            this.$emit('fullscreenMap', false);
         }
     }
 </script>
