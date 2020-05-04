@@ -109,11 +109,17 @@
                 layerConf: this.services
             });
 
-            window.addEventListener('resize', this.onResize.bind(this));
-            this.onResize();
-
             // set the Prop for the fullscreen container after map init
             this.mapEl = this.$refs.mapWrapper;
+
+            // make map resolution responsive on window resize
+            window.addEventListener('resize', this.onResize.bind(this));
+
+            // HACK: wait briefly for render of charts to finish an readjust the scaling
+            // TODO: Make event/lifecycle based
+            setTimeout(() => {
+                this.onResize();
+            }, 2000);
         }
 
         destroyed() {

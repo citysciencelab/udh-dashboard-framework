@@ -719,6 +719,12 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
+    mounted() {
+      if (this.$refs['masterPortalMap']) {
+        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
+      }
+    }
+
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-organisations':
