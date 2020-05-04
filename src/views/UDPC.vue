@@ -676,6 +676,7 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
+        this.fetchFacts();
         this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
@@ -768,6 +769,10 @@ export default class UDPC extends AbstractDashboard {
                     case 'visitorsKPI': {
                       this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
                       this.kpiData.visitorsMonthAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
+                      break;
+                    }
+                    case 'didYouKnowFacts': {
+                      this.didYouKnow = mutationData;
                       break;
                     }
                     case 'sensorsKPI': {
@@ -881,6 +886,10 @@ export default class UDPC extends AbstractDashboard {
 
     onSwitchIncludeMaps() {
       this.fetchDatasetsRange();
+    }
+
+    async fetchFacts() {
+        await this.$store.dispatch('fetchFacts');
     }
 
     async fetchBaseMapKPI() {

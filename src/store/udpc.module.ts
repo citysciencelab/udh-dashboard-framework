@@ -113,6 +113,20 @@ const udpcModule: Module<UDPCState, RootState> = {
                 }]
             }]);
         },
+        fetchFacts: async (context) => {
+            const chartId = 'didYouKnowFacts';
+            const month = new Utils().date.getLastMonth();
+
+            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], [], 'info', undefined, 10);
+            const aggregations = elasticResponse.aggregations;
+            /*
+                try {
+                    context.commit('SET_FILTERED_DATA', [chartId, aggregations.total_entities_and_hits.buckets[0].total_hits]);
+                } catch (e) {
+                    context.commit('SET_FILTERED_DATA', [chartId, null]);
+                }
+            */
+        },
         fetchVisitorsKPI: async (context) => {
             const chartId = 'visitorsKPI';
             const month = new Utils().date.getLastMonth();
