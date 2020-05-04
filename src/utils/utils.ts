@@ -152,16 +152,6 @@ export default class Utils implements IUtils {
     number = {
         getDecimalSeparatedNumber(value: string) {
             return new Intl.NumberFormat('de-DE', { style: 'decimal', useGrouping: true }).format(Number.parseInt(value));
-        },
-        getAbbreviatedNumber(num: number) {
-            let value = num.toLocaleString().replace(/\./g,'');
-            if (value.length > 6 && value.length < 10) {
-                return value.substr(0, value.length-6) + " Mio.";
-            } else if (value.length > 3 && value.length < 7) {
-                return value.substr(0, value.length-3) + " Tsd.";
-            } else {
-                return value;
-            }
         }
     };
 

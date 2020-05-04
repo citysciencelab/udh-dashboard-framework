@@ -11,82 +11,10 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-12 py-2">
-          <!-- Filter -->
-          <dashboard-tile class="filter-card">
-            <template slot="content">
-              <div class="container-fluid">
-                <div class="row">
-                  <multi-select ref="themeSelect"
-                                identifier="theme"
-                                :select-data="getThemeFilterOptions()"
-                                :label="$t('udpc.themeFilter')"
-                                class="multiselect"
-                                @new_selection="applyFilters" />
-                  <multi-select ref="organizationSelect"
-                                identifier="org"
-                                :select-data="getOrgFilterOptions()"
-                                :label="$t('udpc.orgFilter')"
-                                class="multiselect"
-                                @new_selection="applyFilters" />
-                  <div class="filter-icon-container">
-                    <a v-if="filters.theme && filters.theme.length || filters.org && filters.org.length"
-                       class="material-icons"
-                       @click="clearFilters()">delete</a>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </dashboard-tile>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-6 py-2">
-          <!-- Wussten Sie schon? -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
-            <template slot="header">
-              <div class="info-icon-holder"
-                   @click="$refs['tooltip-did-you-know'].show()">
-                <md-icon>help</md-icon>
-              </div>
-              <div class="card-header-text">
-                {{ $t('udpc.didYouKNow') }}
-              </div>
-            </template>
-            <template slot="content">
-              <did-you-know :data="didYouKnow"
-                            :interval="5000" />
-            </template>
-            <template slot="footer" />
-          </dashboard-tile>
-        </div>
-        <div class="col-lg-4 col-md-6 py-2">
-          <!-- Neueste Datensätze -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
-            <template slot="header">
-              <div class="info-icon-holder"
-                   @click="$refs['tooltip-latest-datasets'].show()">
-                <md-icon>help</md-icon>
-              </div>
-              <div class="card-header-text">
-                {{ $t('udpc.newDatassets') }}
-              </div>
-            </template>
-            <template slot="content">
-              <did-you-know :data="recentDataSets"
-                            :interval="7500"
-                            @show-in-map="showDataInMap" />
-            </template>
-            <template slot="footer" />
-          </dashboard-tile>
-        </div>
+      <div class="row ">
         <div class="col-lg-4 col-md-12">
           <div class="row">
             <div class="col-lg-4 col-4 py-2">
-              <!-- KPI Sensoren -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -107,7 +35,6 @@
               </dashboard-tile>
             </div>
             <div class="col-lg-4 col-4 py-2">
-              <!-- KPI Besucher -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -128,7 +55,6 @@
               </dashboard-tile>
             </div>
             <div class="col-lg-4 col-4 py-2">
-              <!-- KPI Karte -->
               <dashboard-tile data-background-color="blue"
                               class="chart-card">
                 <template slot="header">
@@ -150,10 +76,49 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-did-you-know'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.didYouKNow') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="didYouKnow"
+                            :interval="5000" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-latest-datasets'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.newDatassets') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="recentDataSets"
+                            :interval="7500"
+                            :store-id="'udpc'"
+                            @show-in-map="showDataInMap" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
+        </div>
       </div>
       <div class="row ">
-        <div class="col-lg-4 col-md-6 py-2">
-          <!-- Anzahl nach -->
+        <div class="col-lg-4 col-md-6  py-2">
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -168,23 +133,24 @@
             <template slot="content">
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
-                <md-tab id="tab-theme"
-                        :md-label="$t('udpc.tabTopics')" />
-                <md-tab id="tab-organization"
-                        :md-label="$t('udpc.tabOrganisations')" />
+                <md-tab id="tab-topics"
+                        :md-label="$t('udpc.tabTopics')">
+                  &nbsp;
+                </md-tab>
+                <md-tab id="tab-organisations"
+                        :md-label="$t('udpc.tabOrganisations')">
+                  &nbsp;
+                </md-tab>
               </md-tabs>
               <div class="chart-holder">
-                <tree-map-chart-d3 :ds="chartData.dataSetsByTopic"
-                                   holder-element="chart-holder" metric="doc_count"
-                                   descriptor="key" selector="chart-tree-d3"
-                                   @click="onFilterSelectFromTreeMap($event)" />
+                <tree-map-chart :chart-data="chartData.dataSetsByTopic"
+                                :chart-options="chartOptions.dataSetsByTopic" />
               </div>
             </template>
             <template slot="footer">
               <div class="notice">
-                <md-switch v-model="chartSwitches.countGroupedWithPlans"
-                           class="dashboard-switch"
-                           @change="fetchTotalsByTopic()">
+                <md-switch v-model="countGroupedWithPlans"
+                           class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
@@ -192,7 +158,6 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-6 py-2">
-          <!-- Anzahl total -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -209,11 +174,17 @@
                        class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-datasets"
-                        :md-label="$t('udpc.tabDatasets')" />
+                        :md-label="$t('udpc.tabDatasets')">
+                  &nbsp;
+                </md-tab>
                 <md-tab id="tab-apps"
-                        :md-label="$t('udpc.tabApps')" />
+                        :md-label="$t('udpc.tabApps')">
+                  &nbsp;
+                </md-tab>
                 <md-tab id="tab-sensordatasets"
-                        :md-label="$t('udpc.tabSensors')" />
+                        :md-label="$t('udpc.tabSensors')">
+                  &nbsp;
+                </md-tab>
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart :chart-data="chartData.dataSetsByType"
@@ -224,9 +195,8 @@
             <template slot="footer">
               <div v-if="this.$refs['count-total-tabs'] && this.$refs['count-total-tabs'].activeTab === 'tab-datasets'"
                    class="notice">
-                <md-switch v-model="chartSwitches.countTotalWithPlans"
-                           class="dashboard-switch"
-                           @change="fetchTotalsByType()">
+                <md-switch v-model="countTotalWithPlans"
+                           class="dashboard-switch">
                   {{ $t('udpc.includeDevPlan') }}
                 </md-switch>
               </div>
@@ -234,7 +204,6 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-12 py-2">
-          <!-- Karte -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -247,7 +216,11 @@
               </div>
             </template>
             <template slot="content">
-              <master-portal-map :services="mapData.services"
+              <div class="overlay top right" @click="onOpenFullscreenMap">
+                <md-icon>aspect_ratio</md-icon>
+              </div>
+              <master-portal-map ref="masterPortalMap"
+                                 :services="mapData.services"
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id" />
             </template>
@@ -257,7 +230,6 @@
       </div>
       <div class="row ">
         <div class="col-lg-3 col-md-6 py-2">
-          <!-- Top 5 des Monats -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -273,11 +245,17 @@
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-top5-datasets"
-                        :md-label="$t('udpc.tabDatasets')" />
+                        :md-label="$t('udpc.tabDatasets')">
+                  &nbsp;
+                </md-tab>
                 <md-tab id="tab-top5-apps"
-                        :md-label="$t('udpc.tabApps')" />
+                        :md-label="$t('udpc.tabApps')">
+                  &nbsp;
+                </md-tab>
                 <md-tab id="tab-top5-downloads"
-                        :md-label="$t('udpc.tabDownloads')" />
+                        :md-label="$t('udpc.tabDownloads')">
+                  &nbsp;
+                </md-tab>
               </md-tabs>
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
@@ -289,7 +267,6 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
-          <!-- Downloads -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -327,7 +304,6 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
-          <!-- Zugriffe Fachdaten -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -356,14 +332,15 @@
             <template slot="footer">
               <div class="slider-holder">
                 <span class="left">{{ $t('udpc.sliderEarlier') }}</span>
-                <range-slider class="slider"
+                <range-slider ref="totalDatasetsSlider"
+                              class="slider"
                               :options="sliderOptions.datasets"
                               @rangeChange="rangeForChartChanged('datasets', $event)" />
                 <span class="right">{{ $t('udpc.sliderLater') }}</span>
               </div>
               <div class="notice" style="width: 100%; display: flex">
                 <md-switch
-                  v-model="chartSwitches.accessWithBackgroundMaps"
+                  v-model="accessWithBackgroundMaps"
                   class="dashboard-switch"
                   @change="onSwitchIncludeMaps('datasets')">
                   {{ $t('udpc.includeMapHits') }}
@@ -373,7 +350,6 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-3 col-md-6 py-2">
-          <!-- Zugriffe Apps -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
             <template slot="header">
@@ -468,6 +444,10 @@
                   :content="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
                   :content="$t('udpc.tooltipAccessApps')" />
+    <info-overlay ref="fullscreenContent"
+                  style="width:95%; height:95%;"
+                  :html="fullscreenContent.html"
+                  @closed="onCloseFullscreenMap" />
   </div>
 </template>
 
@@ -492,11 +472,10 @@ import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 import Utils from "@/utils/utils";
-import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
+
 
 @Component({
     components: {
-      TreeMapChartD3,
         DashboardTile,
         DidYouKnow,
         MultiSelect,
@@ -510,7 +489,16 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
     }
 })
 export default class UDPC extends AbstractDashboard {
+    countTotalWithPlans = false;
+    countGroupedWithPlans = false;
+    accessWithBackgroundMaps = true;
     agreeDialogActive = false;
+
+    $refs!: {
+      totalDatasetsSlider: RangeSlider & RangeSliderMethods,
+      masterPortalMap: MasterPortalMap,
+      fullscreenContent: InfoOverlay
+    }
 
     mapData: MapData = {
         services: servicesConfig,
@@ -533,19 +521,13 @@ export default class UDPC extends AbstractDashboard {
 
     recentDataSets: DidYouKnowData = {
         items: [],
-        action: 'map'
+        action: 'md_id'
     };
 
     kpiData: { [key: string]: string } = {
       sensorCount: '',
       visitorsMonth: '',
       mapAccess: ''
-    };
-
-    chartSwitches: { [key: string]: boolean } = {
-      accessWithBackgroundMaps: true,
-      countGroupedWithPlans: false,
-      countTotalWithPlans: false
     };
 
     chartData: { [key: string]: Chart.ChartData } = {
@@ -557,17 +539,7 @@ export default class UDPC extends AbstractDashboard {
         totalApps: {}
     };
 
-    activeTabs: { [key: string]: string } = {
-        dataSetsByTopic: '',
-        dataSetsByType: '',
-        totalDownloads: '',
-        totalDatasets: '',
-        totalApps: '',
-        tops: ''
-    };
-
     barChartConfigDefaults = {
-        maintainAspectRatio: false,
         title: {
             display: false
         },
@@ -582,10 +554,7 @@ export default class UDPC extends AbstractDashboard {
                 },
                 ticks: {
                     display: true,
-                    beginAtZero: true,
-                    callback: function(value: number) {
-                      return new Utils().number.getAbbreviatedNumber(value);
-                    }
+                    beginAtZero: true
                 }
             }],
             xAxes: [{
@@ -601,7 +570,7 @@ export default class UDPC extends AbstractDashboard {
 
     chartOptions: { [key: string]: Chart.ChartOptions } = {
         dataSetsByTopic: {
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             title: {
                 display: false
             },
@@ -610,7 +579,6 @@ export default class UDPC extends AbstractDashboard {
             }
         },
         dataSetsByType: {
-            maintainAspectRatio: false,
             title: {
                 display: false,
             },
@@ -625,10 +593,7 @@ export default class UDPC extends AbstractDashboard {
                     },
                     ticks: {
                         display: true,
-                        beginAtZero: true,
-                        callback: function(value: number) {
-                          return new Utils().number.getAbbreviatedNumber(value);
-                        }
+                        beginAtZero: true
                     }
                 }],
                 xAxes: [{
@@ -642,7 +607,6 @@ export default class UDPC extends AbstractDashboard {
             }
         },
         dataSetsTopX: {
-            maintainAspectRatio: false,
             title: {
                 display: false,
             },
@@ -656,9 +620,9 @@ export default class UDPC extends AbstractDashboard {
                         display: false
                     },
                     ticks: {
-                        mirror: true,
                         display: false,
                         beginAtZero: true,
+                        fontColor: '#707070'
                     }
                 }],
                 xAxes: [{
@@ -666,10 +630,7 @@ export default class UDPC extends AbstractDashboard {
                         drawOnChartArea: false
                     },
                     ticks: {
-                        beginAtZero: true,
-                        callback: function(value: number) {
-                          return new Utils().number.getAbbreviatedNumber(value);
-                        }
+                        beginAtZero: true
                     }
                 }]
             }
@@ -677,6 +638,11 @@ export default class UDPC extends AbstractDashboard {
         totalDownloads: this.barChartConfigDefaults,
         totalDatasets: this.barChartConfigDefaults,
         totalApps: this.barChartConfigDefaults
+    };
+
+    fullscreenContent: { [key: string]: Element|null } = {
+        html: document.createElement('div'),
+        ref: document.createElement('div')
     };
 
     created() {
@@ -688,7 +654,7 @@ export default class UDPC extends AbstractDashboard {
         this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
-        this.fetchRecentDatasets();
+        this.fetchRecentDataset();
 
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
@@ -699,134 +665,101 @@ export default class UDPC extends AbstractDashboard {
                 const mutationData = mutation.payload[1];
 
                 switch (mutation.payload[0]) {
-                    case 'totalTopicDatasets': {
-                      mutationData.datasets[0]['key'] = 'doc_count';
-                      mutationData.datasets[0]['groups'] = ['key'];
-                      mutationData.datasets[0]['spacing'] = 2;
-                      mutationData.datasets[0]['borderWidth'] = 0.5;
-                      mutationData.datasets[0]['fontColor'] = 'white';
-                      mutationData.datasets[0]['fontSize'] = 11;
+                    case 'totalTopicDatasets':
+                        mutationData.datasets[0]['key'] = 'doc_count';
+                        mutationData.datasets[0]['groups'] = ['key'];
+                        mutationData.datasets[0]['spacing'] = 2;
+                        mutationData.datasets[0]['borderWidth'] = 0.5;
+                        mutationData.datasets[0]['fontColor'] = 'white';
+                        mutationData.datasets[0]['fontSize'] = 11;
+                        mutationData.datasets[0]['backgroundColor'] = function(ctx: CTX) {
+                            let colorMap = [
+                                "#003063",  "#9FB1C4", "#40648B",
+                                "#7F97B0", "#7FADD4", "#BFD6E9",
+                                "#2B88D8", "#005CA9", "#BFD6E9",
+                                "#FFF4CE", "#DFF6DD",
+                            ];
 
-                      mutationData.datasets[0]['backgroundColor'] = function(ctx: CTX) {
-                        let colorMap = [
-                          "#003063",  "#9FB1C4", "#40648B",
-                          "#7F97B0", "#7FADD4", "#BFD6E9",
-                          "#2B88D8", "#005CA9", "#BFD6E9",
-                          "#FFF4CE", "#DFF6DD",
-                        ];
-
-                        let index:number = ctx.dataIndex ? ctx.dataIndex : 0;
-                        if (index > colorMap.length - 1) {
-                          let colorIdx = index % colorMap.length;
-                          let quotient = Math.floor(index/colorMap.length);
-                          if (quotient > 9) quotient = 9;
-                          return Color(colorMap[colorIdx]).alpha(1 - (0.1 * quotient));
-                        } else {
-                          return colorMap[index];
-                        }
-                      };
-
-                      const colorMap = [
-                        "#003063", "#9FB1C4", "#40648B",
-                        "#7F97B0", "#7FADD4", "#BFD6E9",
-                        "#2B88D8", "#005CA9", "#BFD6E9",
-                        "#FFF4CE", "#DFF6DD",
-                      ];
-
-                      let index:number = 0;
-                      for (const dataElement of mutationData.datasets[0].tree) {
-                        let color = null;
-                        if (index > colorMap.length - 1) {
-                          let colorIdx = index % colorMap.length;
-                          let quotient = Math.floor(index/colorMap.length);
-                          if (quotient > 9) quotient = 9;
-                          color = Color(colorMap[colorIdx]).alpha(1 - (0.1 * quotient)).hex();
-                        } else {
-                          color = colorMap[index];
-                        }
-                        dataElement['color'] = color;
-                        index++;
-                      }
-                      this.chartData.dataSetsByTopic = mutationData;
-                      break;
-                    }
-                    case 'totalDatasetsRangeTop': {
-                      mutationData.datasets[0]['label'] = 'Zugriffe';
-                      mutationData.datasets[0]['backgroundColor'] = '#196CB1';
-                      this.chartData.dataSetsTopX = mutationData;
-                      break;
-                    }
-                    case 'totalDatasetsCount': {
-                      mutationData.datasets[0]['backgroundColor'] = '#003063';
-                      this.chartData.dataSetsByType = mutationData;
-                      break;
-                    }
-                    case 'totalDownloads': {
-                      mutationData.datasets[0].backgroundColor = '#7F97B0';
-                      this.chartData.totalDownloads = mutationData;
-                      break;
-                    }
-                    case 'totalDatasets': {mutationData.datasets[0].backgroundColor = '#196CB1';
-                      this.chartData.totalDatasets = mutationData;
-                      break;
-                    }
-                    case 'totalApps': {mutationData.datasets[0].backgroundColor = '#40648B';
-                      this.chartData.totalApps = mutationData;
-                      break;
-                    }
-                    case 'visitorsKPI': {
-                      this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                      break;
-                    }
-                    case 'sensorsKPI': {
-                     this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                            let index:number = ctx.dataIndex ? ctx.dataIndex : 0;
+                            if (index > colorMap.length - 1) {
+                                let colorIdx = index % colorMap.length;
+                                let quotient = Math.floor(index/colorMap.length);
+                                if (quotient > 9) quotient = 9;
+                                return Color(colorMap[colorIdx]).alpha(1 - (0.1 * quotient));
+                            } else {
+                                return colorMap[index];
+                            }
+                        };
+                        this.chartData.dataSetsByTopic = mutationData;
                         break;
-                    }
-                    case 'baseMapKPI': {
-                        this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                    case 'totalDatasetsRangeTop':
+                        mutationData.datasets[0]['label'] = 'Zugriffe';
+                        mutationData.datasets[0]['backgroundColor'] = '#196CB1';
+                        this.chartData.dataSetsTopX = mutationData;
                         break;
-                    }
-                    case 'recentDatasets': {
-                        this.recentDataSets = mutationData;
-                    }
+                    case 'totalDatasetsCount':
+                        mutationData.datasets[0]['backgroundColor'] = '#003063';
+                        this.chartData.dataSetsByType = mutationData;
+                        break;
+                    case 'totalDownloads':
+                        mutationData.datasets[0].backgroundColor = '#7F97B0';
+                        this.chartData.totalDownloads = mutationData;
+                        break;
+                    case 'totalDatasets':
+                        mutationData.datasets[0].backgroundColor = '#196CB1';
+                        this.chartData.totalDatasets = mutationData;
+                        break;
+                    case 'totalApps':
+                        mutationData.datasets[0].backgroundColor = '#40648B';
+                        this.chartData.totalApps = mutationData;
+                        break;
+                    case 'visitorsKPI':
+                        this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'sensorsKPI':
+                    this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'baseMapKPI':
+                    this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                        break;
+                  case 'recentDatasets':
+                    this.recentDataSets = mutationData;
                 }
             }
         });
     }
 
+    mounted() {
+      if (this.$refs['masterPortalMap']) {
+        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
+      }
+    }
+
     onSwitchTab(tab: string) {
         switch (tab) {
-            case 'tab-theme':
-                this.activeTabs.dataSetsByTopic = 'theme';
-                this.fetchTotalsByTopic();
+            case 'tab-organisations':
+                this.fetchTotalsByTopic('organization');
                 break;
-            case 'tab-organization':
-                this.activeTabs.dataSetsByTopic = 'organization';
-                this.fetchTotalsByTopic();
+            case 'tab-topics':
+                this.fetchTotalsByTopic('theme');
                 break;
             case 'tab-datasets':
-                this.activeTabs.dataSetsByType = 'datasets';
-                this.fetchTotalsByType();
+                this.fetchTotalsByType('datasets');
                 break;
             case 'tab-apps':
-                this.activeTabs.dataSetsByType = 'apps';
-                this.fetchTotalsByType();
+                this.fetchTotalsByType('apps');
                 break;
             case 'tab-sensordatasets':
-                this.activeTabs.dataSetsByType = 'sensordatasets';
-                // this.fetchTotalsByType();  // not yet implemented in backend
-                break;
-            case 'tab-top5-datasets':
-                this.activeTabs.tops = 'datasets';
-                this.fetchTops();
+                // this.fetchTotalsByType('sensors');
                 break;
             case 'tab-top5-apps':
-                this.activeTabs.tops = 'apps';
-                this.fetchTops();
+                this.fetchTops('apps');
                 break;
             case 'tab-top5-downloads':
-                this.activeTabs.tops = 'downloads';
-                this.fetchTops();
+                this.fetchTops('downloads');
+                break;
+            case 'tab-top5-datasets':
+                this.fetchTops('datasets');
                 break;
         }
     }
@@ -838,55 +771,68 @@ export default class UDPC extends AbstractDashboard {
 
         switch (tab) {
             case 'tab-downloads-year':
-                this.activeTabs.totalDownloads = tab;
                 this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchDownloadsRange();
+                this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
             case 'tab-downloads-month':
-                this.activeTabs.totalDownloads = tab;
                 this.sliderOptions.downloads = { min: '2014-09', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchDownloadsRange();
+                this.fetchDownloadsRange(this.sliderOptions.downloads);
                 break;
             case 'tab-datasets-year':
-                this.activeTabs.totalDatasets = tab;
                 this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchDatasetsRange();
+                this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
-            case 'tab-datasets-month':
-                this.activeTabs.totalDatasets = tab;
+            case 'tab-datasetfetchVisitorsKPIs-month':
                 this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchDatasetsRange();
+                this.fetchDatasetsRange(this.sliderOptions.datasets);
                 break;
             case 'tab-apps-year':
-                this.activeTabs.totalApps = tab;
                 this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year', isShowMarks: false};
-                this.fetchAppsRange();
+                this.fetchAppsRange(this.sliderOptions.apps);
                 break;
             case 'tab-apps-month':
-                this.activeTabs.totalApps = tab;
                 this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
-                this.fetchAppsRange();
+                this.fetchAppsRange(this.sliderOptions.apps);
         }
+    }
+
+    onOpenFullscreenMap() {
+        this.fullscreenContent.html = (this.$refs['masterPortalMap'] as Vue).$el;
+        this.fullscreenContent.ref = this.fullscreenContent.html.parentElement;
+
+        (this.$refs['fullscreenContent'] as InfoOverlay).show();
+        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
+    }
+
+    onCloseFullscreenMap() {
+        if (this.fullscreenContent.ref) {
+          this.fullscreenContent.ref.append(this.fullscreenContent.html as Element);
+        }
+        (this.$refs['masterPortalMap'] as MasterPortalMap).onResize(); // resize Map after render
     }
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
-        this.sliderOptions[chartId].min = min;
-        this.sliderOptions[chartId].max = max;
+        const unit = this.sliderOptions[chartId].unit;
 
         switch (chartId) {
             case 'downloads':
-                this.fetchDownloadsRange();
+                this.fetchDownloadsRange({ min, max, unit });
                 break;
             case 'datasets':
-                this.fetchDatasetsRange();
+                this.fetchDatasetsRange({ min, max, unit });
                 break;
             case 'apps':
-                this.fetchAppsRange();
+                this.fetchAppsRange({ min, max, unit });
         }
     }
 
-    onSwitchIncludeMaps() {
-      this.fetchDatasetsRange();
+    onSwitchIncludeMaps(chartId: string) {
+      const minMax: string[] = (this.$refs['totalDatasetsSlider'] as RangeSliderMethods).getCurrentValues();
+      const min = minMax[0];
+      const max = minMax[1];
+      const unit = this.sliderOptions[chartId].unit;
+      this.fetchDatasetsRange({min, max, unit});
+
     }
 
     async fetchBaseMapKPI() {
@@ -901,140 +847,41 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchSensorsKPI');
     }
 
-    async fetchRecentDatasets() {
-        await this.$store.dispatch('fetchRecentDatasets');
+    async fetchRecentDataset() {
+        await this.$store.dispatch('fetchRecentDataset');
     }
 
-    async fetchTotalsByTopic() {
-        const totalsTopic = this.activeTabs.dataSetsByTopic;
-        const theme = this.filters.theme;
-        const org = this.filters.org;
-        const isIncludeBuildPlans = this.chartSwitches.countGroupedWithPlans;
-
-        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic, theme, org, isIncludeBuildPlans });
+    async fetchTotalsByTopic(topic: string) {
+        await this.$store.dispatch('fetchTotalsByTopic', topic);
     }
 
-    async fetchTotalsByType() {
-        const totalsType = this.activeTabs.dataSetsByType;
-        const theme = this.filters.theme;
-        const org = this.filters.org;
-        const isIncludeBuildPlans = totalsType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
-
-        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans });
+    async fetchTotalsByType(type: string) {
+        await this.$store.dispatch('fetchTotalsByType', type);
     }
 
-    async fetchTops() {
-        const topTopic = this.activeTabs.tops;
-        const theme = this.filters.theme;
-        const org = this.filters.org;
-
-        if (topTopic === 'datasets') {
-            await this.$store.dispatch('fetchTops', { topTopic, theme, org });
-        } else {
-            await this.$store.dispatch('fetchTops', { topTopic });
-        }
+    async fetchTops(topic: string ) {
+        await this.$store.dispatch('fetchTops', topic);
     }
 
-    async fetchDownloadsRange() {
-        const params = {
-            chartId: 'totalDownloads',
-            category: 'downloads',
-            min: this.sliderOptions.downloads.min,
-            max: this.sliderOptions.downloads.max,
-            unit: this.sliderOptions.downloads.unit
-        };
+    async fetchDownloadsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
+        params.chartId = 'totalDownloads';
+        params.category = 'downloads';
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchDatasetsRange() {
-        const params = {
-            chartId: 'totalDatasets',
-            category: 'datasets',
-            min: this.sliderOptions.datasets.min,
-            max: this.sliderOptions.datasets.max,
-            unit: this.sliderOptions.datasets.unit,
-            tag_not: this.chartSwitches.accessWithBackgroundMaps ? [''] : ['basemap'],
-            theme: this.filters.theme,
-            org: this.filters.org
-        };
+    async fetchDatasetsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string, tag_not?: string }) {
+        params.chartId = 'totalDatasets';
+        params.category = 'datasets';
+        if (!this.accessWithBackgroundMaps) {
+          params.tag_not = 'basemap';
+        }
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
-    async fetchAppsRange() {
-        const params = {
-            chartId: 'totalApps',
-            category: 'apps',
-            min: this.sliderOptions.apps.min,
-            max: this.sliderOptions.apps.max,
-            unit: this.sliderOptions.apps.unit,
-            theme: this.filters.theme,
-            org: this.filters.org
-        };
+    async fetchAppsRange(params: { min: string, max: string, unit: string, category?: string, chartId?: string}) {
+        params.chartId = 'totalApps';
+        params.category = 'apps';
         await this.$store.dispatch('fetchRangefulData', params);
-    }
-
-    getThemeFilterOptions() {
-        return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'theme');
-    }
-
-    getOrgFilterOptions() {
-        return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'organization');
-    }
-
-    get filters() {
-        return this.$store.getters.filters();
-    }
-
-    set filters(filters: { [key: string]: string[] }) {
-        for (const [k, v] of Object.entries(filters)) {
-            this.$store.dispatch('setFilters', [k, v]);
-        }
-    }
-
-    applyFilters(event: [string, string[]] ) {
-        this.$store.dispatch('setFilters', event);
-        this.fetchAllFiltered();
-    }
-
-    clearFilters() {
-        this.filters = { theme: [], org: [] };
-        this.fetchAllFiltered();
-
-        // synchronize multiselects
-        for (const select of [this.$refs.themeSelect, this.$refs.organizationSelect] as MultiSelect[]) {
-            select.selectedData = [];
-            select.closed(true);
-        }
-    }
-
-    fetchAllFiltered() {
-        this.fetchTotalsByTopic();
-        this.fetchTotalsByType();
-        this.fetchTops();
-        this.fetchDatasetsRange();
-    }
-
-    onFilterSelectFromTreeMap(event: Datum) {
-        if (!event.id) {
-            return;
-        }
-
-        const topics = [event.id] as string[];
-
-        // Synchronize MultiSelects (updating them will trigger 'applyFilters')
-        switch (this.activeTabs.dataSetsByTopic) {
-            case 'theme': {
-                const select = (this.$refs.themeSelect as MultiSelect);
-                select.selectedData = topics;
-                select.closed(true);
-                break;
-            }
-            case 'organization': {
-                const select = (this.$refs.organizationSelect as MultiSelect);
-                select.selectedData = topics;
-                select.closed(true);
-            }
-        }
     }
 
     testSnackBar() {
@@ -1111,6 +958,18 @@ i {
     .hh-logo {
         height: 43px;
     }
+}
+
+.filter-button {
+    background-color: transparent !important;
+    color: black !important;
+    height: 28px !important;
+    min-width: 80px !important;
+    padding-top: 4px !important;
+}
+
+.facts-holder span {
+    padding: 10px;
 }
 
 .dashboard-kpi {
@@ -1205,7 +1064,6 @@ i {
 .md-card {
     box-shadow: none !important;
     border: 1px solid $hamburg-blue-dark25;
-
     .md-card-header {
         .card-header-text {
             font-size: 24px !important;
@@ -1214,23 +1072,17 @@ i {
             color: $hamburg-blue;
         }
     }
-
     .md-card-content {
         font-size: 18px;
         text-align: left;
-
+        position: relative;
         span {
             position: relative;
             top: 10px;
         }
 
         .chart-holder {
-          margin-top: 15px;
-        }
-
-        .chart-holder, .chart-holder >div {
-            height: 292px;
-            width: 100%;
+            padding-top: 15px;
         }
     }
 
@@ -1275,24 +1127,6 @@ i {
           display: none;
         }
     }
-
-    &.filter-card {
-      padding: 0 15px;
-
-      .md-card-content,
-      .md-card-actions {
-        padding: 0;
-      }
-
-      .multiselect {
-        padding-right: 40px;
-      }
-
-      .filter-icon-container {
-        margin-left: -10px;
-        padding: 22px 0;
-      }
-    }
 }
 
 .ant-slider {
@@ -1316,6 +1150,39 @@ i {
     .ant-slider-handle:focus {
         box-shadow: none !important;
     }
+}
+
+.overlay {
+  position: absolute;
+  z-index: 100;
+  padding: 10px 15px;
+  left: 0;
+  top: 0;
+
+  &.left {
+      left: 0;
+      right: initial;
+  }
+  &.right {
+      right: 0;
+      left: initial;
+  }
+  &.top {
+      top: 15px;
+      bottom: initial;
+  }
+  &.bottom {
+      bottom: 0;
+      top: initial;
+  }
+  &.banner {
+    background: rgba(255, 255, 255 , 0.8);
+  }
+  i {
+      color: $hamburg-blue !important;
+      font-size: 2em !important;
+      cursor: pointer;
+  }
 }
 
 .udpc-bottom-bar {
@@ -1344,6 +1211,7 @@ i {
     }
 
     .images-bottom-right {
+
         @media (min-width: 459px) {
             .image-col {
                 padding-bottom: 22px;
@@ -1374,9 +1242,5 @@ i {
 .tooltip-inner {
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-#tree-map {
-    cursor: pointer;
 }
 </style>

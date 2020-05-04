@@ -15,9 +15,9 @@
     "maxScale": 200
   },
   {
-    "id" : "2001",
-    "typ" : "GeoJSON",
+    "id" : "1693",
+    "typ" : "WFS",
     "name" : "Landesgrenze Hamburg",
-    "url" : "https://geoportal-hamburg.de/lgv-config/landesgrenze_hh.json"
+    "url" : "https://geodienste.hamburg.de/HH_WFS_Verwaltungsgrenzen"
   }
 ]

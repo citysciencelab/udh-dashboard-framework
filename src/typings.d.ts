@@ -41,6 +41,7 @@ interface DashboardState {
 
 interface UDPCState extends DashboardState {
   //Potential specific type definitions
+  hmdkUrl: string;
 }
 
 interface ParticipationState extends DashboardState {

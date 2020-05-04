@@ -1,7 +1,12 @@
 <template>
-  <div id="map-div-id"
-       ref="map"
-       :style="mapStyle" />
+  <div id="map-wrapper">
+    <div id="map-div-id"
+         ref="map"
+         :style="mapStyle" />
+    <div class="overlay bottom left banner">
+      {{ overlayText }}
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -14,7 +19,8 @@
 
     @Component({})
     export default class MasterPortalMap extends Vue {
-        @Prop() customLayerId!: string;
+        @Prop({default: "dashboardData"}) customLayerId!: string;
+        @Prop() overlay!: string;
         @Prop() portal!: { [key: string]: any };
         @Prop() services!: { [key: string]: any };
         @Prop() mapStyle!: object;
@@ -22,9 +28,10 @@
         @Prop() md_id!: string;
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
+        overlayText: string = "GeoOnline | LGV Hamburg";
 
         mounted() {
-            if (!this.customLayerId) this.customLayerId === "dashboardData";
+            this.overlayText = this.overlay;
             // wait for the Tile To be rendered completely
             // wait for DOM height to be adjusted
             // TODO: make it event based
@@ -80,6 +87,7 @@
                 }
                 this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
                     this.tempLayers = layers;
+                    this.overlayText = layers[0] ? layers[0].get('name') : '';
                 });
             }
         }
@@ -104,5 +112,12 @@
 <style scoped>
     #map-div-id {
         height: 100%;
+        width: 100%;
+    }
+    #map-wrapper {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        min-height: 240px;
     }
 </style>
