@@ -1,10 +1,14 @@
 <template v-if="data">
   <span class="list-item">
     <template v-if="data.items.length > 0">
-      <a :href="data.items[currentIndex].link"
+      <a v-if="data.items[currentIndex].link"
+         :href="data.items[currentIndex].link"
          @click="onClick($event)">
         {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
       </a>
+      <span v-if="!data.items[currentIndex].link">
+        {{ data.items[currentIndex].label }}
+      </span>
     </template>
   </span>
 </template>

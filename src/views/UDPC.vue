@@ -772,7 +772,7 @@ export default class UDPC extends AbstractDashboard {
                       break;
                     }
                     case 'didYouKnowFacts': {
-                      this.didYouKnow = mutationData;
+                      this.didYouKnow.items = mutationData;
                       break;
                     }
                     case 'sensorsKPI': {
@@ -1256,7 +1256,7 @@ i {
         font-size: 18px;
         text-align: left;
 
-        span {
+        > span {
             position: relative;
             top: 10px;
         }

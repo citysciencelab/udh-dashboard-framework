@@ -115,17 +115,14 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchFacts: async (context) => {
             const chartId = 'didYouKnowFacts';
-            const month = new Utils().date.getLastMonth();
+            const month = new Utils().date.getCurrentMonth();
 
             const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], [], 'info', undefined, 10);
-            const aggregations = elasticResponse.aggregations;
-            /*
-                try {
-                    context.commit('SET_FILTERED_DATA', [chartId, aggregations.total_entities_and_hits.buckets[0].total_hits]);
-                } catch (e) {
-                    context.commit('SET_FILTERED_DATA', [chartId, null]);
-                }
-            */
+            const topX = elasticResponse.aggregations.top_x.buckets;
+            let items: object[] = [];
+
+            topX.map((item: any) => items.push({label: item.key}))
+            context.commit('SET_FILTERED_DATA', [chartId, items]);
         },
         fetchVisitorsKPI: async (context) => {
             const chartId = 'visitorsKPI';
