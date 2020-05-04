@@ -78,6 +78,7 @@
             <template slot="content">
               <did-you-know :data="recentDataSets"
                             :interval="7500"
+                            :store-id="'udpc'"
                             @show-in-map="showDataInMap" />
             </template>
             <template slot="footer" />
@@ -247,9 +248,12 @@
               </div>
             </template>
             <template slot="content">
-              <master-portal-map :services="mapData.services"
+              <master-portal-map ref="masterPortalMap"
+                                 :services="mapData.services"
                                  :portal="mapData.portal"
-                                 :md_id="mapData.md_id" />
+                                 :md_id="mapData.md_id"
+                                 :store-id="'udpc'" 
+                                 @fullscreenMap="toggleRecentDatasetInterval" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -511,6 +515,7 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 })
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
+    updateMapOnInterval = true;
 
     mapData: MapData = {
         services: servicesConfig,
@@ -533,7 +538,7 @@ export default class UDPC extends AbstractDashboard {
 
     recentDataSets: DidYouKnowData = {
         items: [],
-        action: 'map'
+        action: 'md_id'
     };
 
     kpiData: { [key: string]: string } = {
@@ -1064,7 +1069,13 @@ export default class UDPC extends AbstractDashboard {
     }
 
     showDataInMap(md_id: string) {
+      if (this.updateMapOnInterval) {
         this.mapData.md_id = md_id;
+      }
+    }
+
+    toggleRecentDatasetInterval(state: boolean) {
+      this.updateMapOnInterval = !state; 
     }
 }
 </script>
@@ -1378,5 +1389,38 @@ i {
 
 #tree-map {
     cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 100;
+  padding: 10px 15px;
+  left: 0;
+  top: 0;
+
+  &.left {
+      left: 0;
+      right: initial;
+  }
+  &.right {
+      right: 0;
+      left: initial;
+  }
+  &.top {
+      top: 15px;
+      bottom: initial;
+  }
+  &.bottom {
+      bottom: 0;
+      top: initial;
+  }
+  &.banner {
+    background: rgba(255, 255, 255 , 0.8);
+  }
+  > i {
+      color: $hamburg-blue !important;
+      font-size: 2em !important;
+      cursor: pointer;
+  }
 }
 </style>
