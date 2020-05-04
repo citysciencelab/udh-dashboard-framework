@@ -30,6 +30,11 @@
                                 :label="$t('udpc.orgFilter')"
                                 class="multiselect"
                                 @new_selection="applyFilters" />
+                  <div class="filter-icon-container">
+                    <a v-if="filters.theme && filters.theme.length || filters.org && filters.org.length"
+                       class="material-icons"
+                       @click="clearFilters()">delete</a>
+                  </div>
                 </div>
               </div>
             </template>
@@ -557,7 +562,8 @@ export default class UDPC extends AbstractDashboard {
         dataSetsByType: '',
         totalDownloads: '',
         totalDatasets: '',
-        totalApps: ''
+        totalApps: '',
+        tops: ''
     };
 
     barChartConfigDefaults = {
@@ -810,14 +816,17 @@ export default class UDPC extends AbstractDashboard {
                 this.activeTabs.dataSetsByType = 'sensordatasets';
                 // this.fetchTotalsByType();  // not yet implemented in backend
                 break;
+            case 'tab-top5-datasets':
+                this.activeTabs.tops = 'datasets';
+                this.fetchTops();
+                break;
             case 'tab-top5-apps':
-                this.fetchTops('apps');
+                this.activeTabs.tops = 'apps';
+                this.fetchTops();
                 break;
             case 'tab-top5-downloads':
-                this.fetchTops('downloads');
-                break;
-            case 'tab-top5-datasets':
-                this.fetchTops('datasets');
+                this.activeTabs.tops = 'downloads';
+                this.fetchTops();
                 break;
         }
     }
@@ -914,8 +923,16 @@ export default class UDPC extends AbstractDashboard {
         await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans });
     }
 
-    async fetchTops(topic: string ) {
-        await this.$store.dispatch('fetchTops', topic);
+    async fetchTops() {
+        const topTopic = this.activeTabs.tops;
+        const theme = this.filters.theme;
+        const org = this.filters.org;
+
+        if (topTopic === 'datasets') {
+            await this.$store.dispatch('fetchTops', { topTopic, theme, org });
+        } else {
+            await this.$store.dispatch('fetchTops', { topTopic });
+        }
     }
 
     async fetchDownloadsRange() {
@@ -968,13 +985,33 @@ export default class UDPC extends AbstractDashboard {
         return this.$store.getters.filters();
     }
 
+    set filters(filters: { [key: string]: string[] }) {
+        for (const [k, v] of Object.entries(filters)) {
+            this.$store.dispatch('setFilters', [k, v]);
+        }
+    }
+
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
+        this.fetchAllFiltered();
+    }
 
+    clearFilters() {
+        this.filters = { theme: [], org: [] };
+        this.fetchAllFiltered();
+
+        // synchronize multiselects
+        for (const select of [this.$refs.themeSelect, this.$refs.organizationSelect] as MultiSelect[]) {
+            select.selectedData = [];
+            select.closed(true);
+        }
+    }
+
+    fetchAllFiltered() {
         this.fetchTotalsByTopic();
         this.fetchTotalsByType();
+        this.fetchTops();
         this.fetchDatasetsRange();
-        this.fetchAppsRange();
     }
 
     onFilterSelectFromTreeMap(event: Datum) {
@@ -1074,18 +1111,6 @@ i {
     .hh-logo {
         height: 43px;
     }
-}
-
-.filter-button {
-    background-color: transparent !important;
-    color: black !important;
-    height: 28px !important;
-    min-width: 80px !important;
-    padding-top: 4px !important;
-}
-
-.facts-holder span {
-    padding: 10px;
 }
 
 .dashboard-kpi {
@@ -1260,7 +1285,12 @@ i {
       }
 
       .multiselect {
-        padding-right: 50px;
+        padding-right: 40px;
+      }
+
+      .filter-icon-container {
+        margin-left: -10px;
+        padding: 22px 0;
       }
     }
 }

@@ -28,9 +28,6 @@ const chartsModule: Module<DashboardState, RootState> = {
                 delete state.filters[id];
             }
         },
-        SET_FILTERS_NONE: (state) => {
-            state.filters = {}
-        },
         SET_LOADING: (state, loading: boolean) => {
             state.loading = loading;
         }
