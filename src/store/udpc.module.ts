@@ -15,11 +15,13 @@ const udpcModule: Module<UDPCState, RootState> = {
     mutations: {},
     actions: {
         fetchRecentDatasets: async (context) => {
+            const chartId = 'recentDatasets';
+
             context.commit('SET_LOADING', true);
 
             const elasticResponse = await elastic.udpcQuery('', '', [], [], [], [], 'datasets', undefined, 10, 'change_date');
 
-            context.commit('SET_FILTERED_DATA', ['recentDatasets', {
+            context.commit('SET_FILTERED_DATA', [chartId, {
                 items: elasticResponse.hits.hits
                  .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
                 action: 'map'
@@ -27,6 +29,10 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', false);
         },
         fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+            const chartId = 'totalTopicDatasets';
+            const changed = await context.dispatch('paramsChanged', [chartId, params]);
+            if (!changed) return;
+
             context.commit('SET_LOADING', true);
 
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
@@ -35,8 +41,8 @@ const udpcModule: Module<UDPCState, RootState> = {
             const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], tagNot, 'datasets');
             const aggregations = elasticResponse.aggregations;
 
-            context.commit('SET_INITIAL_DATA', ['totalTopicDatasets', aggregations]);
-            context.commit('SET_FILTERED_DATA', ['totalTopicDatasets', {
+            context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
+            context.commit('SET_FILTERED_DATA', [chartId, {
                 datasets: [{
                     tree: aggregations[params.totalsTopic].buckets
                 }]
@@ -44,6 +50,10 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', false);
         },
         fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+            const chartId = 'totalDatasetsCount';
+            const changed = await context.dispatch('paramsChanged', [chartId, params]);
+            if (!changed) return;
+
             context.commit('SET_LOADING', true);
 
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
@@ -52,8 +62,8 @@ const udpcModule: Module<UDPCState, RootState> = {
             const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, [], tagNot, params.totalsType, 'year', 100);
             const aggregations = elasticResponse.aggregations;
 
-            context.commit('SET_INITIAL_DATA', ['totalDatasetsCount', aggregations]);
-            context.commit('SET_FILTERED_DATA', ['totalDatasetsCount', {
+            context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
+            context.commit('SET_FILTERED_DATA', [chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) =>
                     item.key_as_string.substr(0, item.key_as_string.indexOf('-'))),
                 datasets: [{
@@ -62,17 +72,21 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTops: async (context, topTopic: string) => {
+        fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[] }) => {
+            const chartId = 'totalDatasetsRangeTop';
+            const changed = await context.dispatch('paramsChanged', [chartId, params]);
+            if (!changed) return;
+
             context.commit('SET_LOADING', true);
 
             const month = new Utils().date.getLastMonth();
 
-            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], ['basemap'], topTopic, 'month', 10);
+            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], ['basemap'], params.topTopic, 'month', 10);
             const aggregations = elasticResponse.aggregations;
             const topX = aggregations.top_x.buckets;
 
-            context.commit('SET_INITIAL_DATA', ['totalDatasetsRangeTop', aggregations]);
-            context.commit('SET_FILTERED_DATA', ['totalDatasetsRangeTop', {
+            context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
+            context.commit('SET_FILTERED_DATA', [chartId, {
                 labels: topX.map((item: any) => item.key),
                 datasets: [{
                     data: topX.map((item: any) => item.total_hits.value),
@@ -83,6 +97,9 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchRangefulData: async (context, params: { theme: string[], org: string[], min: string, max: string, unit: string, category: string, chartId: string, tag_not: string[] }) => {
             sanitizeRangefulParams(params);
+
+            const changed = await context.dispatch('paramsChanged', [params.chartId, params]);
+            if (!changed) return;
 
             const elasticResponse = await elastic.udpcQuery(params.min, params.max, params.theme, params.org, [], params.tag_not, params.category, params.unit);
             const aggregations = elasticResponse.aggregations;
@@ -97,43 +114,48 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
         },
         fetchVisitorsKPI: async (context) => {
+            const chartId = 'visitorsKPI';
             const month = new Utils().date.getLastMonth();
 
             const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], [], 'visitors', 'month');
             const aggregations = elasticResponse.aggregations;
 
             try {
-                context.commit('SET_FILTERED_DATA', ['visitorsKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+                context.commit('SET_FILTERED_DATA', [chartId, aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
             } catch (e) {
-                context.commit('SET_FILTERED_DATA', ['visitorsKPI', null]);
+                context.commit('SET_FILTERED_DATA', [chartId, null]);
             }
         },
         fetchSensorsKPI: async (context) => {
+            const chartId = 'sensorsKPI';
+
             const response = await Axios.get('https://iot.hamburg.de/v1.0/Datastreams?$filter=not%20substringof(%27E-Roller%27,description)&$count=true');
 
             try {
-                context.commit('SET_FILTERED_DATA', ['sensorsKPI', response.data['@iot.count']]);
+                context.commit('SET_FILTERED_DATA', [chartId, response.data['@iot.count']]);
             } catch (e) {
-                context.commit('SET_FILTERED_DATA', ['sensorsKPI', null]);
+                context.commit('SET_FILTERED_DATA', [chartId, null]);
             }
         },
         fetchBaseMapKPI: async (context) => {
+            const chartId = 'baseMapKPI';
             const month = new Utils().date.getLastMonth();
 
             const elasticResponse = await elastic.udpcQuery(month, month, [], [], ['basemap'], [], '', 'month');
             const aggregations = elasticResponse.aggregations;
 
             try {
-                context.commit('SET_FILTERED_DATA', ['baseMapKPI', aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+                context.commit('SET_FILTERED_DATA', [chartId, aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
             } catch (e) {
-                context.commit('SET_FILTERED_DATA', ['baseMapKPI', null]);
+                context.commit('SET_FILTERED_DATA', [chartId, null]);
             }
         },
-        applyFilter: (context, [id, accessor]) => {
-            const filterFunction = (item: Datum) => context.state.filters[id].indexOf(item[accessor]) > -1;
-            const filteredData = context.state.dashboardData[id].filter(filterFunction);
-
-            context.commit('SET_FILTERED_DATA', [id, filteredData]);
+        paramsChanged: (context, args: [string, any]) => {
+            const id = args[0];
+            const params = JSON.stringify(args[1]);
+            const changed = params !== context.state.filters[id];
+            context.state.filters[id] = params;
+            return changed;
         }
     },
     getters: {}
