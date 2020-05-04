@@ -41,7 +41,7 @@
           </dashboard-tile>
         </div>
       </div>
-      <div class="row">
+      <div class="row facts-row">
         <div class="col-lg-4 col-md-6 py-2">
           <!-- Wussten Sie schon? -->
           <dashboard-tile data-background-color="blue">
@@ -82,7 +82,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-12">
-          <div class="row">
+          <div class="row kpi-row">
             <div class="col-md-4 col-xs-12 py-2">
               <!-- KPI Sensoren -->
               <dashboard-tile class="kpi-tile" data-background-color="blue">
@@ -1146,14 +1146,23 @@ i {
   }
 }
 
+.facts-row {
+  min-height: 140px;
+}
+
+.kpi-row {
+  height: 100%;
+}
+
 .dashboard-kpi {
-    font-size: 30px;
+    font-size: 35px;
     font-weight: bold;
     color: $hamburg-blue;
-    padding: 2px 0;
     text-overflow: ellipsis;
     overflow: hidden;
     margin-bottom: 0 !important;
+    margin-top: 5px;
+    line-height: 1;
 
     @media (max-width: 767px) {
       text-align: center;
