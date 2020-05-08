@@ -42,47 +42,6 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 col-md-6 py-2">
-          <!-- Wussten Sie schon? -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
-            <template slot="header">
-              <div class="info-icon-holder"
-                   @click="$refs['tooltip-did-you-know'].show()">
-                <md-icon>help</md-icon>
-              </div>
-              <div class="card-header-text">
-                {{ $t('udpc.didYouKNow') }}
-              </div>
-            </template>
-            <template slot="content">
-              <did-you-know :data="didYouKnow"
-                            :interval="5000" />
-            </template>
-            <template slot="footer" />
-          </dashboard-tile>
-        </div>
-        <div class="col-lg-4 col-md-6 py-2">
-          <!-- Neueste Datensätze -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
-            <template slot="header">
-              <div class="info-icon-holder"
-                   @click="$refs['tooltip-latest-datasets'].show()">
-                <md-icon>help</md-icon>
-              </div>
-              <div class="card-header-text">
-                {{ $t('udpc.newDatassets') }}
-              </div>
-            </template>
-            <template slot="content">
-              <did-you-know :data="recentDataSets"
-                            :interval="7500"
-                            @show-in-map="showDataInMap" />
-            </template>
-            <template slot="footer" />
-          </dashboard-tile>
-        </div>
         <div class="col-lg-4 col-md-12">
           <div class="row">
             <div class="col-lg-4 col-4 py-2">
@@ -149,6 +108,48 @@
               </dashboard-tile>
             </div>
           </div>
+        </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <!-- Wussten Sie schon? -->
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-did-you-know'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.didYouKNow') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="didYouKnow"
+                            :interval="5000" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
+        </div>
+        <div class="col-lg-4 col-md-6 py-2">
+          <!-- Neueste Datensätze -->
+          <dashboard-tile data-background-color="blue"
+                          class="chart-card">
+            <template slot="header">
+              <div class="info-icon-holder"
+                   @click="$refs['tooltip-latest-datasets'].show()">
+                <md-icon>help</md-icon>
+              </div>
+              <div class="card-header-text">
+                {{ $t('udpc.newDatassets') }}
+              </div>
+            </template>
+            <template slot="content">
+              <did-you-know :data="recentDataSets"
+                            :interval="7500"
+                            :store-id="'udpc'"
+                            @show-in-map="showDataInMap" />
+            </template>
+            <template slot="footer" />
+          </dashboard-tile>
         </div>
       </div>
       <div class="row ">
@@ -247,9 +248,12 @@
               </div>
             </template>
             <template slot="content">
-              <master-portal-map :services="mapData.services"
+              <master-portal-map ref="masterPortalMap"
+                                 :services="mapData.services"
                                  :portal="mapData.portal"
-                                 :md_id="mapData.md_id" />
+                                 :md_id="mapData.md_id"
+                                 :store-id="'udpc'" 
+                                 @fullscreenMap="toggleRecentDatasetInterval" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -443,31 +447,31 @@
     </md-bottom-bar>
 
     <info-overlay ref="tooltip-did-you-know"
-                  :content="$t('udpc.tooltipDidYouKnow')"
+                  :text="$t('udpc.tooltipDidYouKnow')"
                   :header="'Did your whaaaat'"
                   :footer="'Footer zeugs'" />
     <info-overlay ref="tooltip-latest-datasets"
-                  :content="$t('udpc.tooltipLatestDataSets')" />
+                  :text="$t('udpc.tooltipLatestDataSets')" />
     <info-overlay ref="tooltip-sensors"
-                  :content="$t('udpc.tooltipSensors')" />
+                  :text="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
-                  :content="$t('udpc.tooltipVisitorsToday')" />
+                  :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
-                  :content="$t('udpc.tooltipBackgroundAccess')" />
+                  :text="$t('udpc.tooltipBackgroundAccess')" />
     <info-overlay ref="tooltip-datasets-by"
-                  :content="$t('udpc.tooltipDatasetsBy')" />
+                  :text="$t('udpc.tooltipDatasetsBy')" />
     <info-overlay ref="tooltip-count-total"
-                  :content="$t('udpc.tooltipCountTotal')" />
+                  :text="$t('udpc.tooltipCountTotal')" />
     <info-overlay ref="tooltip-map"
-                  :content="$t('udpc.tooltipMap')" />
+                  :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
-                  :content="$t('udpc.tooltipTopX')" />
+                  :text="$t('udpc.tooltipTopX')" />
     <info-overlay ref="tooltip-downloads"
-                  :content="$t('udpc.tooltipDownloads')" />
+                  :text="$t('udpc.tooltipDownloads')" />
     <info-overlay ref="tooltip-access-data"
-                  :content="$t('udpc.tooltipAccessData')" />
+                  :text="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
-                  :content="$t('udpc.tooltipAccessApps')" />
+                  :text="$t('udpc.tooltipAccessApps')" />
   </div>
 </template>
 
@@ -511,6 +515,7 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 })
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
+    updateMapOnInterval = true;
 
     mapData: MapData = {
         services: servicesConfig,
@@ -533,7 +538,7 @@ export default class UDPC extends AbstractDashboard {
 
     recentDataSets: DidYouKnowData = {
         items: [],
-        action: 'map'
+        action: 'md_id'
     };
 
     kpiData: { [key: string]: string } = {
@@ -1064,7 +1069,13 @@ export default class UDPC extends AbstractDashboard {
     }
 
     showDataInMap(md_id: string) {
+      if (this.updateMapOnInterval) {
         this.mapData.md_id = md_id;
+      }
+    }
+
+    toggleRecentDatasetInterval(state: boolean) {
+      this.updateMapOnInterval = !state; 
     }
 }
 </script>
@@ -1378,5 +1389,38 @@ i {
 
 #tree-map {
     cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 100;
+  padding: 10px 15px;
+  left: 0;
+  top: 0;
+
+  &.left {
+      left: 0;
+      right: initial;
+  }
+  &.right {
+      right: 0;
+      left: initial;
+  }
+  &.top {
+      top: 15px;
+      bottom: initial;
+  }
+  &.bottom {
+      bottom: 0;
+      top: initial;
+  }
+  &.banner {
+    background: rgba(255, 255, 255 , 0.8);
+  }
+  > i {
+      color: $hamburg-blue !important;
+      font-size: 2em !important;
+      cursor: pointer;
+  }
 }
 </style>
