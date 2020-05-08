@@ -7,7 +7,8 @@ const initialState: UDPCState = {
     dashboardData: {},
     filteredData: {},
     filters: {},
-    loading: false
+    loading: false,
+    hmdkUrl: 'https://metaver.de/trefferanzeige?docuuid='
 };
 
 const udpcModule: Module<UDPCState, RootState> = {
@@ -24,7 +25,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_FILTERED_DATA', [chartId, {
                 items: elasticResponse.hits.hits
                  .map((item: any) => ({ label: item._source.name, link: item._source.md_id})),
-                action: 'map'
+                action: 'md_id'
             }]);
             context.commit('SET_LOADING', false);
         },

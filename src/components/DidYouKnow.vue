@@ -1,10 +1,13 @@
 <template v-if="data">
   <span class="list-item">
     <template v-if="data.items.length > 0">
-      <a v-if="data.items[currentIndex].link"
-         :href="data.items[currentIndex].link"
-         @click="onClick($event)">
+      <a :href="linkUrl"
+         :title="linkTitle"
+         target="_blank"
+         @click="onClick($event)"
+      >
         {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
+        <md-icon v-if="linkUrl">launch</md-icon>
       </a>
       <span v-if="!data.items[currentIndex].link">
         {{ data.items[currentIndex].label }}
@@ -15,14 +18,44 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+// eslint-disable-next-line no-unused-vars
+import { LocaleMessage } from 'vue-i18n';
 
 @Component({})
 export default class DidYouKnow extends Vue {
     @Prop() data!: DidYouKnowData;
     @Prop() interval!: number;
     @Prop() prefix!: string;
+    @Prop() storeId!: string;
     timer!: number;
     currentIndex = 0;
+
+    get hmdkUrl(): string | undefined {
+        if (this.storeId) {
+            return this.$store.state[this.storeId].hmdkUrl;
+        }
+        return this.$store.state.hmdkUrl
+    }
+
+    get linkTitle(): LocaleMessage | string {
+        switch (this.data.action) {
+            case 'md_id':
+                return this.$t('udpc.tooltipHdmkLink');
+            default:
+                return "";
+        }
+    }
+
+    get linkUrl(): string | null {
+        switch (this.data.action) {
+            case 'md_id':
+                return this.hmdkUrl + this.data.items[this.currentIndex].link;
+            case 'link':
+                return this.data.items[this.currentIndex].link;
+            default:
+                return null;
+        }
+    }
 
     mounted() {
         this.updateInterval();
@@ -44,7 +77,7 @@ export default class DidYouKnow extends Vue {
 
     onInterval() {
         switch (this.data.action) {
-            case 'map':
+            case 'md_id':
                 this.$emit('show-in-map', this.data.items[this.currentIndex].link);
                 break;
             default:
@@ -54,7 +87,7 @@ export default class DidYouKnow extends Vue {
 
     onClick(evt: Event) {
         switch (this.data.action) {
-            case 'link':
+            case 'md_id':
                 break;
             default:
                 evt.preventDefault();
