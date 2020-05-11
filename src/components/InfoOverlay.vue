@@ -14,9 +14,7 @@
     <div v-if="html"
          ref="html"
          class="html" />
-    <div class="text">
-      {{ text }}
-    </div>
+    <div id="textElement" class="text" />
     <div class="footer">
       {{ footer }}
     </div>
@@ -45,7 +43,11 @@ export default class InfoOverlay extends Vue {
 
     renderHtml() {
         if (this.html) {
-            (this.$refs.html as Element).append(this.html);
+          (this.$refs.html as Element).append(this.html);
+        } else if (this.text) {
+          const htmlElement = document.getElementById("textElement");
+          if (htmlElement)
+            htmlElement.insertAdjacentHTML('afterbegin', this.text);
         }
     }
 }
@@ -76,10 +78,12 @@ export default class InfoOverlay extends Vue {
         }
         .text {
             font-size: 18px;
+            white-space: pre-line;
         }
         .html {
             height: 100%;
             width: 100%;
+            white-space: pre-line;
         }
         .footer {
             padding-top: 20px;
