@@ -75,13 +75,13 @@
     }
 
     onInterval() {
-      switch (this.data.action) {
-        case 'md_id':
-          this.$emit('show-in-map', this.data.items[this.currentIndex].link);
-          break;
-        default:
-       // add more options
-      }
+        switch (this.data.action) {
+            case 'md_id':
+                this.$emit('show-in-map', this.data.items[this.currentIndex]);
+                break;
+            default:
+                // add more options
+        }
     }
 
     onClick(evt: Event) {

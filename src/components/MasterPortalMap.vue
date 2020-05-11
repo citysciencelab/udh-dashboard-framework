@@ -14,7 +14,7 @@
            :title="linkTitle"
            target="_blank"
            class="layer-tag">
-          {{ overlayText || overlay }}
+          {{ layerTitle || overlay || mapTitle }}
           <md-icon v-if="linkUrl">launch</md-icon>
         </a>
       </div>
@@ -45,7 +45,8 @@
     })
     export default class MasterPortalMap extends Vue {
         @Prop({default: "dashboardData"}) customLayerId!: string;
-        @Prop({default: "GeoOnline | LGV Hamburg"}) overlay!: string;
+        @Prop({default: "GeoOnline | LGV Hamburg"}) mapTitle!: string;
+        @Prop() overlay!: string;
         @Prop() portal!: { [key: string]: any };
         @Prop() services!: { [key: string]: any };
         @Prop() mapStyle!: object;
@@ -55,7 +56,7 @@
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
-        overlayText: string | null = null;
+        layerTitle: string | null = null;
         isFullscreen: boolean = false;
         mapEl: Element | null = null;
 
@@ -142,9 +143,16 @@
                 }
                 this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
                     this.tempLayers = layers;
-                    this.overlayText = layers[0] ? layers[0].get('name') : null;
+                    this.layerTitle = this.composeLayerTitle(layers[0]);
                 });
             }
+        }
+
+        composeLayerTitle (layer: Layer): string | null {
+            const title = this.overlay ? this.overlay + ': ' : '',
+                layerName = layer ? layer.get('name') : '';
+
+            return title || layerName ? title + layerName : null;
         }
 
         @Watch('featureData') onFeatureDataChanged() {

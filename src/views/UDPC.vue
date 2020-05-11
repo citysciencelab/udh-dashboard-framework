@@ -120,7 +120,7 @@
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
-                {{ $t('udpc.didYouKNow') }}
+                {{ $t('udpc.didYouKnow') }}
               </div>
             </template>
             <template slot="content">
@@ -250,6 +250,7 @@
                                  :services="mapData.services"
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id"
+                                 :overlay="mapData.overlay"
                                  :store-id="'udpc'"
                                  @fullscreenMap="toggleRecentDatasetInterval" />
             </template>
@@ -267,17 +268,17 @@
                 <md-icon>help</md-icon>
               </div>
               <div class="card-header-text">
-                {{ $t('udpc.top5') }}
+                {{ $t('udpc.top10') }}
               </div>
             </template>
             <template slot="content">
               <md-tabs class="dashboard-tabs"
                        @md-changed="onSwitchTab">
-                <md-tab id="tab-top5-datasets"
+                <md-tab id="tab-top10-datasets"
                         :md-label="$t('udpc.tabDatasets')" />
-                <md-tab id="tab-top5-apps"
+                <md-tab id="tab-top10-apps"
                         :md-label="$t('udpc.tabApps')" />
-                <md-tab id="tab-top5-downloads"
+                <md-tab id="tab-top10-downloads"
                         :md-label="$t('udpc.tabDownloads')" />
               </md-tabs>
               <div class="chart-holder">
@@ -441,28 +442,40 @@
     </md-bottom-bar>
 
     <info-overlay ref="tooltip-did-you-know"
-                  :text="$t('udpc.tooltipDidYouKnow')" />
+                  :header="$t('udpc.didYouKnow')"
+                  :html="didYouKnowDataToHtml(didYouKnow, $t('udpc.tooltipDidYouKnow'))" />
     <info-overlay ref="tooltip-latest-datasets"
-                  :text="$t('udpc.tooltipLatestDataSets')" />
+                  :header="$t('udpc.newDatassets')"
+                  :html="didYouKnowDataToHtml(recentDataSets, $t('udpc.tooltipLatestDataSets'))" />
     <info-overlay ref="tooltip-sensors"
+                  :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
+                  :header="$t('udpc.access_overlay_head')"
                   :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
-                  :text="$t('udpc.tooltipBackgroundAccess')" />
+                  :header="$t('udpc.access')"
+                  :html="didYouKnowDataToHtml(overlayDataMapKpi, $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
+                  :header="$t('udpc.countBy')"
                   :text="$t('udpc.tooltipDatasetsBy')" />
     <info-overlay ref="tooltip-count-total"
+                  :header="$t('udpc.countTotal')"
                   :text="$t('udpc.tooltipCountTotal')" />
     <info-overlay ref="tooltip-map"
+                  :header="$t('udpc.map')"
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
-                  :text="$t('udpc.tooltipTopX')" />
+                  :header="$t('udpc.top10')"
+                  :html="didYouKnowDataToHtml(overlayDataTopX, $t('udpc.tooltipTopX'))" />
     <info-overlay ref="tooltip-downloads"
+                  :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
     <info-overlay ref="tooltip-access-data"
+                  :header="$t('udpc.accessTopicData')"
                   :text="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
+                  :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
   </div>
 </template>
@@ -475,6 +488,7 @@ import { messages } from '@/messages/messages.udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
 import DashboardTile from '../components/DashboardTile.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
+import DidYouKnowDataList from '../components/DidYouKnowDataList.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
@@ -495,6 +509,7 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
       TreeMapChartD3,
         DashboardTile,
         DidYouKnow,
+        DidYouKnowDataList,
         MultiSelect,
         RangeSlider,
         ConfirmDialog,
@@ -512,7 +527,8 @@ export default class UDPC extends AbstractDashboard {
     mapData: MapData = {
         services: servicesConfig,
         portal: portalConfig,
-        md_id: ''
+        md_id: '',
+        overlay: undefined
     };
 
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {};
@@ -836,15 +852,15 @@ export default class UDPC extends AbstractDashboard {
                 this.activeTabs.dataSetsByType = 'sensordatasets';
                 // this.fetchTotalsByType();  // not yet implemented in backend
                 break;
-            case 'tab-top5-datasets':
+            case 'tab-top10-datasets':
                 this.activeTabs.tops = 'datasets';
                 this.fetchTops();
                 break;
-            case 'tab-top5-apps':
+            case 'tab-top10-apps':
                 this.activeTabs.tops = 'apps';
                 this.fetchTops();
                 break;
-            case 'tab-top5-downloads':
+            case 'tab-top10-downloads':
                 this.activeTabs.tops = 'downloads';
                 this.fetchTops();
                 break;
@@ -1087,10 +1103,30 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.locale = lang
     }
 
-    showDataInMap(md_id: string) {
+    showDataInMap(dataset: {label: string, link: string}) {
       if (this.updateMapOnInterval) {
-        this.mapData.md_id = md_id;
+        this.mapData.md_id = dataset.link;
+        this.mapData.overlay = dataset.label;
       }
+    }
+
+    didYouKnowDataToHtml(inputData: DidYouKnowData, wrapper?: string): Element {
+      const instance = new DidYouKnowDataList({
+        propsData: {
+          inputData,
+          linkPrefix: this.$store.state.udpc.hmdkUrl
+        }
+      });
+      instance.$mount();
+
+      if (wrapper) {
+        const el = document.createElement('div');
+        el.innerHTML = wrapper.replace('PLATZHALTER', instance.$el.outerHTML);
+
+        return el;
+      }
+
+      return instance.$el;
     }
 
     toggleRecentDatasetInterval(state: boolean) {
