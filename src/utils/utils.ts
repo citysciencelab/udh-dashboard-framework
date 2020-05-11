@@ -165,6 +165,20 @@ export default class Utils implements IUtils {
         }
     };
 
+    request = {
+        sanitizeRangefulParams(params: { min: string, max: string, unit: string }) {
+            // API requires 'YYYY-MM' format
+            if (params.unit === 'year') {
+                if (params.min.length === 4) {
+                    params.min += '-01';
+                }
+                if (params.max.length === 4) {
+                    params.max += '-01';
+                }
+            }
+        }
+    };
+
     install() {
         Vue.prototype.$utils = this;
     }

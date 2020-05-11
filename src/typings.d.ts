@@ -18,7 +18,8 @@ interface MapData {
   portal: { [key: string]: any },
   features?: FeatureSet,
   geoJson?: GeoJSON.GeoJSON,
-  md_id?: string
+  md_id?: string,
+  overlay?: string
 }
 
 type ChartOptions = { dim: string, dim2: string };

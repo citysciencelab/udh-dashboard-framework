@@ -45,7 +45,7 @@ const elastic = {
     },
 
     validateCategory: (category?: string) => {
-        if (category && ['datasets', 'apps', 'downloads', 'visitors'].indexOf(category) === -1) {
+        if (category && ['datasets', 'apps', 'downloads', 'visitors', 'info'].indexOf(category) === -1) {
             throw new Error(`Invalid category. Must be 'datasets', 'apps', 'downloads' or 'visitors'.`);
         }
     },

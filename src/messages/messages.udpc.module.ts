@@ -10,7 +10,7 @@ export const messages = {
             includeDevPlan: 'Bebauungspläne mit einbeziehen',
             includeMapHits: 'Hintergrundkarte mit einbeziehen',
             map: 'Karte',
-            top5: 'Top 5 des Monats',
+            top5: 'Top 10 des Monats',
             download: 'Downloads',
             accessTopicData: 'Zugriffe Fachdaten',
             accessApps: 'Zugriffe Apps',
@@ -27,6 +27,7 @@ export const messages = {
             tabDownloads: 'Downloads',
             themeFilter: 'Nach Thema filtern',
             orgFilter: 'Nach Organisation filtern',
+            clearFilter: 'Filter zurücksetzen',
 
             sliderEarlier: '< früher',
             sliderLater: 'später >',
@@ -58,7 +59,7 @@ export const messages = {
             includeDevPlan: 'Include development plans',
             includeMapHits: 'Include background map',
             map: 'Map',
-            top5: 'Monthly top 5',
+            top5: 'Monthly top 10',
             download: 'Downloads',
             accessTopicData: 'Access application data',
             accessApps: 'Access Apps',
@@ -75,6 +76,7 @@ export const messages = {
             tabDownloads: 'Downloads',
             themeFilter: 'Filter by theme',
             orgFilter: 'Filter by organization',
+            clearFilter: 'Reset filters',
 
             sliderEarlier: '< earlier',
             sliderLater: 'later >',

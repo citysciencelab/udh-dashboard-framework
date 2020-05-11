@@ -33,6 +33,7 @@
                   <div class="filter-icon-container">
                     <a v-if="filters.theme && filters.theme.length || filters.org && filters.org.length"
                        class="material-icons"
+                       :title="$t('udpc.clearFilter')"
                        @click="clearFilters()">delete</a>
                   </div>
                 </div>
@@ -41,13 +42,13 @@
           </dashboard-tile>
         </div>
       </div>
-      <div class="row">
+      <div class="row facts-row">
         <div class="col-lg-4 col-md-12">
-          <div class="row">
-            <div class="col-lg-4 col-4 py-2">
+          <div class="row kpi-row">
+            <div class="col-md-4 col-xs-12 py-2">
               <!-- KPI Sensoren -->
               <dashboard-tile data-background-color="blue"
-                              class="chart-card">
+                              class="kpi-tile">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-sensors'].show()">
@@ -65,10 +66,10 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-4 col-4 py-2">
+            <div class="col-md-4 col-xs-12 py-2">
               <!-- KPI Besucher -->
               <dashboard-tile data-background-color="blue"
-                              class="chart-card">
+                              class="kpi-tile">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-visitors-today'].show()">
@@ -80,16 +81,16 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.visitorsMonth">
-                    {{ kpiData.visitorsMonth }}
+                    {{ kpiData.visitorsMonthAbbreviated }}
                   </p>
                 </template>
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-lg-4 col-4 py-2">
+            <div class="col-md-4 col-xs-12 py-2">
               <!-- KPI Karte -->
               <dashboard-tile data-background-color="blue"
-                              class="chart-card">
+                              class="kpi-tile">
                 <template slot="header">
                   <div class="info-icon-holder"
                        @click="$refs['tooltip-background-access'].show()">
@@ -101,7 +102,7 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.mapAccess">
-                    {{ kpiData.mapAccess }}
+                    {{ kpiData.mapAccessAbbreviated }}
                   </p>
                 </template>
                 <template slot="footer" />
@@ -155,8 +156,7 @@
       <div class="row ">
         <div class="col-lg-4 col-md-6 py-2">
           <!-- Anzahl nach -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-datasets-by'].show()">
@@ -194,8 +194,7 @@
         </div>
         <div class="col-lg-4 col-md-6 py-2">
           <!-- Anzahl total -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-count-total'].show()">
@@ -236,8 +235,7 @@
         </div>
         <div class="col-lg-4 col-md-12 py-2">
           <!-- Karte -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-map'].show()">
@@ -252,7 +250,8 @@
                                  :services="mapData.services"
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id"
-                                 :store-id="'udpc'" 
+                                 :overlay="mapData.overlay"
+                                 :store-id="'udpc'"
                                  @fullscreenMap="toggleRecentDatasetInterval" />
             </template>
             <template slot="footer" />
@@ -261,9 +260,8 @@
       </div>
       <div class="row ">
         <div class="col-lg-3 col-md-6 py-2">
-          <!-- Top 5 des Monats -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <!-- Top 10 des Monats -->
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-top-x'].show()">
@@ -294,8 +292,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Downloads -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-downloads'].show()">
@@ -332,8 +329,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Zugriffe Fachdaten -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-data'].show()">
@@ -378,8 +374,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Zugriffe Apps -->
-          <dashboard-tile data-background-color="blue"
-                          class="chart-card">
+          <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-apps'].show()">
@@ -447,10 +442,12 @@
     </md-bottom-bar>
 
     <info-overlay ref="tooltip-did-you-know"
-                  :text="$t('udpc.tooltipDidYouKnow')"
-                  :header="'Did your whaaaat'"
+                  :html="didYouKnowDataToHtml(didYouKnow)"
+                  :header="$t('udpc.didYouKNow')"
                   :footer="'Footer zeugs'" />
     <info-overlay ref="tooltip-latest-datasets"
+                  :html="didYouKnowDataToHtml(recentDataSets)"
+                  :header="$t('udpc.newDatassets')"
                   :text="$t('udpc.tooltipLatestDataSets')" />
     <info-overlay ref="tooltip-sensors"
                   :text="$t('udpc.tooltipSensors')" />
@@ -483,6 +480,7 @@ import { messages } from '@/messages/messages.udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
 import DashboardTile from '../components/DashboardTile.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
+import DidYouKnowDataList from '../components/DidYouKnowDataList.vue';
 import MultiSelect from '../components/MultiSelect.vue';
 import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
@@ -503,6 +501,7 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
       TreeMapChartD3,
         DashboardTile,
         DidYouKnow,
+        DidYouKnowDataList,
         MultiSelect,
         RangeSlider,
         ConfirmDialog,
@@ -520,19 +519,14 @@ export default class UDPC extends AbstractDashboard {
     mapData: MapData = {
         services: servicesConfig,
         portal: portalConfig,
-        md_id: ''
+        md_id: '',
+        overlay: undefined
     };
 
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {};
 
     didYouKnow: DidYouKnowData = {
-        items: [
-            { label: 'Fact 1', link: '' },
-            { label: 'Fact 2', link: '' },
-            { label: 'Fact 3', link: '' },
-            { label: 'Fact 4', link: '' },
-            { label: 'Fact 5', link: '' },
-        ],
+        items: [],
         action: null
     };
 
@@ -543,8 +537,11 @@ export default class UDPC extends AbstractDashboard {
 
     kpiData: { [key: string]: string } = {
       sensorCount: '',
+      sensorCountAbbreviated: '',
       visitorsMonth: '',
-      mapAccess: ''
+      visitorsMonthAbbreviated: '',
+      mapAccess: '',
+      mapAccessAbbreviated: ''
     };
 
     chartSwitches: { [key: string]: boolean } = {
@@ -690,6 +687,7 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
 
+        this.fetchFacts();
         this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
@@ -781,15 +779,22 @@ export default class UDPC extends AbstractDashboard {
                     }
                     case 'visitorsKPI': {
                       this.kpiData.visitorsMonth = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                      this.kpiData.visitorsMonthAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
+                      break;
+                    }
+                    case 'didYouKnowFacts': {
+                      this.didYouKnow.items = mutationData;
                       break;
                     }
                     case 'sensorsKPI': {
-                     this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                        break;
+                      this.kpiData.sensorCount = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                      this.kpiData.sensorCountAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
+                      break;
                     }
                     case 'baseMapKPI': {
-                        this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
-                        break;
+                      this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
+                      this.kpiData.mapAccessAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
+                      break;
                     }
                     case 'recentDatasets': {
                         this.recentDataSets = mutationData;
@@ -864,12 +869,12 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-apps-year':
                 this.activeTabs.totalApps = tab;
-                this.sliderOptions.apps = { min: '2019', max: currentYear, unit: 'year', isShowMarks: false};
+                this.sliderOptions.apps = { min: '2016', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchAppsRange();
                 break;
             case 'tab-apps-month':
                 this.activeTabs.totalApps = tab;
-                this.sliderOptions.apps = { min: '2019-01', max: currentMonth, unit: 'month', isShowMarks: false};
+                this.sliderOptions.apps = { min: '2016-03', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchAppsRange();
         }
     }
@@ -892,6 +897,10 @@ export default class UDPC extends AbstractDashboard {
 
     onSwitchIncludeMaps() {
       this.fetchDatasetsRange();
+    }
+
+    async fetchFacts() {
+        await this.$store.dispatch('fetchFacts');
     }
 
     async fetchBaseMapKPI() {
@@ -1071,12 +1080,23 @@ export default class UDPC extends AbstractDashboard {
     showDataInMap(dataset: {label: string, link: string}) {
       if (this.updateMapOnInterval) {
         this.mapData.md_id = dataset.link;
-        this.mapData
+        this.mapData.overlay = dataset.label;
       }
     }
 
+    didYouKnowDataToHtml(inputData: DidYouKnowData): Element {
+      const instance = new DidYouKnowDataList({
+        propsData: {
+          inputData
+        }
+      });
+
+      instance.$mount();
+      return instance.$el;
+    }
+
     toggleRecentDatasetInterval(state: boolean) {
-      this.updateMapOnInterval = !state; 
+      this.updateMapOnInterval = !state;
     }
 }
 </script>
@@ -1111,6 +1131,11 @@ i {
         @media (max-width: 380px) {
             font-size: 20px;
         }
+
+        @media (max-width: 489px) {
+          position: absolute;
+          left: 105px;
+        }
     }
 
     .hh-bug {
@@ -1125,14 +1150,52 @@ i {
     }
 }
 
+.filter-button {
+    background-color: transparent !important;
+    color: black !important;
+    height: 28px !important;
+    min-width: 80px !important;
+    padding-top: 4px !important;
+}
+
+.facts-holder span {
+    padding: 10px;
+}
+
+.kpi-tile.md-card  {
+  .md-card-header {
+    .card-header-text {
+      @media (max-width: 768px) {
+        font-size: 24px !important;
+      }
+      @media (min-width: 769px) {
+        font-size: 16px !important;
+      }
+    }
+  }
+}
+
+.facts-row {
+  min-height: 155px;
+}
+
+.kpi-row {
+  height: 100%;
+}
+
 .dashboard-kpi {
-    font-size: 30px;
+    font-size: 35px;
     font-weight: bold;
     color: $hamburg-blue;
-    padding: 2px 0;
     text-overflow: ellipsis;
     overflow: hidden;
     margin-bottom: 0 !important;
+    margin-top: 15px;
+    line-height: 1;
+
+    @media (max-width: 767px) {
+      text-align: center;
+    }
 }
 
 .dashboard-tabs {
@@ -1230,8 +1293,9 @@ i {
     .md-card-content {
         font-size: 18px;
         text-align: left;
+        overflow: hidden;
 
-        span {
+        > span {
             position: relative;
             top: 10px;
         }

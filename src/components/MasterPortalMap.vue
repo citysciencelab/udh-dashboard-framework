@@ -14,7 +14,7 @@
            :title="linkTitle"
            target="_blank"
            class="layer-tag">
-          {{ overlay || layerName ? `${overlay} ${layerName}` : mapTitle }}
+          {{ layerTitle || overlay || mapTitle }}
           <md-icon v-if="linkUrl">launch</md-icon>
         </a>
       </div>
@@ -56,7 +56,7 @@
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
-        layerName: string | null = null;
+        layerTitle: string | null = null;
         isFullscreen: boolean = false;
         mapEl: Element | null = null;
 
@@ -143,9 +143,16 @@
                 }
                 this.map.createLayer(this.md_id, 5).then((layers: Layer[]) => {
                     this.tempLayers = layers;
-                    this.overlayText = layers[0] ? layers[0].get('name') : null;
+                    this.layerTitle = this.composeLayerTitle(layers[0]);
                 });
             }
+        }
+
+        composeLayerTitle (layer: Layer): string | null {
+            const title = this.overlay ? this.overlay + ': ' : '',
+                layerName = layer ? layer.get('name') : '';
+
+            return title || layerName ? title + layerName : null;
         }
 
         @Watch('featureData') onFeatureDataChanged() {
@@ -157,10 +164,12 @@
         }
 
         onResize() {
-            this.map.setSize([0, 0]);
-            setTimeout(() => {
-                 this.map.setSize([(this.$refs.map as Element).clientWidth, (this.$refs.map as Element).clientHeight]);
-            }, 5);
+            if (this.$refs.map) {
+                this.map.setSize([0, 0]);
+                setTimeout(() => {
+                        this.map.setSize([(this.$refs.map as Element).clientWidth, (this.$refs.map as Element).clientHeight]);
+                }, 5);
+            }
         }
 
         onOpenFullscreen () {
