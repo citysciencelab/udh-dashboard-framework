@@ -525,6 +525,16 @@ export default class UDPC extends AbstractDashboard {
 
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {};
 
+    overlayDataTopX: DidYouKnowData = {
+        items: [],
+        action: null
+    };
+
+    overlayDataMapKpi: DidYouKnowData = {
+        items: [],
+        action: null
+    };
+
     didYouKnow: DidYouKnowData = {
         items: [],
         action: null
@@ -759,6 +769,10 @@ export default class UDPC extends AbstractDashboard {
                       this.chartData.dataSetsTopX = mutationData;
                       break;
                     }
+                    case 'totalDatasetsRangeTop-overlay-details': {
+                      this.overlayDataTopX = mutationData;
+                      break;
+                    }
                     case 'totalDatasetsCount': {
                       mutationData.datasets[0]['backgroundColor'] = '#003063';
                       this.chartData.dataSetsByType = mutationData;
@@ -794,6 +808,10 @@ export default class UDPC extends AbstractDashboard {
                     case 'baseMapKPI': {
                       this.kpiData.mapAccess = new Utils().number.getDecimalSeparatedNumber(mutationData);
                       this.kpiData.mapAccessAbbreviated = new Utils().number.getAbbreviatedNumber(mutationData);
+                      break;
+                    }
+                    case 'baseMapKPI-overlay-details': {
+                      this.overlayDataMapKpi = mutationData;
                       break;
                     }
                     case 'recentDatasets': {
