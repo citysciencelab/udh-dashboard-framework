@@ -156,10 +156,13 @@
         }
 
         onResize() {
-            this.map.setSize([0, 0]);
-            setTimeout(() => {
-                 this.map.setSize([(this.$refs.map as Element).clientWidth, (this.$refs.map as Element).clientHeight]);
-            }, 5);
+            console.log(this.$refs.map);
+            if (this.$refs.map) {
+                this.map.setSize([0, 0]);
+                setTimeout(() => {
+                        this.map.setSize([(this.$refs.map as Element).clientWidth, (this.$refs.map as Element).clientHeight]);
+                }, 5);
+            }
         }
 
         onOpenFullscreen () {
