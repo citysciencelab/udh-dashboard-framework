@@ -86,6 +86,12 @@ const udpcModule: Module<UDPCState, RootState> = {
             const aggregations = elasticResponse.aggregations;
             const topX = aggregations.top_x.buckets;
 
+            const details: DidYouKnowData = {
+                items: [],
+                action: null
+            };
+            topX.map((item: any) => details.items.push({label: item.key, link: item.md_id.buckets[0].key}));
+
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
             context.commit('SET_FILTERED_DATA', [chartId, {
                 labels: topX.map((item: any) => item.key),
@@ -94,6 +100,7 @@ const udpcModule: Module<UDPCState, RootState> = {
                     md_id: topX.map((item: any) => item.md_id.buckets[0] ? item.md_id.buckets[0].key : undefined)
                 }]
             }]);
+            context.commit('SET_FILTERED_DATA', [chartId+'-overlay-details', details]);
             context.commit('SET_LOADING', false);
         },
         fetchRangefulData: async (context, params: { theme: string[], org: string[], min: string, max: string, unit: string, category: string, chartId: string, tag_not: string[] }) => {
@@ -151,12 +158,16 @@ const udpcModule: Module<UDPCState, RootState> = {
         fetchBaseMapKPI: async (context) => {
             const chartId = 'baseMapKPI';
             const month = new Utils().date.getLastMonth();
-
             const elasticResponse = await elastic.udpcQuery(month, month, [], [], ['basemap'], [], '', 'month');
             const aggregations = elasticResponse.aggregations;
-
+            const details: DidYouKnowData = {
+                items: [],
+                action: null
+            };
+            aggregations.top_x.buckets.map((item: any) => details.items.push({label: item.key, link: item.md_id.buckets[0].key}));
             try {
                 context.commit('SET_FILTERED_DATA', [chartId, aggregations.total_entities_and_hits.buckets[0].total_hits.value]);
+                context.commit('SET_FILTERED_DATA', [chartId + '-overlay-details', details]);
             } catch (e) {
                 context.commit('SET_FILTERED_DATA', [chartId, null]);
             }
