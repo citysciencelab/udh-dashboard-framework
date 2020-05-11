@@ -441,9 +441,7 @@
     </md-bottom-bar>
 
     <info-overlay ref="tooltip-did-you-know"
-                  :text="$t('udpc.tooltipDidYouKnow')"
-                  :header="'Did your whaaaat'"
-                  :footer="'Footer zeugs'" />
+                  :text="$t('udpc.tooltipDidYouKnow')" />
     <info-overlay ref="tooltip-latest-datasets"
                   :text="$t('udpc.tooltipLatestDataSets')" />
     <info-overlay ref="tooltip-sensors"
