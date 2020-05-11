@@ -1,16 +1,17 @@
 <template v-if="data && data.items.length > 0">
-  <span class="list-item" v-if="data.items[currentIndex]">
-      <a v-if="data.items[currentIndex].link"
-         :href="linkUrl"
-         :title="linkTitle"
-         target="_blank"
-         @click="onClick($event)">
-        {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
-        <md-icon v-if="linkUrl">launch</md-icon>
-      </a>
-      <p v-if="!data.items[currentIndex].link">
-        {{ data.items[currentIndex].label }}
-      </p>
+  <span v-if="data.items[currentIndex]"
+        class="list-item">
+    <a v-if="data.items[currentIndex].link"
+       :href="linkUrl"
+       :title="linkTitle"
+       target="_blank"
+       @click="onClick($event)">
+      {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
+      <md-icon v-if="linkUrl">launch</md-icon>
+    </a>
+    <p v-if="!data.items[currentIndex].link">
+      {{ data.items[currentIndex].label }}
+    </p>
   </span>
 </template>
 

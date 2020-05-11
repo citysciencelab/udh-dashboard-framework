@@ -27,6 +27,7 @@ export const messages = {
             tabDownloads: 'Downloads',
             themeFilter: 'Nach Thema filtern',
             orgFilter: 'Nach Organisation filtern',
+            clearFilter: 'Filter zurücksetzen',
 
             sliderEarlier: '< früher',
             sliderLater: 'später >',
@@ -75,6 +76,7 @@ export const messages = {
             tabDownloads: 'Downloads',
             themeFilter: 'Filter by theme',
             orgFilter: 'Filter by organization',
+            clearFilter: 'Reset filters',
 
             sliderEarlier: '< earlier',
             sliderLater: 'later >',

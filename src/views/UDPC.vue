@@ -33,6 +33,7 @@
                   <div class="filter-icon-container">
                     <a v-if="filters.theme && filters.theme.length || filters.org && filters.org.length"
                        class="material-icons"
+                       :title="$t('udpc.clearFilter')"
                        @click="clearFilters()">delete</a>
                   </div>
                 </div>

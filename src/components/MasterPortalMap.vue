@@ -156,7 +156,6 @@
         }
 
         onResize() {
-            console.log(this.$refs.map);
             if (this.$refs.map) {
                 this.map.setSize([0, 0]);
                 setTimeout(() => {
