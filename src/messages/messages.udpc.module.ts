@@ -10,11 +10,11 @@ export const messages = {
             includeDevPlan: 'Bebauungspläne mit einbeziehen',
             includeMapHits: 'Hintergrundkarte mit einbeziehen',
             map: 'Karte',
-            top5: 'Top 10 des Monats',
+            top10: 'Top 10 des Monats',
             download: 'Downloads',
             accessTopicData: 'Zugriffe Fachdaten',
             accessApps: 'Zugriffe Apps',
-            didYouKNow: 'Wussten Sie schon?',
+            didYouKnow: 'Wussten Sie schon?',
             facts: 'Wussten Sie schon: %{fact}',
             tabTopics: 'Themen',
             tabOrganisations: 'Organisationen',
@@ -32,9 +32,10 @@ export const messages = {
             sliderEarlier: '< früher',
             sliderLater: 'später >',
 
-            tooltipDidYouKnow: 'In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg. \n' +
-             'Weitere Informationen finden Sie hier: <a href="www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a>',
-            tooltipLatestDataSets: '',
+            tooltipDidYouKnow: '<p>In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg.</p>' +
+             'PLATZHALTER \n' +
+             '<p>Weitere Informationen finden Sie hier: <a href="www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
+            tooltipLatestDataSets: 'PLATZHALTER',
             tooltipGeneralLink: 'Link in neuem Tab öffnen',
             tooltipHdmkLink: 'Zum Eintrag im Hamburger Metadaten Katalog',
             tooltipSensors: 'Anzahl der Sensoren, die in der SensorThingsAPI als Thing definiert wurden.\n' +
@@ -42,10 +43,10 @@ export const messages = {
              'Quelle: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
             tooltipVisitorsToday: 'Hier wird die Gesamtanzahl an eindeutigen Besucher von <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> und Geodaten Hamburg (FHH-Atlas im Intranet der FHH) des jeweils vorherigen Kalendermonats angezeigt.\n' +
              'Quelle: Auswertung der awstats',
-            tooltipBackgroundAccess: 'Diese Kachel gibt die Zugriffe auf die Hintergrundkarten des jeweils vorherigen abgeschlossenen Kalendermonats an. \n' +
-             'Die Hintergrundkarten  sind:  \n' +
+            tooltipBackgroundAccess: '<p>Diese Kachel gibt die Zugriffe auf die Hintergrundkarten des jeweils vorherigen abgeschlossenen Kalendermonats an. \n' +
+             'Die Hintergrundkarten  sind:</p>' +
              'PLATZHALTER \n' +
-             'Quelle: Auswertung der awstats',
+             '<p>Quelle: Auswertung der awstats</p>',
             tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze des jeweils vorherigen abgeschlossenen Kalendermonats nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. \n' +
              'Da die Bebauungspläne einen Großteil der Datensätze ausmachen, gibt es eine Möglichkeit diese aus der Ansicht herauszufiltern. \n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
@@ -63,14 +64,14 @@ export const messages = {
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipTopX: 'Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+            tooltipTopX: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
              'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.\n' +
-             'Die Top 10 Datensätze sind:\n' +
+             'Die Top 10 Datensätze sind:</p>' +
              'PLATZHALTER\n'+
-             'Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
+             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
              'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
-             'Quelle: Auswertung der awstats \n',
+             'Quelle: Auswertung der awstats</p>',
             tooltipDownloads: 'Es wird die Anzahl der monatlichen bzw. jährlichen Downloads in einem historischen Zeitverlauf angezeigt.\n' +
              'Quelle: Auswertung der awstats',
             tooltipAccessData: 'Hier werden die monatlichen bzw. jährlichen Zugriffe auf die Fachdaten im Internet und Intranet der FHH mit Historie angegeben. Fachdaten sind alle Datensätze, die keine Hintergrundkarten sind.\n' +
@@ -93,11 +94,11 @@ export const messages = {
             includeDevPlan: 'Include development plans',
             includeMapHits: 'Include background map',
             map: 'Map',
-            top5: 'Monthly top 10',
+            top10: 'Monthly top 10',
             download: 'Downloads',
             accessTopicData: 'Access application data',
             accessApps: 'Access Apps',
-            didYouKNow: 'Did you know?',
+            didYouKnow: 'Did you know?',
             facts: 'Did you know: %{fact}',
             tabTopics: 'Topics',
             tabOrganisations: 'Organisations',
@@ -115,9 +116,10 @@ export const messages = {
             sliderEarlier: '< earlier',
             sliderLater: 'later >',
 
-            tooltipDidYouKnow: 'In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg. \n' +
-             'Weitere Informationen finden Sie hier: <a href="www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a>',
-            tooltipLatestDataSets: '',
+            tooltipDidYouKnow: '<p>In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg.</p>' +
+             'PLATZHALTER \n' +
+             '<p>Weitere Informationen finden Sie hier: <a href="www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
+            tooltipLatestDataSets: 'PLATZHALTER',
             tooltipGeneralLink: 'Open Link to new tab',
             tooltipHdmkLink: 'To the Hamburg Meta-Data Catalogue',
             tooltipSensors: 'Anzahl der Sensoren, die in der SensorThingsAPI als Thing definiert wurden.\n' +
@@ -125,10 +127,10 @@ export const messages = {
              'Quelle: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
             tooltipVisitorsToday: 'Hier wird die Gesamtanzahl an eindeutigen Besucher von <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> und Geodaten Hamburg (FHH-Atlas im Intranet der FHH) des jeweils vorherigen Kalendermonats angezeigt.\n' +
              'Quelle: Auswertung der awstats',
-            tooltipBackgroundAccess: 'Diese Kachel gibt die Zugriffe auf die Hintergrundkarten des jeweils vorherigen abgeschlossenen Kalendermonats an. \n' +
-             'Die Hintergrundkarten  sind:  \n' +
+            tooltipBackgroundAccess: '<p>Diese Kachel gibt die Zugriffe auf die Hintergrundkarten des jeweils vorherigen abgeschlossenen Kalendermonats an. \n' +
+             'Die Hintergrundkarten  sind:</p>' +
              'PLATZHALTER \n' +
-             'Quelle: Auswertung der awstats',
+             '<p>Quelle: Auswertung der awstats</p>',
             tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze des jeweils vorherigen abgeschlossenen Kalendermonats nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. \n' +
              'Da die Bebauungspläne einen Großteil der Datensätze ausmachen, gibt es eine Möglichkeit diese aus der Ansicht herauszufiltern. \n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
@@ -146,14 +148,14 @@ export const messages = {
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipTopX: 'Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+            tooltipTopX: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
              'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.\n' +
-             'Die Top 10 Datensätze sind:\n' +
+             'Die Top 10 Datensätze sind:</p>' +
              'PLATZHALTER\n'+
-             'Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
+             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
              'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
-             'Quelle: Auswertung der awstats \n',
+             'Quelle: Auswertung der awstats</p>',
             tooltipDownloads: 'Es wird die Anzahl der monatlichen bzw. jährlichen Downloads in einem historischen Zeitverlauf angezeigt.\n' +
              'Quelle: Auswertung der awstats',
             tooltipAccessData: 'Hier werden die monatlichen bzw. jährlichen Zugriffe auf die Fachdaten im Internet und Intranet der FHH mit Historie angegeben. Fachdaten sind alle Datensätze, die keine Hintergrundkarten sind.\n' +

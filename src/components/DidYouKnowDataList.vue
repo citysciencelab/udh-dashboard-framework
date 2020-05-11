@@ -1,17 +1,17 @@
 <template>
-  <ul v-if="inputData">
+  <ol v-if="inputData">
     <li v-for="(el, i) in inputData.items"
         :key="i">
-      <h5 v-if="el.link">
-        <a>
-          {{ linkUrl(el.link) }}
-        </a>
-      </h5>
-      <p>
+      <h6>
         {{ el.label }}
-      </p>
+        <a v-if="el.link"
+           :href="linkUrl(el.link)"
+           target="_blank">
+          <md-icon v-if="linkUrl">launch</md-icon>
+        </a>
+      </h6>
     </li>
-  </ul>
+  </ol>
 </template>
 
 <script lang="ts">
@@ -20,11 +20,15 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 @Component({})
 export default class DidYouKnowDataList extends Vue {
     @Prop() inputData!: DidYouKnowData;
-    @Prop() prefix!: string;
+    @Prop() linkPrefix!: string;
 
     linkUrl(path: string): string | null {
-        return this.prefix ? this.prefix + path : path;
+        return this.linkPrefix ? this.linkPrefix + path : path;
     }
+
+    // parseLinks(str: string) {
+    //     return str.indexOf('://') > -1 ? str.split()
+    // }
 }
 </script>
 
