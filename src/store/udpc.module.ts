@@ -97,7 +97,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', false);
         },
         fetchRangefulData: async (context, params: { theme: string[], org: string[], min: string, max: string, unit: string, category: string, chartId: string, tag_not: string[] }) => {
-            sanitizeRangefulParams(params);
+            new Utils().request.sanitizeRangefulParams(params);
 
             const changed = await context.dispatch('paramsChanged', [params.chartId, params]);
             if (!changed) return;
@@ -114,6 +114,17 @@ const udpcModule: Module<UDPCState, RootState> = {
                 }]
             }]);
         },
+        fetchFacts: async (context) => {
+            const chartId = 'didYouKnowFacts';
+            const month = new Utils().date.getCurrentMonth();
+
+            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], [], 'info', undefined, 10);
+            const topX = elasticResponse.aggregations.top_x.buckets;
+            let items: object[] = [];
+
+            topX.map((item: any) => items.push({label: item.key}))
+            context.commit('SET_FILTERED_DATA', [chartId, items]);
+        },
         fetchVisitorsKPI: async (context) => {
             const chartId = 'visitorsKPI';
             const month = new Utils().date.getLastMonth();
@@ -129,7 +140,6 @@ const udpcModule: Module<UDPCState, RootState> = {
         },
         fetchSensorsKPI: async (context) => {
             const chartId = 'sensorsKPI';
-
             const response = await Axios.get('https://iot.hamburg.de/v1.0/Datastreams?$filter=not%20substringof(%27E-Roller%27,description)&$count=true');
 
             try {
@@ -163,15 +173,3 @@ const udpcModule: Module<UDPCState, RootState> = {
 };
 
 export default udpcModule;
-
-function sanitizeRangefulParams(params: { min: string, max: string, unit: string }) {
-    // API requires 'YYYY-MM' format
-    if (params.unit === 'year') {
-        if (params.min.length === 4) {
-            params.min += '-01';
-        }
-        if (params.max.length === 4) {
-            params.max += '-01';
-        }
-    }
-}
