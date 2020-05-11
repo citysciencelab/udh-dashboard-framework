@@ -448,26 +448,34 @@
                   :header="$t('udpc.newDatassets')"
                   :html="didYouKnowDataToHtml(recentDataSets, $t('udpc.tooltipLatestDataSets'))" />
     <info-overlay ref="tooltip-sensors"
+                  :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
+                  :header="$t('udpc.access_overlay_head')"
                   :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
                   :header="$t('udpc.access')"
                   :html="didYouKnowDataToHtml(overlayDataMapKpi, $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
+                  :header="$t('udpc.countBy')"
                   :text="$t('udpc.tooltipDatasetsBy')" />
     <info-overlay ref="tooltip-count-total"
+                  :header="$t('udpc.countTotal')"
                   :text="$t('udpc.tooltipCountTotal')" />
     <info-overlay ref="tooltip-map"
+                  :header="$t('udpc.map')"
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
                   :header="$t('udpc.top10')"
                   :html="didYouKnowDataToHtml(overlayDataTopX, $t('udpc.tooltipTopX'))" />
     <info-overlay ref="tooltip-downloads"
+                  :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
     <info-overlay ref="tooltip-access-data"
+                  :header="$t('udpc.accessTopicData')"
                   :text="$t('udpc.tooltipAccessData')" />
     <info-overlay ref="tooltip-access-apps"
+                  :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
   </div>
 </template>
