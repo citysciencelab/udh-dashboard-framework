@@ -44,7 +44,7 @@ export const messages = {
              'Quelle: Auswertung der awstats',
             tooltipBackgroundAccess: 'Diese Kachel gibt die Zugriffe auf die Hintergrundkarten des jeweils vorherigen abgeschlossenen Kalendermonats an. \n' +
              'Die Hintergrundkarten  sind:  \n' +
-             'Bsp. name [Link zum Layer in Geo-Online/Metaver]; \n' +
+             'PLATZHALTER \n' +
              'Quelle: Auswertung der awstats',
             tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze des jeweils vorherigen abgeschlossenen Kalendermonats nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. \n' +
              'Da die Bebauungspläne einen Großteil der Datensätze ausmachen, gibt es eine Möglichkeit diese aus der Ansicht herauszufiltern. \n' +
@@ -67,7 +67,10 @@ export const messages = {
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
              'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.\n' +
              'Die Top 10 Datensätze sind:\n' +
-             'Platzhalter:\n',
+             'PLATZHALTER\n'+
+             'Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
+             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             'Quelle: Auswertung der awstats \n',
             tooltipDownloads: 'Es wird die Anzahl der monatlichen bzw. jährlichen Downloads in einem historischen Zeitverlauf angezeigt.\n' +
              'Quelle: Auswertung der awstats',
             tooltipAccessData: 'Hier werden die monatlichen bzw. jährlichen Zugriffe auf die Fachdaten im Internet und Intranet der FHH mit Historie angegeben. Fachdaten sind alle Datensätze, die keine Hintergrundkarten sind.\n' +
