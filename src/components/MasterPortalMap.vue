@@ -14,7 +14,7 @@
            :title="linkTitle"
            target="_blank"
            class="layer-tag">
-          {{ overlayText || overlay }}
+          {{ overlay || layerName ? `${overlay} ${layerName}` : mapTitle }}
           <md-icon v-if="linkUrl">launch</md-icon>
         </a>
       </div>
@@ -45,7 +45,8 @@
     })
     export default class MasterPortalMap extends Vue {
         @Prop({default: "dashboardData"}) customLayerId!: string;
-        @Prop({default: "GeoOnline | LGV Hamburg"}) overlay!: string;
+        @Prop({default: "GeoOnline | LGV Hamburg"}) mapTitle!: string;
+        @Prop() overlay!: string;
         @Prop() portal!: { [key: string]: any };
         @Prop() services!: { [key: string]: any };
         @Prop() mapStyle!: object;
@@ -55,7 +56,7 @@
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
-        overlayText: string | null = null;
+        layerName: string | null = null;
         isFullscreen: boolean = false;
         mapEl: Element | null = null;
 

@@ -75,7 +75,7 @@ export default class DidYouKnow extends Vue {
     onInterval() {
         switch (this.data.action) {
             case 'md_id':
-                this.$emit('show-in-map', this.data.items[this.currentIndex].link);
+                this.$emit('show-in-map', this.data.items[this.currentIndex]);
                 break;
             default:
                 // add more options

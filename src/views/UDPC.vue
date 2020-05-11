@@ -1068,9 +1068,10 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.locale = lang
     }
 
-    showDataInMap(md_id: string) {
+    showDataInMap(dataset: {label: string, link: string}) {
       if (this.updateMapOnInterval) {
-        this.mapData.md_id = md_id;
+        this.mapData.md_id = dataset.link;
+        this.mapData
       }
     }
 
