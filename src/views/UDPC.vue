@@ -80,7 +80,7 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.visitorsMonth">
-                    {{ kpiData.visitorsMonth }}
+                    {{ kpiData.visitorsMonthAbbreviated }}
                   </p>
                 </template>
                 <template slot="footer" />
@@ -101,7 +101,7 @@
                 </template>
                 <template slot="content">
                   <p v-b-tooltip.hover class="dashboard-kpi" :title="kpiData.mapAccess">
-                    {{ kpiData.mapAccess }}
+                    {{ kpiData.mapAccessAbbreviated }}
                   </p>
                 </template>
                 <template slot="footer" />
