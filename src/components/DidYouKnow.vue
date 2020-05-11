@@ -1,11 +1,11 @@
 <template v-if="data">
   <span class="list-item">
     <template v-if="data.items.length > 0">
-      <a :href="linkUrl"
+      <a v-if="data.items[currentIndex].link"
+         :href="linkUrl"
          :title="linkTitle"
          target="_blank"
-         @click="onClick($event)"
-      >
+         @click="onClick($event)">
         {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
         <md-icon v-if="linkUrl">launch</md-icon>
       </a>
