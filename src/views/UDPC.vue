@@ -519,13 +519,7 @@ export default class UDPC extends AbstractDashboard {
     sliderOptions: { [key: string]: DateRangeSliderOptions } = {};
 
     didYouKnow: DidYouKnowData = {
-        items: [
-            { label: 'Fact 1', link: '' },
-            { label: 'Fact 2', link: '' },
-            { label: 'Fact 3', link: '' },
-            { label: 'Fact 4', link: '' },
-            { label: 'Fact 5', link: '' },
-        ],
+        items: [],
         action: null
     };
 
@@ -1163,7 +1157,7 @@ i {
 }
 
 .facts-row {
-  min-height: 140px;
+  min-height: 155px;
 }
 
 .kpi-row {
@@ -1177,7 +1171,7 @@ i {
     text-overflow: ellipsis;
     overflow: hidden;
     margin-bottom: 0 !important;
-    margin-top: 5px;
+    margin-top: 15px;
     line-height: 1;
 
     @media (max-width: 767px) {
@@ -1280,6 +1274,7 @@ i {
     .md-card-content {
         font-size: 18px;
         text-align: left;
+        overflow: hidden;
 
         > span {
             position: relative;
