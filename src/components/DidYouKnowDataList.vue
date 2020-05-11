@@ -4,6 +4,7 @@
         :key="i">
       <h6>
         {{ el.label }}
+        <!-- <div v-html="el"></div> -->
         <a v-if="el.link"
            :href="linkUrl(el.link)"
            target="_blank">
@@ -26,9 +27,10 @@ export default class DidYouKnowDataList extends Vue {
         return this.linkPrefix ? this.linkPrefix + path : path;
     }
 
-    // parseLinks(str: string) {
-    //     return str.indexOf('://') > -1 ? str.split()
-    // }
+    parseLinks(str: string) {
+        // return str.indexOf('://') > -1 ? str.split()
+        return str;
+    }
 }
 </script>
 
