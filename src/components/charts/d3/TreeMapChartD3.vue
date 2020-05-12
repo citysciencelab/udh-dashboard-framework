@@ -60,6 +60,9 @@ import {Tooltip} from "d3/types/d3";
        .padding(4)
        .round(true)(root);
 
+      // Delete all old tooltips if necessary
+      d3.select(".d3-tip").remove();
+
       // Create tooltip
       const tip = d3tip()
        .attr('class', 'd3-tip')
