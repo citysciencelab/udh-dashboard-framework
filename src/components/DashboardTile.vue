@@ -47,6 +47,7 @@ export default class DashboardTile extends Vue {
             width: 15px;
             height: 15px;
             min-width: 15px;
+            cursor: pointer;
         }
     }
 
