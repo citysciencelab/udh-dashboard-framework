@@ -452,9 +452,9 @@
                   :text="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
                   :header="$t('udpc.access_overlay_head')"
-                  :text="$t('udpc.tooltipVisitorsToday')" />
+                  :text="$t('udpc.visitors')" />
     <info-overlay ref="tooltip-background-access"
-                  :header="$t('udpc.access')"
+                  :header="$t('udpc.tooltipVisitorsToday')"
                   :html="didYouKnowDataToHtml(overlayDataMapKpi, $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
                   :header="$t('udpc.countBy')"
