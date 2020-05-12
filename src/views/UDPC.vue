@@ -1163,7 +1163,7 @@ i {
         padding-top: 8px;
 
         @media (max-width: 380px) {
-            font-size: 20px;
+            font-size: 17px;
         }
 
         @media (max-width: 489px) {
