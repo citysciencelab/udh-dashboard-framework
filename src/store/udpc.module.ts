@@ -128,7 +128,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], [], 'info', undefined, 10);
             const topX = elasticResponse.aggregations.top_x.buckets;
             let items: object[] = [];
-
+            
             topX.map((item: any) => items.push({label: item.key}))
             context.commit('SET_FILTERED_DATA', [chartId, items]);
         },

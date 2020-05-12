@@ -72,6 +72,9 @@ interface IUtils {
   date: {
     getDateStringFromDate: (date: Date) => string,
     getDateStringFromMillis: (dateMillis: number) => string
+  },
+  string: {
+    parseLinkFromString: (str: string) => string
   }
 }
 

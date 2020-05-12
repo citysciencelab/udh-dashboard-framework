@@ -165,6 +165,24 @@ export default class Utils implements IUtils {
         }
     };
 
+    string = {
+        parseLinkFromString (str: string) {
+            let res = str;
+            const regex = new RegExp("(https|http)://", "g"),
+                matches = str.matchAll(regex);
+
+            for (const match of matches) {
+                const start = match.index as number,
+                    matchEnd = /\/(\s|$)/ig.exec(str.substr(match.index as number)),
+                    end = matchEnd ? matchEnd.index as number + 1 : undefined;
+
+                res = res.replace(str.substr(start, end), `<a href="${str.substr(start, end)}">${str.substr(start, end)}</a>`);
+            }
+
+            return res;
+        }
+    };
+
     request = {
         sanitizeRangefulParams(params: { min: string, max: string, unit: string }) {
             // API requires 'YYYY-MM' format
