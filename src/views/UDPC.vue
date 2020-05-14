@@ -15,6 +15,11 @@
         <div class="col-lg-12 py-2">
           <!-- Filter -->
           <dashboard-tile class="filter-card">
+            <template slot="header">
+              <div class="card-header-text">
+                {{ $t('udpc.filter') }}
+              </div>
+            </template>
             <template slot="content">
               <div class="container-fluid">
                 <div class="row">
@@ -1218,7 +1223,7 @@ i {
 }
 
 .dashboard-kpi {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
     color: $hamburg-blue;
     text-overflow: ellipsis;
@@ -1328,6 +1333,7 @@ i {
         font-size: 18px;
         text-align: left;
         overflow: hidden;
+        padding: 0;
 
         > span {
             position: relative;
@@ -1387,7 +1393,7 @@ i {
     }
 
     &.filter-card {
-      padding: 0 15px;
+      //padding: 0 15px;
 
       .md-card-content,
       .md-card-actions {
