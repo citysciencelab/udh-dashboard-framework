@@ -208,7 +208,7 @@ export default class Participation extends AbstractDashboard {
 
             switch (mutation.type) {
                 case 'SET_INITIAL_DATA':
-                    if (mutation.payload[0] === 'participationData') {
+                    if (mutation.payload[0] === 'participationMapData') {
                         this.dataAsFeatures = mutation.payload[1];
                     }
                     break;
@@ -226,6 +226,8 @@ export default class Participation extends AbstractDashboard {
                         chartCountTree.datasets[0]['borderWidth'] =0.5;
                         chartCountTree.datasets[0]['fontColor'] = 'black';
                         this.chartData.participationDistrictCountTree = chartCountTree;
+                    } else if (mutation.payload[0] === 'participationMapData') {
+                        this.dataAsFeatures = mutation.payload[1];
                     }
                     break;
             }
@@ -244,9 +246,11 @@ export default class Participation extends AbstractDashboard {
     *   Gets fired when a MultiSelect selection has changed.
     *   Vuex store ist set from the MultiSelect itself
     *   @param the selected elements - not used in this dashboard
-    */
-    filterChanged() {
-        this.recalculate();
+
+     */
+    filterChanged(event: [string, string[]]) {
+      this.$store.dispatch('setFilters', event);
+      this.recalculate();
     }
 
     resetFilters() {
@@ -257,6 +261,7 @@ export default class Participation extends AbstractDashboard {
     recalculate() {
         const data = this.$store.getters.dataWithAppliedFilters('participationData');
         this.$store.dispatch('recalculateChartData', data);
+        this.$store.dispatch('recalculateMapData');
     }
 }
 </script>
