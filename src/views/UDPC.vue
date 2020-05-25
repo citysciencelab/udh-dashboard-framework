@@ -422,7 +422,7 @@
           <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
             <div class="row">
               <div class="offset-lg-6 col-lg-3 col-6 image-col">
-                <a href="#"
+                <a href="www.geoinfo.hamburg.de"
                    target="_blank">
                   <img src="../assets/images/nl-lgv-logo@2x.png"
                        alt="LGV">
@@ -451,10 +451,10 @@
                   :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
-                  :header="$t('udpc.access_overlay_head')"
-                  :text="$t('udpc.visitors')" />
+                  :header="$t('udpc.visitors')"
+                  :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
-                  :header="$t('udpc.tooltipVisitorsToday')"
+                  :header="$t('udpc.access_overlay_head')"
                   :html="didYouKnowDataToHtml(overlayDataMapKpi, $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
                   :header="$t('udpc.countBy')"
