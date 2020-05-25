@@ -1218,7 +1218,7 @@ i {
 }
 
 .dashboard-kpi {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
     color: $hamburg-blue;
     text-overflow: ellipsis;
