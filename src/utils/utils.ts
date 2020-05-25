@@ -155,10 +155,13 @@ export default class Utils implements IUtils {
         },
         getAbbreviatedNumber(num: number) {
             let value = num.toLocaleString().replace(/\./g,'');
+            const addedNum = value[1] !== '0' ? ',' + value[1] : '';
             if (value.length > 6 && value.length < 10) {
-                return value.substr(0, value.length-6) + " Mio.";
+                const abbreviated = value.substr(0, value.length-6);
+                return (abbreviated.length === 1 ? abbreviated + addedNum : abbreviated) + " Mio.";
             } else if (value.length > 3 && value.length < 7) {
-                return value.substr(0, value.length-3) + " Tsd.";
+                const abbreviated = value.substr(0, value.length-3);
+                return  (abbreviated.length === 1 ? abbreviated + addedNum : abbreviated) + " Tsd.";
             } else {
                 return value;
             }
