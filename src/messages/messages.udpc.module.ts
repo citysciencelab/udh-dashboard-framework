@@ -82,7 +82,13 @@ export const messages = {
              'Welche Apps dazu gehören erfahren Sie in den Metadatenkatalogen:\n' +
              'Link für Internet-Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
              'Link für Intranet-Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
-             'Quelle: Auswertung der awstats'
+             'Quelle: Auswertung der awstats',
+
+
+            privacy: 'Datenschutz',
+            legal: 'Impressum',
+            toolTipPrivacy: 'Privacy text',
+            toolTipLegal: 'Legal text'
         }
     },
     en: {
@@ -168,7 +174,12 @@ export const messages = {
              'Welche Apps dazu gehören erfahren Sie in den Metadatenkatalogen:\n' +
              'Link für Internet-Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
              'Link für Intranet-Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
-             'Quelle: Auswertung der awstats'
+             'Quelle: Auswertung der awstats',
+
+            privacy: 'Data privacy',
+            legal: 'Legal notice',
+            toolTipPrivacy: 'Privacy text',
+            toolTipLegal: 'Legal text'
         }
     }
 };

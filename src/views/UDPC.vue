@@ -421,8 +421,12 @@
       <div class="container-fluid">
         <div class="row">
           <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
-            <a href="">Datenschutz</a>
-            <a href="">Impressum</a>
+            <span @click="$refs['tooltip-privacy'].show()">
+              {{ $t('udpc.privacy') }}
+            </span>
+            <span @click="$refs['tooltip-legal'].show()">
+              {{ $t('udpc.legal') }}
+            </span>
           </div>
           <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
             <div class="row">
@@ -482,6 +486,13 @@
     <info-overlay ref="tooltip-access-apps"
                   :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
+
+    <info-overlay ref="tooltip-privacy"
+                  :header="$t('udpc.privacy')"
+                  :text="$t('udpc.toolTipPrivacy')" />
+    <info-overlay ref="tooltip-legal"
+                  :header="$t('udpc.legal')"
+                  :text="$t('udpc.toolTipLegal')" />
   </div>
 </template>
 
@@ -1447,12 +1458,13 @@ i {
     .links-bottom-left {
         text-align: left;
         padding-bottom: 22px;
+        cursor: pointer;
 
-        > a {
+        > span {
             padding-right: 30px !important;
         }
 
-        a {
+        span {
             font-size: 16px;
             padding-right: 10px;
             color: $hamburg-blue;
