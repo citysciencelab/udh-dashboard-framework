@@ -289,7 +289,8 @@
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
                                       :chart-options="chartOptions.dataSetsTopX"
-                                      :is-standard-tooltips="true" />
+                                      :is-standard-tooltips="true" 
+                                      :link-prefix="hmdkLink" />
               </div>
             </template>
             <template slot="footer" />
@@ -539,6 +540,7 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
     updateMapOnInterval = true;
+    hmdkLink = null;
 
     mapData: MapData = {
         services: servicesConfig,
@@ -726,6 +728,8 @@ export default class UDPC extends AbstractDashboard {
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
         this.fetchRecentDatasets();
+
+        this.hmdkLink = this.$store.state.udpc.hmdkUrl;
 
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
@@ -1130,7 +1134,7 @@ export default class UDPC extends AbstractDashboard {
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
-          linkPrefix: this.$store.state.udpc.hmdkUrl
+          linkPrefix: this.hmdkLink
         }
       });
       instance.$mount();
