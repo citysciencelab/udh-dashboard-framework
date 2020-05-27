@@ -12,7 +12,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-12 py-2">
+        <div class="col-xl-12 py-2">
           <!-- Filter -->
           <dashboard-tile class="filter-card">
             <template slot="content">
@@ -43,9 +43,9 @@
         </div>
       </div>
       <div class="row facts-row">
-        <div class="col-lg-4 col-md-12">
+        <div class="col-xl-4 col-lg-12">
           <div class="row kpi-row">
-            <div class="col-md-4 col-xs-12 py-2">
+            <div class="col-lg-4 col-xs-12 py-2 kpi-first">
               <!-- KPI Sensoren -->
               <dashboard-tile data-background-color="blue"
                               class="kpi-tile">
@@ -66,7 +66,7 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-md-4 col-xs-12 py-2">
+            <div class="col-lg-4 col-xs-12 py-2 kpi-second">
               <!-- KPI Besucher -->
               <dashboard-tile data-background-color="blue"
                               class="kpi-tile">
@@ -87,7 +87,7 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-md-4 col-xs-12 py-2">
+            <div class="col-lg-4 col-xs-12 py-2 kpi-third">
               <!-- KPI Karte -->
               <dashboard-tile data-background-color="blue"
                               class="kpi-tile">
@@ -110,7 +110,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 py-2">
+        <div class="col-xl-4 col-lg-6 py-2">
           <!-- Wussten Sie schon? -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
@@ -130,7 +130,7 @@
             <template slot="footer" />
           </dashboard-tile>
         </div>
-        <div class="col-lg-4 col-md-6 py-2">
+        <div class="col-xl-4 col-lg-6 py-2">
           <!-- Neueste Datensätze -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
@@ -154,7 +154,7 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-lg-4 col-md-6 py-2">
+        <div class="col-xl-4 col-lg-6 py-2">
           <!-- Anzahl nach -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -192,7 +192,7 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-4 col-md-6 py-2">
+        <div class="col-xl-4 col-lg-6 py-2">
           <!-- Anzahl total -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -233,7 +233,7 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-4 col-md-12 py-2">
+        <div class="col-xl-4 col-lg-12 py-2">
           <!-- Karte -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -259,7 +259,7 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Top 10 des Monats -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -290,7 +290,7 @@
             <template slot="footer" />
           </dashboard-tile>
         </div>
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Downloads -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -327,7 +327,7 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Zugriffe Fachdaten -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -372,7 +372,7 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Zugriffe Apps -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -415,20 +415,20 @@
     <md-bottom-bar class="udpc-bottom-bar">
       <div class="container-fluid">
         <div class="row">
-          <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
+          <div class="order-sm-0 order-12 col-xl-6 col-lg-6 align-self-end links-bottom-left">
             <a href="">Datenschutz</a>
             <a href="">Impressum</a>
           </div>
-          <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
+          <div class="col-xl-6 col-lg-6 align-self-center images-bottom-right">
             <div class="row">
-              <div class="offset-lg-6 col-lg-3 col-6 image-col">
+              <div class="offset-xl-6 col-xl-3 col-6 image-col">
                 <a href="www.geoinfo.hamburg.de"
                    target="_blank">
                   <img src="../assets/images/nl-lgv-logo@2x.png"
                        alt="LGV">
                 </a>
               </div>
-              <div class="col-lg-3 col-6 image-col">
+              <div class="col-xl-3 col-6 image-col">
                 <a href="http://www.urbandataplatform.hamburg/"
                    target="_blank">
                   <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
@@ -1215,6 +1215,23 @@ i {
 
 .kpi-row {
   height: 100%;
+
+  .kpi-first {
+    @media (min-width: 1200px) {
+      padding-right: 2px;
+    }
+  }
+  .kpi-second {
+    @media (min-width: 1200px) {
+      padding-right: 2px;
+      padding-left: 2px;
+    }
+  }
+  .kpi-third {
+    @media (min-width: 1200px) {
+      padding-left: 2px;
+    }
+  }
 }
 
 .dashboard-kpi {
