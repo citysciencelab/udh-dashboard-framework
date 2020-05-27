@@ -125,7 +125,7 @@
             </template>
             <template slot="content">
               <did-you-know :data="didYouKnow"
-                            :interval="5000" />
+                            :interval="10000" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -145,7 +145,7 @@
             </template>
             <template slot="content">
               <did-you-know :data="recentDataSets"
-                            :interval="7500"
+                            :interval="10000"
                             :store-id="'udpc'"
                             @show-in-map="showDataInMap" />
             </template>
