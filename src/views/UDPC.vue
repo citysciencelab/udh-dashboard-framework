@@ -870,7 +870,7 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-sensordatasets':
                 this.activeTabs.dataSetsByType = 'sensordatasets';
-                // this.fetchTotalsByType();  // not yet implemented in backend
+                this.fetchTotalsByType();
                 break;
             case 'tab-top10-datasets':
                 this.activeTabs.tops = 'datasets';
