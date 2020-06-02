@@ -14,7 +14,7 @@
     <div v-if="html"
          ref="html"
          class="html" />
-    <div id="textElement" class="text" />
+    <p id="textElement" class="text" />
     <div class="footer">
       {{ footer }}
     </div>
@@ -77,7 +77,7 @@ export default class InfoOverlay extends Vue {
             padding-bottom: 20px;
         }
         .text {
-            font-size: 18px;
+            font-size: 14px;
             white-space: pre-line;
         }
         .html {
