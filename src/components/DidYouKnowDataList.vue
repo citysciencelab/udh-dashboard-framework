@@ -3,8 +3,9 @@
     <li v-for="(el, i) in inputData.items"
         :key="i">
       <h6>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div v-html="utils.string.parseLinkFromString(el.label)">
+        <div>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div class="inline" v-html="utils.string.parseLinkFromString(el.label)" />
           <a v-if="el.link"
              :href="linkUrl(el.link)"
              target="_blank">
@@ -34,3 +35,8 @@ export default class DidYouKnowDataList extends Vue {
 </script>
 
 <style scoped lang="scss">
+ .inline {
+   display: inline-block;
+   margin-right: 5px;
+ }
+</style>

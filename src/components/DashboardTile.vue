@@ -1,5 +1,5 @@
 <template>
-  <md-card>
+  <md-card class="dashboard-tile">
     <md-card-header :data-background-color="dataBackgroundColor">
       <slot name="header" />
     </md-card-header>
@@ -23,8 +23,8 @@ export default class DashboardTile extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-.md-card /deep/ {
+<style lang="scss">
+.dashboard-tile.md-card {
     padding: 15px 15px 10px 15px;
     margin: 0;
     height: 100%;
@@ -54,7 +54,7 @@ export default class DashboardTile extends Vue {
     .md-card-content {
         padding: 0 !important;
         margin: 15px 0 0 0;
-        // height: 100%;
+        height: 100%;
     }
 
     .md-card-actions {

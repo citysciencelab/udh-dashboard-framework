@@ -15,6 +15,11 @@
         <div class="col-xl-12 py-2">
           <!-- Filter -->
           <dashboard-tile class="filter-card">
+            <template slot="header">
+              <div class="card-header-text">
+                {{ $t('udpc.filter') }}
+              </div>
+            </template>
             <template slot="content">
               <div class="container-fluid">
                 <div class="row">
@@ -155,7 +160,7 @@
       </div>
       <div class="row ">
         <div class="col-xl-4 col-lg-6 py-2">
-          <!-- Anzahl nach -->
+          <!-- Anzahl Datensätze nach -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
@@ -193,7 +198,7 @@
           </dashboard-tile>
         </div>
         <div class="col-xl-4 col-lg-6 py-2">
-          <!-- Anzahl total -->
+          <!-- Anzahl Datensätze total -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
@@ -284,7 +289,8 @@
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
                                       :chart-options="chartOptions.dataSetsTopX"
-                                      :is-standard-tooltips="true" />
+                                      :is-standard-tooltips="true" 
+                                      :link-prefix="hmdkLink" />
               </div>
             </template>
             <template slot="footer" />
@@ -292,7 +298,7 @@
         </div>
         <div class="col-xl-3 col-lg-6 py-2">
           <!-- Downloads -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-downloads'].show()">
@@ -329,7 +335,7 @@
         </div>
         <div class="col-xl-3 col-lg-6 py-2">
           <!-- Zugriffe Fachdaten -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-data'].show()">
@@ -374,7 +380,7 @@
         </div>
         <div class="col-xl-3 col-lg-6 py-2">
           <!-- Zugriffe Apps -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-apps'].show()">
@@ -415,9 +421,13 @@
     <md-bottom-bar class="udpc-bottom-bar">
       <div class="container-fluid">
         <div class="row">
-          <div class="order-sm-0 order-12 col-xl-6 col-lg-6 align-self-end links-bottom-left">
-            <a href="">Datenschutz</a>
-            <a href="">Impressum</a>
+          <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
+            <span @click="$refs['tooltip-privacy'].show()">
+              {{ $t('udpc.privacy') }}
+            </span>
+            <span @click="$refs['tooltip-legal'].show()">
+              {{ $t('udpc.legal') }}
+            </span>
           </div>
           <div class="col-xl-6 col-lg-6 align-self-center images-bottom-right">
             <div class="row">
@@ -446,7 +456,7 @@
                   :html="didYouKnowDataToHtml(didYouKnow, $t('udpc.tooltipDidYouKnow'))" />
     <info-overlay ref="tooltip-latest-datasets"
                   :header="$t('udpc.newDatassets')"
-                  :html="didYouKnowDataToHtml(recentDataSets, $t('udpc.tooltipLatestDataSets'))" />
+                  :html="didYouKnowDataToHtml(recentDataSets)" />
     <info-overlay ref="tooltip-sensors"
                   :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
@@ -477,6 +487,13 @@
     <info-overlay ref="tooltip-access-apps"
                   :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
+
+    <info-overlay ref="tooltip-privacy"
+                  :header="$t('udpc.privacy')"
+                  :text="$t('udpc.toolTipPrivacy')" />
+    <info-overlay ref="tooltip-legal"
+                  :header="$t('udpc.legal')"
+                  :text="$t('udpc.toolTipLegal')" />
   </div>
 </template>
 
@@ -523,6 +540,7 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
     updateMapOnInterval = true;
+    hmdkLink = null;
 
     mapData: MapData = {
         services: servicesConfig,
@@ -711,6 +729,8 @@ export default class UDPC extends AbstractDashboard {
         this.fetchSensorsKPI();
         this.fetchRecentDatasets();
 
+        this.hmdkLink = this.$store.state.udpc.hmdkUrl;
+
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
                 return;
@@ -850,7 +870,7 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-sensordatasets':
                 this.activeTabs.dataSetsByType = 'sensordatasets';
-                // this.fetchTotalsByType();  // not yet implemented in backend
+                this.fetchTotalsByType();
                 break;
             case 'tab-top10-datasets':
                 this.activeTabs.tops = 'datasets';
@@ -1114,7 +1134,7 @@ export default class UDPC extends AbstractDashboard {
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
-          linkPrefix: this.$store.state.udpc.hmdkUrl
+          linkPrefix: this.hmdkLink
         }
       });
       instance.$mount();
@@ -1328,6 +1348,13 @@ i {
     }
 }
 
+// This is necessary to align the time sliders to the top in one horizontal line
+.range-slider-tile {
+  .md-card-content {
+    height: initial !important;
+  }
+}
+
 .md-card {
     box-shadow: none !important;
     border: 1px solid $hamburg-blue-dark25;
@@ -1345,6 +1372,7 @@ i {
         font-size: 18px;
         text-align: left;
         overflow: hidden;
+        padding: 0;
 
         > span {
             position: relative;
@@ -1404,7 +1432,7 @@ i {
     }
 
     &.filter-card {
-      padding: 0 15px;
+      //padding: 0 15px;
 
       .md-card-content,
       .md-card-actions {
@@ -1458,12 +1486,13 @@ i {
     .links-bottom-left {
         text-align: left;
         padding-bottom: 22px;
+        cursor: pointer;
 
-        > a {
+        > span {
             padding-right: 30px !important;
         }
 
-        a {
+        span {
             font-size: 16px;
             padding-right: 10px;
             color: $hamburg-blue;

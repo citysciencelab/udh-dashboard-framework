@@ -1,5 +1,5 @@
 <template>
-  <div class="md-layout md-gutter">
+  <div class="md-layout md-gutter multi-select">
     <div class="md-layout-item">
       <md-field>
         <label :for="identifier">{{ label }}</label>
@@ -46,7 +46,20 @@ export default class MultiSelect extends Vue {
 </script>
 
 <style scoped lang="scss">
-.md-field {
+.multi-select >>> .md-field {
     max-width: 300px;
+    min-height: 40px;
+    margin: 0 0 10px;
+    padding-top: 0;
+
+    label {
+      top: 14px;
+    }
+    .md-select {
+      .md-icon {
+        margin-top: 10px;
+      }
+    }
+
 }
 </style>
