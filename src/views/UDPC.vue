@@ -298,7 +298,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Downloads -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-downloads'].show()">
@@ -335,7 +335,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Zugriffe Fachdaten -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-data'].show()">
@@ -380,7 +380,7 @@
         </div>
         <div class="col-lg-3 col-md-6 py-2">
           <!-- Zugriffe Apps -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-apps'].show()">
@@ -1329,6 +1329,13 @@ i {
     .md-switch-thumb {
         background-color: white !important;
     }
+}
+
+// This is necessary to align the time sliders to the top in one horizontal line
+.range-slider-tile {
+  .md-card-content {
+    height: initial !important;
+  }
 }
 
 .md-card {
