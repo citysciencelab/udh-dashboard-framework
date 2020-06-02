@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%">
+  <div class="range-slider" style="width: 100%">
     <div v-if="!isShowMarks"
          class="range-display">
       {{ currentValues[0] }} - {{ currentValues[1] }}
@@ -106,7 +106,7 @@ export default class RangeSlider extends Vue implements RangeSliderMethods {
 </script>
 
 <style scoped lang="scss">
-.ant-slider /deep/ {
+.range-slider >>> .ant-slider {
     width: 100%;
 
     & .ant-slider-mark {

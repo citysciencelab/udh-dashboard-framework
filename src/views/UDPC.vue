@@ -12,9 +12,14 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-12 py-2">
+        <div class="col-xl-12 py-2">
           <!-- Filter -->
           <dashboard-tile class="filter-card">
+            <template slot="header">
+              <div class="card-header-text">
+                {{ $t('udpc.filter') }}
+              </div>
+            </template>
             <template slot="content">
               <div class="container-fluid">
                 <div class="row">
@@ -43,9 +48,9 @@
         </div>
       </div>
       <div class="row facts-row">
-        <div class="col-lg-4 col-md-12">
+        <div class="col-xl-4 col-lg-12">
           <div class="row kpi-row">
-            <div class="col-md-4 col-xs-12 py-2">
+            <div class="col-lg-4 col-xs-12 py-2 kpi-first">
               <!-- KPI Sensoren -->
               <dashboard-tile data-background-color="blue"
                               class="kpi-tile">
@@ -66,7 +71,7 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-md-4 col-xs-12 py-2">
+            <div class="col-lg-4 col-xs-12 py-2 kpi-second">
               <!-- KPI Besucher -->
               <dashboard-tile data-background-color="blue"
                               class="kpi-tile">
@@ -87,7 +92,7 @@
                 <template slot="footer" />
               </dashboard-tile>
             </div>
-            <div class="col-md-4 col-xs-12 py-2">
+            <div class="col-lg-4 col-xs-12 py-2 kpi-third">
               <!-- KPI Karte -->
               <dashboard-tile data-background-color="blue"
                               class="kpi-tile">
@@ -110,7 +115,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 py-2">
+        <div class="col-xl-4 col-lg-6 py-2">
           <!-- Wussten Sie schon? -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
@@ -125,12 +130,12 @@
             </template>
             <template slot="content">
               <did-you-know :data="didYouKnow"
-                            :interval="5000" />
+                            :interval="10000" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
         </div>
-        <div class="col-lg-4 col-md-6 py-2">
+        <div class="col-xl-4 col-lg-6 py-2">
           <!-- Neueste Datensätze -->
           <dashboard-tile data-background-color="blue"
                           class="chart-card">
@@ -145,7 +150,7 @@
             </template>
             <template slot="content">
               <did-you-know :data="recentDataSets"
-                            :interval="7500"
+                            :interval="10000"
                             :store-id="'udpc'"
                             @show-in-map="showDataInMap" />
             </template>
@@ -154,8 +159,8 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-lg-4 col-md-6 py-2">
-          <!-- Anzahl nach -->
+        <div class="col-xl-4 col-lg-6 py-2">
+          <!-- Anzahl Datensätze nach -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
@@ -192,8 +197,8 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-4 col-md-6 py-2">
-          <!-- Anzahl total -->
+        <div class="col-xl-4 col-lg-6 py-2">
+          <!-- Anzahl Datensätze total -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
@@ -233,7 +238,7 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-4 col-md-12 py-2">
+        <div class="col-xl-4 col-lg-12 py-2">
           <!-- Karte -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -259,7 +264,7 @@
         </div>
       </div>
       <div class="row ">
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Top 10 des Monats -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
@@ -284,15 +289,16 @@
               <div class="chart-holder">
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
                                       :chart-options="chartOptions.dataSetsTopX"
-                                      :is-standard-tooltips="true" />
+                                      :is-standard-tooltips="true" 
+                                      :link-prefix="hmdkLink" />
               </div>
             </template>
             <template slot="footer" />
           </dashboard-tile>
         </div>
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Downloads -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-downloads'].show()">
@@ -327,9 +333,9 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Zugriffe Fachdaten -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-data'].show()">
@@ -372,9 +378,9 @@
             </template>
           </dashboard-tile>
         </div>
-        <div class="col-lg-3 col-md-6 py-2">
+        <div class="col-xl-3 col-lg-6 py-2">
           <!-- Zugriffe Apps -->
-          <dashboard-tile data-background-color="blue">
+          <dashboard-tile class="range-slider-tile" data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
                    @click="$refs['tooltip-access-apps'].show()">
@@ -416,19 +422,23 @@
       <div class="container-fluid">
         <div class="row">
           <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
-            <a href="">Datenschutz</a>
-            <a href="">Impressum</a>
+            <span @click="$refs['tooltip-privacy'].show()">
+              {{ $t('udpc.privacy') }}
+            </span>
+            <span @click="$refs['tooltip-legal'].show()">
+              {{ $t('udpc.legal') }}
+            </span>
           </div>
-          <div class="col-lg-6 col-md-6 align-self-center images-bottom-right">
+          <div class="col-xl-6 col-lg-6 align-self-center images-bottom-right">
             <div class="row">
-              <div class="offset-lg-6 col-lg-3 col-6 image-col">
-                <a href="#"
+              <div class="offset-xl-6 col-xl-3 col-6 image-col">
+                <a href="www.geoinfo.hamburg.de"
                    target="_blank">
                   <img src="../assets/images/nl-lgv-logo@2x.png"
                        alt="LGV">
                 </a>
               </div>
-              <div class="col-lg-3 col-6 image-col">
+              <div class="col-xl-3 col-6 image-col">
                 <a href="http://www.urbandataplatform.hamburg/"
                    target="_blank">
                   <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
@@ -446,15 +456,15 @@
                   :html="didYouKnowDataToHtml(didYouKnow, $t('udpc.tooltipDidYouKnow'))" />
     <info-overlay ref="tooltip-latest-datasets"
                   :header="$t('udpc.newDatassets')"
-                  :html="didYouKnowDataToHtml(recentDataSets, $t('udpc.tooltipLatestDataSets'))" />
+                  :html="didYouKnowDataToHtml(recentDataSets)" />
     <info-overlay ref="tooltip-sensors"
                   :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
     <info-overlay ref="tooltip-visitors-today"
-                  :header="$t('udpc.access_overlay_head')"
-                  :text="$t('udpc.visitors')" />
+                  :header="$t('udpc.visitors')"
+                  :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
-                  :header="$t('udpc.tooltipVisitorsToday')"
+                  :header="$t('udpc.access_overlay_head')"
                   :html="didYouKnowDataToHtml(overlayDataMapKpi, $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
                   :header="$t('udpc.countBy')"
@@ -477,6 +487,13 @@
     <info-overlay ref="tooltip-access-apps"
                   :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
+
+    <info-overlay ref="tooltip-privacy"
+                  :header="$t('udpc.privacy')"
+                  :text="$t('udpc.toolTipPrivacy')" />
+    <info-overlay ref="tooltip-legal"
+                  :header="$t('udpc.legal')"
+                  :text="$t('udpc.toolTipLegal')" />
   </div>
 </template>
 
@@ -523,6 +540,7 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
     updateMapOnInterval = true;
+    hmdkLink = null;
 
     mapData: MapData = {
         services: servicesConfig,
@@ -711,6 +729,8 @@ export default class UDPC extends AbstractDashboard {
         this.fetchSensorsKPI();
         this.fetchRecentDatasets();
 
+        this.hmdkLink = this.$store.state.udpc.hmdkUrl;
+
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
                 return;
@@ -850,7 +870,7 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-sensordatasets':
                 this.activeTabs.dataSetsByType = 'sensordatasets';
-                // this.fetchTotalsByType();  // not yet implemented in backend
+                this.fetchTotalsByType();
                 break;
             case 'tab-top10-datasets':
                 this.activeTabs.tops = 'datasets';
@@ -1114,7 +1134,7 @@ export default class UDPC extends AbstractDashboard {
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
-          linkPrefix: this.$store.state.udpc.hmdkUrl
+          linkPrefix: this.hmdkLink
         }
       });
       instance.$mount();
@@ -1215,10 +1235,27 @@ i {
 
 .kpi-row {
   height: 100%;
+
+  .kpi-first {
+    @media (min-width: 1200px) {
+      padding-right: 2px;
+    }
+  }
+  .kpi-second {
+    @media (min-width: 1200px) {
+      padding-right: 2px;
+      padding-left: 2px;
+    }
+  }
+  .kpi-third {
+    @media (min-width: 1200px) {
+      padding-left: 2px;
+    }
+  }
 }
 
 .dashboard-kpi {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
     color: $hamburg-blue;
     text-overflow: ellipsis;
@@ -1311,6 +1348,13 @@ i {
     }
 }
 
+// This is necessary to align the time sliders to the top in one horizontal line
+.range-slider-tile {
+  .md-card-content {
+    height: initial !important;
+  }
+}
+
 .md-card {
     box-shadow: none !important;
     border: 1px solid $hamburg-blue-dark25;
@@ -1328,6 +1372,7 @@ i {
         font-size: 18px;
         text-align: left;
         overflow: hidden;
+        padding: 0;
 
         > span {
             position: relative;
@@ -1387,7 +1432,7 @@ i {
     }
 
     &.filter-card {
-      padding: 0 15px;
+      //padding: 0 15px;
 
       .md-card-content,
       .md-card-actions {
@@ -1441,12 +1486,13 @@ i {
     .links-bottom-left {
         text-align: left;
         padding-bottom: 22px;
+        cursor: pointer;
 
-        > a {
+        > span {
             padding-right: 30px !important;
         }
 
-        a {
+        span {
             font-size: 16px;
             padding-right: 10px;
             color: $hamburg-blue;

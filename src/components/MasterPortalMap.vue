@@ -100,15 +100,13 @@
                         color: "#000000"
                     }),
                     fill: new Fill({
-                        color: "#FFFFFF55"
+                        color: "rgba(255,255,255,0.2)"
+
                     })
                 })
             });
 
-            this.map = mpapi.createMap({
-                ...this.portal,
-                layerConf: this.services
-            });
+            this.map = mpapi.createMap(Object.assign(this.portal, {layerConf: this.services}));
 
             // set the Prop for the fullscreen container after map init
             this.mapEl = this.$refs.mapWrapper;
