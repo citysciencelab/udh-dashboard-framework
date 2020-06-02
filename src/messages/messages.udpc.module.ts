@@ -6,14 +6,14 @@ export const messages = {
             visitors: 'Besucher',
             access: 'Karte',
             access_overlay_head: 'Karten Zugriffe',
-            countBy: 'Anzahl nach',
-            countTotal: 'Anzahl total',
+            countBy: 'Anzahl Datensätze nach',
+            countTotal: 'Anzahl Datensätze total',
             includeDevPlan: 'Bebauungspläne mit einbeziehen',
             includeMapHits: 'Hintergrundkarte mit einbeziehen',
             map: 'Karte',
             top10: 'Top 10 des Monats',
             download: 'Downloads',
-            accessTopicData: 'Zugriffe Fachdaten',
+            accessTopicData: 'Zugriffe',
             accessApps: 'Zugriffe Apps',
             didYouKnow: 'Wussten Sie schon?',
             facts: 'Wussten Sie schon: %{fact}',
@@ -81,7 +81,7 @@ export const messages = {
             tooltipAccessApps: 'Es werden die monatlichen bzw. jährlichen Gesamtzugriffe auf die Internet- und Intranet-Anwendungen (Apps) des LGV in einem historischen Zeitverlauf angezeigt.\n' +
              'Welche Apps dazu gehören erfahren Sie in den Metadatenkatalogen:\n' +
              'Link für Internet-Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
-             'Link für Intranet-Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
+             'Link für Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
              'Quelle: Auswertung der awstats',
 
 
@@ -173,7 +173,7 @@ export const messages = {
             tooltipAccessApps: 'Es werden die monatlichen bzw. jährlichen Gesamtzugriffe auf die Internet- und Intranet-Anwendungen (Apps) des LGV in einem historischen Zeitverlauf angezeigt.\n' +
              'Welche Apps dazu gehören erfahren Sie in den Metadatenkatalogen:\n' +
              'Link für Internet-Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
-             'Link für Intranet-Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
+             'Link für Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
              'Quelle: Auswertung der awstats',
 
             privacy: 'Data privacy',

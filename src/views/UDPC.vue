@@ -160,7 +160,7 @@
       </div>
       <div class="row ">
         <div class="col-lg-4 col-md-6 py-2">
-          <!-- Anzahl nach -->
+          <!-- Anzahl Datensätze nach -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
@@ -198,7 +198,7 @@
           </dashboard-tile>
         </div>
         <div class="col-lg-4 col-md-6 py-2">
-          <!-- Anzahl total -->
+          <!-- Anzahl Datensätze total -->
           <dashboard-tile data-background-color="blue">
             <template slot="header">
               <div class="info-icon-holder"
