@@ -86,9 +86,7 @@ export const messages = {
 
 
             privacy: 'Datenschutz',
-            legal: 'Impressum',
-            toolTipPrivacy: 'Privacy text',
-            toolTipLegal: 'Legal text'
+            legal: 'Impressum'
         }
     },
     en: {
@@ -177,9 +175,7 @@ export const messages = {
              'Quelle: Auswertung der awstats',
 
             privacy: 'Data privacy',
-            legal: 'Legal notice',
-            toolTipPrivacy: 'Privacy text',
-            toolTipLegal: 'Legal text'
+            legal: 'Legal notice'
         }
     }
 };
