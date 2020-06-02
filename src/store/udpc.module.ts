@@ -49,7 +49,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+        fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean, tag: string[] }) => {
             const chartId = 'totalDatasetsCount';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
             if (!changed) return;
@@ -59,7 +59,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
             const currentMonth = new Utils().date.getCurrentMonth();
 
-            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, [], tagNot, params.totalsType, 'year', 100);
+            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, params.tag, tagNot, params.totalsType, 'year', 100);
             const aggregations = elasticResponse.aggregations;
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);

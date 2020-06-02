@@ -967,12 +967,14 @@ export default class UDPC extends AbstractDashboard {
     }
 
     async fetchTotalsByType() {
-        const totalsType = this.activeTabs.dataSetsByType;
+        // Sensordatasets are a subset of datasets filtered by tag
+        const totalsType = this.activeTabs.dataSetsByType === 'sensordatasets' ? 'datasets' : this.activeTabs.dataSetsByType;
         const theme = this.filters.theme;
         const org = this.filters.org;
         const isIncludeBuildPlans = totalsType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
+        const tag = this.activeTabs.dataSetsByType === 'sensordatasets' ? ['sensordata'] : [];
 
-        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans });
+        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans, tag });
     }
 
     async fetchTops() {
