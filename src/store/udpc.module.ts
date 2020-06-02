@@ -7,8 +7,7 @@ const initialState: UDPCState = {
     dashboardData: {},
     filteredData: {},
     filters: {},
-    loading: false,
-    hmdkUrl: 'https://metaver.de/trefferanzeige?docuuid='
+    loading: false
 };
 
 const udpcModule: Module<UDPCState, RootState> = {
@@ -84,20 +83,23 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], ['basemap'], params.topTopic, 'month', 10);
             const aggregations = elasticResponse.aggregations;
-            const topX = aggregations.top_x.buckets;
+            const topX = aggregations?.top_x?.buckets;
 
             const details: DidYouKnowData = {
                 items: [],
                 action: null
             };
-            topX.map((item: any) => details.items.push({label: item.key, link: item.md_id.buckets[0].key}));
+            topX.map((item: any) => details.items.push({
+                label: item.key,
+                link: params.topTopic !== 'downloads' ? item.md_id?.buckets?.[0]?.key : item.key
+            }));
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
             context.commit('SET_FILTERED_DATA', [chartId, {
                 labels: topX.map((item: any) => item.key),
                 datasets: [{
                     data: topX.map((item: any) => item.total_hits.value),
-                    md_id: topX.map((item: any) => item.md_id.buckets[0] ? item.md_id.buckets[0].key : undefined)
+                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
                 }]
             }]);
             context.commit('SET_FILTERED_DATA', [chartId+'-overlay-details', details]);

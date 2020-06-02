@@ -290,7 +290,7 @@
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
                                       :chart-options="chartOptions.dataSetsTopX"
                                       :is-standard-tooltips="true" 
-                                      :link-prefix="hmdkLink" />
+                                      :link-prefix="urls.hmdk" />
               </div>
             </template>
             <template slot="footer" />
@@ -476,8 +476,8 @@
                   :header="$t('udpc.map')"
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
-                  :header="$t('udpc.top10')"
-                  :html="didYouKnowDataToHtml(overlayDataTopX, $t('udpc.tooltipTopX'))" />
+                  :header="$t(`udpc.top10_${activeTabs.tops}`)"
+                  :html="didYouKnowDataToHtml(overlayDataTopX, $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
     <info-overlay ref="tooltip-downloads"
                   :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
@@ -540,7 +540,10 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
     updateMapOnInterval = true;
-    hmdkLink = null;
+    urls = {
+      hmdk: 'https://metaver.de/trefferanzeige?docuuid=',
+      daten_hh: 'http://daten-hamburg.de'
+    }
 
     mapData: MapData = {
         services: servicesConfig,
@@ -728,8 +731,6 @@ export default class UDPC extends AbstractDashboard {
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
         this.fetchRecentDatasets();
-
-        this.hmdkLink = this.$store.state.udpc.hmdkUrl;
 
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
@@ -1131,10 +1132,11 @@ export default class UDPC extends AbstractDashboard {
     }
 
     didYouKnowDataToHtml(inputData: DidYouKnowData, wrapper?: string): Element {
+      const linkPrefix = this.activeTabs.tops !== "downloads" ? this.urls.hmdk : this.urls.daten_hh
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
-          linkPrefix: this.hmdkLink
+          linkPrefix
         }
       });
       instance.$mount();
