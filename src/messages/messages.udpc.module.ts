@@ -12,6 +12,9 @@ export const messages = {
             includeMapHits: 'Hintergrundkarte mit einbeziehen',
             map: 'Karte',
             top10: 'Top 10 des Monats',
+            top10_datasets: 'Top 10 Datensätze des Monats',
+            top10_apps: 'Top 10 Apps des Monats',
+            top10_downloads: 'Top 10 Downloads des Monats',
             download: 'Downloads',
             accessTopicData: 'Zugriffe',
             accessApps: 'Zugriffe Apps',
@@ -66,10 +69,26 @@ export const messages = {
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipTopX: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
-             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.\n' +
-             'Die Top 10 Datensätze sind:</p>' +
+             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+             '<h6>Die Top 10 Datensätze sind:</h6>' +
+             'PLATZHALTER\n'+
+             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
+             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             'Quelle: Auswertung der awstats</p>',
+            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+             'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
+             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+             '<h6>Die Top 10 Apps sind:</h6>' +
+             'PLATZHALTER\n'+
+             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
+             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             'Quelle: Auswertung der awstats</p>',
+            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+             'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
+             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+             '<h6>Die Top 10 Downloads sind:</h6>' +
              'PLATZHALTER\n'+
              '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
              'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
@@ -102,6 +121,9 @@ export const messages = {
             includeMapHits: 'Include background map',
             map: 'Map',
             top10: 'Monthly top 10',
+            top10_datasets: 'Monthly top 10 Datasets',
+            top10_apps: 'Monthy top 10 Apps',
+            top10_downloads: 'Monthly top 10 Downloads',
             download: 'Downloads',
             accessTopicData: 'Access application data',
             accessApps: 'Access Apps',
@@ -156,10 +178,26 @@ export const messages = {
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipTopX: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
-             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.\n' +
-             'Die Top 10 Datensätze sind:</p>' +
+             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+             '<h6>Die Top 10 Datasets sind:</h6>' +
+             'PLATZHALTER\n'+
+             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
+             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             'Quelle: Auswertung der awstats</p>',
+            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+             'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
+             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+             '<h6>Die Top 10 Apps sind:</h6>' +
+             'PLATZHALTER\n'+
+             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
+             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             'Quelle: Auswertung der awstats</p>',
+            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+             'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
+             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+             '<h6>Die Top 10 Downloads sind:</h6>' +
              'PLATZHALTER\n'+
              '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
              'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
