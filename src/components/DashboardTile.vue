@@ -54,7 +54,7 @@ export default class DashboardTile extends Vue {
     .md-card-content {
         padding: 0 !important;
         margin: 15px 0 0 0;
-        // height: 100%;
+        height: 100%;
     }
 
     .md-card-actions {
