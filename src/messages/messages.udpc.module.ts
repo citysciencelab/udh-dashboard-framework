@@ -102,10 +102,9 @@ export const messages = {
              'Link für Internet-Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
              'Link für Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
              'Quelle: Auswertung der awstats',
-
-
             privacy: 'Datenschutz',
-            legal: 'Impressum'
+            legal: 'Impressum',
+            legalEU: 'Dieses Projekt wurde im Rahmen der Finanzhilfevereinbarung Nr. 731297 vom Forschungs- und Innovationsprogramm Horizont 2020 der Europäischen Union teilfinanziert.'
         }
     },
     en: {
@@ -211,9 +210,9 @@ export const messages = {
              'Link für Internet-Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
              'Link für Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
              'Quelle: Auswertung der awstats',
-
             privacy: 'Data privacy',
-            legal: 'Legal notice'
+            legal: 'Legal notice',
+            legalEU: 'This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 731297.'
         }
     }
 };

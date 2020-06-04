@@ -420,7 +420,7 @@
 
     <md-bottom-bar class="udpc-bottom-bar">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row logo-row">
           <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
             <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Datenschutz.aspx"
                target="_blank">Datenschutz</a>
@@ -444,6 +444,11 @@
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row eu-row justify-content-end">
+          <div class="col-3 eu-legal-notice">
+            {{ $t('udpc.legalEU') }}
           </div>
         </div>
       </div>
@@ -1015,7 +1020,6 @@ export default class UDPC extends AbstractDashboard {
             theme: this.filters.theme,
             org: this.filters.org
         };
-        console.log(params)
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
@@ -1457,9 +1461,19 @@ i {
     color: $hamburg-blue-dark;
     box-shadow: 0px -3px 6px #00000029;
 
-    .row {
+    .logo-row {
         min-height: 122px;
     }
+
+    .eu-row {
+        min-height: 90px;
+
+        .eu-legal-notice {
+          font-size: 9pt;
+          text-align: left;
+        }
+    }
+
 
     .links-bottom-left {
         text-align: left;
