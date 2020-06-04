@@ -498,7 +498,6 @@ import DashboardTile from '../components/DashboardTile.vue';
 import DidYouKnow from '../components/DidYouKnow.vue';
 import DidYouKnowDataList from '../components/DidYouKnowDataList.vue';
 import MultiSelect from '../components/MultiSelect.vue';
-import SnackBar from '../components/SnackBar.vue';
 import ConfirmDialog from '../components/ConfirmDialog.vue';
 import InfoOverlay from '../components/InfoOverlay.vue';
 import RangeSlider from '../components/RangeSlider.vue';
@@ -1091,30 +1090,8 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
-    testSnackBar() {
-        let options = {
-            message: 'Important bottom message',
-            position: 'center',
-            duration: 10000,
-            showSnackbar: true
-        };
-
-        const snack = document.getElementById('snack');
-        if (!snack) {
-            return;
-        }
-        new Vue({
-            el: snack.querySelector('div') || undefined,
-            render: h => h(SnackBar, { props: options })
-        });
-    }
-
     dialogResult() {
         this.agreeDialogActive = false;
-    }
-
-    changeLanguage(lang: string) {
-        this.$i18n.locale = lang
     }
 
     showDataInMap(dataset: {label: string, link: string}) {
