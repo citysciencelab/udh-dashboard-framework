@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import elastic from '../utils/elastic';
+import elastic from '../connectors/elastic';
 import Utils from '@/utils/utils'
 import Axios from "axios";
 

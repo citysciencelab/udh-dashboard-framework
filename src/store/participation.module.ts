@@ -1,7 +1,7 @@
 import { Module } from 'vuex';
 import {countData} from '@/utils/utils';
-import {FeatureSet} from "@/utils/wfs";
-import wfs from "@/utils/wfs";
+import {FeatureSet} from "@/connectors/wfs";
+import wfs from "@/connectors/wfs";
 
 const wfsUrl: string = 'HH_WFS_Beteiligungsverfahren';
 const wfsTypename = 'beteiligungsverfahren';

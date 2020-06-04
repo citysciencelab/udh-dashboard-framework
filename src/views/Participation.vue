@@ -145,7 +145,7 @@ import { messages } from '@/messages/messages.participation.module';
 import MasterPortalMap from "@/components/MasterPortalMap.vue";
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
-import { FeatureSet } from '../utils/wfs';
+import { FeatureSet } from '../connectors/wfs';
 
 @Component({
     components: {

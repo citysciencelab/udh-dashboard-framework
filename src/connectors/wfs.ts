@@ -1,5 +1,5 @@
 import WFS from 'ol/format/WFS';
-import {registerProjections} from './projections';
+import {registerProjections} from '@/utils/projections';
 
 export default {
     get: (wfsUrl: string, wfsTypename: string, options: { [key: string]: string|string[]  }) => {
