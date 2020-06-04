@@ -37,10 +37,22 @@ npm run lint
 ### Creating a new dashboard
 
 Try to reuse existing components as much as possible.
-Create a new view in the views folder and add a path to the routing.js file.
+Create a new view in the views folder and add a path to the router.js file.
 Create a new vuex storage module in the store folder.
 The storage module should handle your view specific data request and processing.
-The storage module should be lazy loaded in the corresponding view - this way it will only be loaded when used.
+The storage module should be lazy loaded in the corresponding view:
+```
+    this.$store.registerModule('storename', storeVariable);
+```
+This way it will only be loaded when used.
+
+
+### Data connectors
+
+Many dashboards will get the underlying data from a variety of sources.
+The connectors should be as reusable as possible so that they dont have to be recreated again for every project.
+They will all be in the connectors folder.
+
 
 ### Including a Vue component in the Masterportal Backbone environment
 
