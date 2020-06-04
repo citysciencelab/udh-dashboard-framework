@@ -95,12 +95,27 @@ const udpcModule: Module<UDPCState, RootState> = {
             }));
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
-            context.commit('SET_FILTERED_DATA', [chartId, {
-                labels: topX.map((item: any) => item.key),
-                datasets: [{
+            let dataSets = [{}];
+            if (params.topTopic === 'datasets') {
+                dataSets = [{
+                    label: 'internet',
+                    data: topX.map((item: any) => item.total_internet.value),
+                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
+                },{
+                    label: 'intranet',
+                    backgroundColor : '#7FADD4',
+                    data: topX.map((item: any) => item.total_intranet.value),
+                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
+                }]
+            } else {
+                dataSets = [{
                     data: topX.map((item: any) => item.total_hits.value),
                     md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
                 }]
+            }
+            context.commit('SET_FILTERED_DATA', [chartId, {
+                labels: topX.map((item: any) => item.key),
+                datasets: dataSets
             }]);
             context.commit('SET_FILTERED_DATA', [chartId+'-overlay-details', details]);
             context.commit('SET_LOADING', false);
@@ -113,14 +128,28 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const elasticResponse = await elastic.udpcQuery(params.min, params.max, params.theme, params.org, [], params.tag_not, params.category, params.unit);
             const aggregations = elasticResponse.aggregations;
+            let dataSets = [{}];
+
+            if (params.chartId === 'totalDatasets') {
+                dataSets = [{
+                    label: 'internet',
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_internet.value)
+                },{
+                    label: 'intranet',
+                    backgroundColor : '#7FADD4',
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_intranet.value)
+                }]
+            } else {
+                dataSets = [{
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value)
+                }]
+            }
 
             context.commit('SET_FILTERED_DATA', [params.chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
                     return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
                 }),
-                datasets: [{
-                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value)
-                }]
+                datasets: dataSets
             }]);
         },
         fetchFacts: async (context) => {

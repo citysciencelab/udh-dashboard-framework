@@ -489,7 +489,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import Component from 'vue-class-component';
 import udpcStore from '../store/udpc.module';
 import { messages } from '@/messages/messages.udpc.module';
@@ -786,6 +785,8 @@ export default class UDPC extends AbstractDashboard {
                       mutationData.datasets[0]['label'] = 'Zugriffe';
                       mutationData.datasets[0]['backgroundColor'] = '#196CB1';
                       this.chartData.dataSetsTopX = mutationData;
+                      this.chartOptions.dataSetsTopX.scales!.xAxes![0].stacked = this.activeTabs.tops === 'datasets';
+                      this.chartOptions.dataSetsTopX.scales!.yAxes![0].stacked = this.activeTabs.tops === 'datasets';
                       break;
                     }
                     case 'totalDatasetsRangeTop-overlay-details': {
@@ -802,8 +803,12 @@ export default class UDPC extends AbstractDashboard {
                       this.chartData.totalDownloads = mutationData;
                       break;
                     }
-                    case 'totalDatasets': {mutationData.datasets[0].backgroundColor = '#196CB1';
+                    case 'totalDatasets': {
+                      mutationData.datasets[0].backgroundColor = '#196CB1';
                       this.chartData.totalDatasets = mutationData;
+                      // For stacking internet and intranet
+                      this.chartOptions.totalDatasets.scales!.xAxes![0].stacked = true;
+                      this.chartOptions.totalDatasets.scales!.yAxes![0].stacked = true;
                       break;
                     }
                     case 'totalApps': {mutationData.datasets[0].backgroundColor = '#40648B';
@@ -1010,6 +1015,7 @@ export default class UDPC extends AbstractDashboard {
             theme: this.filters.theme,
             org: this.filters.org
         };
+        console.log(params)
         await this.$store.dispatch('fetchRangefulData', params);
     }
 
