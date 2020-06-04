@@ -447,8 +447,15 @@
           </div>
         </div>
         <div class="row eu-row justify-content-end">
-          <div class="col-3 eu-legal-notice">
-            {{ $t('udpc.legalEU') }}
+          <div class="offset-xl-5 col-xl-5 eu-legal-notice">
+            <div class="row">
+              <div class="col-6 eu-image">
+                <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
+              </div>
+              <div class="col-6">
+                      {{ $t('udpc.legalEU') }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1469,8 +1476,19 @@ i {
         min-height: 90px;
 
         .eu-legal-notice {
-          font-size: 9pt;
-          text-align: left;
+            font-size: 9pt;
+            text-align: left;
+
+            .eu-image {
+                padding-right: 0;
+
+                img {
+                    float: right;
+                    height: 40px;
+                }
+            }
+
+
         }
     }
 
