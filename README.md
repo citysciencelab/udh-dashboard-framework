@@ -54,6 +54,14 @@ The connectors should be as reusable as possible so that they dont have to be re
 They will all be in the connectors folder.
 
 
+### Internationalization
+
+vue-i18n package is used to change the applications language
+The corresponding messages are stored in an individual file for each dashboard in the /messages folder and lazy loaded 
+Messages that will be used by a multitude components, should be kept in the messages.module.ts
+A changeLanguage method is in the AbstractDashboard and can be reused
+
+
 ### Including a Vue component in the Masterportal Backbone environment
 
 The vue dashboard framework has been designed so that single components can be included in a backbone environment.
