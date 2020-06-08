@@ -447,13 +447,13 @@
           </div>
         </div>
         <div class="row eu-row justify-content-end">
-          <div class="offset-xl-5 col-xl-5 eu-legal-notice">
+          <div class="offset-xl-6 col-xl-6 col-lg-6 eu-legal-notice">
             <div class="row">
-              <div class="col-6 eu-image">
+              <div class="col-xl-7 col-lg-2 eu-image col-3">
                 <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
               </div>
-              <div class="col-6">
-                      {{ $t('udpc.legalEU') }}
+              <div class="col-xl-5 col-lg-10 col-9">
+                  {{ $t('udpc.legalEU') }}
               </div>
             </div>
           </div>
@@ -1274,6 +1274,10 @@ i {
 
         .md-ripple {
             padding: 0 10px;
+
+          @media (max-width: 375px) {
+            padding-left: 5px;
+          }
         }
 
         .md-button-content {
