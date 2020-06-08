@@ -191,7 +191,7 @@ export default class Utils implements IUtils {
             // API requires 'YYYY-MM' format
             if (params.unit === 'year') {
                 if (params.min.length === 4) {
-                    params.min += '-12';
+                    params.min += '-01';
                 }
                 if (params.max.length === 4) {
                     params.max += '-12';
