@@ -40,12 +40,20 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], tagNot, 'datasets');
             const aggregations = elasticResponse.aggregations;
+            let dataSets = [{
+                tree: aggregations[params.totalsTopic].buckets
+            }];
+            if (params.totalsTopic === 'organization') {
+                for (const dataSet of dataSets[0].tree) {
+                    if (Object.prototype.hasOwnProperty.call(dataSet, 'label_org')) {
+                        dataSet.label_short = dataSet.label_org.buckets[0].key;
+                    }
+                }
+            }
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
             context.commit('SET_FILTERED_DATA', [chartId, {
-                datasets: [{
-                    tree: aggregations[params.totalsTopic].buckets
-                }]
+                datasets: dataSets
             }]);
             context.commit('SET_LOADING', false);
         },

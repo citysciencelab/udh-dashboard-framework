@@ -22,7 +22,11 @@ interface MapData {
   overlay?: string
 }
 
-type ChartOptions = { dim: string, dim2: string };
+type D3ChartOptions = {
+  labelKey: string,
+  toolTipKey?: string,
+  metric: string
+};
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
 

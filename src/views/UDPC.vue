@@ -181,8 +181,10 @@
               </md-tabs>
               <div class="chart-holder">
                 <tree-map-chart-d3 :ds="chartData.dataSetsByTopic"
-                                   holder-element="chart-holder" metric="doc_count"
-                                   descriptor="key" selector="chart-tree-d3"
+                                   holder-element="chart-holder"
+                                   :metric="d3ChartOptions.dataSetsByTopic.metric"
+                                   :descriptor="d3ChartOptions.dataSetsByTopic.labelKey" selector="chart-tree-d3"
+                                   :toolTipKey="d3ChartOptions.dataSetsByTopic.toolTipKey"
                                    @click="onFilterSelectFromTreeMap($event)" />
               </div>
             </template>
@@ -514,7 +516,6 @@ import InfoOverlay from '../components/InfoOverlay.vue';
 import RangeSlider from '../components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
-import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 import Color from "color";
 import MasterPortalMap from '../components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
@@ -534,7 +535,6 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
         InfoOverlay,
         BarChart,
         BarChartHorizontal,
-        TreeMapChart,
         MasterPortalMap
     }
 })
@@ -641,16 +641,15 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
+    d3ChartOptions: { [key: string]: D3ChartOptions} = {
+      dataSetsByTopic: {
+        labelKey: '',
+        metric: 'doc_count',
+        toolTipKey: undefined
+      }
+    };
+
     chartOptions: { [key: string]: Chart.ChartOptions } = {
-        dataSetsByTopic: {
-            maintainAspectRatio: false,
-            title: {
-                display: false
-            },
-            legend: {
-                display: false
-            }
-        },
         dataSetsByType: {
             maintainAspectRatio: false,
             title: {
@@ -744,7 +743,16 @@ export default class UDPC extends AbstractDashboard {
                 switch (mutation.payload[0]) {
                     case 'totalTopicDatasets': {
                       mutationData.datasets[0]['key'] = 'doc_count';
-                      mutationData.datasets[0]['groups'] = ['key'];
+                      if (Object.prototype.hasOwnProperty.call(mutationData.datasets[0].tree[0], 'label_short')) {
+                        this.d3ChartOptions.dataSetsByTopic.labelKey = 'label_short';
+                        this.d3ChartOptions.dataSetsByTopic.toolTipKey = 'key';
+                        mutationData.datasets[0]['groups'] = ['label_short'];
+                        console.log("blubb")
+                      } else {
+                        this.d3ChartOptions.dataSetsByTopic.toolTipKey = undefined;
+                        this.d3ChartOptions.dataSetsByTopic.labelKey = 'key';
+                        mutationData.datasets[0]['groups'] = ['key'];
+                      }
                       mutationData.datasets[0]['spacing'] = 2;
                       mutationData.datasets[0]['borderWidth'] = 0.5;
                       mutationData.datasets[0]['fontColor'] = 'white';
