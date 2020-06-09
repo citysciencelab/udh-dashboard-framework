@@ -27,8 +27,8 @@ export default class SnackBar extends Vue {
     }
 
     /**
-       Example of usage below - e.g. can be copied to AbstractDasboard
-      The snackBar html element is in the App.vue and can be reused by all component
+       Example of usage below. Should be copied to AbstractDasboard. Can then be accessed via all Dashboards
+       The snackBar html element is in the App.vue and can be reused by all component
      **/
 
     /**

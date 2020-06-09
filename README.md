@@ -75,5 +75,12 @@ Uses the lightweight [MasterportalAPI](https://bitbucket.org/geowerkstatt-hambur
 Vue Dashboard uses the MasterportalAPI fork from [CityScienceLab](https://bitbucket.org/dasc3290/masterportalapi-csl.git).
 A full documentation of all MasterportalAPI features and their interaction with the vue dashboard can be found there.
 
+### Charting
+
+Since the LGV uses chartJS as well as D3, you can find implementations of both libraries in the components/charts folder.
+For simple diagrams chartJ should provide sufficient functionality. If however a special diagram-type or customization is necessary, D3 should be the library of choice.
+Currently all chartJS components are functional. Of the D3 components only the TreeMapChartD3 is working. The rest of the examples are included but not ready to use.
+
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

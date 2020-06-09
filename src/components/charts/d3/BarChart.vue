@@ -16,6 +16,11 @@ import AbstractChartD3 from './AbstractChartD3.vue';
 
 const d3tip = _d3tip as () => Tooltip;
 
+/**
+ * FIX: This Chart is not ready to use. Of the D3 Components, only the TreeMap is currently working.
+ * Only minor changes should be necessary to run this component.
+ */
+
 @Component({})
 export default class BarChart extends AbstractChartD3 {
     axisPadding = 10; // px
