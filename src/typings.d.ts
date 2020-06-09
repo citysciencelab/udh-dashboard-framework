@@ -23,6 +23,8 @@ interface MapData {
 }
 
 type D3ChartOptions = {
+  dim: string,
+  dim2: string
   labelKey: string,
   toolTipKey?: string,
   metric: string

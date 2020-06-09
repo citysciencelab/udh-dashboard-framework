@@ -16,10 +16,10 @@ const udpcModule: Module<UDPCState, RootState> = {
     actions: {
         fetchRecentDatasets: async (context) => {
             const chartId = 'recentDatasets';
-
             context.commit('SET_LOADING', true);
+            const lastMonth = new Utils().date.getLastMonth();
 
-            const elasticResponse = await elastic.udpcQuery('', '', [], [], [], [], 'datasets', undefined, 10, 'change_date');
+            const elasticResponse = await elastic.udpcQuery(lastMonth, lastMonth, [], [], [], [], 'datasets', undefined, 10, 'create_date', ['online']);
 
             context.commit('SET_FILTERED_DATA', [chartId, {
                 items: elasticResponse.hits.hits

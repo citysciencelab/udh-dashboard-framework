@@ -184,7 +184,7 @@
                                    holder-element="chart-holder"
                                    :metric="d3ChartOptions.dataSetsByTopic.metric"
                                    :descriptor="d3ChartOptions.dataSetsByTopic.labelKey" selector="chart-tree-d3"
-                                   :toolTipKey="d3ChartOptions.dataSetsByTopic.toolTipKey"
+                                   :tool-tip-key="d3ChartOptions.dataSetsByTopic.toolTipKey"
                                    @click="onFilterSelectFromTreeMap($event)" />
               </div>
             </template>
@@ -455,7 +455,7 @@
                 <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
               </div>
               <div class="col-xl-5 col-lg-10 col-9">
-                  {{ $t('udpc.legalEU') }}
+                {{ $t('udpc.legalEU') }}
               </div>
             </div>
           </div>
@@ -643,6 +643,8 @@ export default class UDPC extends AbstractDashboard {
 
     d3ChartOptions: { [key: string]: D3ChartOptions} = {
       dataSetsByTopic: {
+        dim: '',
+        dim2: '',
         labelKey: '',
         metric: 'doc_count',
         toolTipKey: undefined

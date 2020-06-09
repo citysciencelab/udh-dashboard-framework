@@ -4,6 +4,7 @@
 
   export default abstract class AbstractChartD3 extends Vue {
     @Prop() ds!: Dataset;
+    @Prop() options!: D3ChartOptions;
     @Prop() title!: string;
     @Prop() metric!: string;
     @Prop() descriptor!: string;
