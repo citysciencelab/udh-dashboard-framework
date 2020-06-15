@@ -255,6 +255,8 @@ export default class Participation extends AbstractDashboard {
 
     resetFilters() {
         this.$store.commit('SET_FILTERS_NONE');
+        (this.$refs.districtSelect as MultiSelect).resetSelection();
+        (this.$refs.originatorSelect as MultiSelect).resetSelection();
         this.recalculate();
     }
 

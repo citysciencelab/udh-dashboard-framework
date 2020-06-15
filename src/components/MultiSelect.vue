@@ -37,10 +37,27 @@ export default class MultiSelect extends Vue {
         this.isOnceSelected = true;
     }
 
+    /*
+     * Communicates the new selection to the assigned method that implements this component
+     */
     closed(force: boolean) {
         if (this.isOnceSelected || force) {
             this.$emit('new_selection', [this.identifier, this.selectedData]);
         }
+    }
+
+    /*
+     * In case we want to trigger a recalculation from outside
+     */
+    forceUpdate() {
+        this.$forceUpdate();
+    }
+
+    /*
+     * Resets selected filter values
+     */
+    public resetSelection() {
+      this.selectedData = [];
     }
 }
 </script>
