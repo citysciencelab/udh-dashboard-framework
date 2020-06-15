@@ -504,20 +504,20 @@
 
 <script lang="ts">
 import Component from 'vue-class-component';
-import udpcStore from '../store/udpc.module';
+import udpcStore from '@/store/udpc.module';
 import { messages } from '@/messages/messages.udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
-import DashboardTile from '../components/DashboardTile.vue';
-import DidYouKnow from '../components/DidYouKnow.vue';
-import DidYouKnowDataList from '../components/DidYouKnowDataList.vue';
-import MultiSelect from '../components/MultiSelect.vue';
-import ConfirmDialog from '../components/ConfirmDialog.vue';
-import InfoOverlay from '../components/InfoOverlay.vue';
-import RangeSlider from '../components/RangeSlider.vue';
+import DashboardTile from '@/components/DashboardTile.vue';
+import DidYouKnow from '@/components/DidYouKnow.vue';
+import DidYouKnowDataList from '@/components/DidYouKnowDataList.vue';
+import MultiSelect from '@/components/MultiSelect.vue';
+import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import InfoOverlay from '@/components/InfoOverlay.vue';
+import RangeSlider from '@/components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
 import Color from "color";
-import MasterPortalMap from '../components/MasterPortalMap.vue'
+import MasterPortalMap from '@/components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 import Utils from "@/utils/utils";
@@ -1155,7 +1155,7 @@ export default class UDPC extends AbstractDashboard {
 </script>
 
 <style lang="scss">
-@import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
+@import '@/assets/scss/udpc-dashboard/_fonts_colors.scss';
 
 * {
     font-family: 'Roboto';

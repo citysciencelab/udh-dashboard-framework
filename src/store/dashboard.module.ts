@@ -1,6 +1,6 @@
 import { Module } from 'vuex';
 import Chart from 'chart.js';
-import { FeatureSet } from '../connectors/wfs';
+import { FeatureSet } from '@/connectors/wfs';
 
 const initialState: DashboardState = {
     dashboardData: {},

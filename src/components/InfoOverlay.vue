@@ -54,7 +54,7 @@ export default class InfoOverlay extends Vue {
 </script>
 
 <style scoped lang="scss">
-    @import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
+    @import '@/assets/scss/udpc-dashboard/_fonts_colors.scss';
 
     .md-dialog {
         color: black;

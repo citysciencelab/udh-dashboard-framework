@@ -8,12 +8,12 @@ export default new Router({
     {
       path: '/udpc',
       name: 'udpc',
-      component: () => import(/* webpackChunkName: "udpc" */ '../views/UDPC.vue')
+      component: () => import(/* webpackChunkName: "udpc" */ '@/views/UDPC.vue')
     },
     {
       path: '/participation',
       name: 'participation',
-      component: () => import(/* webpackChunkName: "udpc" */ '../views/Participation.vue')
+      component: () => import(/* webpackChunkName: "udpc" */ '@/views/Participation.vue')
     }
   ]
 })

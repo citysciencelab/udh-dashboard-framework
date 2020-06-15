@@ -132,18 +132,18 @@
 
 <script lang="ts">
 import Component from 'vue-class-component';
-import DashboardTile from '../components/DashboardTile.vue';
-import MultiSelect from '../components/MultiSelect.vue';
-import BarChart from '../components/charts/chartjs/BarChart.vue';
-import HorizontalBarChart from '../components/charts/chartjs/BarChartHorizontal.vue';
-import TreeMapChart from '../components/charts/chartjs/TreeMap.vue';
+import DashboardTile from '@/components/DashboardTile.vue';
+import MultiSelect from '@/components/MultiSelect.vue';
+import BarChart from '@/components/charts/chartjs/BarChart.vue';
+import HorizontalBarChart from '@/components/charts/chartjs/BarChartHorizontal.vue';
+import TreeMapChart from '@/components/charts/chartjs/TreeMap.vue';
 import partStore from '@/store/participation.module';
 import AbstractDashboard from '@/views/AbstractDashboard.vue';
 import { messages } from '@/messages/messages.participation.module';
 import MasterPortalMap from "@/components/MasterPortalMap.vue";
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
-import { FeatureSet } from '../connectors/wfs';
+import { FeatureSet } from '@/connectors/wfs';
 
 @Component({
     components: {
