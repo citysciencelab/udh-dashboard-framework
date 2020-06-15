@@ -6,7 +6,8 @@
     "start": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit src/**/*.spec.js",
   },
   "dependencies": {
     "ant-design-vue": "^1.4.12",
@@ -47,6 +48,7 @@
     "@vue/cli": "^4.2.3",
     "@vue/cli-plugin-eslint": "^4.2.3",
     "@vue/cli-plugin-typescript": "^4.2.3",
+    "@vue/cli-plugin-unit-mocha": "^4.4.4",
     "@vue/cli-service": "^4.2.3",
     "@vue/eslint-config-typescript": "^5.0.2",
     "eslint": "^6.8.0",
