@@ -22,7 +22,13 @@ interface MapData {
   overlay?: string
 }
 
-type ChartOptions = { dim: string, dim2: string };
+type D3ChartOptions = {
+  dim: string,
+  dim2: string
+  labelKey: string,
+  toolTipKey?: string,
+  metric: string
+};
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
 
@@ -42,7 +48,6 @@ interface DashboardState {
 
 interface UDPCState extends DashboardState {
   //Potential specific type definitions
-  hmdkUrl: string;
 }
 
 interface ParticipationState extends DashboardState {

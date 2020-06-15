@@ -67,9 +67,7 @@ import {Tooltip} from "d3/types/d3";
       const tip = d3tip()
        .attr('class', 'd3-tip')
        .offset([-8, 0])
-       .html(function (d: Datum) {
-         return d['id'] + ': ' + d['value'];
-       });
+       .html(this.showToolTip);
       svg.call(tip);
 
       var cell = svg.selectAll('g')
@@ -137,6 +135,10 @@ import {Tooltip} from "d3/types/d3";
       if (this.title) {
         this.$utils.chart.addTitle(this.title, svg, this.$data.width);
       }
+    }
+
+    showToolTip(d: Datum) {
+      return (this.toolTipKey ? d['data'][this.toolTipKey] : d['id']) + ': ' + d['value'];
     }
 
     clickChartElement(d: Datum, i: number) {

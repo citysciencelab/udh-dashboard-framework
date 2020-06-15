@@ -18,8 +18,9 @@ const elastic = {
      * @param interval string, zeitliche Aggregation pro Monat oder pro Jahr, {month|year}, default: month, bei der category "visitors" liefert der Wert "year" keine sinnvollen Ergebnisse.
      * @param limit int, steuert alle Ergebnismengen (raw features und top_x Aggregation), default: 10
      * @param sortBy string, Feld, nach dem die raw features sortiert werden sollen, default: "change_date", {jedes feld der raw features}
+     * @param status string, Feld, nach dem die raw features sortiert werden sollen, nur für neueste datensätze im einsatz, default: []
      */
-    async udpcQuery(from: string, to: string, theme: string[], org: string[], tag: string[], tag_not: string[], category?: string, interval?: string, limit?: number, sortBy?: string) {
+    async udpcQuery(from: string, to: string, theme: string[], org: string[], tag: string[], tag_not: string[], category?: string, interval?: string, limit?: number, sortBy?: string, status?: string[]) {
         theme = elastic.validateArray(theme);
         org = elastic.validateArray(org);
         tag = elastic.validateArray(tag);
@@ -29,6 +30,7 @@ const elastic = {
         elastic.validateCategory(category);
         elastic.validateInterval(interval);
         elastic.validateSortBy(sortBy);
+        status = status ? elastic.validateArray(status) : [];
 
         const params = { from, to, theme, org, tag, tag_not, category, interval, limit, sortBy };
         const source = JSON.stringify({ id: 'udpc_query', params: params });
@@ -58,7 +60,7 @@ const elastic = {
 
     validateSortBy: (sortBy?: string) => {
         if (sortBy && ['create_date', 'change_date', 'date'].indexOf(sortBy) === -1) {
-            throw new Error(`Invalid interval. Must be 'create_date', 'change_date' or 'date'.`);
+            throw new Error(`Invalid sortBy. Must be 'create_date', 'change_date' or 'date'.`);
         }
     },
 

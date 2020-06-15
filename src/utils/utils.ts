@@ -194,7 +194,7 @@ export default class Utils implements IUtils {
                     params.min += '-01';
                 }
                 if (params.max.length === 4) {
-                    params.max += '-01';
+                    params.max += '-12';
                 }
             }
         }

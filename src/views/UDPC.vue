@@ -181,8 +181,10 @@
               </md-tabs>
               <div class="chart-holder">
                 <tree-map-chart-d3 :ds="chartData.dataSetsByTopic"
-                                   holder-element="chart-holder" metric="doc_count"
-                                   descriptor="key" selector="chart-tree-d3"
+                                   holder-element="chart-holder"
+                                   :metric="d3ChartOptions.dataSetsByTopic.metric"
+                                   :descriptor="d3ChartOptions.dataSetsByTopic.labelKey" selector="chart-tree-d3"
+                                   :tool-tip-key="d3ChartOptions.dataSetsByTopic.toolTipKey"
                                    @click="onFilterSelectFromTreeMap($event)" />
               </div>
             </template>
@@ -290,7 +292,7 @@
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
                                       :chart-options="chartOptions.dataSetsTopX"
                                       :is-standard-tooltips="true" 
-                                      :link-prefix="hmdkLink" />
+                                      :link-prefix="urls.hmdk" />
               </div>
             </template>
             <template slot="footer" />
@@ -420,14 +422,12 @@
 
     <md-bottom-bar class="udpc-bottom-bar">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row logo-row">
           <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
-            <span @click="$refs['tooltip-privacy'].show()">
-              {{ $t('udpc.privacy') }}
-            </span>
-            <span @click="$refs['tooltip-legal'].show()">
-              {{ $t('udpc.legal') }}
-            </span>
+            <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Datenschutz.aspx"
+               target="_blank">Datenschutz</a>
+            <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Impressum.aspx "
+               target="_blank">Impressum</a>
           </div>
           <div class="col-xl-6 col-lg-6 align-self-center images-bottom-right">
             <div class="row">
@@ -444,6 +444,18 @@
                   <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
                        alt="UDP">
                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row eu-row justify-content-end">
+          <div class="offset-xl-6 col-xl-6 col-lg-6 eu-legal-notice">
+            <div class="row">
+              <div class="col-xl-7 col-lg-2 eu-image col-3">
+                <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
+              </div>
+              <div class="col-xl-5 col-lg-10 col-9">
+                {{ $t('udpc.legalEU') }}
               </div>
             </div>
           </div>
@@ -476,8 +488,8 @@
                   :header="$t('udpc.map')"
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
-                  :header="$t('udpc.top10')"
-                  :html="didYouKnowDataToHtml(overlayDataTopX, $t('udpc.tooltipTopX'))" />
+                  :header="$t(`udpc.top10_${activeTabs.tops}`)"
+                  :html="didYouKnowDataToHtml(overlayDataTopX, $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
     <info-overlay ref="tooltip-downloads"
                   :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
@@ -487,35 +499,25 @@
     <info-overlay ref="tooltip-access-apps"
                   :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
-
-    <info-overlay ref="tooltip-privacy"
-                  :header="$t('udpc.privacy')"
-                  :text="$t('udpc.toolTipPrivacy')" />
-    <info-overlay ref="tooltip-legal"
-                  :header="$t('udpc.legal')"
-                  :text="$t('udpc.toolTipLegal')" />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import Component from 'vue-class-component';
-import udpcStore from '../store/udpc.module';
+import udpcStore from '@/store/udpc.module';
 import { messages } from '@/messages/messages.udpc.module';
 import AbstractDashboard from "@/views/AbstractDashboard.vue";
-import DashboardTile from '../components/DashboardTile.vue';
-import DidYouKnow from '../components/DidYouKnow.vue';
-import DidYouKnowDataList from '../components/DidYouKnowDataList.vue';
-import MultiSelect from '../components/MultiSelect.vue';
-import SnackBar from '../components/SnackBar.vue';
-import ConfirmDialog from '../components/ConfirmDialog.vue';
-import InfoOverlay from '../components/InfoOverlay.vue';
-import RangeSlider from '../components/RangeSlider.vue';
+import DashboardTile from '@/components/DashboardTile.vue';
+import DidYouKnow from '@/components/DidYouKnow.vue';
+import DidYouKnowDataList from '@/components/DidYouKnowDataList.vue';
+import MultiSelect from '@/components/MultiSelect.vue';
+import ConfirmDialog from '@/components/ConfirmDialog.vue';
+import InfoOverlay from '@/components/InfoOverlay.vue';
+import RangeSlider from '@/components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
-import TreeMapChart from "../components/charts/chartjs/TreeMap.vue";
 import Color from "color";
-import MasterPortalMap from '../components/MasterPortalMap.vue'
+import MasterPortalMap from '@/components/MasterPortalMap.vue'
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 import Utils from "@/utils/utils";
@@ -533,14 +535,16 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
         InfoOverlay,
         BarChart,
         BarChartHorizontal,
-        TreeMapChart,
         MasterPortalMap
     }
 })
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
     updateMapOnInterval = true;
-    hmdkLink = null;
+    urls = {
+      hmdk: 'https://metaver.de/trefferanzeige?docuuid=',
+      daten_hh: 'http://daten-hamburg.de'
+    }
 
     mapData: MapData = {
         services: servicesConfig,
@@ -637,16 +641,17 @@ export default class UDPC extends AbstractDashboard {
         }
     };
 
+    d3ChartOptions: { [key: string]: D3ChartOptions} = {
+      dataSetsByTopic: {
+        dim: '',
+        dim2: '',
+        labelKey: '',
+        metric: 'doc_count',
+        toolTipKey: undefined
+      }
+    };
+
     chartOptions: { [key: string]: Chart.ChartOptions } = {
-        dataSetsByTopic: {
-            maintainAspectRatio: false,
-            title: {
-                display: false
-            },
-            legend: {
-                display: false
-            }
-        },
         dataSetsByType: {
             maintainAspectRatio: false,
             title: {
@@ -729,8 +734,6 @@ export default class UDPC extends AbstractDashboard {
         this.fetchSensorsKPI();
         this.fetchRecentDatasets();
 
-        this.hmdkLink = this.$store.state.udpc.hmdkUrl;
-
         this.$store.subscribe((mutation) => {
             if (!mutation.payload) {
                 return;
@@ -742,7 +745,15 @@ export default class UDPC extends AbstractDashboard {
                 switch (mutation.payload[0]) {
                     case 'totalTopicDatasets': {
                       mutationData.datasets[0]['key'] = 'doc_count';
-                      mutationData.datasets[0]['groups'] = ['key'];
+                      if (Object.prototype.hasOwnProperty.call(mutationData.datasets[0].tree[0], 'label_short')) {
+                        this.d3ChartOptions.dataSetsByTopic.labelKey = 'label_short';
+                        this.d3ChartOptions.dataSetsByTopic.toolTipKey = 'key';
+                        mutationData.datasets[0]['groups'] = ['label_short'];
+                      } else {
+                        this.d3ChartOptions.dataSetsByTopic.toolTipKey = undefined;
+                        this.d3ChartOptions.dataSetsByTopic.labelKey = 'key';
+                        mutationData.datasets[0]['groups'] = ['key'];
+                      }
                       mutationData.datasets[0]['spacing'] = 2;
                       mutationData.datasets[0]['borderWidth'] = 0.5;
                       mutationData.datasets[0]['fontColor'] = 'white';
@@ -795,6 +806,8 @@ export default class UDPC extends AbstractDashboard {
                       mutationData.datasets[0]['label'] = 'Zugriffe';
                       mutationData.datasets[0]['backgroundColor'] = '#196CB1';
                       this.chartData.dataSetsTopX = mutationData;
+                      this.chartOptions.dataSetsTopX.scales!.xAxes![0].stacked = this.activeTabs.tops === 'datasets';
+                      this.chartOptions.dataSetsTopX.scales!.yAxes![0].stacked = this.activeTabs.tops === 'datasets';
                       break;
                     }
                     case 'totalDatasetsRangeTop-overlay-details': {
@@ -811,8 +824,12 @@ export default class UDPC extends AbstractDashboard {
                       this.chartData.totalDownloads = mutationData;
                       break;
                     }
-                    case 'totalDatasets': {mutationData.datasets[0].backgroundColor = '#196CB1';
+                    case 'totalDatasets': {
+                      mutationData.datasets[0].backgroundColor = '#196CB1';
                       this.chartData.totalDatasets = mutationData;
+                      // For stacking internet and intranet
+                      this.chartOptions.totalDatasets.scales!.xAxes![0].stacked = true;
+                      this.chartOptions.totalDatasets.scales!.yAxes![0].stacked = true;
                       break;
                     }
                     case 'totalApps': {mutationData.datasets[0].backgroundColor = '#40648B';
@@ -975,12 +992,14 @@ export default class UDPC extends AbstractDashboard {
     }
 
     async fetchTotalsByType() {
-        const totalsType = this.activeTabs.dataSetsByType;
+        // Sensordatasets are a subset of datasets filtered by tag
+        const totalsType = this.activeTabs.dataSetsByType === 'sensordatasets' ? 'datasets' : this.activeTabs.dataSetsByType;
         const theme = this.filters.theme;
         const org = this.filters.org;
         const isIncludeBuildPlans = totalsType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
+        const tag = this.activeTabs.dataSetsByType === 'sensordatasets' ? ['sensordata'] : [];
 
-        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans });
+        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans, tag });
     }
 
     async fetchTops() {
@@ -1097,30 +1116,8 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
-    testSnackBar() {
-        let options = {
-            message: 'Important bottom message',
-            position: 'center',
-            duration: 10000,
-            showSnackbar: true
-        };
-
-        const snack = document.getElementById('snack');
-        if (!snack) {
-            return;
-        }
-        new Vue({
-            el: snack.querySelector('div') || undefined,
-            render: h => h(SnackBar, { props: options })
-        });
-    }
-
     dialogResult() {
         this.agreeDialogActive = false;
-    }
-
-    changeLanguage(lang: string) {
-        this.$i18n.locale = lang
     }
 
     showDataInMap(dataset: {label: string, link: string}) {
@@ -1131,10 +1128,11 @@ export default class UDPC extends AbstractDashboard {
     }
 
     didYouKnowDataToHtml(inputData: DidYouKnowData, wrapper?: string): Element {
+      const linkPrefix = this.activeTabs.tops !== "downloads" ? this.urls.hmdk : this.urls.daten_hh
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
-          linkPrefix: this.hmdkLink
+          linkPrefix
         }
       });
       instance.$mount();
@@ -1156,7 +1154,7 @@ export default class UDPC extends AbstractDashboard {
 </script>
 
 <style lang="scss">
-@import '../assets/scss/udpc-dashboard/_fonts_colors.scss';
+@import '@/assets/scss/udpc-dashboard/_fonts_colors.scss';
 
 * {
     font-family: 'Roboto';
@@ -1285,6 +1283,10 @@ i {
 
         .md-ripple {
             padding: 0 10px;
+
+          @media (max-width: 375px) {
+            padding-left: 5px;
+          }
         }
 
         .md-button-content {
@@ -1479,20 +1481,41 @@ i {
     color: $hamburg-blue-dark;
     box-shadow: 0px -3px 6px #00000029;
 
-    .row {
+    .logo-row {
         min-height: 122px;
     }
+
+    .eu-row {
+        min-height: 90px;
+
+        .eu-legal-notice {
+            font-size: 9pt;
+            text-align: left;
+
+            .eu-image {
+                padding-right: 0;
+
+                img {
+                    float: right;
+                    height: 40px;
+                }
+            }
+
+
+        }
+    }
+
 
     .links-bottom-left {
         text-align: left;
         padding-bottom: 22px;
         cursor: pointer;
 
-        > span {
+        > a {
             padding-right: 30px !important;
         }
 
-        span {
+        a {
             font-size: 16px;
             padding-right: 10px;
             color: $hamburg-blue;

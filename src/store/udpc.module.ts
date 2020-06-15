@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import elastic from '../utils/elastic';
+import elastic from '@/connectors/elastic';
 import Utils from '@/utils/utils'
 import Axios from "axios";
 
@@ -7,8 +7,7 @@ const initialState: UDPCState = {
     dashboardData: {},
     filteredData: {},
     filters: {},
-    loading: false,
-    hmdkUrl: 'https://metaver.de/trefferanzeige?docuuid='
+    loading: false
 };
 
 const udpcModule: Module<UDPCState, RootState> = {
@@ -17,10 +16,10 @@ const udpcModule: Module<UDPCState, RootState> = {
     actions: {
         fetchRecentDatasets: async (context) => {
             const chartId = 'recentDatasets';
-
             context.commit('SET_LOADING', true);
+            const lastMonth = new Utils().date.getLastMonth();
 
-            const elasticResponse = await elastic.udpcQuery('', '', [], [], [], [], 'datasets', undefined, 10, 'change_date');
+            const elasticResponse = await elastic.udpcQuery(lastMonth, lastMonth, [], [], [], [], 'datasets', undefined, 10, 'create_date', ['online']);
 
             context.commit('SET_FILTERED_DATA', [chartId, {
                 items: elasticResponse.hits.hits
@@ -41,16 +40,24 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], tagNot, 'datasets');
             const aggregations = elasticResponse.aggregations;
+            let dataSets = [{
+                tree: aggregations[params.totalsTopic].buckets
+            }];
+            if (params.totalsTopic === 'organization') {
+                for (const dataSet of dataSets[0].tree) {
+                    if (Object.prototype.hasOwnProperty.call(dataSet, 'label_org')) {
+                        dataSet.label_short = dataSet.label_org.buckets[0].key;
+                    }
+                }
+            }
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
             context.commit('SET_FILTERED_DATA', [chartId, {
-                datasets: [{
-                    tree: aggregations[params.totalsTopic].buckets
-                }]
+                datasets: dataSets
             }]);
             context.commit('SET_LOADING', false);
         },
-        fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+        fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean, tag: string[] }) => {
             const chartId = 'totalDatasetsCount';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
             if (!changed) return;
@@ -60,7 +67,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
             const currentMonth = new Utils().date.getCurrentMonth();
 
-            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, [], tagNot, params.totalsType, 'year', 100);
+            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, params.tag, tagNot, params.totalsType, 'year', 100);
             const aggregations = elasticResponse.aggregations;
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
@@ -84,21 +91,39 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], ['basemap'], params.topTopic, 'month', 10);
             const aggregations = elasticResponse.aggregations;
-            const topX = aggregations.top_x.buckets;
+            const topX = aggregations?.top_x?.buckets;
 
             const details: DidYouKnowData = {
                 items: [],
                 action: null
             };
-            topX.map((item: any) => details.items.push({label: item.key, link: item.md_id.buckets[0].key}));
+            topX.map((item: any) => details.items.push({
+                label: item.key,
+                link: params.topTopic !== 'downloads' ? item.md_id?.buckets?.[0]?.key : item.key
+            }));
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
+            let dataSets = [{}];
+            if (params.topTopic === 'datasets') {
+                dataSets = [{
+                    label: 'internet',
+                    data: topX.map((item: any) => item.total_internet.value),
+                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
+                },{
+                    label: 'intranet',
+                    backgroundColor : '#7FADD4',
+                    data: topX.map((item: any) => item.total_intranet.value),
+                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
+                }]
+            } else {
+                dataSets = [{
+                    data: topX.map((item: any) => item.total_hits.value),
+                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
+                }]
+            }
             context.commit('SET_FILTERED_DATA', [chartId, {
                 labels: topX.map((item: any) => item.key),
-                datasets: [{
-                    data: topX.map((item: any) => item.total_hits.value),
-                    md_id: topX.map((item: any) => item.md_id.buckets[0] ? item.md_id.buckets[0].key : undefined)
-                }]
+                datasets: dataSets
             }]);
             context.commit('SET_FILTERED_DATA', [chartId+'-overlay-details', details]);
             context.commit('SET_LOADING', false);
@@ -111,14 +136,28 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const elasticResponse = await elastic.udpcQuery(params.min, params.max, params.theme, params.org, [], params.tag_not, params.category, params.unit);
             const aggregations = elasticResponse.aggregations;
+            let dataSets = [{}];
+
+            if (params.chartId === 'totalDatasets') {
+                dataSets = [{
+                    label: 'internet',
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_internet.value)
+                },{
+                    label: 'intranet',
+                    backgroundColor : '#7FADD4',
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_intranet.value)
+                }]
+            } else {
+                dataSets = [{
+                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value)
+                }]
+            }
 
             context.commit('SET_FILTERED_DATA', [params.chartId, {
                 labels: aggregations.total_entities_and_hits.buckets.map((item: any) => {
                     return params.unit === 'year' ? item.key_as_string.substring(0, 4) : item.key_as_string;
                 }),
-                datasets: [{
-                    data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_hits.value)
-                }]
+                datasets: dataSets
             }]);
         },
         fetchFacts: async (context) => {

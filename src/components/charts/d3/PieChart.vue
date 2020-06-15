@@ -14,6 +14,11 @@ import _d3tip from 'd3-tip';
 import { Tooltip } from 'd3/types/d3';
 import AbstractChartD3 from './AbstractChartD3.vue';
 
+/**
+ * FIX: This Chart is not ready to use. Of the D3 Components, only the TreeMap is currently working.
+ * Only minor changes should be necessary to run this component.
+ */
+
 const d3tip = _d3tip as () => Tooltip;
 
 @Component({})

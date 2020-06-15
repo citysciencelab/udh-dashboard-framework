@@ -27,13 +27,12 @@
         <dashboard-tile data-background-color="blue"
                         class="chart-holder">
           <template slot="header">
-            <md-icon id="tooltip-os-data"
-                     class="info-icon">
-              info_outline
-            </md-icon>
-            <div class="tool-tip-header"
+            <div class="info-icon-holder"
                  @click="openToolTip('tooltip-os-data')">
-              Participation Data
+              <md-icon>info_outline</md-icon>
+            </div>
+            <div class="card-header-text">
+              {{ $t('participation.chartHeader1') }}
             </div>
           </template>
           <template slot="content">
@@ -42,7 +41,7 @@
           </template>
           <template slot="footer">
             <div class="notice">
-              this data is supported the JBe foundation
+              {{ $t('participation.chartFooter1') }}
             </div>
           </template>
         </dashboard-tile>
@@ -51,12 +50,12 @@
         <dashboard-tile data-background-color="blue"
                         class="chart-holder">
           <template slot="header">
-            <md-icon class="info-icon">
-              info_outline
-            </md-icon>
-            <div class="tool-tip-header"
-                 @click="openToolTip('')">
-              Other chart
+            <div class="info-icon-holder"
+                 @click="openToolTip('tooltip-os-data')">
+              <md-icon>info_outline</md-icon>
+            </div>
+            <div class="card-header-text">
+              {{ $t('participation.chartHeader2') }}
             </div>
           </template>
           <template slot="content">
@@ -65,7 +64,7 @@
           </template>
           <template slot="footer">
             <div class="notice">
-              this data is supported the JBe foundation
+              {{ $t('participation.chartFooter2') }}
             </div>
           </template>
         </dashboard-tile>
@@ -76,13 +75,12 @@
         <dashboard-tile data-background-color="blue"
                         class="chart-holder">
           <template slot="header">
-            <md-icon id="tooltip-os-data-3"
-                     class="info-icon">
-              info_outline
-            </md-icon>
-            <div class="tool-tip-header"
-                 @click="openToolTip('tooltip-os-data-3')">
-              Participation Data
+            <div class="info-icon-holder"
+                 @click="openToolTip('tooltip-os-data')">
+              <md-icon>info_outline</md-icon>
+            </div>
+            <div class="card-header-text">
+              {{ $t('participation.chartHeader3') }}
             </div>
           </template>
           <template slot="content">
@@ -91,7 +89,7 @@
           </template>
           <template slot="footer">
             <div class="notice">
-              this data is supported the JBe foundation
+              {{ $t('participation.chartFooter3') }}
             </div>
           </template>
         </dashboard-tile>
@@ -100,12 +98,12 @@
         <dashboard-tile data-background-color="blue"
                         class="chart-holder">
           <template slot="header">
-            <md-icon class="info-icon">
-              info_outline
-            </md-icon>
-            <div class="tool-tip-header"
-                 @click="openToolTip('')">
-              Other chart
+            <div class="info-icon-holder"
+                 @click="openToolTip('tooltip-os-data')">
+              <md-icon>info_outline</md-icon>
+            </div>
+            <div class="card-header-text">
+              {{ $t('participation.mapHeader') }}
             </div>
           </template>
           <template slot="content">
@@ -115,7 +113,7 @@
           </template>
           <template slot="footer">
             <div class="notice">
-              this data is supported the JBe foundation
+              {{ $t('participation.mapFooter') }}
             </div>
           </template>
         </dashboard-tile>
@@ -134,18 +132,18 @@
 
 <script lang="ts">
 import Component from 'vue-class-component';
-import DashboardTile from '../components/DashboardTile.vue';
-import MultiSelect from '../components/MultiSelect.vue';
-import BarChart from '../components/charts/chartjs/BarChart.vue';
-import HorizontalBarChart from '../components/charts/chartjs/BarChartHorizontal.vue';
-import TreeMapChart from '../components/charts/chartjs/TreeMap.vue';
+import DashboardTile from '@/components/DashboardTile.vue';
+import MultiSelect from '@/components/MultiSelect.vue';
+import BarChart from '@/components/charts/chartjs/BarChart.vue';
+import HorizontalBarChart from '@/components/charts/chartjs/BarChartHorizontal.vue';
+import TreeMapChart from '@/components/charts/chartjs/TreeMap.vue';
 import partStore from '@/store/participation.module';
 import AbstractDashboard from '@/views/AbstractDashboard.vue';
 import { messages } from '@/messages/messages.participation.module';
 import MasterPortalMap from "@/components/MasterPortalMap.vue";
 import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
-import { FeatureSet } from '../utils/wfs';
+import { FeatureSet } from '@/connectors/wfs';
 
 @Component({
     components: {
