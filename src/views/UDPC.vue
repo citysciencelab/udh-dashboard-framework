@@ -749,7 +749,6 @@ export default class UDPC extends AbstractDashboard {
                         this.d3ChartOptions.dataSetsByTopic.labelKey = 'label_short';
                         this.d3ChartOptions.dataSetsByTopic.toolTipKey = 'key';
                         mutationData.datasets[0]['groups'] = ['label_short'];
-                        console.log("blubb")
                       } else {
                         this.d3ChartOptions.dataSetsByTopic.toolTipKey = undefined;
                         this.d3ChartOptions.dataSetsByTopic.labelKey = 'key';
