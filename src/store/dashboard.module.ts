@@ -28,6 +28,9 @@ const chartsModule: Module<DashboardState, RootState> = {
                 delete state.filters[id];
             }
         },
+        SET_FILTERS_NONE: (state) => {
+            state.filters = {};
+        },
         SET_LOADING: (state, loading: boolean) => {
             state.loading = loading;
         }
@@ -52,7 +55,12 @@ const chartsModule: Module<DashboardState, RootState> = {
                 return;
             }
             const data = state.dashboardData[dataId] as any;
-            return data[property].buckets.map((bucket: { key: string, doc_count: number }) => bucket.key);
+            if (Object.prototype.hasOwnProperty.call(data, property)) {
+                return data[property].buckets.map((bucket: { key: string, doc_count: number }) => bucket.key);
+            } else {
+                const notUnique = data.map((item: any) => item[property]);
+                return [...new Set(notUnique)];
+            }
         },
         dataWithAppliedFilters: state => (dataId: string) => {
             const filters = state.filters,
