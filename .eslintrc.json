@@ -18,5 +18,21 @@
   "rules": {
     "vue/html-closing-bracket-newline": "off",
     "vue/max-attributes-per-line": "off"
-  }
+  },
+  "env": {
+    // browser global variables
+    "browser": true,
+    // adds all of the Mocha testing global variables.
+    "mocha": true,
+    "node": true,
+    "es6": true
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js","*.spec.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }

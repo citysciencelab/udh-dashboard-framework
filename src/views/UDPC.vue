@@ -512,7 +512,6 @@ import DidYouKnow from '@/components/DidYouKnow.vue';
 import DidYouKnowDataList from '@/components/DidYouKnowDataList.vue';
 import MultiSelect from '@/components/MultiSelect.vue';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
-import InfoOverlay from '@/components/InfoOverlay.vue';
 import RangeSlider from '@/components/RangeSlider.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
@@ -532,7 +531,6 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
         MultiSelect,
         RangeSlider,
         ConfirmDialog,
-        InfoOverlay,
         BarChart,
         BarChartHorizontal,
         MasterPortalMap
