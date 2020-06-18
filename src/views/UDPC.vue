@@ -1094,11 +1094,11 @@ export default class UDPC extends AbstractDashboard {
     }
 
     onFilterSelectFromTreeMap(event: Datum) {
-        if (!event.id) {
+        if (!event.data.key) {
             return;
         }
 
-        const topics = [event.id] as string[];
+        const topics = [event.data.key] as string[];
 
         // Synchronize MultiSelects (updating them will trigger 'applyFilters')
         switch (this.activeTabs.dataSetsByTopic) {
