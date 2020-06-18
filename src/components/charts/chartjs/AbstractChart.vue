@@ -18,9 +18,11 @@ export default abstract class AbstractChart extends Vue {
         this.chartOptions['tooltips'] = {
           callbacks: {
             label: function (tooltipItem: any, data: any) {
+              console.log("dd")
               let tooltip = ' ';
+              const index = tooltipItem.datasetIndex;
               const value = new Utils().number.getDecimalSeparatedNumber(tooltipItem.value);
-              const label = Object.prototype.hasOwnProperty.call(data.datasets[0], 'label') ? data.datasets[0]['label'] : null;
+              const label = Object.prototype.hasOwnProperty.call(data.datasets[index], 'label') ? data.datasets[index]['label'] : null;
               const link = Object.prototype.hasOwnProperty.call(data.datasets[0], 'md_id') ? data.datasets[0]['md_id'] : null;
 
               if (label) {
