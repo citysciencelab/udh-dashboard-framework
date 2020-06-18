@@ -4,7 +4,7 @@ export const messages = {
             newDatassets: 'Neueste Datensätze',
             sensors: 'Sensoren',
             visitors: 'Besucher',
-            access: 'Karte',
+            access: 'Zugriffe Basiskarten',
             access_overlay_head: 'Karten Zugriffe',
             countBy: 'Anzahl Datensätze nach',
             countTotal: 'Anzahl Datensätze total',
@@ -43,13 +43,13 @@ export const messages = {
             tooltipLatestDataSets: 'PLATZHALTER',
             tooltipGeneralLink: 'Link in neuem Tab öffnen',
             tooltipHdmkLink: 'Zum Eintrag im Hamburger Metadaten Katalog',
-            tooltipSensors: 'Anzahl der Sensoren, die in der SensorThingsAPI als Thing definiert wurden.\n' +
+            tooltipSensors: 'Anzahl der Sensoren, die in der SensorThingsAPI als Datastream definiert wurden.\n' +
              'Die Zahl bezieht sich auf den jeweils vorherigen Kalendermonat.\n' +
              'Quelle: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
             tooltipVisitorsToday: 'Hier wird die Gesamtanzahl an eindeutigen Besucher von <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> und Geodaten Hamburg (FHH-Atlas im Intranet der FHH) des jeweils vorherigen Kalendermonats angezeigt.\n' +
              'Quelle: Auswertung der awstats',
-            tooltipBackgroundAccess: '<p>Diese Kachel gibt die Zugriffe auf die Hintergrundkarten des jeweils vorherigen abgeschlossenen Kalendermonats an. \n' +
-             'Die Hintergrundkarten  sind:</p>' +
+            tooltipBackgroundAccess: '<p>Diese Kachel gibt die monatlichen Zugriffe auf die Hintergrundkarten (auch Basiskarten) an.\n' +
+             'Die Hintergrundkarten sind:</p>' +
              'PLATZHALTER \n' +
              '<p>Quelle: Auswertung der awstats</p>',
             tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze des jeweils vorherigen abgeschlossenen Kalendermonats nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. \n' +

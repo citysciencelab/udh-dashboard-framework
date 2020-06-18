@@ -1497,7 +1497,7 @@ i {
 
                 img {
                     float: right;
-                    height: 40px;
+                    height: 62px;
                 }
             }
 
