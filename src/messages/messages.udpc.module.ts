@@ -69,29 +69,29 @@ export const messages = {
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
-             'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
-             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits an. \n' +
+             'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Datensätze sind:</h6>' +
              'PLATZHALTER\n'+
-             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
-             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
+             'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
              'Quelle: Auswertung der awstats</p>',
-            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
-             'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
-             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits an. \n' +
+             'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Apps sind:</h6>' +
              'PLATZHALTER\n'+
-             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
-             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
+             'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
              'Quelle: Auswertung der awstats</p>',
-            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
-             'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
-             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
+            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits an. \n' +
+             'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Downloads sind:</h6>' +
              'PLATZHALTER\n'+
-             '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
-             'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
+             '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
+             'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
              'Quelle: Auswertung der awstats</p>',
             tooltipDownloads: 'Es wird die Anzahl der monatlichen bzw. jährlichen Downloads in einem historischen Zeitverlauf angezeigt.\n' +
              'Quelle: Auswertung der awstats',
