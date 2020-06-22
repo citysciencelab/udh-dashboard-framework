@@ -151,7 +151,7 @@
             <template slot="content">
               <did-you-know :data="recentDataSets"
                             :interval="10000"
-                            :store-id="'udpc'"
+                            :link-prefix="urls.hmdk"
                             @show-in-map="showDataInMap" />
             </template>
             <template slot="footer" />
@@ -258,7 +258,7 @@
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id"
                                  :overlay="mapData.overlay"
-                                 :store-id="'udpc'"
+                                 :link-prefix="urls.hmdk"
                                  @fullscreenMap="toggleRecentDatasetInterval" />
             </template>
             <template slot="footer" />

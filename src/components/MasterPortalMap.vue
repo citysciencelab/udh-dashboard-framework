@@ -52,7 +52,7 @@
         @Prop() mapStyle!: object;
         @Prop() featureData!: FeatureSet;
         @Prop() md_id!: string;
-        @Prop() storeId!: string;
+        @Prop() linkPrefix!: string;
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
@@ -66,19 +66,12 @@
             map: Element
         }
 
-        get hmdkUrl(): string | undefined {
-            if (this.storeId) {
-                return this.$store.state[this.storeId].hmdkUrl;
-            }
-            return this.$store.state.hmdkUrl
-        }
-
         get linkTitle(): LocaleMessage {
             return this.md_id ? this.$t('udpc.tooltipHdmkLink') : this.$t('udpc.tooltipGeneralLink');
         }
 
         get linkUrl(): string {
-            return this.md_id ? this.hmdkUrl + this.md_id : "https://geoportal-hamburg.de/geo-online/";
+            return this.md_id ? this.linkPrefix + this.md_id : "https://geoportal-hamburg.de/geo-online/";
         }
 
         mounted() {
