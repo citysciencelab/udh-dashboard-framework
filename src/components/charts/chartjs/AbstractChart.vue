@@ -18,7 +18,6 @@ export default abstract class AbstractChart extends Vue {
         this.chartOptions['tooltips'] = {
           callbacks: {
             label: function (tooltipItem: any, data: any) {
-              console.log("dd")
               let tooltip = ' ';
               const index = tooltipItem.datasetIndex;
               const value = new Utils().number.getDecimalSeparatedNumber(tooltipItem.value);
@@ -45,6 +44,7 @@ export default abstract class AbstractChart extends Vue {
       if (this.chartData.datasets) {
         if ((this.chartData.datasets[0] as Datum).md_id)
         this.$el.addEventListener('click', (e) => {
+          e.stopImmediatePropagation();
           const el = this.$data._chart.getDatasetAtEvent(e)[0];
 
           if (el) {

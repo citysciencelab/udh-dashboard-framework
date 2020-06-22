@@ -118,7 +118,12 @@ const udpcModule: Module<UDPCState, RootState> = {
             } else {
                 dataSets = [{
                     data: topX.map((item: any) => item.total_hits.value),
-                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
+                    md_id: topX.map((item: any) => {
+                        if (params.topTopic === 'downloads') {
+                            return item.key;
+                        }
+                        return item.md_id?.buckets?.[0]?.key;
+                    })
                 }]
             }
             context.commit('SET_FILTERED_DATA', [chartId, {
