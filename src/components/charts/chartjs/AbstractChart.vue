@@ -11,6 +11,8 @@ export default abstract class AbstractChart extends Vue {
   currIndex!: number;
 
   @Watch('chartData') onDataChanged() {
+    const that = this;
+
     if (this.chartData) {
       if (this.isStandardTooltips) {
         this.chartOptions['tooltips'] = {
@@ -20,6 +22,7 @@ export default abstract class AbstractChart extends Vue {
               const index = tooltipItem.datasetIndex;
               const value = new Utils().number.getDecimalSeparatedNumber(tooltipItem.value);
               const label = Object.prototype.hasOwnProperty.call(data.datasets[index], 'label') ? data.datasets[index]['label'] : null;
+              const link = Object.prototype.hasOwnProperty.call(data.datasets[0], 'md_id') ? data.datasets[0]['md_id'] : null;
 
               if (label) {
                 tooltip += `${label}: `;
@@ -27,16 +30,16 @@ export default abstract class AbstractChart extends Vue {
               if (value) {
                 tooltip += value;
               }
+              if (link) {
+                that.currIndex = tooltipItem.index;
+              }
 
               return tooltip;
             },
             footer: function (tooltipItem: any[], data: any): string {
               const link = Object.prototype.hasOwnProperty.call(data.datasets[0], 'md_id') ? data.datasets[0]['md_id'] : null;
 
-              if (link) {
-                return 'Balken anklicken für weitere Infos';
-              }
-              return '';
+              return link ? 'Balken anklicken für weitere Infos' : '';
             }
           }
         }
