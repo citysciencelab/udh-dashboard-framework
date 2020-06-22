@@ -18,8 +18,8 @@ describe("InfoOverlay.vue", () => {
         console.log(wrapper)
 
         expect(wrapper.vm.text).to.equal('newTextMessage');
-        expect(wrapper.isVisible()).to.be.true;
         wrapper.vm.show();
+        expect(wrapper.isVisible()).to.be.true;
         wrapper.find(".close-button").trigger("click");
         await Vue.nextTick();
         expect(wrapper.isEmpty());
