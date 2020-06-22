@@ -58,26 +58,26 @@ export const messages = {
              'Ein Klick auf ein Thema oder eine Organisation filtert auf die jeweils zugehörigen Datensätze.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
             tooltipCountTotal: 'Zeigt die Anzahl der Datensätze, Anwendungen (Apps) und Sensordatensätze pro Monat oder Jahr in einem historischen Zeitverlauf an.\n' +
+             'Im folgenden wird erklärt, was sich hinter Datensätzen, Apps und Sensordatensätzen verbirgt:\n' +
              'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
-             'Eine Checkbox mit/ohne Bebauungspläne ermöglicht das Einbeziehen und Herausfiltern von Datensätzen, die zu den Bebauungsplänen gehören.\n' +
+             'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen.\n' +
              'Unter Apps wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
              'Sensordatensätze beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
-             'Checkbox mit/ohne Bebauungspläne ermöglicht das Einbeziehen und Herausfiltern von Datensätzen, die zu den Bebauungsplänen gehören.\n' +
              'Quelle: Metadaten der Datensätze, Sensordatensätze und Anwendungen (Hamburger Metadatenkatalog – HMDK)',
             tooltipMap: 'Ein Klick auf den Datensatznamen in der Rubrik „Neuste Datensätze“ führt zu einer Vorschau des Datensatzes in der Karte.\n' +
              'Neuste Datensätze sind die 10 Datensätze, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden (create date) und mit produktiven Diensten (WFS/WMS) gekoppelt sind. \n' +
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits an. \n' +
+            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Datensätze sind:</h6>' +
              'PLATZHALTER\n'+
              '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
              'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
-             'Quelle: Auswertung der awstats</p>',
-            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits an. \n' +
+             'Quelle: Aeisten Zugriffenuswertung der awstats</p>',
+            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Apps sind:</h6>' +
              'PLATZHALTER\n'+
@@ -85,7 +85,7 @@ export const messages = {
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
              'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
              'Quelle: Auswertung der awstats</p>',
-            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits an. \n' +
+            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Downloads sind:</h6>' +
              'PLATZHALTER\n'+
@@ -177,7 +177,7 @@ export const messages = {
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+            tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
              'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
              '<h6>Die Top 10 Datasets sind:</h6>' +
@@ -185,7 +185,7 @@ export const messages = {
              '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
              'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
              'Quelle: Auswertung der awstats</p>',
-            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+            tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
              'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
              '<h6>Die Top 10 Apps sind:</h6>' +
@@ -193,7 +193,7 @@ export const messages = {
              '<p>Bei den Apps werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.\n' +
              'Bei den Downloads werden alle Daten berücksichtigt, die über den Server: <a href="http://daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n' +
              'Quelle: Auswertung der awstats</p>',
-            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen und die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
+            tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits aus dem letzten abgeschlossenen Monat an. \n' +
              'Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. \n' +
              'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei.</p>' +
              '<h6>Die Top 10 Downloads sind:</h6>' +
