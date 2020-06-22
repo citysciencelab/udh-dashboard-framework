@@ -39,7 +39,7 @@ export const messages = {
 
             tooltipDidYouKnow: '<p>In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg.</p>' +
              'PLATZHALTER \n' +
-             '<p>Weitere Informationen finden Sie hier: <a href="www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
+             '<p>Weitere Informationen finden Sie hier: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'PLATZHALTER',
             tooltipGeneralLink: 'Link in neuem Tab öffnen',
             tooltipHdmkLink: 'Zum Eintrag im Hamburger Metadaten Katalog',
@@ -147,7 +147,7 @@ export const messages = {
 
             tooltipDidYouKnow: '<p>In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg.</p>' +
              'PLATZHALTER \n' +
-             '<p>Weitere Informationen finden Sie hier: <a href="www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
+             '<p>Weitere Informationen finden Sie hier: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'PLATZHALTER',
             tooltipGeneralLink: 'Open Link to new tab',
             tooltipHdmkLink: 'See entry in the Hamburg Meta-Data Catalogue',
