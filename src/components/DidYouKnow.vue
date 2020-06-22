@@ -25,16 +25,9 @@
     @Prop() data!: DidYouKnowData;
     @Prop() interval!: number;
     @Prop() prefix!: string;
-    @Prop() storeId!: string;
+    @Prop() linkPrefix!: string;
     timer!: number;
     currentIndex = 0;
-
-    get hmdkUrl(): string | undefined {
-      if (this.storeId) {
-        return this.$store.state[this.storeId].hmdkUrl;
-      }
-      return this.$store.state.hmdkUrl
-    }
 
     get linkTitle(): LocaleMessage | string {
       switch (this.data.action) {
@@ -48,7 +41,7 @@
     get linkUrl(): string | null {
       switch (this.data.action) {
         case 'md_id':
-          return this.hmdkUrl + this.data.items[this.currentIndex].link;
+          return this.linkPrefix + this.data.items[this.currentIndex].link;
         case 'link':
           return this.data.items[this.currentIndex].link;
         default:
