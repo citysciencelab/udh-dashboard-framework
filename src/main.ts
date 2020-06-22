@@ -13,7 +13,7 @@ import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
 import { messages } from './messages/messages.module';
-import utils from './utils/utils';
+import Utils from './utils/utils';
 
 // Module augmentations for Vue
 declare module 'vue/types/vue' {
@@ -41,7 +41,7 @@ Vue.use(VueMaterial);
 
 Vue.config.productionTip = false;
 
-Vue.use(new utils);
+Vue.use(new Utils);
 
 Vue.component('country-flag', CountryFlag);
 
