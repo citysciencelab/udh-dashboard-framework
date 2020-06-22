@@ -1175,7 +1175,7 @@ i {
 
     .navbar-brand {
         font-size: 26px;
-        font-weight: 300;
+        font-weight: 400;
         color: $hamburg-blue-dark;
         padding-left: 5px;
         padding-top: 8px;
