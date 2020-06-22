@@ -513,6 +513,7 @@ import DidYouKnowDataList from '@/components/DidYouKnowDataList.vue';
 import MultiSelect from '@/components/MultiSelect.vue';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
 import RangeSlider from '@/components/RangeSlider.vue';
+import InfoOverlay from '@/components/InfoOverlay.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
 import Color from "color";
@@ -533,7 +534,8 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
         ConfirmDialog,
         BarChart,
         BarChartHorizontal,
-        MasterPortalMap
+        MasterPortalMap,
+        InfoOverlay
     }
 })
 export default class UDPC extends AbstractDashboard {
