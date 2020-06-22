@@ -8,7 +8,7 @@ export const messages = {
             access_overlay_head: 'Karten Zugriffe',
             countBy: 'Anzahl Datensätze nach',
             countTotal: 'Anzahl Datensätze total',
-            includeDevPlan: 'Bebauungspläne mit einbeziehen',
+            includeDevPlan: 'Bebauungsplane u.a. mit einbeziehen',
             includeMapHits: 'Hintergrundkarte mit einbeziehen',
             map: 'Karte',
             top10: 'Top 10 des Monats',
