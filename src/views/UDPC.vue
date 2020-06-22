@@ -151,7 +151,7 @@
             <template slot="content">
               <did-you-know :data="recentDataSets"
                             :interval="10000"
-                            :store-id="'udpc'"
+                            :link-prefix="urls.hmdk"
                             @show-in-map="showDataInMap" />
             </template>
             <template slot="footer" />
@@ -258,7 +258,7 @@
                                  :portal="mapData.portal"
                                  :md_id="mapData.md_id"
                                  :overlay="mapData.overlay"
-                                 :store-id="'udpc'"
+                                 :link-prefix="urls.hmdk"
                                  @fullscreenMap="toggleRecentDatasetInterval" />
             </template>
             <template slot="footer" />
@@ -292,7 +292,7 @@
                 <bar-chart-horizontal :chart-data="chartData.dataSetsTopX"
                                       :chart-options="chartOptions.dataSetsTopX"
                                       :is-standard-tooltips="true" 
-                                      :link-prefix="urls.hmdk" />
+                                      :link-prefix="activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk" />
               </div>
             </template>
             <template slot="footer" />
@@ -465,7 +465,7 @@
 
     <info-overlay ref="tooltip-did-you-know"
                   :header="$t('udpc.didYouKnow')"
-                  :html="didYouKnowDataToHtml(didYouKnow, $t('udpc.tooltipDidYouKnow'))" />
+                  :html="didYouKnowDataToHtml(didYouKnow, urls.hmdk, $t('udpc.tooltipDidYouKnow'))" />
     <info-overlay ref="tooltip-latest-datasets"
                   :header="$t('udpc.newDatassets')"
                   :html="didYouKnowDataToHtml(recentDataSets)" />
@@ -477,7 +477,7 @@
                   :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
                   :header="$t('udpc.access_overlay_head')"
-                  :html="didYouKnowDataToHtml(overlayDataMapKpi, $t('udpc.tooltipBackgroundAccess'))" />
+                  :html="didYouKnowDataToHtml(overlayDataMapKpi, urls.hmdk, $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
                   :header="$t('udpc.countBy')"
                   :text="$t('udpc.tooltipDatasetsBy')" />
@@ -489,7 +489,7 @@
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
                   :header="$t(`udpc.top10_${activeTabs.tops}`)"
-                  :html="didYouKnowDataToHtml(overlayDataTopX, $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
+                  :html="didYouKnowDataToHtml(overlayDataTopX, activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk, $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
     <info-overlay ref="tooltip-downloads"
                   :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
@@ -1094,11 +1094,11 @@ export default class UDPC extends AbstractDashboard {
     }
 
     onFilterSelectFromTreeMap(event: Datum) {
-        if (!event.id) {
+        if (!event.data.key) {
             return;
         }
 
-        const topics = [event.id] as string[];
+        const topics = [event.data.key] as string[];
 
         // Synchronize MultiSelects (updating them will trigger 'applyFilters')
         switch (this.activeTabs.dataSetsByTopic) {
@@ -1127,8 +1127,7 @@ export default class UDPC extends AbstractDashboard {
       }
     }
 
-    didYouKnowDataToHtml(inputData: DidYouKnowData, wrapper?: string): Element {
-      const linkPrefix = this.activeTabs.tops !== "downloads" ? this.urls.hmdk : this.urls.daten_hh
+    didYouKnowDataToHtml(inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, wrapper?: string): Element {
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
@@ -1175,7 +1174,7 @@ i {
 
     .navbar-brand {
         font-size: 26px;
-        font-weight: 300;
+        font-weight: 400;
         color: $hamburg-blue-dark;
         padding-left: 5px;
         padding-top: 8px;
@@ -1497,7 +1496,7 @@ i {
 
                 img {
                     float: right;
-                    height: 40px;
+                    height: 62px;
                 }
             }
 

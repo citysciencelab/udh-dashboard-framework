@@ -179,7 +179,7 @@ export default class Utils implements IUtils {
                     matchEnd = /\/(\s|$)/ig.exec(str.substr(match.index as number)),
                     end = matchEnd ? matchEnd.index as number + 1 : undefined;
 
-                res = res.replace(str.substr(start, end), `<a href="${str.substr(start, end)}">${str.substr(start, end)}</a>`);
+                res = res.replace(str.substr(start, end), `<a href="${str.substr(start, end)}" target="_blank">${str.substr(start, end)}</a>`);
             }
 
             return res;

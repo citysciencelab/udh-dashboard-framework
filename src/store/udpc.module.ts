@@ -106,11 +106,11 @@ const udpcModule: Module<UDPCState, RootState> = {
             let dataSets = [{}];
             if (params.topTopic === 'datasets') {
                 dataSets = [{
-                    label: 'internet',
+                    label: 'Internet',
                     data: topX.map((item: any) => item.total_internet.value),
                     md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
                 },{
-                    label: 'intranet',
+                    label: 'Intranet der FHH',
                     backgroundColor : '#7FADD4',
                     data: topX.map((item: any) => item.total_intranet.value),
                     md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
@@ -118,7 +118,12 @@ const udpcModule: Module<UDPCState, RootState> = {
             } else {
                 dataSets = [{
                     data: topX.map((item: any) => item.total_hits.value),
-                    md_id: topX.map((item: any) => item.md_id?.buckets?.[0]?.key)
+                    md_id: topX.map((item: any) => {
+                        if (params.topTopic === 'downloads') {
+                            return item.key;
+                        }
+                        return item.md_id?.buckets?.[0]?.key;
+                    })
                 }]
             }
             context.commit('SET_FILTERED_DATA', [chartId, {
@@ -140,10 +145,11 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             if (params.chartId === 'totalDatasets') {
                 dataSets = [{
-                    label: 'internet',
+                    label: 'Internet',
+                    backgroundColor : '#FF00FF',
                     data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_internet.value)
                 },{
-                    label: 'intranet',
+                    label: 'Intranet der FHH',
                     backgroundColor : '#7FADD4',
                     data: aggregations.total_entities_and_hits.buckets.map((item: any) => item.total_intranet.value)
                 }]
