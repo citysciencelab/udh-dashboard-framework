@@ -59,10 +59,10 @@ export const messages = {
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
             tooltipCountTotal: 'Zeigt die Anzahl der Datensätze, Anwendungen (Apps) und Sensordatensätze pro Monat oder Jahr in einem historischen Zeitverlauf an.\n' +
              'Im folgenden wird erklärt, was sich hinter Datensätzen, Apps und Sensordatensätzen verbirgt:\n' +
-             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
+             'Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
              'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen.\n' +
-             'Unter Apps wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
-             'Sensordatensätze beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
+             'Unter <b>Apps</b> wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
+             '<b>Sensordatensätze</b> beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
              'Quelle: Metadaten der Datensätze, Sensordatensätze und Anwendungen (Hamburger Metadatenkatalog – HMDK)',
             tooltipMap: 'Ein Klick auf den Datensatznamen in der Rubrik „Neuste Datensätze“ führt zu einer Vorschau des Datensatzes in der Karte.\n' +
              'Neuste Datensätze sind die 10 Datensätze, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden (create date) und mit produktiven Diensten (WFS/WMS) gekoppelt sind. \n' +
@@ -167,10 +167,10 @@ export const messages = {
              'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
             tooltipCountTotal: 'Zeigt die Anzahl der Datensätze, Anwendungen (Apps) und Sensordatensätze pro Monat oder Jahr in einem historischen Zeitverlauf an.\n' +
              'Im folgenden wird erklärt, was sich hinter Datensätzen, Apps und Sensordatensätzen verbirgt:\n' +
-             'Ein Datensatz ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
+             'Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
              'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen.\n' +
-             'Unter Apps wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
-             'Sensordatensätze beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
+             'Unter <b>Apps</b> wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
+             '<b>Sensordatensätze</b> beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
              'Quelle: Metadaten der Datensätze, Sensordatensätze und Anwendungen (Hamburger Metadatenkatalog – HMDK)',
             tooltipMap: 'Ein Klick auf den Datensatznamen in der Rubrik „Neuste Datensätze“ führt zu einer Vorschau des Datensatzes in der Karte.\n' +
              'Neuste Datensätze sind die 10 Datensätze, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden (create date) und mit produktiven Diensten (WFS/WMS) gekoppelt sind. \n' +
