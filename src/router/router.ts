@@ -3,6 +3,8 @@ import Router from 'vue-router'
 
 Vue.use(Router);
 
+// import(/* webpackChunkName: "yourdashboardname" */ '@/views/yourdashboardname.vue') makes sure that components are lazy loaded
+
 export default new Router({
   routes: [
     {

@@ -39,8 +39,9 @@ npm run lint
 Try to reuse existing components as much as possible.
 Create a new view in the views folder and add a path to the router.js file.
 Create a new vuex storage module in the store folder.
-The storage module should handle your view specific data request and processing.
-The storage module should be lazy loaded in the corresponding view:
+The storage modules (src/store) should handle your view specific data request and processing.
+Default storage state, mutations, actions, getters and setters is initialized for every dashboard and included via dashboard.module.ts
+The individual storage modules for a single dashboard should be lazy loaded in the corresponding view:
 ```
     this.$store.registerModule('storename', storeVariable);
 ```

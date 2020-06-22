@@ -11,13 +11,4 @@ export const messages = {
             help: 'Help'
         }
     }
-
-    /*
-    *    TODO: pluralization
-    *     en: {
-            car: 'car | cars'
-            }
-            <p>{{ $tc('car', 1) }}</p>
-            <p>{{ $tc('car', 2) }}</p>
-    */
 };
