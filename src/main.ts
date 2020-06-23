@@ -49,6 +49,7 @@ Vue.component('country-flag', CountryFlag);
 const i18n = new VueI18n({
     locale: 'en', // set locale
     fallbackLocale: 'de',
+    silentTranslationWarn: true,
     messages, // set locale messages
 });
 
