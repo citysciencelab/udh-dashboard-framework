@@ -197,11 +197,16 @@ export default class Participation extends AbstractDashboard {
         await this.fetchParticipationStats();
     }
 
+    /**
+    *  Life cycle hook that mounts the lazy loaded messages and vuex store
+    *  Stars fetching data from the store and subscribe to its mutations.
+    *  When the requests from the WFS are finished, these subscriptions will set the data for each chart
+    */
     created() {
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
-
         this.$store.registerModule('participation', partStore);
+
         this.$store.subscribe((mutation) => {
 
             switch (mutation.type) {
@@ -232,6 +237,11 @@ export default class Participation extends AbstractDashboard {
         });
     }
 
+    /*
+      *   Retrieves the distinct filter values from the vuex store
+      *   @param dataId the name of the dataset to retrieve filters from
+      *   @param filterProperty name of the property in the dataset values to get distinct elements
+       */
     getFilterOptions(dataId: string, filterProperty: string): any[] {
         return this.$store.getters.distinctPropertyValues(dataId, filterProperty);
     }
@@ -251,17 +261,17 @@ export default class Participation extends AbstractDashboard {
       this.recalculate();
     }
 
-    resetFilters() {
-        this.$store.commit('SET_FILTERS_NONE');
-        (this.$refs.districtSelect as MultiSelect).resetSelection();
-        (this.$refs.originatorSelect as MultiSelect).resetSelection();
-        this.recalculate();
-    }
-
     recalculate() {
         const data = this.$store.getters.dataWithAppliedFilters('participationData');
         this.$store.dispatch('recalculateChartData', data);
         this.$store.dispatch('recalculateMapData');
+    }
+
+    resetFilters() {
+      this.$store.commit('SET_FILTERS_NONE');
+      (this.$refs.districtSelect as MultiSelect).resetSelection();
+      (this.$refs.originatorSelect as MultiSelect).resetSelection();
+      this.recalculate();
     }
 }
 </script>
