@@ -912,7 +912,7 @@ export default class UDPC extends AbstractDashboard {
         switch (tab) {
             case 'tab-downloads-year':
                 this.activeTabs.totalDownloads = tab;
-                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: true};
+                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDownloadsRange();
                 break;
             case 'tab-downloads-month':
