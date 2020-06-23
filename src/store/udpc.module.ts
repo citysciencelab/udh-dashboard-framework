@@ -14,6 +14,9 @@ const udpcModule: Module<UDPCState, RootState> = {
     state: initialState,
     mutations: {},
     actions: {
+        /*
+            Requests the recently added datasets
+         */
         fetchRecentDatasets: async (context) => {
             const chartId = 'recentDatasets';
             context.commit('SET_LOADING', true);
@@ -28,6 +31,10 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
+        /*
+            Requests total resource count by topic: 'topics' or 'organizations'
+            The requested can be filtered by either of the above
+         */
         fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
             const chartId = 'totalTopicDatasets';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
@@ -57,6 +64,10 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
+        /*
+            Requests resource count by type: 'datasets', 'apps', 'sensors'
+            The data is structured by year of creation
+         */
         fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean, tag: string[] }) => {
             const chartId = 'totalDatasetsCount';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
@@ -80,6 +91,11 @@ const udpcModule: Module<UDPCState, RootState> = {
             }]);
             context.commit('SET_LOADING', false);
         },
+        /*
+            Fetches the most accessed resources by type: 'datasets', 'apps', 'downloads'
+            The number of requested resources as well as the monitored time period can be adjusted
+            For datasets it currently divides the requested data by intranet and internet resources
+         */
         fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[] }) => {
             const chartId = 'totalDatasetsRangeTop';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
@@ -133,6 +149,11 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_FILTERED_DATA', [chartId+'-overlay-details', details]);
             context.commit('SET_LOADING', false);
         },
+        /*
+            Fetches total access numbers by resources type: 'datasets', 'apps', 'downloads'
+            The request can be altered by adjusting the time-frame
+            The datasets totals are divided into intranet and internet
+         */
         fetchRangefulData: async (context, params: { theme: string[], org: string[], min: string, max: string, unit: string, category: string, chartId: string, tag_not: string[] }) => {
             new Utils().request.sanitizeRangefulParams(params);
 
@@ -166,6 +187,9 @@ const udpcModule: Module<UDPCState, RootState> = {
                 datasets: dataSets
             }]);
         },
+        /*
+            Fetches facts from the given elastic endpoint
+         */
         fetchFacts: async (context) => {
             const chartId = 'didYouKnowFacts';
             const month = new Utils().date.getCurrentMonth();
@@ -177,6 +201,9 @@ const udpcModule: Module<UDPCState, RootState> = {
             topX.map((item: any) => items.push({label: item.key}))
             context.commit('SET_FILTERED_DATA', [chartId, items]);
         },
+        /*
+            Requests the total numbers of visitors to the urban data platform for the last month
+         */
         fetchVisitorsKPI: async (context) => {
             const chartId = 'visitorsKPI';
             const month = new Utils().date.getLastMonth();
@@ -190,6 +217,9 @@ const udpcModule: Module<UDPCState, RootState> = {
                 context.commit('SET_FILTERED_DATA', [chartId, null]);
             }
         },
+        /*
+            Requests the total number of sensors from the sensorthings api
+         */
         fetchSensorsKPI: async (context) => {
             const chartId = 'sensorsKPI';
             const response = await Axios.get('https://iot.hamburg.de/v1.0/Datastreams?$filter=not%20substringof(%27E-Roller%27,description)&$count=true');
@@ -200,6 +230,9 @@ const udpcModule: Module<UDPCState, RootState> = {
                 context.commit('SET_FILTERED_DATA', [chartId, null]);
             }
         },
+        /*
+            Requests total access count for resources tagged with basemap
+         */
         fetchBaseMapKPI: async (context) => {
             const chartId = 'baseMapKPI';
             const month = new Utils().date.getLastMonth();
@@ -217,6 +250,10 @@ const udpcModule: Module<UDPCState, RootState> = {
                 context.commit('SET_FILTERED_DATA', [chartId, null]);
             }
         },
+        /*
+            Monitors if the underlying parameters for a request have been changed
+            If no change has been detected, no new request to elastic has to be fired
+         */
         paramsChanged: (context, args: [string, any]) => {
             const id = args[0];
             const params = JSON.stringify(args[1]);

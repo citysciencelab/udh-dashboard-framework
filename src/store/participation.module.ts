@@ -23,6 +23,9 @@ const participationModule: Module<ParticipationState, RootState> = {
     state: { ...initialState },
     mutations: {    },
     actions: {
+        /*
+            Fetches data from a given wfs by url
+         */
         fetchParticipationStats: async (context) => {
             const results: FeatureSet = await wfs.get(wfsUrl, wfsTypename, {}) as FeatureSet;
 
@@ -30,6 +33,9 @@ const participationModule: Module<ParticipationState, RootState> = {
             context.commit('SET_INITIAL_DATA', ['participationData', results.getProperties()]);
             context.commit('SET_INITIAL_DATA', ['participationMapData', results]);
         },
+        /*
+            Recalculates a given dataset and creates a count by 'bezirk'
+         */
         recalculateChartData: (context, filteredData) => {
             if (!filteredData) {
                 return;
@@ -47,6 +53,9 @@ const participationModule: Module<ParticipationState, RootState> = {
                 }]
             }]);
         },
+        /*
+            Applies given filters to the data to be displayed in the masterportal map component
+         */
         recalculateMapData: (context) => {
             const filters = context.getters.filters(),
              initialData = context.getters.dashboardData()['participationMapData'];

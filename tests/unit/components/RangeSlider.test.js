@@ -10,24 +10,46 @@ describe("RangeSlider.vue", () => {
         expect(wrapper).to.be.an("object");
     });
 
-    it("mounting tests", async () => {
-        const minYear = '2014';
-        const today = new Date();
-        const currentYear = `${today.getFullYear()}`;
-        const sliderOptions = { min: minYear, max: currentYear, unit: 'year', isShowMarks: true};
-        // let wrapper = mount(RangeSlider);
+    it("marks creation year", async () => {
+        const sliderOptions = { min: 2014, max: 2020, unit: 'year', isShowMarks: true};
         const wrapper = mount(RangeSlider, {
             propsData: {
                 options: sliderOptions
             }
-        })
+        });
         wrapper.vm.onOptionsChanged();
-        //wrapper.setData({ options: sliderOptions });
-        //wrapper.setData({ defaults: [2018,2019] });
+        expect(wrapper.vm.marks[2]).to.equal('2016');
+        expect(Object.keys(wrapper.vm.marks)).to.have.lengthOf(7);
+    });
 
-        expect(wrapper.vm.minYear).to.equal(parseInt(minYear, 10));
-        expect(wrapper.vm.maxYear).to.equal(parseInt(currentYear, 10));
-        //expect(wrapper.isVisible()).to.be.true;
+    it("marks creation month", async () => {
+        const sliderOptions = { min: '2014-01', max: '2020-01', unit: 'month', isShowMarks: true};
+        const wrapper = mount(RangeSlider, {
+            propsData: {
+                options: sliderOptions
+            }
+        });
+        wrapper.vm.onOptionsChanged();
+        expect(wrapper.vm.marks[69]).to.equal('2019-10');
+    });
 
+    it("no marks creation", async () => {
+        const sliderOptions = { min: 2014, max: 2020, unit: 'year', isShowMarks: true};
+        const wrapper = mount(RangeSlider, {
+            propsData: {
+                options: sliderOptions
+            }
+        });
+        wrapper.vm.onOptionsChanged();
+        const antSliderMark1 = wrapper.findAll(".range-slider");
+        console.log(antSliderMark1.at(0).html())
+        //TODO: check the frontend a-slider - it should not contain ".ant-slider-mark"
+        /**
+        console.log(antSliderMark1.at(0).findAll(".ant-slider").at(0).html())
+        antSliderMark1.to.have.lengthOf(1)
+        const antSliderMark = wrapper.findAll(".ant-slider-mark");
+        antSliderMark.to.have.lengthOf(1)
+        antSliderMark.contains('span').toBe(false)
+         **/
     });
 });
