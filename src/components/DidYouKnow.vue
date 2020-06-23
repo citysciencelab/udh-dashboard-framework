@@ -23,7 +23,7 @@
   @Component({})
   export default class DidYouKnow extends Vue {
     @Prop() data!: DidYouKnowData;
-    @Prop() interval!: number;
+    @Prop({default: 5000}) interval!: number;
     @Prop() prefix!: string;
     @Prop() linkPrefix!: string;
     timer!: number;
@@ -41,7 +41,7 @@
     get linkUrl(): string | null {
       switch (this.data.action) {
         case 'md_id':
-          return this.linkPrefix + this.data.items[this.currentIndex].link;
+          return (this.linkPrefix || "") + this.data.items[this.currentIndex].link;
         case 'link':
           return this.data.items[this.currentIndex].link;
         default:

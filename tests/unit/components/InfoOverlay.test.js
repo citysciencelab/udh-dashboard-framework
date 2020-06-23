@@ -15,7 +15,6 @@ describe("InfoOverlay.vue", () => {
         let wrapper = mount(InfoOverlay);
         wrapper.setProps({ text: 'newTextMessage' });
         console.warn("InfoOverlay wrapper.html:", wrapper.html);
-        console.log(wrapper)
 
         expect(wrapper.vm.text).to.equal('newTextMessage');
         wrapper.vm.show();

@@ -50,7 +50,7 @@ export default class Utils implements IUtils {
          * Returns: abbreviated number
          */
         getAbbreviatedNumber(num: number) {
-            let value = num.toLocaleString().replace(/\./g,'');
+            let value = num.toString();
             const addedNum = value[1] !== '0' ? ',' + value[1] : '';
             if (value.length > 6 && value.length < 10) {
                 const abbreviated = value.substr(0, value.length-6);
