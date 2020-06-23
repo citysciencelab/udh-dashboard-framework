@@ -912,7 +912,7 @@ export default class UDPC extends AbstractDashboard {
         switch (tab) {
             case 'tab-downloads-year':
                 this.activeTabs.totalDownloads = tab;
-                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: false};
+                this.sliderOptions.downloads = { min: '2014', max: currentYear, unit: 'year', isShowMarks: true};
                 this.fetchDownloadsRange();
                 break;
             case 'tab-downloads-month':
@@ -922,12 +922,12 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-datasets-year':
                 this.activeTabs.totalDatasets = tab;
-                this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
+                this.sliderOptions.datasets = { min: '2017', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDatasetsRange();
                 break;
             case 'tab-datasets-month':
                 this.activeTabs.totalDatasets = tab;
-                this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
+                this.sliderOptions.datasets = { min: '2017-01', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDatasetsRange();
                 break;
             case 'tab-apps-year':
