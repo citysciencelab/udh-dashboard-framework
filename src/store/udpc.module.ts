@@ -76,9 +76,10 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', true);
 
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
+            const status = params.isIncludeBuildPlans ? [''] : ['online'];
             const currentMonth = new Utils().date.getCurrentMonth();
 
-            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, params.tag, tagNot, params.totalsType, 'year', 100);
+            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, params.tag, tagNot, params.totalsType, 'year', 100, undefined, status);
             const aggregations = elasticResponse.aggregations;
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);

@@ -30,9 +30,9 @@ const elastic = {
         elastic.validateCategory(category);
         elastic.validateInterval(interval);
         elastic.validateSortBy(sortBy);
-        status = status ? elastic.validateArray(status) : [];
+        status = elastic.validateArray(status);
 
-        const params = { from, to, theme, org, tag, tag_not, category, interval, limit, sortBy };
+        const params = { from, to, theme, org, tag, tag_not, category, interval, limit, sortBy, status };
         const source = JSON.stringify({ id: 'udpc_query', params: params });
         const url = encodeURI(`${baseUrl}/template?source=${source}&source_content_type=application/json`);
         const response = await Axios.get(url);
@@ -64,7 +64,7 @@ const elastic = {
         }
     },
 
-    validateArray(array: string[]) {
+    validateArray(array?: string[]) {
         return array && array.length ? array : [''];
     }
 };
