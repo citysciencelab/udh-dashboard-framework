@@ -544,7 +544,7 @@ export default class UDPC extends AbstractDashboard {
     urls = {
       hmdk: 'https://metaver.de/trefferanzeige?docuuid=',
       daten_hh: 'http://daten-hamburg.de'
-    }
+    };
 
     mapData: MapData = {
         services: servicesConfig,
@@ -608,6 +608,23 @@ export default class UDPC extends AbstractDashboard {
         tops: ''
     };
 
+    /**
+     *  Standard options for the D3 Treemap
+     */
+    d3ChartOptions: { [key: string]: D3ChartOptions} = {
+      dataSetsByTopic: {
+        dim: '',
+        dim2: '',
+        labelKey: '',
+        metric: 'doc_count',
+        toolTipKey: undefined
+      }
+    };
+
+    /**
+     *  Options for the chartJS diagrams
+     */
+
     barChartConfigDefaults = {
         maintainAspectRatio: false,
         title: {
@@ -639,16 +656,6 @@ export default class UDPC extends AbstractDashboard {
                 }
             }]
         }
-    };
-
-    d3ChartOptions: { [key: string]: D3ChartOptions} = {
-      dataSetsByTopic: {
-        dim: '',
-        dim2: '',
-        labelKey: '',
-        metric: 'doc_count',
-        toolTipKey: undefined
-      }
     };
 
     chartOptions: { [key: string]: Chart.ChartOptions } = {
@@ -722,6 +729,12 @@ export default class UDPC extends AbstractDashboard {
         totalApps: this.barChartConfigDefaults
     };
 
+
+    /**
+     *  Life cycle hook that mounts the lazy loaded messages and vuex store
+     *  Stars fetching data from the store and subscribe to its mutations.
+     *  When the requests to elastic are finished, these subscriptions will set the data for each chart
+     */
     created() {
         this.$i18n.locale = 'de';
         this.$i18n.mergeLocaleMessage('en', messages.en);
@@ -867,6 +880,10 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
+    /**
+     *  Sends new requests to elastic on the change of a tab
+     */
+
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-theme':
@@ -942,6 +959,14 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
+
+    /**
+     *  Sends new requests to elastic on the change of a date range slider
+     *  @param chartId name of the chartId the date rang slider belogs to
+     *  @param max, the max date range value of the slider
+     *  @param min the min date range value of the slider
+     */
+
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
         this.sliderOptions[chartId].min = min;
         this.sliderOptions[chartId].max = max;
@@ -962,6 +987,9 @@ export default class UDPC extends AbstractDashboard {
       this.fetchDatasetsRange();
     }
 
+    /**
+     *  Asynchronous requests via store to elastic
+     */
     async fetchFacts() {
         await this.$store.dispatch('fetchFacts');
     }
@@ -1060,16 +1088,28 @@ export default class UDPC extends AbstractDashboard {
         return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'organization');
     }
 
+    /**
+     *  The following methods handle filter actions
+     *  Filters can be fired by selecting and closing a filter or by clicking on the treemap
+     */
     get filters() {
         return this.$store.getters.filters();
     }
 
+    /**
+     *  Sets filters
+     *  @param filters key value pair of the filters
+     */
     set filters(filters: { [key: string]: string[] }) {
         for (const [k, v] of Object.entries(filters)) {
             this.$store.dispatch('setFilters', [k, v]);
         }
     }
 
+    /**
+     *  Sets filters and fires new data request
+     *  @param event containing new filter values
+     */
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
         this.fetchAllFiltered();
@@ -1093,6 +1133,10 @@ export default class UDPC extends AbstractDashboard {
         this.fetchDatasetsRange();
     }
 
+    /**
+     *  Sets new filters from the treemap chart click
+     *  @param event containing new filter values
+     */
     onFilterSelectFromTreeMap(event: Datum) {
         if (!event.data.key) {
             return;
@@ -1127,6 +1171,9 @@ export default class UDPC extends AbstractDashboard {
       }
     }
 
+    /**
+     *  Manipulates the DidyouknowData to display links and dynamic data
+     */
     didYouKnowDataToHtml(inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, wrapper?: string): Element {
       const instance = new DidYouKnowDataList({
         propsData: {
