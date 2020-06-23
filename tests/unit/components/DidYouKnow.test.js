@@ -4,7 +4,7 @@ import {shallowMount, mount} from "@vue/test-utils";
 import {expect} from "chai";
 import * as sinon from "sinon";
 
-// Test the InfoOverlay component
+// Test the DidYouKnow component
 describe("DidYouKnow.vue", () => {
     let clock;
     const data = {
