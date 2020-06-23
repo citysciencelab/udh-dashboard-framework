@@ -17,18 +17,16 @@ describe("RangeSlider.vue", () => {
         const sliderOptions = { min: minYear, max: currentYear, unit: 'year', isShowMarks: true};
         // let wrapper = mount(RangeSlider);
         const wrapper = mount(RangeSlider, {
-            options: sliderOptions
+            propsData: {
+                options: sliderOptions
+            }
         })
         wrapper.vm.onOptionsChanged();
         //wrapper.setData({ options: sliderOptions });
         //wrapper.setData({ defaults: [2018,2019] });
-        console.warn("RangeSlider wrapper.html:", wrapper.html);
 
-        console.log(wrapper.vm.options)
-        console.log(wrapper.vm.defaults)
-        console.log(wrapper.vm.marks)
-        expect(wrapper.vm.minYear).to.equal(minYear);
-        expect(wrapper.vm.maxYear).to.equal(currentYear);
+        expect(wrapper.vm.minYear).to.equal(parseInt(minYear, 10));
+        expect(wrapper.vm.maxYear).to.equal(parseInt(currentYear, 10));
         //expect(wrapper.isVisible()).to.be.true;
 
     });

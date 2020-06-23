@@ -47,7 +47,7 @@
         @Prop({default: "dashboardData"}) customLayerId!: string;
         @Prop({default: "GeoOnline | LGV Hamburg"}) mapTitle!: string;
         @Prop() overlay!: string;
-        @Prop() portal!: { [key: string]: any };
+        @Prop({default: {}}) portal!: { [key: string]: any };
         @Prop() services!: { [key: string]: any };
         @Prop() mapStyle!: object;
         @Prop() featureData!: FeatureSet;
@@ -81,7 +81,7 @@
         }
 
         createMap() {
-            const mapElement = document.getElementById(this.portal.target);
+            const mapElement = this.$refs.map;
             if (mapElement) {
                 mapElement.innerHTML = "";
             }
