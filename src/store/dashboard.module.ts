@@ -64,7 +64,7 @@ const chartsModule: Module<DashboardState, RootState> = {
          *  Used to fill the filters with a list of distinct values
          *  @param dataId name of the dashboardData dataset to get the distinct filter values from
          *  @param propterty is the name of the distinct filters to retrieve
-         *  @return unique filters
+         *  @returns unique filters
          */
         distinctPropertyValues: state => (dataId: string, property: string) => {
             if (!state.dashboardData[dataId]) {
@@ -81,7 +81,7 @@ const chartsModule: Module<DashboardState, RootState> = {
         /*
          * Return a recalculated dataset according to the given filters
          * @param dataId name of the dashboardData dataset to apply filters
-         * @return filtered data or complete dataset if no filters have been found
+         * @returns filtered data or complete dataset if no filters have been found
          */
         dataWithAppliedFilters: state => (dataId: string) => {
             const filters = state.filters,

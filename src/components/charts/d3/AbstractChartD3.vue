@@ -41,7 +41,7 @@
 
     /*
     *   Looks for the D3 Chart SVG and returns its width
-    *   @return number width of chart
+    *   @returns number width of chart
     */
     get svgWidth() {
       const node = this.svg.node();
@@ -57,7 +57,7 @@
 
     /*
      *   Looks for the D3 Chart SVG and returns its height
-     *    @return number height of chart
+     *    @returns number height of chart
      */
     get svgHeight() {
       const node = this.svg.node();
@@ -77,7 +77,7 @@
 
     /*
      *   Looks for in the parents for the element that has the className this.holderElement
-     *    @return html element with classname holderElement
+     *    @returns html element with classname holderElement
      */
     get parentHolder() {
       const svg = this.svgElement;
@@ -89,8 +89,8 @@
     }
 
     /*
-     *   Returns the assigned width and height of the D3 chart
-     *    @return object width and height as
+     *   width and height of the D3 chart
+     *    @returns object width and height as
      */
     get style() {
       return {
