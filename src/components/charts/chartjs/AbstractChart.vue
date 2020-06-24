@@ -2,6 +2,9 @@
 import { Prop, Vue, Watch } from 'vue-property-decorator';
 import Utils from "@/utils/utils";
 
+/*
+*   This class includes methods, that are meant to be reused/inherited in more than one ChartJS Component
+*/
 
 export default abstract class AbstractChart extends Vue {
   @Prop() isStandardTooltips!: boolean;
@@ -10,6 +13,12 @@ export default abstract class AbstractChart extends Vue {
   @Prop({ default: 'https://' }) linkPrefix!: string;
   currIndex!: number;
 
+
+  /*
+  *   When new chartData is being set;
+  *      tooltips are formatted accordingly
+  *      potential chart click events are set
+  */
   @Watch('chartData') onDataChanged() {
     const that = this;
 
@@ -38,7 +47,6 @@ export default abstract class AbstractChart extends Vue {
             },
             footer: function (tooltipItem: any[], data: any): string {
               const link = Object.prototype.hasOwnProperty.call(data.datasets[0], 'md_id') ? data.datasets[0]['md_id'] : null;
-
               return link ? 'Balken anklicken für weitere Infos' : '';
             }
           }

@@ -3,6 +3,10 @@
 
   export default abstract class AbstractDashboard extends Vue {
 
+    /*
+    *   This class includes methods, that are meant to be reused/inherited in more than one Dashboard
+    */
+
     openToolTip(toolTipRef: string) {
       const component = <Vue>this.$refs[toolTipRef];
       if (!component) {
