@@ -14,7 +14,6 @@
     "axios": "^0.19.1",
     "bootstrap-vue": "^2.6.1",
     "chart.js": "^2.9.3",
-    "chartjs-chart-treemap": "^0.2.3",
     "color": "^3.1.2",
     "core-js": "^3.6.4",
     "d1st-uisystem-base": "^2.33.12",
