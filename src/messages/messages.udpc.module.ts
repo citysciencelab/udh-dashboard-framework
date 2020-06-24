@@ -3,11 +3,11 @@ export const messages = {
         udpc: {
             newDatassets: 'Neueste Datensätze',
             sensors: 'Sensoren',
-            visitors: 'Besucher',
+            visitors: 'Besucher Geoportal',
             access: 'Zugriffe Basiskarten',
             access_overlay_head: 'Karten Zugriffe',
             countBy: 'Anzahl Datensätze nach',
-            countTotal: 'Anzahl Datensätze total',
+            countTotal: 'Anzahl total',
             includeDevPlan: 'Bebauungsplane u.a. mit einbeziehen',
             includeMapHits: 'Hintergrundkarte mit einbeziehen',
             map: 'Karte',
@@ -42,7 +42,7 @@ export const messages = {
              '<p>Weitere Informationen finden Sie hier: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'PLATZHALTER',
             tooltipGeneralLink: 'Link in neuem Tab öffnen',
-            tooltipHdmkLink: 'Zum Eintrag im Hamburger Metadaten Katalog',
+            tooltipHdmkLink: 'Metadaten in MetaVer ansehen',
             tooltipSensors: 'Anzahl der Sensoren, die in der SensorThingsAPI als Datastream definiert wurden.\n' +
              'Die Zahl bezieht sich auf den jeweils vorherigen Kalendermonat.\n' +
              'Quelle: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
@@ -52,38 +52,37 @@ export const messages = {
              'Die Hintergrundkarten sind:</p>' +
              'PLATZHALTER \n' +
              '<p>Quelle: Auswertung der awstats</p>',
-            tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze des jeweils vorherigen abgeschlossenen Kalendermonats nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. \n' +
-             'Da die Bebauungspläne einen Großteil der Datensätze ausmachen, gibt es eine Möglichkeit diese aus der Ansicht herauszufiltern. \n' +
-             'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
-             'Ein Klick auf ein Thema oder eine Organisation filtert auf die jeweils zugehörigen Datensätze.\n' +
-             'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipCountTotal: 'Zeigt die Anzahl der Datensätze, Anwendungen (Apps) und Sensordatensätze pro Monat oder Jahr in einem historischen Zeitverlauf an.\n' +
+            tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. Ein Klick auf ein Thema oder eine Organisation filtert auf die jeweils zugehörigen Datensätze.\n' +
+             'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen. \n' +
+             'Die Themen sind die vom Dateneigentümer zugewiesenen Open Data Kategorien eines Datensatzes. Der Name der Organisation entstammt der Herausgeberinformation in den Metadaten des Datensatzes. Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
+             'Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)',
+            tooltipCountTotal: 'Zeigt die Anzahl der Datensätze, Anwendungen (Apps) oder Sensordatensätze pro Monat oder Jahr in einem historischen Zeitverlauf an.\n' +
              'Im folgenden wird erklärt, was sich hinter Datensätzen, Apps und Sensordatensätzen verbirgt:\n' +
-             'Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
+             'Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierte, inhaltlich und/oder räumlich zusammengehörige Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
              'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen.\n' +
              'Unter <b>Apps</b> wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
              '<b>Sensordatensätze</b> beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
-             'Quelle: Metadaten der Datensätze, Sensordatensätze und Anwendungen (Hamburger Metadatenkatalog – HMDK)',
+             'Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)',
             tooltipMap: 'Ein Klick auf den Datensatznamen in der Rubrik „Neuste Datensätze“ führt zu einer Vorschau des Datensatzes in der Karte.\n' +
              'Neuste Datensätze sind die 10 Datensätze, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden (create date) und mit produktiven Diensten (WFS/WMS) gekoppelt sind. \n' +
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
              'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
-             'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
+             'Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)',
             tooltipTop_datasets: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Datensätze sind:</h6>' +
              'PLATZHALTER\n'+
              '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
-             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
-             'Quelle: Aeisten Zugriffenuswertung der awstats</p>',
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Downloadserver der UDP heruntergeladen wurden. \n\n' +
+             'Quelle: Auswertung der awstats</p>',
             tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Apps sind:</h6>' +
              'PLATZHALTER\n'+
              '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
-             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Downloadserver der UDP heruntergeladen wurden. \n\n' +
              'Quelle: Auswertung der awstats</p>',
             tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
@@ -91,7 +90,7 @@ export const messages = {
              'PLATZHALTER\n'+
              '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
-             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Downloadserver der UDP heruntergeladen wurden. \n\n' +
              'Quelle: Auswertung der awstats</p>',
             tooltipDownloads: 'Es wird die Anzahl der monatlichen bzw. jährlichen Downloads in einem historischen Zeitverlauf angezeigt.\n' +
              'Quelle: Auswertung der awstats',
@@ -111,12 +110,12 @@ export const messages = {
         udpc: {
             newDatassets: 'Latest datasets',
             sensors: 'Sensors',
-            visitors: 'Visitors today',
-            access: 'Map',
+            visitors: 'Visitors Geoportal',
+            access: 'Map access',
             access_overlay_head: 'Map access',
             countBy: 'Datasets by',
             countTotal: 'Count total',
-            includeDevPlan: 'Include development plans',
+            includeDevPlan: 'Include development plans etc.',
             includeMapHits: 'Include background map',
             map: 'Map',
             top10: 'Monthly top 10',
@@ -138,40 +137,39 @@ export const messages = {
             tabApps: 'Apps',
             tabDownloads: 'Downloads',
             filter: 'Filter',
-            themeFilter: 'Filter by theme',
+            themeFilter: 'Filter by topic',
             orgFilter: 'Filter by organization',
             clearFilter: 'Reset filters',
 
             sliderEarlier: '< earlier',
             sliderLater: 'later >',
 
-            tooltipDidYouKnow: '<p>In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg.</p>' +
+            tooltipDidYouKnow: '<p> Facts about the Urban Data Platform Hamburg.</p>' +
              'PLATZHALTER \n' +
-             '<p>Weitere Informationen finden Sie hier: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
+             '<p>Find out more: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'PLATZHALTER',
             tooltipGeneralLink: 'Open Link to new tab',
-            tooltipHdmkLink: 'See entry in the Hamburg Meta-Data Catalogue',
-            tooltipSensors: 'Anzahl der Sensoren, die in der SensorThingsAPI als Datastream definiert wurden.\n' +
-             'Die Zahl bezieht sich auf den jeweils vorherigen Kalendermonat.\n' +
-             'Quelle: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
-            tooltipVisitorsToday: 'Hier wird die Gesamtanzahl an eindeutigen Besucher von <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> und Geodaten Hamburg (FHH-Atlas im Intranet der FHH) des jeweils vorherigen Kalendermonats angezeigt.\n' +
-             'Quelle: Auswertung der awstats',
-            tooltipBackgroundAccess: '<p>Diese Kachel gibt die monatlichen Zugriffe auf die Hintergrundkarten (auch Basiskarten) an.\n' +
-             'Die Hintergrundkarten sind:</p>' +
+            tooltipHdmkLink: 'See Metadata in MetaVer',
+            tooltipSensors: 'Number of Sensors, that have been defined as datastream in the SensorThingsAPI\n' +
+             'The number refers to the last calendar month\n' +
+             'Source: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
+            tooltipVisitorsToday: 'Number of visitors on <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> and Geodaten Hamburg (FHH-Atlas, Intranet of the Free and Hanseatic City of Hamburg) in the last month\n' +
+             'Source: Analysis of awstats',
+            tooltipBackgroundAccess: '<p>monthly access on background maps (also called base maps\n' +
+             'Base maps are: </p>' +
              'PLATZHALTER \n' +
-             '<p>Quelle: Auswertung der awstats</p>',
-            tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze des jeweils vorherigen abgeschlossenen Kalendermonats nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. \n' +
-             'Da die Bebauungspläne einen Großteil der Datensätze ausmachen, gibt es eine Möglichkeit diese aus der Ansicht herauszufiltern. \n' +
-             'Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
-             'Ein Klick auf ein Thema oder eine Organisation filtert auf die jeweils zugehörigen Datensätze.\n' +
-             'Quelle: Metadaten der Datensätze (Hamburger Metadatenkatalog – HMDK)',
-            tooltipCountTotal: 'Zeigt die Anzahl der Datensätze, Anwendungen (Apps) und Sensordatensätze pro Monat oder Jahr in einem historischen Zeitverlauf an.\n' +
-             'Im folgenden wird erklärt, was sich hinter Datensätzen, Apps und Sensordatensätzen verbirgt:\n' +
-             'Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
-             'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen.\n' +
-             'Unter <b>Apps</b> wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
-             '<b>Sensordatensätze</b> beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
-             'Quelle: Metadaten der Datensätze, Sensordatensätze und Anwendungen (Hamburger Metadatenkatalog – HMDK)',
+             '<p>Source: Analysis of awstats</p>',
+            tooltipDatasetsBy: 'This tile shows the number of records by topic or organization that were last described in the Hamburg Metadata Catalogue (HMDK) and are linked to productive Internet and Intranet services (WFS/WMS). clicking on a topic or organization filters to the corresponding records.\n' +
+             'With the additional filter "Include development plans etc." you can also display the numerous development plans and some datasets that are not linked to productive Internet and Intranet services (WFS/WMS). \n' +
+             'The topics are the Open Data categories of a dataset assigned by the data owner. The name of the organization is taken from the publisher information in the metadata. Metadata record descriptions of datasets published on the Internet can be found at <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
+             'Source: CSW-API of HMDK (Hamburger Metadatenkatalog)',
+            tooltipCountTotal: 'Shows the number of datasets, applications (apps) or sensor datasets per month or year in a historical time period.\n' +
+             'The following explains datasets, apps and sensor datasets:\n' +
+             'A <b>dataset</b> is a group of data in a file, defined by the data owner, which are related in content and/or location. In the case of datasets, only specialist data is included, i.e. only datasets that are not background maps.\n' +
+             'With the additional filter "Include development plans etc." you can also display the numerous development plans and some datasets that are not linked to productive Internet and Intranet services (WFS/WMS).\n' +
+             'The tab <b>Apps</b> shows the total number of all LGV applications accessible on the Internet and Intrane, listed in a monthly or yearly timeline.  \n' +
+             '<b>Sensor datasets</b> describe all datasets that are created and updated by sensors in real time. They are a subset of datasets. '\n'.
+             'Source: CSW-API of HMDK (Hamburger Metadatenkatalog)',
             tooltipMap: 'Ein Klick auf den Datensatznamen in der Rubrik „Neuste Datensätze“ führt zu einer Vorschau des Datensatzes in der Karte.\n' +
              'Neuste Datensätze sind die 10 Datensätze, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden (create date) und mit produktiven Diensten (WFS/WMS) gekoppelt sind. \n' +
              'Ein Klick auf den Vergrößerungsbutton stoppt den Durchlauf der „Neusten Datensätze“ und zeigt den aktuellen Datensatz in der vergrößerten Karte an.\n' +
@@ -183,33 +181,33 @@ export const messages = {
              'PLATZHALTER\n'+
              '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
-             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
-             'Quelle: Aeisten Zugriffenuswertung der awstats</p>',
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Downloadserver der UDP heruntergeladen wurden. \n\n' +
+             'Source: Analysis of awstats</p>',
             tooltipTop_apps: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Apps sind:</h6>' +
              'PLATZHALTER\n'+
              '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
-             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
-             'Quelle: Auswertung der awstats</p>',
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Downloadserver der UDP heruntergeladen wurden. \n\n' +
+             'Source: Analysis of awstats</p>',
             tooltipTop_downloads: '<p>Zeigt Datensätze, Anwendungen (Apps) mit den meisten Zugriffen oder die Downloads mit den meisten Hits an. \n' +
              'Mit einem Klick auf den jeweiligen Balken gelangen Sie zur Metadatensatzbeschreibung in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>Die Top 10 Downloads sind:</h6>' +
              'PLATZHALTER\n'+
              '<p>Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierter, inhaltlich und/oder räumlich zusammengehöriger Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen. Der Zusatz FHHNET zeigt an, dass der Datensatz nur im Intranet der FHH verfügbar ist, daher gibt es auch keinen Eintrag in MetaVer. \n' +
              'Bei den <b>Apps</b> werden die Anwendungen des LGV berücksichtigt, die im Internet und über das Intranet verfügbar sind.  \n' +
-             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Server: <a href="daten-hamburg.de" target="_blank">daten-hamburg.de</a> heruntergeladen wurden. \n\n' +
-             'Quelle: Auswertung der awstats</p>',
+             'Bei den <b>Downloads</b> werden alle Daten berücksichtigt, die über den Downloadserver der UDP heruntergeladen wurden. \n\n' +
+             'Source: Analysis of awstats</p>',
             tooltipDownloads: 'Es wird die Anzahl der monatlichen bzw. jährlichen Downloads in einem historischen Zeitverlauf angezeigt.\n' +
-             'Quelle: Auswertung der awstats',
+             'Source: Analysis of awstats',
             tooltipAccessData: 'Hier werden die monatlichen bzw. jährlichen Zugriffe auf die Fachdaten im Internet und Intranet der FHH mit Historie angegeben. Fachdaten sind alle Datensätze, die keine Hintergrundkarten sind.\n' +
-             'Quelle: Auswertung der awstats',
+             'Source: Analysis of awstats',
             tooltipAccessApps: 'Es werden die monatlichen bzw. jährlichen Gesamtzugriffe auf die Internet- und Intranet-Anwendungen (Apps) des LGV in einem historischen Zeitverlauf angezeigt.\n' +
              'Welche Apps dazu gehören erfahren Sie in den Metadatenkatalogen:\n' +
              'Link für Internet-Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
              'Link für Intranet-Apps: <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
-             'Quelle: Auswertung der awstats',
+             'Source: Analysis of awstats',
             privacy: 'Data privacy',
             legal: 'Legal notice',
             legalEU: 'This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 731297.'
