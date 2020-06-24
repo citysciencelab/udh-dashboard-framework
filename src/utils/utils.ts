@@ -37,7 +37,7 @@ export default class Utils implements IUtils {
 
         /*
          * Adds a decimal separator according to local 'de-DE'
-         * @param value string to be added separators to
+         * @param {string} value string to be added separators to
          * Returns: 'de-DE seprarated number'
          */
         getDecimalSeparatedNumber(value: string) {
@@ -46,7 +46,7 @@ export default class Utils implements IUtils {
 
         /**
          * Manipulates a number string for short axis-labels, tooltips or kpi
-         * @param num number that will be abbreviated or retransformed
+         * @param {number} num that will be abbreviated or retransformed
          * Returns: abbreviated number
          */
         getAbbreviatedNumber(num: number) {
@@ -86,7 +86,7 @@ export default class Utils implements IUtils {
 
         /**
          * Prepares date values for the elastic search api of the UrbanDataPlatformCockpit
-         * @param params object with the min and max dates to be requested and the corresponding request unit
+         * @param {Object} params object with the min and max dates to be requested and the corresponding request unit
          */
         sanitizeRangefulParams(params: { min: string, max: string, unit: string }) {
             // API requires 'YYYY-MM' format
@@ -159,9 +159,9 @@ export default class Utils implements IUtils {
 
         /**
          * Calculates the extent of the axis to take it into account while drawing other chart components
-         * @param svg the D3 chart element
-         * @param axis the prepared axis to be drawn
-         * @param axisName has to be 'xAxis' or 'yAxis' to determine if to measure width or height
+         * @param {SVG} svg the D3 chart element
+         * @param {d3.Axis<Datum>} axis the prepared axis to be drawn
+         * @param {string} axisName has to be 'xAxis' or 'yAxis' to determine if to measure width or height
          * @returns [number]
          */
         drawAxisMeasureExtent(svg: SVG, axis: d3.Axis<Datum>, axisName: string) {
@@ -241,9 +241,9 @@ export default class Utils implements IUtils {
  * Aggregates data values for a given key value pair
  *
  * Stored query params:
- * @param ds array of objects to be aggregated
- * @param descriptor string the key for which to aggregate the data
- * @param metric string the value for which to aggregate the data
+ * @param {Object[]} ds array of objects to be aggregated
+ * @param {string} descriptor the key for which to aggregate the data
+ * @param {string} metric the value for which to aggregate the data
  */
 export function aggregateData(ds: Dataset, descriptor: string, metric: string): Dataset {
     const aggregated = ds.reduce((results, item) => {
@@ -265,8 +265,8 @@ export function aggregateData(ds: Dataset, descriptor: string, metric: string): 
  * Counts values of the dataset, that contain a given key
  *
  * Stored query params:
- * @param ds array of objects to be aggregated as count values
- * @param descriptor string the key for which to look for and count in the data
+ * @param {Object[]}ds array of objects to be aggregated as count values
+ * @param {string} descriptor string the key for which to look for and count in the data
  */
 export function countData(ds: Dataset, descriptor: string): Dataset {
     return ds.reduce((countData: Dataset, datum: Datum) => {

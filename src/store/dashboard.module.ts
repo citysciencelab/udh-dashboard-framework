@@ -62,8 +62,8 @@ const chartsModule: Module<DashboardState, RootState> = {
         /*
          *  Return the distinct values from a dataset for a given property
          *  Used to fill the filters with a list of distinct values
-         *  @param dataId name of the dashboardData dataset to get the distinct filter values from
-         *  @param propterty is the name of the distinct filters to retrieve
+         *  @param {string} dataId name of the dashboardData dataset to get the distinct filter values from
+         *  @param {string} propterty is the name of the distinct filters to retrieve
          *  @returns unique filters
          */
         distinctPropertyValues: state => (dataId: string, property: string) => {

@@ -962,9 +962,9 @@ export default class UDPC extends AbstractDashboard {
 
     /**
      *  Sends new requests to elastic on the change of a date range slider
-     *  @param chartId name of the chartId the date rang slider belogs to
-     *  @param max, the max date range value of the slider
-     *  @param min the min date range value of the slider
+     *  @param {string} chartId name of the chartId the date rang slider belogs to
+     *  @param {string} max, the max date range value of the slider
+     *  @param {string} min the min date range value of the slider
      */
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
@@ -1098,7 +1098,7 @@ export default class UDPC extends AbstractDashboard {
 
     /**
      *  Sets filters
-     *  @param filters key value pair of the filters
+     *  @param {Object} filters key value pair of the filters
      */
     set filters(filters: { [key: string]: string[] }) {
         for (const [k, v] of Object.entries(filters)) {
@@ -1108,7 +1108,7 @@ export default class UDPC extends AbstractDashboard {
 
     /**
      *  Sets filters and fires new data request
-     *  @param event containing new filter values
+     *  @param {string[]} event containing new filter values
      */
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
@@ -1135,7 +1135,7 @@ export default class UDPC extends AbstractDashboard {
 
     /**
      *  Sets new filters from the treemap chart click
-     *  @param event containing new filter values
+     *  @param {Datum} event containing new filter values
      */
     onFilterSelectFromTreeMap(event: Datum) {
         if (!event.data.key) {

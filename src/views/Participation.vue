@@ -237,8 +237,8 @@ export default class Participation extends AbstractDashboard {
 
     /*
       *   Retrieves the distinct filter values from the vuex store
-      *   @param dataId the name of the dataset to retrieve filters from
-      *   @param filterProperty name of the property in the dataset values to get distinct elements
+      *   @param {string} dataId the name of the dataset to retrieve filters from
+      *   @param {string} filterProperty name of the property in the dataset values to get distinct elements
        */
     getFilterOptions(dataId: string, filterProperty: string): any[] {
         return this.$store.getters.distinctPropertyValues(dataId, filterProperty);
@@ -251,7 +251,7 @@ export default class Participation extends AbstractDashboard {
     /*
     *   Gets fired when a MultiSelect selection has changed.
     *   Vuex store ist set from the MultiSelect itself
-    *   @param the selected elements - not used in this dashboard
+    *   @param event the selected elements - not used in this dashboard
 
      */
     filterChanged(event: [string, string[]]) {
