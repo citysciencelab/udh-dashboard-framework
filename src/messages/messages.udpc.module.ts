@@ -169,7 +169,7 @@ export const messages = {
              'A <b>dataset</b> is a group of data in a file, defined by the data owner, which are related in content and/or location. In the case of datasets, only specialist data is included, i.e. only datasets that are not background maps.\n' +
              'With the additional filter "Include development plans etc." you can also display the numerous development plans and some datasets that are not linked to productive Internet and Intranet services (WFS/WMS).\n' +
              'The tab <b>Apps</b> shows the total number of all LGV applications accessible on the Internet and Intrane, listed in a monthly or yearly timeline.  \n' +
-             '<b>Sensor datasets</b> describe all datasets that are created and updated by sensors in real time. They are a subset of datasets. '\n'.
+             '<b>Sensor datasets</b> describe all datasets that are created and updated by sensors in real time. They are a subset of datasets.  \n' +
              'Source: CSW-API of HMDK (Hamburger Metadatenkatalog)',
             tooltipMap: 'Clicking on the record name in the "Recent records" section will display a preview of the record in the map.\n' +
              'Newest records are the 10 datasets which were last described in the Hamburg metadata catalogue (create date) and are linked to productive services (WFS/WMS). \n' +
