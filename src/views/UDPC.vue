@@ -1328,8 +1328,12 @@ i {
         .md-ripple {
             padding: 0 10px;
 
-          @media (max-width: 375px) {
+          @media (max-width: 500px) {
             padding-left: 5px;
+          }
+
+          @media (max-width: 380px) {
+            padding-left: 2px;
           }
         }
 
@@ -1338,6 +1342,10 @@ i {
             font-size: 16px;
             color: $hamburg-blue;
             font-weight: bold;
+
+            @media (max-width: 500px) {
+              font-size: 12px;
+            }
         }
     }
 
