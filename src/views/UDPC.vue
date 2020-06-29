@@ -152,7 +152,8 @@
               <did-you-know :data="recentDataSets"
                             :interval="10000"
                             :link-prefix="urls.hmdk"
-                            @show-in-map="showDataInMap" />
+                            @show-in-map="showDataInMap"
+                            @tooltip-internal-network="onTooltipInternalNetwork" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -463,10 +464,10 @@
 
     <info-overlay ref="tooltip-did-you-know"
                   :header="$t('udpc.didYouKnow')"
-                  :html="didYouKnowDataToHtml(didYouKnow, urls.hmdk, undefined, $t('udpc.tooltipDidYouKnow'))" />
+                  :html="didYouKnowDataToHtml('tooltip-did-you-know', didYouKnow, urls.hmdk, undefined, $t('udpc.tooltipDidYouKnow'))" />
     <info-overlay ref="tooltip-latest-datasets"
                   :header="$t('udpc.newDatassets')"
-                  :html="didYouKnowDataToHtml(recentDataSets, urls.hmdk, $t('udpc.dateTag'))" />
+                  :html="didYouKnowDataToHtml('tooltip-latest-datasets', recentDataSets, urls.hmdk, $t('udpc.dateTag'))" />
     <info-overlay ref="tooltip-sensors"
                   :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
@@ -475,7 +476,7 @@
                   :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
                   :header="$t('udpc.access_overlay_head')"
-                  :html="didYouKnowDataToHtml(overlayDataMapKpi, urls.hmdk, $t('udpc.dateTag'), $t('udpc.tooltipBackgroundAccess'))" />
+                  :html="didYouKnowDataToHtml('tooltip-background-access', overlayDataMapKpi, urls.hmdk, $t('udpc.dateTag'), $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
                   :header="$t('udpc.countBy')"
                   :text="$t('udpc.tooltipDatasetsBy')" />
@@ -487,7 +488,7 @@
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
                   :header="$t(`udpc.top10_${activeTabs.tops}`)"
-                  :html="didYouKnowDataToHtml(overlayDataTopX, activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk, $t('udpc.dateTag'), $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
+                  :html="didYouKnowDataToHtml('tooltip-top-x', overlayDataTopX, activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk, $t('udpc.dateTag'), $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
     <info-overlay ref="tooltip-downloads"
                   :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
@@ -497,6 +498,20 @@
     <info-overlay ref="tooltip-access-apps"
                   :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
+    <info-overlay ref="tooltip-interal-network"
+                  :header="tooltipInternalNetwork.label"
+                  :html="$t('udpc.tooltipInternalNetwork')">
+      <template slot="after-body">
+        <a
+          :href="tooltipInternalNetwork.link"
+          target="_blank"
+        >
+          <md-button class="md-primary md-dense">
+            {{ $t('general.open') }}
+          </md-button>
+        </a>
+      </template>
+    </info-overlay>
   </div>
 </template>
 
@@ -539,6 +554,12 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
     updateMapOnInterval = true;
+
+    tooltipInternalNetwork = {
+      label: '',
+      link: '',
+    };
+
     urls = {
       hmdk: 'https://metaver.de/trefferanzeige?docuuid=',
       daten_hh: 'http://daten-hamburg.de'
@@ -1162,6 +1183,9 @@ export default class UDPC extends AbstractDashboard {
         this.agreeDialogActive = false;
     }
 
+    /**
+     * shows the currently active dataset in the map, when possible
+     */
     showDataInMap(dataset: {label: string, link: string}) {
       if (this.updateMapOnInterval) {
         this.mapData.md_id = dataset.link;
@@ -1176,29 +1200,35 @@ export default class UDPC extends AbstractDashboard {
      * @param {string} wrapper - the wrapping text in which the list from inputData is injected
      * @returns {Element} - the html element to render
      */
-    didYouKnowDataToHtml(inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, date: string | undefined = 'Stand: ', wrapper?: string): Element {
+    didYouKnowDataToHtml(ref: string, inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, date: string | undefined = 'Stand: ', wrapper?: string): Element {
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
           linkPrefix,
+          wrapper,
           date,
           langCode: this.$t('udpc.langCode')
-        }
+        },
+      });
+      instance.$on('tooltip-internal-network', (el: { label: string, link: string }) => {
+        this.onTooltipInternalNetwork(el, ref)
       });
       instance.$mount();
-
-      if (wrapper) {
-        const el = document.createElement('div');
-        el.innerHTML = wrapper.replace('PLATZHALTER', instance.$el.outerHTML);
-
-        return el;
-      }
 
       return instance.$el;
     }
 
     toggleRecentDatasetInterval(state: boolean) {
       this.updateMapOnInterval = !state;
+    }
+
+    onTooltipInternalNetwork(el: { label: string, link: string }, ref?: string) {
+      this.tooltipInternalNetwork = el;
+
+      if (ref) {
+        (this.$refs[ref] as InfoOverlay).hide();
+      }
+      (this.$refs['tooltip-interal-network'] as InfoOverlay).show();
     }
 }
 </script>

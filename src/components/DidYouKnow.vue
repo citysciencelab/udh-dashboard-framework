@@ -17,15 +17,21 @@
 
 <script lang="ts">
   import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+  import InfoOverlay from './InfoOverlay.vue';
   // eslint-disable-next-line no-unused-vars
   import {LocaleMessage} from 'vue-i18n';
 
-  @Component({})
+  @Component({
+    components: {
+      InfoOverlay
+    }
+  })
   export default class DidYouKnow extends Vue {
     @Prop() data!: DidYouKnowData;
     @Prop({default: 5000}) interval!: number;
     @Prop() prefix!: string;
     @Prop() linkPrefix!: string;
+    @Prop({default: 'FHHNET'}) internalNetwork!: string;
     timer!: number;
     currentIndex = 0;
 
@@ -80,6 +86,13 @@
     onClick(evt: Event) {
       switch (this.data.action) {
         case 'md_id':
+          if (this.data.items[this.currentIndex].label.includes(this.internalNetwork)) {
+            evt.preventDefault();
+            this.$emit('tooltip-internal-network', {
+              label: this.data.items[this.currentIndex].label,
+              link: this.data.items[this.currentIndex].link
+            });
+          }
           break;
         default:
           evt.preventDefault();

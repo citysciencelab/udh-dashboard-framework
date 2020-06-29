@@ -7,7 +7,7 @@
     <span class="close-button" @click="hide()">
       <md-icon>close</md-icon>
     </span>
-
+    <slot name="before-header" />
     <div class="heading">
       {{ header }}
     </div>
@@ -15,6 +15,7 @@
          ref="html"
          class="html" />
     <p id="textElement" class="text" />
+    <slot name="after-body" />
     <div class="footer">
       {{ footer }}
     </div>
@@ -26,7 +27,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class InfoOverlay extends Vue {
-    @Prop() html!: Element;
+    @Prop() html!: Element | string;
     @Prop() text!: string;
     @Prop() header!: string;
     @Prop() footer!: string;
@@ -43,9 +44,20 @@ export default class InfoOverlay extends Vue {
 
     renderHtml() {
         if (this.html) {
-          (this.$refs.html as Element).append(this.html);
+          let html = this.html;
+
+          if (typeof html === "string") {
+            const el =  document.createElement('div');
+
+            el.innerHTML = html;
+            html = el;
+          }
+
+          (this.$refs.html as Element).append(html);
+
         } else if (this.text) {
           const htmlElement = document.getElementById("textElement");
+
           if (htmlElement)
             htmlElement.insertAdjacentHTML('afterbegin', this.text);
         }

@@ -106,7 +106,10 @@ export const messages = {
              'Quelle: Auswertung der awstats',
             privacy: 'Datenschutz',
             legal: 'Impressum',
-            legalEU: 'Dieses Projekt wurde im Rahmen der Finanzhilfevereinbarung Nr. 731297 vom Forschungs- und Innovationsprogramm Horizont 2020 der Europäischen Union teilfinanziert.'
+            legalEU: 'Dieses Projekt wurde im Rahmen der Finanzhilfevereinbarung Nr. 731297 vom Forschungs- und Innovationsprogramm Horizont 2020 der Europäischen Union teilfinanziert.',
+            tooltipInternalNetwork: '<p>Sie haben einen <strong>FHHNet</strong> internen Link angeklickt.<br />' +
+            'Wenn Sie entsprechende Zugriffsberechtigungen haben klicken sie <strong>auf den Button unten</strong> um dem Link zu folgen.' +
+            'Ansonsten schließen Sie dieses Fenster.</p>'
         }
     },
     en: {
@@ -217,7 +220,10 @@ export const messages = {
              'Source: Analysis of awstats',
             privacy: 'Data privacy',
             legal: 'Legal notice',
-            legalEU: 'This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 731297.'
+            legalEU: 'This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 731297.',
+            tooltipInternalNetwork: '<p>You have clicked on an <strong>FHHNet</strong> internal link.<br />' +
+            'If you have the appropriate access rights click on the <strong>button below</strong> to follow the link.' +
+            'Otherwise close this window.</p>'
         }
     }
 };
