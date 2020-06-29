@@ -431,14 +431,14 @@
           </div>
           <div class="order-md-2 order-sm-1 col-xl-7 col-lg-9 col-md-8 align-self-center images-bottom-right">
             <div class="row">
-              <div class="col-xl-3 col-sm-6 col-md-3 col-sm-6 col-6 image-col">
+              <div class="col-xl-3 col-sm-6 col-md-3 col-sm-6 col-6 image-col align-self-start">
                 <a href="www.geoinfo.hamburg.de"
                    target="_blank">
                   <img src="../assets/images/nl-lgv-logo@2x.png"
                        alt="LGV">
                 </a>
               </div>
-              <div class="col-xl-3 col-sm-6 col-md-3 col-sm-6 col-6 image-col">
+              <div class="col-xl-3 col-sm-6 col-md-3 col-sm-6 col-6 image-col align-self-start">
                 <a href="http://www.urbandataplatform.hamburg/"
                    target="_blank">
                   <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
@@ -447,10 +447,10 @@
               </div>
               <div class="col-xl-6 col-sm-12 col-md-6 col-12 eu-legal-notice">
                 <div class="row">
-                  <div class="col-xl-3 col-lg-3 image-col eu-image col-3">
+                  <div class="col-xl-3 col-lg-3 image-col eu-image col-3 align-self-start">
                     <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
                   </div>
-                  <div class="col-xl-9 col-lg-9 col-9 image-col">
+                  <div class="col-xl-9 col-lg-9 col-9 image-col align-self-start">
                     <p>{{ $t('udpc.legalEU') }}</p>
                   </div>
                 </div>
@@ -1572,6 +1572,7 @@ i {
     .images-bottom-right {
         @media (min-width: 459px) {
             .image-col {
+                padding-top: 22px;
                 padding-bottom: 22px;
                 align-self: flex-end;
             }
