@@ -8,6 +8,18 @@
            src="../assets/images/Hamburg_Bug_NEU_RGB.png"
            alt="Hamburg Bug">
       <span class="navbar-brand">Urban Data Platform Cockpit</span>
+
+        <ul class="navbar-nav ml-auto navbar-lang">
+          <li class="nav-item lang" v-bind:class="{ active: $i18n.locale === 'de'}">
+            <span @click="changeLanguage('de')">De</span>
+          </li>
+          <li class="nav-item">
+            <span> | </span>
+          </li>
+          <li class="nav-item lang" v-bind:class="{ active: $i18n.locale === 'en'}">
+            <span @click="changeLanguage('en')">En</span>
+          </li>
+        </ul>
     </nav>
 
     <div class="container-fluid">
@@ -1249,6 +1261,27 @@ i {
           position: absolute;
           left: 105px;
         }
+    }
+
+    .navbar-lang {
+      color: white;
+      position: relative;
+      top: 60px;
+      flex-direction: row;
+      font-size: 16px;
+
+      span {
+        margin: 0 2px;
+        font-weight: bold;
+      }
+
+      .lang {
+        cursor: pointer;
+      }
+
+      .active {
+        color: $hamburg-red;
+      }
     }
 
     .hh-bug {
