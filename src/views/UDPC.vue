@@ -279,7 +279,8 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs class="dashboard-tabs"
+              <md-tabs ref="top-x-tabs"
+                       class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-top10-datasets"
                         :md-label="$t('udpc.tabDatasets')" />
@@ -295,7 +296,17 @@
                                       :link-prefix="activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk" />
               </div>
             </template>
-            <template slot="footer" />
+            <template slot="footer">
+              <div v-if="this.$refs['top-x-tabs'] && this.$refs['top-x-tabs'].activeTab === 'tab-top10-datasets'"
+                   class="notice" style="width: 100%; display: flex">
+                <md-switch
+                        v-model="chartSwitches.accessWithBackgroundMapsTop"
+                        class="dashboard-switch"
+                        @change="onSwitchIncludeMapsTops()">
+                  {{ $t('udpc.includeMapHits') }}
+                </md-switch>
+              </div>
+            </template>
           </dashboard-tile>
         </div>
         <div class="col-xl-3 col-lg-6 py-2">
@@ -371,9 +382,9 @@
               </div>
               <div class="notice" style="width: 100%; display: flex">
                 <md-switch
-                  v-model="chartSwitches.accessWithBackgroundMaps"
+                  v-model="chartSwitches.accessWithBackgroundMapsHits"
                   class="dashboard-switch"
-                  @change="onSwitchIncludeMaps('datasets')">
+                  @change="onSwitchIncludeMapsHits('datasets')">
                   {{ $t('udpc.includeMapHits') }}
                 </md-switch>
               </div>
@@ -583,7 +594,8 @@ export default class UDPC extends AbstractDashboard {
     };
 
     chartSwitches: { [key: string]: boolean } = {
-      accessWithBackgroundMaps: true,
+      accessWithBackgroundMapsHits: true,
+      accessWithBackgroundMapsTop: false,
       countGroupedWithPlans: false,
       countTotalWithPlans: false
     };
@@ -981,8 +993,12 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
-    onSwitchIncludeMaps() {
+    onSwitchIncludeMapsHits() {
       this.fetchDatasetsRange();
+    }
+
+    onSwitchIncludeMapsTops() {
+      this.fetchTops();
     }
 
     /**
@@ -1032,9 +1048,10 @@ export default class UDPC extends AbstractDashboard {
         const topTopic = this.activeTabs.tops;
         const theme = this.filters.theme;
         const org = this.filters.org;
+        const tag_not = this.chartSwitches.accessWithBackgroundMapsTop ? [''] : ['basemap'];
 
         if (topTopic === 'datasets') {
-            await this.$store.dispatch('fetchTops', { topTopic, theme, org });
+            await this.$store.dispatch('fetchTops', { topTopic, theme, org, tag_not });
         } else {
             await this.$store.dispatch('fetchTops', { topTopic });
         }

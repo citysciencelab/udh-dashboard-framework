@@ -97,7 +97,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             The number of requested resources as well as the monitored time period can be adjusted
             For datasets it currently divides the requested data by intranet and internet resources
          */
-        fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[] }) => {
+        fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[], tag_not: string[] }) => {
             const chartId = 'totalDatasetsRangeTop';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
             if (!changed) return;
@@ -106,7 +106,7 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const month = new Utils().date.getLastMonth();
 
-            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], ['basemap'], params.topTopic, 'month', 10);
+            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], params.tag_not, params.topTopic, 'month', 10);
             const aggregations = elasticResponse.aggregations;
             const topX = aggregations?.top_x?.buckets;
 
