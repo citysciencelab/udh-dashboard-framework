@@ -396,7 +396,7 @@
                 <md-switch
                   v-model="chartSwitches.accessWithBackgroundMapsHits"
                   class="dashboard-switch"
-                  @change="onSwitchIncludeMapsHits('datasets')">
+                  @change="onSwitchIncludeMapsHits()">
                   {{ $t('udpc.includeMapHits') }}
                 </md-switch>
               </div>
@@ -1047,13 +1047,19 @@ export default class UDPC extends AbstractDashboard {
 
     async fetchTotalsByType() {
         // Sensordatasets are a subset of datasets filtered by tag
-        const totalsType = this.activeTabs.dataSetsByType === 'sensordatasets' ? 'datasets' : this.activeTabs.dataSetsByType;
-        const theme = this.filters.theme;
-        const org = this.filters.org;
+        const dataSetTypeSelection = this.activeTabs.dataSetsByType;
+        const totalsType = dataSetTypeSelection === 'sensordatasets' ? 'datasets' : dataSetTypeSelection;
         const isIncludeBuildPlans = totalsType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
-        const tag = this.activeTabs.dataSetsByType === 'sensordatasets' ? ['sensordata'] : [];
+        const params = {
+          totalsType: totalsType,
+          theme: this.filters.theme,
+          org: this.filters.org,
+          tag: dataSetTypeSelection === 'sensordatasets' ? ['sensordata'] : [],
+          tagNot: dataSetTypeSelection === 'datasets' ? (isIncludeBuildPlans ? [''] : ['bplan']) : [''],
+          status: dataSetTypeSelection === 'datasets' ? (isIncludeBuildPlans ? [''] : ['online']) : ['']
+        };
 
-        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans, tag });
+        await this.$store.dispatch('fetchTotalsByType', params);
     }
 
     async fetchTops() {
@@ -1087,7 +1093,7 @@ export default class UDPC extends AbstractDashboard {
             min: this.sliderOptions.datasets.min,
             max: this.sliderOptions.datasets.max,
             unit: this.sliderOptions.datasets.unit,
-            tag_not: this.chartSwitches.accessWithBackgroundMaps ? [''] : ['basemap'],
+            tag_not: this.chartSwitches.accessWithBackgroundMapsHits ? [''] : ['basemap'],
             theme: this.filters.theme,
             org: this.filters.org
         };
