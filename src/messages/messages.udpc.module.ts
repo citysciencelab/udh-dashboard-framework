@@ -22,7 +22,7 @@ export const messages = {
             facts: 'Wussten Sie schon: %{fact}',
             tabTopics: 'Themen',
             tabOrganisations: 'Organisationen',
-            tabSensors: 'Sensoren',
+            tabSensors: 'Sensordatensätze',
             tabYear: 'Jahr',
             tabMonth: 'Monat',
             tabDay: 'Tag',

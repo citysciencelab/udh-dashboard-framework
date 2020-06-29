@@ -423,39 +423,37 @@
     <md-bottom-bar class="udpc-bottom-bar">
       <div class="container-fluid">
         <div class="row logo-row">
-          <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
+          <div class="order-sm-1 order-sm-1 order-12 col-xl-5 col-lg-3 col-md-5 align-self-end links-bottom-left">
             <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Datenschutz.aspx"
                target="_blank">Datenschutz</a>
             <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Impressum.aspx "
                target="_blank">Impressum</a>
           </div>
-          <div class="col-xl-6 col-lg-6 align-self-center images-bottom-right">
+          <div class="col-xl-7 col-lg-9 col-md-7 align-self-center images-bottom-right">
             <div class="row">
-              <div class="offset-xl-6 col-xl-3 col-6 image-col">
+              <div class="col-xl-3 col-sm-6 col-md-3 col-3 col-3 image-col">
                 <a href="www.geoinfo.hamburg.de"
                    target="_blank">
                   <img src="../assets/images/nl-lgv-logo@2x.png"
                        alt="LGV">
                 </a>
               </div>
-              <div class="col-xl-3 col-6 image-col">
+              <div class="col-xl-3 col-sm-6 col-md-3 col-3 image-col">
                 <a href="http://www.urbandataplatform.hamburg/"
                    target="_blank">
                   <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
                        alt="UDP">
                 </a>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row eu-row justify-content-end">
-          <div class="offset-xl-6 col-xl-6 col-lg-6 eu-legal-notice">
-            <div class="row">
-              <div class="col-xl-7 col-lg-2 eu-image col-3">
-                <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
-              </div>
-              <div class="col-xl-5 col-lg-10 col-9">
-                {{ $t('udpc.legalEU') }}
+              <div class="col-xl-6 col-sm-12 col-md-6 col-6 eu-legal-notice">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-3 image-col eu-image col-3">
+                    <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
+                  </div>
+                  <div class="col-xl-9 col-lg-9 col-9 image-col">
+                    {{ $t('udpc.legalEU') }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1531,25 +1529,20 @@ i {
         min-height: 122px;
     }
 
-    .eu-row {
-        min-height: 90px;
+    .eu-legal-notice {
+      font-size: 9pt;
+      text-align: left;
 
-        .eu-legal-notice {
-            font-size: 9pt;
-            text-align: left;
+      .eu-image {
+        //padding-right: 0;
 
-            .eu-image {
-                padding-right: 0;
-
-                img {
-                    float: right;
-                    height: 62px;
-                }
-            }
-
-
+        img {
+          float: right;
+          max-height: 62px;
         }
+      }
     }
+
 
 
     .links-bottom-left {
