@@ -260,7 +260,8 @@
                                  :md_id="mapData.md_id"
                                  :overlay="mapData.overlay"
                                  :link-prefix="urls.hmdk"
-                                 @fullscreenMap="toggleRecentDatasetInterval" />
+                                 @fullscreenMap="toggleRecentDatasetInterval"
+                                 @tooltip-internal-network="onTooltipInternalNetwork" />
             </template>
             <template slot="footer" />
           </dashboard-tile>

@@ -13,7 +13,8 @@
         <a :href="linkUrl"
            :title="linkTitle"
            target="_blank"
-           class="layer-tag">
+           class="layer-tag"
+           @click="onClick">
           {{ layerTitle || overlay || mapTitle }}
           <md-icon v-if="linkUrl">launch</md-icon>
         </a>
@@ -53,6 +54,7 @@
         @Prop() featureData!: FeatureSet;
         @Prop() md_id!: string;
         @Prop() linkPrefix!: string;
+        @Prop({default: 'FHHNET'}) internalNetwork!: string
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
@@ -175,6 +177,18 @@
             this.onResize();
             this.isFullscreen = false;
             this.$emit('fullscreenMap', false);
+        }
+
+        onClick(evt: Event) {
+            if (this.layerTitle) {
+                if (this.layerTitle.includes(this.internalNetwork)) {
+                    evt.preventDefault();
+                    this.$emit('tooltip-internal-network', {
+                        label: this.layerTitle,
+                        link: this.linkUrl
+                    });
+                }
+            }
         }
     }
 </script>
