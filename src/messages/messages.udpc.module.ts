@@ -112,25 +112,25 @@ export const messages = {
             newDatassets: 'Latest datasets',
             sensors: 'Sensors',
             visitors: 'Visitors Geoportal',
-            access: 'Map access',
-            access_overlay_head: 'Map access',
+            access: 'Map hits',
+            access_overlay_head: 'Map hits',
             countBy: 'Datasets by',
             countTotal: 'Count total',
             includeDevPlan: 'Include development plans etc.',
             includeMapHits: 'Include background map',
             map: 'Map',
             top10: 'Monthly top 10',
-            top10_datasets: 'Monthly top 10 Datasets',
-            top10_apps: 'Monthy top 10 Apps',
-            top10_downloads: 'Monthly top 10 Downloads',
+            top10_datasets: 'Monthly top 10 datasets',
+            top10_apps: 'Monthy top 10 apps',
+            top10_downloads: 'Monthly top 10 downloads',
             download: 'Downloads',
-            accessTopicData: 'Total access',
-            accessApps: 'Access Apps',
+            accessTopicData: 'Total hits',
+            accessApps: 'App hits',
             didYouKnow: 'Did you know?',
             facts: 'Did you know: %{fact}',
             tabTopics: 'Topics',
             tabOrganisations: 'Organisations',
-            tabSensors: 'Sensors',
+            tabSensors: 'sensor datasets',
             tabYear: 'Year',
             tabMonth: 'Month',
             tabDay: 'Day',
@@ -149,67 +149,67 @@ export const messages = {
              'PLATZHALTER \n' +
              '<p>Find out more: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'PLATZHALTER',
-            tooltipGeneralLink: 'Open Link to new tab',
-            tooltipHdmkLink: 'See Metadata in MetaVer',
-            tooltipSensors: 'Number of Sensors, that have been defined as datastream in the SensorThingsAPI\n' +
+            tooltipGeneralLink: 'Open link to new tab',
+            tooltipHdmkLink: 'See metadata in MetaVer',
+            tooltipSensors: 'Number of sensors defined as a datastream in the SensorThingsAPI\n' +
              'The number refers to the last calendar month\n' +
              'Source: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
-            tooltipVisitorsToday: 'Number of visitors on <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> and Geodaten Hamburg (FHH-Atlas, Intranet of the Free and Hanseatic City of Hamburg) in the last month\n' +
+            tooltipVisitorsToday: 'Number of visitors to <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> and Geodaten Hamburg (FHH-Atlas, Intranet of the Free and Hanseatic City of Hamburg) in the last month\n' +
              'Source: Analysis of awstats',
-            tooltipBackgroundAccess: '<p>monthly access on background maps (also called base maps\n' +
+            tooltipBackgroundAccess: '<p>Monthly hits of background maps (also called base maps\n' +
              'Base maps are: </p>' +
              'PLATZHALTER \n' +
              '<p>Source: Analysis of awstats</p>',
-            tooltipDatasetsBy: 'This tile shows the number of records by topic or organization that were last described in the Hamburg Metadata Catalogue (HMDK) and are linked to productive Internet and Intranet services (WFS/WMS). clicking on a topic or organization filters to the corresponding records.\n' +
-             'With the additional filter "Include development plans etc." you can also display the numerous development plans and some datasets that are not linked to productive Internet and Intranet services (WFS/WMS). \n' +
-             'The topics are the Open Data categories of a dataset assigned by the data owner. The name of the organization is taken from the publisher information in the metadata. Metadata record descriptions of datasets published on the Internet can be found at <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
-             'Source: CSW-API of HMDK (Hamburger Metadatenkatalog)',
-            tooltipCountTotal: 'Shows the number of datasets, applications (apps) or sensor datasets per month or year in a historical time period.\n' +
+            tooltipDatasetsBy: 'This tile shows the number of records by topic or organization that were last described in the Hamburg Metadata Catalogue (HMDK) and are linked to productive internet and intranet services (WFS/WMS). A click on a topic or organization filters the corresponding records.\n' +
+             'With the additional filter "Include development plans etc." you can also display the numerous development plans and select datasets that are not linked to productive internet and intranet services (WFS/WMS). \n' +
+             'The topics are open data categories of a dataset assigned by the data owner. The name of the organization is taken from the publisher information in the metadata. Metadata record descriptions of datasets published on the internet can be found at <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
+             'Source: CSW-API of HMDK (Hamburg Metadata Catalogue)',
+            tooltipCountTotal: 'Shows the number of datasets, applications (apps) or sensor datasets per month or per year over a historical time period.\n' +
              'The following explains datasets, apps and sensor datasets:\n' +
              'A <b>dataset</b> is a group of data in a file, defined by the data owner, which are related in content and/or location. In the case of datasets, only specialist data is included, i.e. only datasets that are not background maps.\n' +
-             'With the additional filter "Include development plans etc." you can also display the numerous development plans and some datasets that are not linked to productive Internet and Intranet services (WFS/WMS).\n' +
-             'The tab <b>Apps</b> shows the total number of all LGV applications accessible on the Internet and Intrane, listed in a monthly or yearly timeline.  \n' +
+             'With the additional filter "Include development plans etc." you can also display the numerous development plans and some datasets that are not linked to productive internet and intranet services (WFS/WMS).\n' +
+             'The tab <b>Apps</b> shows the total number of all LGV applications accessible on the internet and intranet, listed in a monthly or yearly timeline.  \n' +
              '<b>Sensor datasets</b> describe all datasets that are created and updated by sensors in real time. They are a subset of datasets.  \n' +
-             'Source: CSW-API of HMDK (Hamburger Metadatenkatalog)',
+             'Source: CSW-API of HMDK (Hamburger Hamburg Metadata Catalogue)',
             tooltipMap: 'Clicking on the record name in the "Recent records" section will display a preview of the record in the map.\n' +
-             'Newest records are the 10 datasets which were last described in the Hamburg metadata catalogue (create date) and are linked to productive services (WFS/WMS). \n' +
+             'Newest records are the 10 datasets which were last described in the Hamburg Metadata Catalogue (create date) and are linked to productive services (WFS/WMS). \n' +
              'Clicking on the full screen button stops the run of the "Newest datasets" and shows the current data set in the enlarged map.\n' +
-             'By clicking on the name of the dataset in the map you can access the metadata descriptions of datasets published on the Internet <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
+             'By clicking on the name of the dataset in the map you can access the metadata descriptions of datasets published on the internet <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Source: CSW interface of the HMDK (Hamburg Metadata Catalogue)',
-            tooltipTop_datasets: '<p>Shows datasets, applications (apps) with the most accesses or the downloads with the most hits. \n' +
+            tooltipTop_datasets: '<p>Shows datasets, applications (apps) with the most hits or downloads. \n' +
              'By clicking on the respective bar, you can access the metadata description in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>The top 10 datasets are:</h6>' +
              'PLATZHALTER\n'+
              '<p>a <b>dataset</b> is a group of data in a file, defined by the data owner, which are related in content and/or location. In the case of datasets, only the specialist data is included, i.e. only datasets that are not background maps. FHHNET  indicates that the dataset is only available on the FHH intranet, so there is no entry in MetaVer. \n' +
-             'For the <b>Apps</b> the applications of the LGV are considered, which are available on the Internet and via the Intranet.  \n' +
+             'For the <b>Apps</b> only applications from LGV are considered, which are available on the internet and via the intranet.  \n' +
              'For the <b>Downloads</b>, all data downloaded via the download server of the UDP is taken into account. \n\n' +
              'Source: Analysis of awstats</p>',
-            tooltipTop_apps: '<p>Shows datasets, applications (apps) with the most accesses or the downloads with the most hits. \n' +
+            tooltipTop_apps: '<p>Shows datasets, applications (apps) with the most hits or downloads. \n' +
              'By clicking on the respective bar, you can access the metadata description in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>The top 10 Apps are:</h6>' +
              'PLATZHALTER\n'+
              '<p>a <b>dataset</b> is a group of data in a file, defined by the data owner, which are related in content and/or location. In the case of datasets, only the specialist data is included, i.e. only datasets that are not background maps. FHHNET  indicates that the dataset is only available on the FHH intranet, so there is no entry in MetaVer. \n' +
-             'For the <b>Apps</b> the applications of the LGV are considered, which are available on the Internet and via the Intranet.  \n' +
+             'For the <b>Apps</b> the applications of the LGV are considered, which are available on the internet and via the intranet.  \n' +
              'For the <b>Downloads</b>, all data downloaded via the download server of the UDP is taken into account. \n\n' +
              'Source: Analysis of awstats</p>',
-            tooltipTop_downloads: '<p>Shows datasets, applications (apps) with the most accesses or the downloads with the most hits. \n' +
+            tooltipTop_downloads: '<p>Shows datasets, applications (apps) with the most hits or downloads. \n' +
              'By clicking on the respective bar, you can access the metadata description in <a href="https://metaver.de" target="_blank">MetaVer</a> \n' +
              '<h6>The top 10 Downloads are:</h6>' +
              'PLATZHALTER\n'+
              '<p>a <b>dataset</b> is a group of data in a file, defined by the data owner, which are related in content and/or location. In the case of datasets, only the specialist data is included, i.e. only datasets that are not background maps. FHHNET  indicates that the dataset is only available on the FHH intranet, so there is no entry in MetaVer. \n' +
-             'For the <b>Apps</b> the applications of the LGV are considered, which are available on the Internet and via the Intranet.  \n' +
+             'For the <b>Apps</b> the applications of the LGV are considered, which are available on the internet and via the intranet.  \n' +
              'For the <b>Downloads</b>, all data downloaded via the download server of the UDP is taken into account. \n\n' +
              'Source: Analysis of awstats</p>',
             tooltipDownloads: ' The number of monthly or annual downloads of documents (e.g. PDF, JPEG, etc.) from the UDP download server is summed up and displayed over time.\n' +
              'Source: Analysis of awstats',
-            tooltipAccessData: 'Here the monthly and annual accesses to the specalist data on the Internet and Intranet of the FHH are indicated with history.\n' +
+            tooltipAccessData: 'Here the monthly and annual views of the specalist data on the internet and intranet of the FHH are indicated with history.\n' +
             'Specialist data are all datasets that are not background maps. \n' + 
             'The strong increase in the number of hits from 2018 to 2019 is explained by the fact that only since November 2018 all hits have been determined automatically. Before this was only partially possible.\n' +
              'Source: Analysis of awstats',
-            tooltipAccessApps: 'The monthly or annual total accesses to the Internet and Intranet applications (Apps)of the Agency for Geoinformation and Surveying (LGV) are displayed over time.\n' +
+            tooltipAccessApps: 'The monthly or annual total hits to internet and intranet applications (Apps)of the Agency for Geoinformation and Surveying (LGV) are displayed over time.\n' +
              'You can find out which apps are included in the metadata catalogues:\n' +
-             'Link for Internet Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
-             'Link for Intranet-Apps (FHHNET): <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
+             'Link for internet Apps: <a href="https://metaver.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">metaver.de/freitextsuche</a> \n' +
+             'Link for intranet-Apps (FHHNET): <a href="http://hmdk.fhhnet.stadt.hamburg.de/freitextsuche?action=doSearch&q=iplugs%3A%22%2Fingrid-group%3Aige-iplug-HH%22+t01_object.obj_class%3A6&grouping=domain" target="_blank">hmdk.fhhnet.stadt.hamburg.de</a> \n' +
              'Source: Analysis of awstats',
             privacy: 'Data privacy',
             legal: 'Legal notice',
