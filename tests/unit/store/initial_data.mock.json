@@ -1,0 +1,3173 @@
+{
+    "total_entities_and_hits": {
+        "buckets": [
+            {
+                "key_as_string": "2010-01",
+                "key": 1262300400000,
+                "doc_count": 32,
+                "total_hits": {
+                    "value": 0
+                },
+                "entities_unique": {
+                    "value": 32
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 0
+                }
+            },
+            {
+                "key_as_string": "2011-01",
+                "key": 1293836400000,
+                "doc_count": 39,
+                "total_hits": {
+                    "value": 0
+                },
+                "entities_unique": {
+                    "value": 39
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 0
+                }
+            },
+            {
+                "key_as_string": "2012-01",
+                "key": 1325372400000,
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 0
+                },
+                "entities_unique": {
+                    "value": 55
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 0
+                }
+            },
+            {
+                "key_as_string": "2013-01",
+                "key": 1356994800000,
+                "doc_count": 98,
+                "total_hits": {
+                    "value": 0
+                },
+                "entities_unique": {
+                    "value": 98
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 0
+                }
+            },
+            {
+                "key_as_string": "2014-01",
+                "key": 1388530800000,
+                "doc_count": 157,
+                "total_hits": {
+                    "value": 0
+                },
+                "entities_unique": {
+                    "value": 157
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 0
+                }
+            },
+            {
+                "key_as_string": "2015-01",
+                "key": 1420066800000,
+                "doc_count": 191,
+                "total_hits": {
+                    "value": 0
+                },
+                "entities_unique": {
+                    "value": 191
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 0
+                }
+            },
+            {
+                "key_as_string": "2016-01",
+                "key": 1451602800000,
+                "doc_count": 2714,
+                "total_hits": {
+                    "value": 0
+                },
+                "entities_unique": {
+                    "value": 248
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 0
+                }
+            },
+            {
+                "key_as_string": "2017-01",
+                "key": 1483225200000,
+                "doc_count": 3334,
+                "total_hits": {
+                    "value": 239990440
+                },
+                "entities_unique": {
+                    "value": 305
+                },
+                "total_internet": {
+                    "value": 125056408
+                },
+                "total_intranet": {
+                    "value": 114933448
+                }
+            },
+            {
+                "key_as_string": "2018-01",
+                "key": 1514761200000,
+                "doc_count": 3829,
+                "total_hits": {
+                    "value": 272153240
+                },
+                "entities_unique": {
+                    "value": 335
+                },
+                "total_internet": {
+                    "value": 146866944
+                },
+                "total_intranet": {
+                    "value": 125285708
+                }
+            },
+            {
+                "key_as_string": "2019-01",
+                "key": 1546297200000,
+                "doc_count": 4399,
+                "total_hits": {
+                    "value": 413663327
+                },
+                "entities_unique": {
+                    "value": 390
+                },
+                "total_internet": {
+                    "value": 283442327
+                },
+                "total_intranet": {
+                    "value": 130220413
+                }
+            },
+            {
+                "key_as_string": "2020-01",
+                "key": 1577833200000,
+                "doc_count": 1979,
+                "total_hits": {
+                    "value": 198263519
+                },
+                "entities_unique": {
+                    "value": 405
+                },
+                "total_internet": {
+                    "value": 130755057
+                },
+                "total_intranet": {
+                    "value": 67508209
+                }
+            }
+        ]
+    },
+    "organization": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+            {
+                "key": "Behörde für Umwelt und Energie (BUE)",
+                "doc_count": 4552,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BUE",
+                            "doc_count": 4552
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 95
+                }
+            },
+            {
+                "key": "Landesbetrieb Geoinformation und Vermessung",
+                "doc_count": 4207,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "LGV",
+                            "doc_count": 4207
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 101
+                }
+            },
+            {
+                "key": "Behörde für Wirtschaft, Verkehr und Innovation",
+                "doc_count": 1997,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BWVI",
+                            "doc_count": 1997
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 52
+                }
+            },
+            {
+                "key": "Behörde für Stadtentwicklung und Wohnen",
+                "doc_count": 1493,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BSW",
+                            "doc_count": 1493
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 31
+                }
+            },
+            {
+                "key": "Statistisches Amt für Hamburg und Schleswig-Holstein",
+                "doc_count": 573,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Statistikamt Nord",
+                            "doc_count": 573
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 12
+                }
+            },
+            {
+                "key": "Behörde für Arbeit, Soziales, Familie und Integration",
+                "doc_count": 512,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BASFI",
+                            "doc_count": 512
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 12
+                }
+            },
+            {
+                "key": "Bezirksamt Eimsbüttel",
+                "doc_count": 473,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BA Eimsbüttel",
+                            "doc_count": 473
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 29
+                }
+            },
+            {
+                "key": "Behörde für Inneres und Sport",
+                "doc_count": 436,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BIS",
+                            "doc_count": 436
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 10
+                }
+            },
+            {
+                "key": "Behörde für Gesundheit und Verbraucherschutz",
+                "doc_count": 352,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BGV",
+                            "doc_count": 352
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 9
+                }
+            },
+            {
+                "key": "Landesbetrieb Straßen, Brücken und Gewässer",
+                "doc_count": 228,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "LSBG",
+                            "doc_count": 228
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 7
+                }
+            },
+            {
+                "key": "Behörde für Kultur und Medien",
+                "doc_count": 209,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BKM",
+                            "doc_count": 209
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 5
+                }
+            },
+            {
+                "key": "Bezirksamt Hamburg-Mitte",
+                "doc_count": 207,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BA Hamburg-Mitte",
+                            "doc_count": 207
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 7
+                }
+            },
+            {
+                "key": "Landesbetrieb Schulbau",
+                "doc_count": 138,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "SBH",
+                            "doc_count": 138
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 4
+                }
+            },
+            {
+                "key": "Landesbetrieb Verkehr (LBV)",
+                "doc_count": 126,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "LBV",
+                            "doc_count": 126
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 3
+                }
+            },
+            {
+                "key": "Archäologisches Museum Hamburg",
+                "doc_count": 114,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "AMH",
+                            "doc_count": 114
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Hamburg Port Authority",
+                "doc_count": 113,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "HPA",
+                            "doc_count": 113
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Wasser, Abwasser und Geologie | W1 - Wasserwirtschaft",
+                "doc_count": 110,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Wasserwirtschaft (W1)",
+                            "doc_count": 110
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Landesbetrieb Immobilienmanagement und Grundvermögen",
+                "doc_count": 109,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "LIG",
+                            "doc_count": 109
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Bezirksamt Bergedorf",
+                "doc_count": 92,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BA Bergedorf",
+                            "doc_count": 92
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Bezirksamt Harburg",
+                "doc_count": 76,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BA Harburg",
+                            "doc_count": 76
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 3
+                }
+            },
+            {
+                "key": "",
+                "doc_count": 75,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "",
+                            "doc_count": 75
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Bezirksamt Altona",
+                "doc_count": 56,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BA Altona",
+                            "doc_count": 56
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Bezirksamt Hamburg-Nord",
+                "doc_count": 56,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BA Hamburg-Nord",
+                            "doc_count": 56
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Bezirksamt Wandsbek",
+                "doc_count": 56,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BA Wandsbek",
+                            "doc_count": 56
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Behörde für Schule und Berufsbildung",
+                "doc_count": 55,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BSB",
+                            "doc_count": 55
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Hamburger Verkehrsverbund GmbH",
+                "doc_count": 55,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "HVV",
+                            "doc_count": 55
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Staats- und Universitätsbibliothek Hamburg",
+                "doc_count": 55,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "SUB Hamburg",
+                            "doc_count": 55
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Z4-Informationstechnologie",
+                "doc_count": 55,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "IT (Z4)",
+                            "doc_count": 55
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "HAMBURG WASSER",
+                "doc_count": 54,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Hamburg Wasser",
+                            "doc_count": 54
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Hamburger Hochbahn AG",
+                "doc_count": 54,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Hochbahn",
+                            "doc_count": 54
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Hamburg Convention Bureau GmbH",
+                "doc_count": 47,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Hamburg Convention Bureau GmbH",
+                            "doc_count": 47
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Senatskanzlei",
+                "doc_count": 47,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Senatskanzlei",
+                            "doc_count": 47
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "HAMBURG ENERGIE",
+                "doc_count": 45,
+                "label_org": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Hamburg Energie",
+                            "doc_count": 45
+                        }
+                    ]
+                },
+                "entities_unique": {
+                    "value": 1
+                }
+            }
+        ]
+    },
+    "top_x": {
+        "doc_count_error_upper_bound": -1,
+        "sum_other_doc_count": 11592,
+        "buckets": [
+            {
+                "key": "Internetstadtplan Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 175856803
+                },
+                "total_internet": {
+                    "value": 148014546
+                },
+                "total_intranet": {
+                    "value": 27842257
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "61C8428E-6270-4AA0-B38D-C1DC9964AAEA",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Verkehrslage auf Autobahnen (Schleifen) Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 129410023
+                },
+                "total_internet": {
+                    "value": 127269364
+                },
+                "total_intranet": {
+                    "value": 2140613
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "2FC4BBED-350C-4380-B138-4222C28F56C6",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "GeoBasisKarten Hamburg",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 114082137
+                },
+                "total_internet": {
+                    "value": 24711450
+                },
+                "total_intranet": {
+                    "value": 89370687
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "B6A59A2B-2D40-4676-9094-0EB73039ED34",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "ALKIS - ausgewählte Daten Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 60546732
+                },
+                "total_internet": {
+                    "value": 27744641
+                },
+                "total_intranet": {
+                    "value": 32802091
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "DC71F8A1-7A8C-488C-AC99-23776FA7775E",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Denkmalkartierung Hamburg",
+                "doc_count": 57,
+                "total_hits": {
+                    "value": 43954201
+                },
+                "total_internet": {
+                    "value": 22207643
+                },
+                "total_intranet": {
+                    "value": 21746558
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "3B43E143-2C8B-43E8-8004-EE9EDA3EA563",
+                            "doc_count": 57
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Planwerke der verbindlichen Bauleitplanung im Bezirk Hamburg Altona",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 42195230
+                },
+                "total_internet": {
+                    "value": 29542431
+                },
+                "total_intranet": {
+                    "value": 12652773
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "61BB42F9-20FE-489A-8C13-4FBFAC009CEA",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bebauungspläne Hamburg",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 42012031
+                },
+                "total_internet": {
+                    "value": 29701469
+                },
+                "total_intranet": {
+                    "value": 12310547
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "EBA4BF12-3ED2-4305-9B67-8E689FE8C445",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Landesgrundbesitzverzeichnis Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 36640651
+                },
+                "total_internet": {
+                    "value": 8589818
+                },
+                "total_intranet": {
+                    "value": 28050833
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "38575F13-7FA2-4F26-973F-EDED24D937E5",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Landesgrundbesitzverzeichnis Hamburg - Aufgliederung Verwaltungsvermögen FHHNET",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 36608155
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 36608155
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "DA1C583E-BFBE-4685-917A-8F833898F6A2",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitale Orthophotos 10cm - FHHNET",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 30030251
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 30030251
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "25DB0242-D6A3-48E2-BAE4-359FB28491BA",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Straßenbaumkataster Hamburg",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 19524987
+                },
+                "total_internet": {
+                    "value": 15979997
+                },
+                "total_intranet": {
+                    "value": 3544922
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "C1C61928-C602-4E37-AF31-2D23901E2540",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bodenrichtwertzonen Hamburg",
+                "doc_count": 58,
+                "total_hits": {
+                    "value": 17026939
+                },
+                "total_internet": {
+                    "value": 16226741
+                },
+                "total_intranet": {
+                    "value": 800178
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "DB433BD1-1640-4FBC-A879-72402BD5CFDB",
+                            "doc_count": 58
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Velo- und Freizeitrouten Hamburg",
+                "doc_count": 28,
+                "total_hits": {
+                    "value": 13945385
+                },
+                "total_internet": {
+                    "value": 7238634
+                },
+                "total_intranet": {
+                    "value": 6706751
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "67611D79-37ED-40DD-B7A2-A54080DB7563",
+                            "doc_count": 28
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bodenrichtwerte für Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 12026328
+                },
+                "total_internet": {
+                    "value": 11421710
+                },
+                "total_intranet": {
+                    "value": 604598
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "6A0D8B9D-1BBD-441B-BA5C-6159EE41EE71",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Abfall und Recycling Hamburg",
+                "doc_count": 42,
+                "total_hits": {
+                    "value": 11915008
+                },
+                "total_internet": {
+                    "value": 11820664
+                },
+                "total_intranet": {
+                    "value": 94344
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "374EB872-F584-4353-8A2C-65A53EE511EE",
+                            "doc_count": 42
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Flächennutzungsplan Hamburg",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 10121994
+                },
+                "total_internet": {
+                    "value": 7656351
+                },
+                "total_intranet": {
+                    "value": 2465628
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "DFDA2969-A041-433B-BD65-4CDA9F830A55",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitale Orthophotos Hamburg",
+                "doc_count": 57,
+                "total_hits": {
+                    "value": 10061678
+                },
+                "total_internet": {
+                    "value": 8785355
+                },
+                "total_intranet": {
+                    "value": 1276323
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "DD10AFD3-5530-4FD4-933D-5FC71D14B8C7",
+                            "doc_count": 57
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitale Orthophotos hochauflösend – FHHNET",
+                "doc_count": 18,
+                "total_hits": {
+                    "value": 9425804
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 9425804
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "71ABB124-1A93-49FF-94B3-B2CCEE3AEC54",
+                            "doc_count": 18
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Biotopkataster Hamburg",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 9365486
+                },
+                "total_internet": {
+                    "value": 3573591
+                },
+                "total_intranet": {
+                    "value": 5791895
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "D7B5CCBB-1F03-4482-AB59-26F2F7972547",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "ALKIS - Flurstücke und Gebäude (schwarz)",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 9325634
+                },
+                "total_internet": {
+                    "value": 4664218
+                },
+                "total_intranet": {
+                    "value": 4661395
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "FE4DAF57-2AF6-434D-85E3-220A20B8C0F1",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "HWRM-Karten 1.Zyklus Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 9036915
+                },
+                "total_internet": {
+                    "value": 7274288
+                },
+                "total_intranet": {
+                    "value": 1762627
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "47233BC2-8D3F-4D9E-B760-BA153327F0E8",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "HVV Streckennetz für Bahn-, Bus- und Fährlinien Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 8995004
+                },
+                "total_internet": {
+                    "value": 6003880
+                },
+                "total_intranet": {
+                    "value": 2991124
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "7A77D5EA-C3B4-44D9-8004-36D5D324485D",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Historische Karten 1: 5000 - Auswahl",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 8520043
+                },
+                "total_internet": {
+                    "value": 3524836
+                },
+                "total_intranet": {
+                    "value": 4995207
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "7A32A730-8B7A-4BB1-9D7F-D0BB37805696",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "ALKIS Verwaltungsgrenzen Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 7728124
+                },
+                "total_internet": {
+                    "value": 4353775
+                },
+                "total_intranet": {
+                    "value": 3374349
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "F35EAC11-C236-429F-B1BF-751C0C18E8B7",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Hamburger Wohnlagenverzeichnis",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 6995118
+                },
+                "total_internet": {
+                    "value": 6843391
+                },
+                "total_intranet": {
+                    "value": 151727
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "4D9C6574-686F-4537-BE43-850F6C167E3F",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Parkhäuser Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 6693099
+                },
+                "total_internet": {
+                    "value": 6661784
+                },
+                "total_intranet": {
+                    "value": 31273
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "0EEE1494-36DD-410C-B5A3-7531DC457014",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitale Karte 1: 5000 Hamburg",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 6582678
+                },
+                "total_internet": {
+                    "value": 3486550
+                },
+                "total_intranet": {
+                    "value": 3096128
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "2AE6D23E-48A5-4D85-BC0A-160737E0C8D2",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Brücken und sonstige Ingenieurbauwerke Hamburg",
+                "doc_count": 58,
+                "total_hits": {
+                    "value": 6435486
+                },
+                "total_internet": {
+                    "value": 2531038
+                },
+                "total_intranet": {
+                    "value": 3904448
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "3645B69F-2C00-4DD0-937D-D9D567F8A6A6",
+                            "doc_count": 58
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Straßen- und Wegenetz Hamburg (HH-SIB)",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 6140884
+                },
+                "total_internet": {
+                    "value": 3300662
+                },
+                "total_intranet": {
+                    "value": 2840222
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "5262159C-D358-11D5-88C8-000102DCCF41",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Lärmkarten Hamburg (§47c BlmSchG)",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 5449751
+                },
+                "total_internet": {
+                    "value": 5137713
+                },
+                "total_intranet": {
+                    "value": 312038
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "030A8F47-EBEF-4669-94FC-0299BB7D5C88",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitales Informationssystem Planrecht - FHHNET",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 5435546
+                },
+                "total_internet": {
+                    "value": 591885
+                },
+                "total_intranet": {
+                    "value": 4843661
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "635714B3-9878-436E-88DA-0DD9148DB199",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitales Höhenmodell Hamburg DGM 1",
+                "doc_count": 57,
+                "total_hits": {
+                    "value": 4972680
+                },
+                "total_internet": {
+                    "value": 4056048
+                },
+                "total_intranet": {
+                    "value": 916632
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "A39B4E86-15E2-4BF7-BA82-66F9913D5640",
+                            "doc_count": 57
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Geförderte Mietwohnungen",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 4941030
+                },
+                "total_internet": {
+                    "value": 4677090
+                },
+                "total_intranet": {
+                    "value": 263940
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "EFCC59E6-E7A1-4ECA-95AB-8683308FA0C2",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "StadtRAD-Stationen Hamburg",
+                "doc_count": 39,
+                "total_hits": {
+                    "value": 4276644
+                },
+                "total_internet": {
+                    "value": 4105954
+                },
+                "total_intranet": {
+                    "value": 170690
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "D18F375E-FA5F-4998-AFF8-557969F44479",
+                            "doc_count": 39
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitale Orthophotos (belaubt) Hamburg mit Umland",
+                "doc_count": 10,
+                "total_hits": {
+                    "value": 4242723
+                },
+                "total_internet": {
+                    "value": 3684078
+                },
+                "total_intranet": {
+                    "value": 558645
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "9784D2A9-AEEA-46DF-9FAD-2FA14BFCA00D",
+                            "doc_count": 10
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Kreuzungsskizzen Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 4018910
+                },
+                "total_internet": {
+                    "value": 2436172
+                },
+                "total_intranet": {
+                    "value": 1582738
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "B9A9F45E-A138-4549-9481-CD9B473D9870",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Lichtsignalanlagen Hamburg",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 3889028
+                },
+                "total_internet": {
+                    "value": 3340300
+                },
+                "total_intranet": {
+                    "value": 548728
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "C498DEED-985C-11D5-889E-000102B6A10E",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Landschaftsschutzgebiete in Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 3847843
+                },
+                "total_internet": {
+                    "value": 1676060
+                },
+                "total_intranet": {
+                    "value": 2171739
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "301ED065-D98B-449C-A15F-FD4846F55366",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Biosphärenreservate in Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 3775433
+                },
+                "total_internet": {
+                    "value": 1645173
+                },
+                "total_intranet": {
+                    "value": 2130221
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "A88ACF70-9173-4E43-8146-3BD5C2449658",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "ALKIS - Flurstücke und Gebäude (gelb)",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 3703925
+                },
+                "total_internet": {
+                    "value": 1852513
+                },
+                "total_intranet": {
+                    "value": 1851394
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "F691CFB0-D38F-4308-B12F-1671166FF181",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Krankenhäuser Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 3629562
+                },
+                "total_internet": {
+                    "value": 2107411
+                },
+                "total_intranet": {
+                    "value": 1522151
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "9329C2CB-4552-4780-B343-0CC847538896",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Naturschutzgebiete in Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 3549516
+                },
+                "total_internet": {
+                    "value": 1536307
+                },
+                "total_intranet": {
+                    "value": 2013171
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "8761AF79-641F-4E64-AE4D-280FAAEF4EC2",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Schulstammdaten und Schülerzahlen der Hamburger Schulen",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 3499828
+                },
+                "total_internet": {
+                    "value": 2651851
+                },
+                "total_intranet": {
+                    "value": 847963
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "D3DDBBA3-7329-475C-BB07-14D539ED6B1E",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Verkehrszählstellen Hamburg",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 3466755
+                },
+                "total_internet": {
+                    "value": 1365948
+                },
+                "total_intranet": {
+                    "value": 2100807
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "7E0B7C8A-20D5-4BFB-A9DA-C892638F74C8",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "dwista - Tafeln  dynamische Wegweiser mit integrierter Stauinformation",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 3436396
+                },
+                "total_internet": {
+                    "value": 3384242
+                },
+                "total_intranet": {
+                    "value": 52115
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "F1C43CA7-9865-4BE5-8626-43E51EB033B7",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Rasterplan - Bebauungspläne Hamburg",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 3374008
+                },
+                "total_internet": {
+                    "value": 96049
+                },
+                "total_intranet": {
+                    "value": 3277959
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "08C1D158-C5CB-43E1-8DF8-58D4EFB1F3D1",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Zentrale Erstaufnahmeeinrichtungen (ZEA) Hamburg",
+                "doc_count": 49,
+                "total_hits": {
+                    "value": 3199502
+                },
+                "total_internet": {
+                    "value": 2830691
+                },
+                "total_intranet": {
+                    "value": 368811
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "13217475-1B3B-4CD8-B034-59DA42A81D3A",
+                            "doc_count": 49
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Öffentlich rechtliche Unterbringung (ÖRU) Hamburg",
+                "doc_count": 49,
+                "total_hits": {
+                    "value": 3159063
+                },
+                "total_internet": {
+                    "value": 2785581
+                },
+                "total_intranet": {
+                    "value": 373482
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "B394D0AD-722C-4BD7-B372-25EE407BE605",
+                            "doc_count": 49
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bevölkerungsdaten zu Stadtteilen in Hamburg",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 3113796
+                },
+                "total_internet": {
+                    "value": 2365372
+                },
+                "total_intranet": {
+                    "value": 748424
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "C2B674ED-73DB-4D29-9955-8621C1B5906A",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "INSPIRE HH Flurstücke/Grundstücke ALKIS",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 2936608
+                },
+                "total_internet": {
+                    "value": 2542512
+                },
+                "total_intranet": {
+                    "value": 394096
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "9F0CF4ED-A570-4856-B0EC-BBAD5A2E3D0C",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Integrierte Stadtteilentwicklung - RISE - Fördergebiete in Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 2878584
+                },
+                "total_internet": {
+                    "value": 585775
+                },
+                "total_intranet": {
+                    "value": 2292809
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "0B04AC26-6602-49A2-93D0-75531B1A2FC5",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Flüchtlingsunterbringung mit der Perspektive Wohnen Hamburg",
+                "doc_count": 49,
+                "total_hits": {
+                    "value": 2718467
+                },
+                "total_internet": {
+                    "value": 2398028
+                },
+                "total_intranet": {
+                    "value": 320439
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "26301F97-A19C-43EE-9330-E5A7207722A8",
+                            "doc_count": 49
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Überschwemmungsgebiete Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 2716682
+                },
+                "total_internet": {
+                    "value": 1513430
+                },
+                "total_intranet": {
+                    "value": 1203252
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "0879B86F-4F44-45AA-BA5B-021D9D30AAEF",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Städtebauliche Erhaltungsverordnungen Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 2712204
+                },
+                "total_internet": {
+                    "value": 451785
+                },
+                "total_intranet": {
+                    "value": 2260419
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "463EE9E2-1CAD-4775-845B-6F0D3EE53F0D",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Kita Einrichtungen Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 2699551
+                },
+                "total_internet": {
+                    "value": 1306901
+                },
+                "total_intranet": {
+                    "value": 1392650
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "C1AC42B2-C104-45B8-91F9-DA14C3C88A1F",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Arten- und Biotopschutz - AuBS (ehem. APRO)",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 2556343
+                },
+                "total_internet": {
+                    "value": 1559192
+                },
+                "total_intranet": {
+                    "value": 997151
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "B8F6865A-1790-4B9D-987E-AF97B88E84D3",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "ALKIS Adressen Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 2392973
+                },
+                "total_internet": {
+                    "value": 1309768
+                },
+                "total_intranet": {
+                    "value": 1083205
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "0C6CD167-F1F3-43E7-B897-9C49D3CD6AB7",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Naturdenkmale in Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 2380240
+                },
+                "total_internet": {
+                    "value": 1036077
+                },
+                "total_intranet": {
+                    "value": 1344130
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "C8018F25-E028-4910-AB91-D55720175045",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Geotourismus-Karte 1:60 000",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 2331436
+                },
+                "total_internet": {
+                    "value": 2108826
+                },
+                "total_intranet": {
+                    "value": 222610
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "545527FE-2776-4B9B-95B6-477348BE8F3A",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Soziale Erhaltungsverordnungen - Gebiete in Hamburg",
+                "doc_count": 58,
+                "total_hits": {
+                    "value": 2287983
+                },
+                "total_internet": {
+                    "value": 568460
+                },
+                "total_intranet": {
+                    "value": 1719523
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "A97BB2BD-52D3-49D6-A2FA-7664350C0E5B",
+                            "doc_count": 58
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Lärmschutzbereich Flughafen Hamburg",
+                "doc_count": 27,
+                "total_hits": {
+                    "value": 2201150
+                },
+                "total_internet": {
+                    "value": 1871231
+                },
+                "total_intranet": {
+                    "value": 329919
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "335B680C-CA3E-4FE9-BC05-641BA565E366",
+                            "doc_count": 27
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "ParkraumGIS Hamburg (Veraltet!)",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 2188716
+                },
+                "total_internet": {
+                    "value": 1070603
+                },
+                "total_intranet": {
+                    "value": 1118113
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "757A328B-415C-4E5A-A696-353ABDC80419",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Grünes Netz Hamburg / Freiraumverbund",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 2125981
+                },
+                "total_internet": {
+                    "value": 1641466
+                },
+                "total_intranet": {
+                    "value": 484494
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "049A94BD-0024-11D6-814F-00500445A596",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "HWRM-Karten 2.Zyklus Hamburg",
+                "doc_count": 5,
+                "total_hits": {
+                    "value": 2107335
+                },
+                "total_internet": {
+                    "value": 1741675
+                },
+                "total_intranet": {
+                    "value": 365660
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "E103645E-9038-4878-94B5-082AFD0464E1",
+                            "doc_count": 5
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Verkehrskameras Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 2076703
+                },
+                "total_internet": {
+                    "value": 2066569
+                },
+                "total_intranet": {
+                    "value": 10095
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "6E28E698-F4FA-4231-A8C5-CC44441FF2A7",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "HOCHBAHN Tunnel Hamburg",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 2035936
+                },
+                "total_internet": {
+                    "value": 1368884
+                },
+                "total_intranet": {
+                    "value": 667052
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "8EC0A17F-C265-4CE9-A9DD-5E5B0409F961",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Fauna-Flora-Habitat-Gebiete in Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 2022847
+                },
+                "total_internet": {
+                    "value": 877844
+                },
+                "total_intranet": {
+                    "value": 1144966
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "8DAF4008-EFB4-46E7-BCB6-2750BF8BC30D",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bohrarchiv",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 1988949
+                },
+                "total_internet": {
+                    "value": 1776042
+                },
+                "total_intranet": {
+                    "value": 212907
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "2B609FD3-DAC9-11D2-9A86-080000507261",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Straßenbaumkataster Hamburger Hafen",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 1887951
+                },
+                "total_internet": {
+                    "value": 1746950
+                },
+                "total_intranet": {
+                    "value": 140970
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "19676799-FEDB-4D1A-A89A-26FBA887B3F0",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Straßenverkehrsnetz Hamburg (INSPIRE)",
+                "doc_count": 57,
+                "total_hits": {
+                    "value": 1872089
+                },
+                "total_internet": {
+                    "value": 713810
+                },
+                "total_intranet": {
+                    "value": 1158279
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "19A39B3A-2D9E-4805-A5E6-56A5CA3EC8CB",
+                            "doc_count": 57
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bodendenkmäler Hamburg öffentlich Internet",
+                "doc_count": 57,
+                "total_hits": {
+                    "value": 1836072
+                },
+                "total_internet": {
+                    "value": 1301810
+                },
+                "total_intranet": {
+                    "value": 534262
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "AB47AA1D-8EFE-4182-A1DF-98FDB8957901",
+                            "doc_count": 57
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Lärmminderungsplanung, Fluglärm Hamburg",
+                "doc_count": 30,
+                "total_hits": {
+                    "value": 1740452
+                },
+                "total_internet": {
+                    "value": 1445040
+                },
+                "total_intranet": {
+                    "value": 295412
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "335B680C-CA3E-4FE9-BC05-641BA565E366",
+                            "doc_count": 30
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Verkehrsmengen auf Hauptverkehrsstraßen in Hamburg",
+                "doc_count": 44,
+                "total_hits": {
+                    "value": 1740229
+                },
+                "total_internet": {
+                    "value": 1140344
+                },
+                "total_intranet": {
+                    "value": 599885
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "2EFC4867-650E-4850-815B-CFBD2469513B",
+                            "doc_count": 44
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Polizeikommissariate Hamburg",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 1649838
+                },
+                "total_internet": {
+                    "value": 191813
+                },
+                "total_intranet": {
+                    "value": 1458025
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "BE21912D-C106-423D-8FCF-08CDC0B4A1E2",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Hauptverkehrsstraßen Hamburg",
+                "doc_count": 33,
+                "total_hits": {
+                    "value": 1649374
+                },
+                "total_internet": {
+                    "value": 358453
+                },
+                "total_intranet": {
+                    "value": 1290921
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "AF8ECA8F-5D29-488F-9BB5-0653BA412759",
+                            "doc_count": 33
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Übersicht Kachelbezeichnungen Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 1601084
+                },
+                "total_internet": {
+                    "value": 1256669
+                },
+                "total_intranet": {
+                    "value": 344415
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "70B957B1-223A-406D-991B-17775FAED3A1",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Landschaftsprogramm Hamburg",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 1578129
+                },
+                "total_internet": {
+                    "value": 1167140
+                },
+                "total_intranet": {
+                    "value": 410971
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "7B8442C9-001F-11D6-814F-00500445A596",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "INSPIRE HH Schutzgebiete",
+                "doc_count": 40,
+                "total_hits": {
+                    "value": 1577204
+                },
+                "total_internet": {
+                    "value": 1283099
+                },
+                "total_intranet": {
+                    "value": 294105
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "EA9C3500-863B-494B-9E61-2CBDD158C96B",
+                            "doc_count": 40
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Baumpflanzstandorte Mein Baum-Meine Stadt Hamburg",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 1573627
+                },
+                "total_internet": {
+                    "value": 1235563
+                },
+                "total_intranet": {
+                    "value": 338064
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "2F6895F2-E9F4-4520-BD22-EEB37090A889",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Geologische Karte 1:50 000",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 1520499
+                },
+                "total_internet": {
+                    "value": 1326210
+                },
+                "total_intranet": {
+                    "value": 194253
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "A02341C6-1C34-11D4-B517-0060086B14D3",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Vogelschutzgebiete in Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 1520481
+                },
+                "total_internet": {
+                    "value": 662144
+                },
+                "total_intranet": {
+                    "value": 858294
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "9649E685-6517-4FA2-A7E5-6CE330316D3A",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bauschutzbereich § 12 LuftVG Hamburg",
+                "doc_count": 56,
+                "total_hits": {
+                    "value": 1472530
+                },
+                "total_internet": {
+                    "value": 558709
+                },
+                "total_intranet": {
+                    "value": 913821
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "3EE8938B-FF9E-467B-AAA2-8534BB505580",
+                            "doc_count": 56
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Störfallbetriebe mit Abstandsflächen - FHHNET",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 1437288
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 1437288
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "B1DAB413-D25C-4628-9ABA-572F26FE174C",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Bodendenkmäler Hamburg Planung Intranet - FHHNET",
+                "doc_count": 57,
+                "total_hits": {
+                    "value": 1351229
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 1351229
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "63191614-5A7F-486C-858E-364394911F70",
+                            "doc_count": 57
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Unterbringung unbegleiteter minderjähriger Flüchtlinge Hamburg",
+                "doc_count": 49,
+                "total_hits": {
+                    "value": 1346240
+                },
+                "total_internet": {
+                    "value": 1189843
+                },
+                "total_intranet": {
+                    "value": 156397
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "076E27CC-3627-4CE6-9E22-12BD09C167D5",
+                            "doc_count": 49
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Digitaler Grünplan / Kataster der öffentlichen Grünanlagen",
+                "doc_count": 59,
+                "total_hits": {
+                    "value": 1306298
+                },
+                "total_internet": {
+                    "value": 250328
+                },
+                "total_intranet": {
+                    "value": 1055970
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "63A9A629-C051-4876-B18B-C535016F0B8A",
+                            "doc_count": 59
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Drohnenflugverbotszonen Hamburg - FHHNET",
+                "doc_count": 47,
+                "total_hits": {
+                    "value": 1281207
+                },
+                "total_internet": {
+                    "value": 194957
+                },
+                "total_intranet": {
+                    "value": 1086250
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "3D11E158-ECBC-4952-9000-71F6F3126C39",
+                            "doc_count": 47
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Wohnungsbauflächenpotenziale",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 1245107
+                },
+                "total_internet": {
+                    "value": 1144025
+                },
+                "total_intranet": {
+                    "value": 101082
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "8223B7BD-D194-4230-B436-1607D3BF3BC5",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Übersichtskarte über normierte Bodenrichtwerte für Hamburg",
+                "doc_count": 51,
+                "total_hits": {
+                    "value": 1186354
+                },
+                "total_internet": {
+                    "value": 981438
+                },
+                "total_intranet": {
+                    "value": 204916
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "E69294A5-FF97-4D3F-AC3E-2E9BE90E297D",
+                            "doc_count": 51
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Ausgleichsflächen (Kompensationsverzeichnis gem. BNatSchG) - FHHNET",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 1075630
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 1075630
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "E8208460-BF03-451F-B65F-F8CBF9198BDB",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Eventlotse Daten Hamburg",
+                "doc_count": 47,
+                "total_hits": {
+                    "value": 1013011
+                },
+                "total_internet": {
+                    "value": 614564
+                },
+                "total_intranet": {
+                    "value": 398447
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "295985A0-B456-4BAD-904B-B780508F214C",
+                            "doc_count": 47
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Hafengebietsgrenzen Hamburg",
+                "doc_count": 58,
+                "total_hits": {
+                    "value": 1003663
+                },
+                "total_internet": {
+                    "value": 129567
+                },
+                "total_intranet": {
+                    "value": 874096
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "181BB09D-8B03-4408-9CA4-D7B5A3A91261",
+                            "doc_count": 58
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Milieugebiete Hamburg",
+                "doc_count": 39,
+                "total_hits": {
+                    "value": 998025
+                },
+                "total_internet": {
+                    "value": 589315
+                },
+                "total_intranet": {
+                    "value": 408710
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "F6055211-F88C-48D1-9C34-385FBCBB6A7B",
+                            "doc_count": 39
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Gewässerunterhaltung Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 983719
+                },
+                "total_internet": {
+                    "value": 413914
+                },
+                "total_intranet": {
+                    "value": 569805
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "72C3C8A3-6F6B-48A1-A5C2-2191D4D13196",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Flächennutzungsplan Hamburg - Änderungsübersicht",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 970972
+                },
+                "total_internet": {
+                    "value": 637361
+                },
+                "total_intranet": {
+                    "value": 333611
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "FDE79B82-201C-4A1A-A1E5-5A10E01E3701",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Baugenehmigungen pro Bezirk",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 969227
+                },
+                "total_internet": {
+                    "value": 739835
+                },
+                "total_intranet": {
+                    "value": 229392
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "548AE319-98B9-4E5B-B5C4-192DC8F4EF4D",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Einzugsbereiche von HVV-Haltestellen",
+                "doc_count": 47,
+                "total_hits": {
+                    "value": 936693
+                },
+                "total_internet": {
+                    "value": 686085
+                },
+                "total_intranet": {
+                    "value": 250608
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "00A186DC-ACDE-4FCC-8D8D-DAC9B9C7BBB9",
+                            "doc_count": 47
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Versickerungspotentialkarte Hamburg",
+                "doc_count": 55,
+                "total_hits": {
+                    "value": 876516
+                },
+                "total_internet": {
+                    "value": 691262
+                },
+                "total_intranet": {
+                    "value": 185254
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "0BB1DAE8-F1AB-486A-BD5F-36CDEA2532F2",
+                            "doc_count": 55
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "Baulastenblattnummern Hamburg - FHHNET",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 875857
+                },
+                "total_internet": {
+                    "value": 0
+                },
+                "total_intranet": {
+                    "value": 875857
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "2D4E042E-1574-483B-BE70-D50D46D285B7",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            },
+            {
+                "key": "ALKIS - Festlegungen",
+                "doc_count": 54,
+                "total_hits": {
+                    "value": 871353
+                },
+                "total_internet": {
+                    "value": 435800
+                },
+                "total_intranet": {
+                    "value": 435533
+                },
+                "md_id": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "0CBAA166-3A14-4B94-BDDD-DF3D1B502BCF",
+                            "doc_count": 54
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "entities_unique": {
+        "value": 405
+    },
+    "theme": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+            {
+                "key": "Umwelt und Klima",
+                "doc_count": 4186,
+                "entities_unique": {
+                    "value": 101
+                }
+            },
+            {
+                "key": "Geographie, Geologie und Geobasisdaten",
+                "doc_count": 3283,
+                "entities_unique": {
+                    "value": 73
+                }
+            },
+            {
+                "key": "Transport und Verkehr",
+                "doc_count": 3145,
+                "entities_unique": {
+                    "value": 85
+                }
+            },
+            {
+                "key": "Infrastruktur, Bauen und Wohnen",
+                "doc_count": 3126,
+                "entities_unique": {
+                    "value": 72
+                }
+            },
+            {
+                "key": "Kultur, Freizeit, Sport und Tourismus",
+                "doc_count": 833,
+                "entities_unique": {
+                    "value": 19
+                }
+            },
+            {
+                "key": "Öffentliche Verwaltung, Haushalt und Steuern",
+                "doc_count": 817,
+                "entities_unique": {
+                    "value": 16
+                }
+            },
+            {
+                "key": "Soziales",
+                "doc_count": 513,
+                "entities_unique": {
+                    "value": 12
+                }
+            },
+            {
+                "key": "Bevölkerung",
+                "doc_count": 278,
+                "entities_unique": {
+                    "value": 9
+                }
+            },
+            {
+                "key": "Bildung und Wissenschaft",
+                "doc_count": 234,
+                "entities_unique": {
+                    "value": 6
+                }
+            },
+            {
+                "key": "Politik und Wahlen",
+                "doc_count": 162,
+                "entities_unique": {
+                    "value": 3
+                }
+            },
+            {
+                "key": "Gesundheit",
+                "doc_count": 109,
+                "entities_unique": {
+                    "value": 2
+                }
+            },
+            {
+                "key": "Sonstiges",
+                "doc_count": 59,
+                "entities_unique": {
+                    "value": 4
+                }
+            },
+            {
+                "key": "Gesetze und Justiz",
+                "doc_count": 54,
+                "entities_unique": {
+                    "value": 1
+                }
+            },
+            {
+                "key": "Wirtschaft und Arbeit",
+                "doc_count": 28,
+                "entities_unique": {
+                    "value": 2
+                }
+            }
+        ]
+    }
+}
