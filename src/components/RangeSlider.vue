@@ -37,6 +37,12 @@ export default class RangeSlider extends Vue implements RangeSliderMethods {
         this.onOptionsChanged();
     }
 
+    /*
+    *   When new options have been set:
+    *     calculate possible labels
+    *     calculate possible ticks
+    *     calculate possible tooltips
+    */
     @Watch('options') onOptionsChanged() {
         if (!this.options) {
             return;
@@ -93,6 +99,10 @@ export default class RangeSlider extends Vue implements RangeSliderMethods {
     public getCurrentValues() {
         return this.currentValues;
     }
+
+    /*
+    *   When new values have been set by the user, these are emitted to the enclosing component
+    */
 
     private onAfterChange(values: number[]) {
         let newValues = [this.tipFormat(values[0]), this.tipFormat(values[1])];

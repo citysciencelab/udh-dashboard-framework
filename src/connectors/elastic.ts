@@ -8,17 +8,17 @@ const elastic = {
      * Get data from Elasticsearch endpoint "udpc_query"
      *
      * Stored query params:
-     * @param from "YYYY-MM", default: "2019-11"
-     * @param to "YYYY-MM", default: "2020-01"
-     * @param theme array, Open Data Kategorie, kein default, Array muss mind. 1 Element enthalten
-     * @param org array, Organisation, kein default, Array muss mind. 1 Element enthalten
-     * @param tag array, {basemap|bplan|sensor}, Filter nach tags, kein default, Array muss mind. 1 Element enthalten
-     * @param tag_not array, {basemap|bplan|sensor}, Negativ-Filter nach tags, kein default, Array muss mind. 1 Element enthalten
-     * @param category string, {datasets|apps|downloads|visitors}, default: datasets
-     * @param interval string, zeitliche Aggregation pro Monat oder pro Jahr, {month|year}, default: month, bei der category "visitors" liefert der Wert "year" keine sinnvollen Ergebnisse.
-     * @param limit int, steuert alle Ergebnismengen (raw features und top_x Aggregation), default: 10
-     * @param sortBy string, Feld, nach dem die raw features sortiert werden sollen, default: "change_date", {jedes feld der raw features}
-     * @param status string, Feld, nach dem die raw features sortiert werden sollen, nur für neueste datensätze im einsatz, default: []
+     * @param {string} from "YYYY-MM", default: "2019-11"
+     * @param {string} to "YYYY-MM", default: "2020-01"
+     * @param {string[]} theme, Open Data Kategorie, kein default, Array muss mind. 1 Element enthalten
+     * @param {string[]} org, Organisation, kein default, Array muss mind. 1 Element enthalten
+     * @param {string[]} tag, {basemap|bplan|sensor}, Filter nach tags, kein default, Array muss mind. 1 Element enthalten
+     * @param {string[]} tag_not, {basemap|bplan|sensor}, Negativ-Filter nach tags, kein default, Array muss mind. 1 Element enthalten
+     * @param {string} category, {datasets|apps|downloads|visitors}, default: datasets
+     * @param {string} interval, zeitliche Aggregation pro Monat oder pro Jahr, {month|year}, default: month, bei der category "visitors" liefert der Wert "year" keine sinnvollen Ergebnisse.
+     * @param {number} limit, steuert alle Ergebnismengen (raw features und top_x Aggregation), default: 10
+     * @param {string} sortBy, Feld, nach dem die raw features sortiert werden sollen, default: "change_date", {jedes feld der raw features}
+     * @param {string} status, Feld, nach dem die raw features sortiert werden sollen, nur für neueste datensätze im einsatz, default: []
      */
     async udpcQuery(from: string, to: string, theme: string[], org: string[], tag: string[], tag_not: string[], category?: string, interval?: string, limit?: number, sortBy?: string, status?: string[]) {
         theme = elastic.validateArray(theme);
