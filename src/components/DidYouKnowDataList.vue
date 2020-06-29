@@ -25,6 +25,7 @@ import Utils from '@/utils/utils'
 export default class DidYouKnowDataList extends Vue {
     @Prop() inputData!: DidYouKnowData;
     @Prop() linkPrefix!: string;
+    @Prop({default: false}) date!: boolean;
 
     utils = new Utils();
 
