@@ -463,10 +463,10 @@
 
     <info-overlay ref="tooltip-did-you-know"
                   :header="$t('udpc.didYouKnow')"
-                  :html="didYouKnowDataToHtml(didYouKnow, urls.hmdk, $t('udpc.tooltipDidYouKnow'))" />
+                  :html="didYouKnowDataToHtml(didYouKnow, urls.hmdk, undefined, $t('udpc.tooltipDidYouKnow'))" />
     <info-overlay ref="tooltip-latest-datasets"
                   :header="$t('udpc.newDatassets')"
-                  :html="didYouKnowDataToHtml(recentDataSets)" />
+                  :html="didYouKnowDataToHtml(recentDataSets, urls.hmdk, $t('udpc.dateTag'))" />
     <info-overlay ref="tooltip-sensors"
                   :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
@@ -475,7 +475,7 @@
                   :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
                   :header="$t('udpc.access_overlay_head')"
-                  :html="didYouKnowDataToHtml(overlayDataMapKpi, urls.hmdk, $t('udpc.tooltipBackgroundAccess'))" />
+                  :html="didYouKnowDataToHtml(overlayDataMapKpi, urls.hmdk, $t('udpc.dateTag'), $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
                   :header="$t('udpc.countBy')"
                   :text="$t('udpc.tooltipDatasetsBy')" />
@@ -487,7 +487,7 @@
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
                   :header="$t(`udpc.top10_${activeTabs.tops}`)"
-                  :html="didYouKnowDataToHtml(overlayDataTopX, activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk, $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
+                  :html="didYouKnowDataToHtml(overlayDataTopX, activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk, $t('udpc.dateTag'), $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
     <info-overlay ref="tooltip-downloads"
                   :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
@@ -1170,13 +1170,19 @@ export default class UDPC extends AbstractDashboard {
     }
 
     /**
-     *  Manipulates the DidyouknowData to display links and dynamic data
+     * Manipulates the DidyouknowData to display links and dynamic data
+     * @param {DidYouKnowData} inputData - the currently active Data on the respective card
+     * @param {string} linkPrefix - the base-url used for <a> elements' href
+     * @param {string} wrapper - the wrapping text in which the list from inputData is injected
+     * @returns {Element} - the html element to render
      */
-    didYouKnowDataToHtml(inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, wrapper?: string): Element {
+    didYouKnowDataToHtml(inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, date: string | undefined = 'Stand: ', wrapper?: string): Element {
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
-          linkPrefix
+          linkPrefix,
+          date,
+          langCode: this.$t('udpc.langCode')
         }
       });
       instance.$mount();

@@ -33,6 +33,8 @@ export const messages = {
             themeFilter: 'Nach Thema filtern',
             orgFilter: 'Nach Organisation filtern',
             clearFilter: 'Filter zurücksetzen',
+            langCode: 'de-DE',
+            dateTag: 'Stand: ',
 
             sliderEarlier: '< früher',
             sliderLater: 'später >',
@@ -141,6 +143,8 @@ export const messages = {
             themeFilter: 'Filter by topic',
             orgFilter: 'Filter by organization',
             clearFilter: 'Reset filters',
+            langCode: 'en-US',
+            dateTag: 'Updated: ',
 
             sliderEarlier: '< earlier',
             sliderLater: 'later >',
