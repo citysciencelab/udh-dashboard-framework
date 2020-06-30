@@ -11,7 +11,9 @@
           <md-option v-for="(item, index) in selectData"
                      :key="index"
                      :value="item">
-            &nbsp;<md-tooltip md-direction="top">{{ item }}</md-tooltip>
+            &nbsp;<md-tooltip md-direction="top">
+                    {{ item }}
+                  </md-tooltip>
             {{ item }}
           </md-option>
         </md-select>

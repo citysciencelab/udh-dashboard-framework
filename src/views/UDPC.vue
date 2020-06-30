@@ -9,17 +9,17 @@
            alt="Hamburg Bug">
       <span class="navbar-brand">Urban Data Platform Cockpit</span>
 
-        <ul class="navbar-nav ml-auto navbar-lang">
-          <li class="nav-item lang" v-bind:class="{ active: $i18n.locale === 'de'}">
-            <span @click="changeLanguage('de')">De</span>
-          </li>
-          <li class="nav-item">
-            <span> | </span>
-          </li>
-          <li class="nav-item lang" v-bind:class="{ active: $i18n.locale === 'en'}">
-            <span @click="changeLanguage('en')">En</span>
-          </li>
-        </ul>
+      <ul class="navbar-nav ml-auto navbar-lang">
+        <li class="nav-item lang" :class="{ active: $i18n.locale === 'de'}">
+          <span @click="changeLanguage('de')">De</span>
+        </li>
+        <li class="nav-item">
+          <span> | </span>
+        </li>
+        <li class="nav-item lang" :class="{ active: $i18n.locale === 'en'}">
+          <span @click="changeLanguage('en')">En</span>
+        </li>
+      </ul>
     </nav>
 
     <div class="container-fluid">
@@ -314,9 +314,9 @@
               <div v-if="this.$refs['top-x-tabs'] && this.$refs['top-x-tabs'].activeTab === 'tab-top10-datasets'"
                    class="notice" style="width: 100%; display: flex">
                 <md-switch
-                        v-model="chartSwitches.accessWithBackgroundMapsTop"
-                        class="dashboard-switch"
-                        @change="onSwitchIncludeMapsTops()">
+                  v-model="chartSwitches.accessWithBackgroundMapsTop"
+                  class="dashboard-switch"
+                  @change="onSwitchIncludeMapsTops()">
                   {{ $t('udpc.includeMapHits') }}
                 </md-switch>
               </div>
