@@ -39,6 +39,23 @@
     // eslint-disable-next-line no-unused-vars
     import { LocaleMessage } from 'vue-i18n';
 
+    /**
+     * Displays a Masterportal-style map.
+     * Can be initialized with any masterportal-style layer-config.json.
+     * Dynamically reacts to changes in "md_id" property to display any layer from the Hamburg Urban Data Portal, can be adopted for other data repositories
+     * Can be maximized to fullscreen
+     * See https://bitbucket.org/geowerkstatt-hamburg/masterportalapi for further instruction
+     * @property {string} customLayerId
+     * @property {string} mapTitle
+     * @property {string} overlay
+     * @property {{ [key: string]: any }} portal - the portal config, specifiying initial map view, layers and CRS
+     * @property {{ [key: string]: any }} services - the file specifying OGC services (incl. urls) to load the configured data from, defaults to https://geoportal-hamburg.de/lgv-config/services-internet.json
+     * @property {object} mapStyle - the vector-data style specs
+     * @property {FeatureSet} featureData - OpenLayers features to be rendered (TODO: can be parsed from geoJson)
+     * @property {string} md_id - the dataset ID to look up from "services"
+     * @property {string} linkPrefix - the base-url to the meta data catalogue
+     * @property {string} internalNetwork - the tag identifying non public data
+     */
     @Component({
         components: {
             InfoOverlay
