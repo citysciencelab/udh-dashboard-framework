@@ -17,15 +17,10 @@
 
 <script lang="ts">
   import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-  import InfoOverlay from './InfoOverlay.vue';
   // eslint-disable-next-line no-unused-vars
   import {LocaleMessage} from 'vue-i18n';
 
-  @Component({
-    components: {
-      InfoOverlay
-    }
-  })
+  @Component({})
   export default class DidYouKnow extends Vue {
     @Prop() data!: DidYouKnowData;
     @Prop({default: 5000}) interval!: number;
