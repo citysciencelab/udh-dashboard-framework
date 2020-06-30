@@ -41,7 +41,7 @@ export const messages = {
              'PLATZHALTER \n' +
              '<p>Weitere Informationen finden Sie hier: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'Hier zeigen wir die zuletzt veröffentlichten Datensätze, die mit einem produktiven Dienst (WFS/WMS) gekoppelt sind.\n' +
-            'PLATZHALTER' \n' + 
+            'PLATZHALTER \n' +
             '<p>Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)</p>',
             tooltipGeneralLink: 'Link in neuem Tab öffnen',
             tooltipHdmkLink: 'Metadaten in MetaVer ansehen',
@@ -150,7 +150,7 @@ export const messages = {
              'PLATZHALTER \n' +
              '<p>Find out more: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'The most recently published datasets that are linked to a productive service (WFS/WMS).\n' +
-            'PLATZHALTER'
+            'PLATZHALTER \n' +
             '<p>Source: CSW interface of the HMDK (Hamburg Metadata Catalogue)</p>',
             tooltipGeneralLink: 'Open link to new tab',
             tooltipHdmkLink: 'See metadata in MetaVer',
