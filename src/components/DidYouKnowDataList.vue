@@ -35,13 +35,8 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import Utils from '@/utils/utils'
-import InfoOverlay from './InfoOverlay.vue';
 
-@Component({
-  components: {
-    InfoOverlay
-  }
-})
+@Component({})
 export default class DidYouKnowDataList extends Vue {
     @Prop() inputData!: DidYouKnowData;
     @Prop() linkPrefix!: string;
