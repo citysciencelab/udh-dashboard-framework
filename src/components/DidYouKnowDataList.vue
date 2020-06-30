@@ -49,14 +49,25 @@ export default class DidYouKnowDataList extends Vue {
 
     utils = new Utils();
 
+    /**
+     * @returns {string} - a link to an external source used as href in <a>
+     */
     linkUrl(path: string): string | null {
         return this.linkPrefix ? this.linkPrefix + path : path;
     }
 
+    /**
+     * @param {number} i - the index of the wrapper text split by the PLATZHALTER tag
+     * @returns {string} - the text to be used in the resp. position
+     */
     getWrapper(i: number) {
       return this.wrapper.split('PLATZHALTER')[i] || '';
     }
 
+    /**
+     * getter for a locale date string based on the input props and set language
+     * @returns {string} the date string
+     */
     get dateString(): string {
       if (this.lastMonth) {
         return this.date + new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString((this.langCode as string), this.dateOpts);
@@ -64,6 +75,11 @@ export default class DidYouKnowDataList extends Vue {
       return this.date + new Date().toLocaleDateString((this.langCode as string), this.dateOpts)
     }
 
+    /**
+     * click event handler on <a> element click and alerts the app if the link leads to an internal source
+     * @fires tooltip-internal-network Event to the parent component
+     * @returns {void}
+     */
     onClick(evt: Event, el: { label: string, link: string }) {
       if (el.label.includes(this.internalNetwork)) {
         evt.preventDefault();
