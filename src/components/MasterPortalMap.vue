@@ -82,6 +82,11 @@
             this.createLayerByMdId();
         }
 
+        /**
+         * initialize the map with it's initial/default props
+         * uses MasterportalAPI.createMap
+         * @returns {void}
+         */
         createMap() {
             const mapElement = this.$refs.map;
             if (mapElement) {
@@ -116,10 +121,17 @@
             }, 2000);
         }
 
+        /**
+         * remove the window.onresize listener if the component is unmounted
+         */
         destroyed() {
             window.removeEventListener('resize', this.onResize.bind(this));
         }
 
+        /**
+         * renders a new layer if dedicated vector features are provided
+         * @returns {void}
+         */
         showFeaturesInMap() {
             const layer = mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.featureData);
 
@@ -127,6 +139,11 @@
             this.map.addLayer(layer);
         }
 
+        /**
+         * reads out the md_id property and triggers the rendering of the resp. layer by
+         * MasterportalAPI.map.createLayer
+         * @returns {void}
+         */
         createLayerByMdId() {
             if (this.md_id) {
                 if (this.tempLayers) {
@@ -141,6 +158,10 @@
             }
         }
 
+        /**
+         * creates a Title for the map overlay, uses default title as fallback
+         * @returns {string}
+         */
         composeLayerTitle (layer: Layer): string | null {
             const title = this.overlay ? this.overlay + ': ' : '',
                 layerName = layer ? layer.get('name') : '';
@@ -156,6 +177,10 @@
             this.createLayerByMdId();
         }
 
+        /**
+         * fired when viewport is resized and manually, resizes the map to it's new container constraints
+         * @returns {void}
+         */
         onResize() {
             if (this.$refs.map) {
                 this.map.setSize([0, 0]);
@@ -165,6 +190,11 @@
             }
         }
 
+        /**
+         * move map to the opened overlay, resize accordingly
+         * @listens onOpenFullscreen Event on Fullscreen Button
+         * @returns {void}
+         */
         onOpenFullscreen () {
             (this.$refs.fullscreen as InfoOverlay).show();
             this.onResize();
@@ -172,6 +202,11 @@
             this.$emit('fullscreenMap', true);
         }
 
+        /**
+         * move map back to original container, resize accordingly
+         * @listens onCloseFullscreen Event on Overlay
+         * @returns {void}
+         */
         onCloseFullscreen () {
             this.$el.append(this.$refs.mapWrapper);
             this.onResize();
@@ -179,6 +214,11 @@
             this.$emit('fullscreenMap', false);
         }
 
+        /**
+         * click event handler on <a> element click and alerts the app if the link leads to an internal source
+         * @fires tooltip-internal-network Event to the parent component
+         * @returns {void}
+         */
         onClick(evt: Event) {
             if (this.layerTitle) {
                 if (this.layerTitle.includes(this.internalNetwork)) {
