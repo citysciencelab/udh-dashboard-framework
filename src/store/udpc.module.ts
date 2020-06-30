@@ -68,18 +68,15 @@ const udpcModule: Module<UDPCState, RootState> = {
             Requests resource count by type: 'datasets', 'apps', 'sensors'
             The data is structured by year of creation
          */
-        fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], isIncludeBuildPlans: boolean, tag: string[] }) => {
+        fetchTotalsByType: async (context, params: { totalsType: string, theme: string[], org: string[], tag: string[] , tagNot: string[], status: string[] }) => {
             const chartId = 'totalDatasetsCount';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
             if (!changed) return;
 
             context.commit('SET_LOADING', true);
 
-            const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
-            const status = params.isIncludeBuildPlans ? [''] : ['online'];
             const currentMonth = new Utils().date.getCurrentMonth();
-
-            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, params.tag, tagNot, params.totalsType, 'year', 100, undefined, status);
+            const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, params.tag, params.tagNot, params.totalsType, 'year', 100, undefined, params.status);
             const aggregations = elasticResponse.aggregations;
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
@@ -97,7 +94,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             The number of requested resources as well as the monitored time period can be adjusted
             For datasets it currently divides the requested data by intranet and internet resources
          */
-        fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[] }) => {
+        fetchTops: async (context, params: { topTopic: string, theme: string[], org: string[], tag_not: string[] }) => {
             const chartId = 'totalDatasetsRangeTop';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
             if (!changed) return;
@@ -106,7 +103,7 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const month = new Utils().date.getLastMonth();
 
-            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], ['basemap'], params.topTopic, 'month', 10);
+            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], params.tag_not, params.topTopic, 'month', 10);
             const aggregations = elasticResponse.aggregations;
             const topX = aggregations?.top_x?.buckets;
 

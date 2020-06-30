@@ -42,13 +42,14 @@ export const messages = {
             tooltipDidYouKnow: '<p>In dieser Kachel präsentieren wir ein paar Fakten rund um die Urban Data Platform Hamburg.</p>' +
              'PLATZHALTER \n' +
              '<p>Weitere Informationen finden Sie hier: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
-            tooltipLatestDataSets: 'PLATZHALTER',
+            tooltipLatestDataSets: 'Hier zeigen wir die zuletzt veröffentlichten Datensätze, die mit einem produktiven Dienst (WFS/WMS) gekoppelt sind.\n' +
+            'PLATZHALTER \n' +
+            '<p>Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)</p>',
             tooltipGeneralLink: 'Link in neuem Tab öffnen',
             tooltipHdmkLink: 'Metadaten in MetaVer ansehen',
             tooltipSensors: 'Anzahl der Sensoren, die in der SensorThingsAPI als Datastream definiert wurden.\n' +
-             'Die Zahl bezieht sich auf den jeweils vorherigen Kalendermonat.\n' +
              'Quelle: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
-            tooltipVisitorsToday: 'Hier wird die Gesamtanzahl an eindeutigen Besucher von <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> und Geodaten Hamburg (FHH-Atlas im Intranet der FHH) des jeweils vorherigen Kalendermonats angezeigt.\n' +
+            tooltipVisitorsToday: 'Hier wird die monatliche Gesamtanzahl an eindeutigen Besucher von <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> und Geodaten Hamburg (FHH-Atlas im Intranet der FHH) angezeigt.\n' +
              'Quelle: Auswertung der awstats',
             tooltipBackgroundAccess: '<p>Diese Kachel gibt die monatlichen Zugriffe auf die Hintergrundkarten (auch Basiskarten) an.\n' +
              'Die Hintergrundkarten sind:</p>' +
@@ -155,13 +156,14 @@ export const messages = {
             tooltipDidYouKnow: '<p> Facts about the Urban Data Platform Hamburg.</p>' +
              'PLATZHALTER \n' +
              '<p>Find out more: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
-            tooltipLatestDataSets: 'PLATZHALTER',
+            tooltipLatestDataSets: 'The most recently published datasets that are linked to a productive service (WFS/WMS).\n' +
+            'PLATZHALTER \n' +
+            '<p>Source: CSW interface of the HMDK (Hamburg Metadata Catalogue)</p>',
             tooltipGeneralLink: 'Open link to new tab',
             tooltipHdmkLink: 'See metadata in MetaVer',
             tooltipSensors: 'Number of sensors defined as a datastream in the SensorThingsAPI\n' +
-             'The number refers to the last calendar month\n' +
              'Source: <a href="https://iot.hamburg.de/v1.0/Datastreams?$count=true" target="_blank">iot.hamburg.de</a>',
-            tooltipVisitorsToday: 'Number of visitors to <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> and Geodaten Hamburg (FHH-Atlas, Intranet of the Free and Hanseatic City of Hamburg) in the last month\n' +
+            tooltipVisitorsToday: 'Monthly Number of visitors to <a href="http://www.geoportal-hamburg.de/geo-online/" target="_blank">Geo-Online</a> and Geodaten Hamburg (FHH-Atlas, Intranet of the Free and Hanseatic City of Hamburg)\n' +
              'Source: Analysis of awstats',
             tooltipBackgroundAccess: '<p>Monthly hits of background maps (also called base maps\n' +
              'Base maps are: </p>' +

@@ -136,6 +136,7 @@ import DashboardTile from '@/components/DashboardTile.vue';
 import MultiSelect from '@/components/MultiSelect.vue';
 import BarChart from '@/components/charts/chartjs/BarChart.vue';
 import HorizontalBarChart from '@/components/charts/chartjs/BarChartHorizontal.vue';
+import TreeMapChart from '@/components/charts/chartjs/TreeMap.vue';
 import partStore from '@/store/participation.module';
 import AbstractDashboard from '@/views/AbstractDashboard.vue';
 import { messages } from '@/messages/messages.participation.module';
@@ -150,6 +151,7 @@ import { FeatureSet } from '@/connectors/wfs';
         MultiSelect,
         BarChart,
         HorizontalBarChart,
+        TreeMapChart,
         MasterPortalMap
     }
 })
