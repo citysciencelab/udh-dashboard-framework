@@ -48,6 +48,8 @@ import {Tooltip} from "d3/types/d3";
       originElement[this.descriptor] = parentValue;
       originElement[parentName] = null;
       originElement[this.metric] = null;
+
+
       dsClone.push(originElement);
 
       let root = <d3.HierarchyRectangularNode<Datum>>d3.stratify<Datum>()
@@ -89,15 +91,27 @@ import {Tooltip} from "d3/types/d3";
        .attr('x', d => d.x0)
        .attr('y', d => d.y0)
        .attr('fill', function (d) {
-         return d.data.color ? d.data.color : 'slateblue';
+         if (d['value'] === 0) {
+           return '#FFFFFF'
+         } else {
+           return d.data.color ? d.data.color : 'slateblue';
+         }
        })
        .on('mouseover', tip.show)
        .on('mouseenter', function (d) {
-         d3.select(this).attr('fill', Color(d.data.color ? d.data.color : 'slateblue').alpha(0.9).hex());
+         if (d['value'] === 0) {
+           d3.select(this).attr('fill', '#FFFFFF');
+         } else {
+           d3.select(this).attr('fill', Color(d.data.color ? d.data.color : 'slateblue').alpha(0.9).hex());
+         }
        })
        .on('mouseout', function (d) {
+         if (d['value'] === 0) {
+           d3.select(this).attr('fill', '#FFFFFF');
+         } else {
+           d3.select(this).attr('fill', d.data.color ? d.data.color : 'slateblue');
+         }
          tip.hide();
-         d3.select(this).attr('fill', d.data.color ? d.data.color : 'slateblue');
        })
        .on('click', this.clickChartElement);
 

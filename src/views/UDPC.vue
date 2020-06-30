@@ -780,7 +780,8 @@ export default class UDPC extends AbstractDashboard {
                 switch (mutation.payload[0]) {
                     case 'totalTopicDatasets': {
                       mutationData.datasets[0]['key'] = 'doc_count';
-                      if (Object.prototype.hasOwnProperty.call(mutationData.datasets[0].tree[0], 'label_short')) {
+                      if (mutationData.datasets[0].tree.length > 0 &&
+                              Object.prototype.hasOwnProperty.call(mutationData.datasets[0].tree[0], 'label_short')) {
                         this.d3ChartOptions.dataSetsByTopic.labelKey = 'label_short';
                         this.d3ChartOptions.dataSetsByTopic.toolTipKey = 'key';
                         mutationData.datasets[0]['groups'] = ['label_short'];
