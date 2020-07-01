@@ -1,0 +1,1412 @@
+[
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "BSW",
+    "bezirk": "Altona",
+    "bezeichnung": "Verlängerung Holstenkamp",
+    "zustaendigkeit": "BSW/PGD",
+    "gebiet": "Verlängerung des Holstenkamps Richtung Westen",
+    "planverfahren": "Rahmenplan",
+    "beteiligungsformate": "Online-Beteiligung",
+    "status": "ruht",
+    "start": "28.06.2017",
+    "ende": "15.11.2017",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/fernstrassen/beteiligungsverfahren-holstenkamp/",
+    "kontaktpersonen": "BSW, Projekt Deckel, Tel: 040 428 40 8244, Deckel-BAB7@bsw.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "3",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        559873.7,
+        5936619.29,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "BSW",
+    "bezirk": "Altona",
+    "bezeichnung": "Neue Mitte Altona",
+    "zustaendigkeit": "zunächst BA-Altona, ab Bürgerschaftsbeschluss BSU",
+    "gebiet": "alte Bahn- und Güterflächen als Grundlage für Neue Mitte Altona",
+    "planverfahren": "Beschluss Leitbild, Masterplan, städtebauliches-landschaftsplanerisches Konzept, Festsetzung B-Plan",
+    "beteiligungsformate": "Bürgerforen, Themenabende, Infoveranstaltungen, Begehungen, Plandiskussion, Newsletter",
+    "status": "abgeschlossen",
+    "start": "01.06.2010",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/mitte-altona/",
+    "verfuegbare_daten": " Informationen zu Planungsverfahren, Stellungnahmen der ÖPD, Veranstaltungsprotokolle, Präsentationen",
+    "kontaktpersonen": "BSU, Referat Baugenehmigungen - ABH23, Tel: 4 28 40 – 2121, baugenehmigungen@bsu.hamburg.de",
+    "sonstiges": "sehr umfangreiche Informationensbereitstellung",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "5",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        562019.8,
+        5935063.54,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Altona",
+    "bezirk": "Altona",
+    "bezeichnung": "Holstenareal",
+    "zustaendigkeit": "BA-Altona",
+    "gebiet": "Gelände der ehemaligen Holsten-Brauerei",
+    "planverfahren": "Auftaktwerkstatt, städtebaulicher- freiraumplanerischer Wettbewerb",
+    "beteiligungsformate": "Informationsveranstaltungen, Auftaktwerkstatt, Ausstellung",
+    "status": "ruht",
+    "start": "07.11.2016",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/holstenareal/",
+    "verfuegbare_daten": "Informationen zu Veranstaltungen, Wettbewerben, Entwürfen, Beiträge der informellen Beteiligung",
+    "kontaktpersonen": "BA-Altona, Fachamt für Stadt-und Landschaftsplanung, Jessenstraße 1-3, 22767 Hamburg, 040 42811 6014, holstenareal@steg-hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "7",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        562470.91,
+        5935145.56,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Altona",
+    "bezirk": "Altona",
+    "bezeichnung": "Veloroute 1",
+    "zustaendigkeit": "BA-Altona",
+    "gebiet": "20 Projekte vom Karoviertel bis Rissen",
+    "planverfahren": "Beschluss, Konzeptionsphase",
+    "beteiligungsformate": "Beteiligungsformate in 2018 geplant",
+    "status": "in Vorbereitung",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/radverkehr/418898/veloroute-1/",
+    "verfuegbare_daten": "Fahrradforum",
+    "kontaktpersonen": "BA-Altona, Oliver Hahn, Tel.: 040 428116395",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "9",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        561976.5,
+        5933525.02,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "LSBG",
+    "bezirk": "Altona",
+    "bezeichnung": "Max-Brauer-Alle (Busbeschleunigung)",
+    "zustaendigkeit": "LSBG",
+    "gebiet": "Straßenabschnitt von der Holstenstraße bis zur  Palmaille",
+    "planverfahren": "vorgelagerte informelle Beteiligung",
+    "beteiligungsformate": "Passantenbefragung, Auftaktveranstaltung, Planungswerkstätten, Abschlussveranstaltung",
+    "status": "abgeschlossen",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.via-bus.de/prozess-max-brauer-allee/",
+    "verfuegbare_daten": "vielfältige Informationen zu allen Verfahrensschritten der informellen Beteiligung",
+    "kontaktpersonen": "Landesbetrieb Straßen, Brücken und Gewässer\nRoland Hansen\nSachsenfeld 3-5\n20097 Hamburg\nTel.: 040 428 26 2670​​​​​​​, roland.hansen@lsbg.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "11",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        562133.12,
+        5934213.98,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "LSBG",
+    "bezirk": "Altona",
+    "bezeichnung": "Elbchaussee",
+    "zustaendigkeit": "LSBG",
+    "gebiet": "Abschnitt Manteuffelstraße bis Altonaer Rathaus",
+    "status": "aktiv",
+    "start": "26.03.2018",
+    "link": "http://lsbg.hamburg.de/elbchaussee/",
+    "verfuegbare_daten": "Informationen zum Projekt, online-Beteiligung",
+    "kontaktpersonen": "Freie und Hansestadt Hamburg\nLandesbetrieb, Straßen, Brücken und Gewässer \nDr. Leonie Lange\nSachsenfeld 3-5 • 20097 Hamburg\nTelefon   +49 40 428 26 – 2370\nleonie.lange@lsbg.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "13",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        557291.25,
+        5933561.79,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Eimsbüttel",
+    "bezirk": "Eimsbüttel",
+    "bezeichnung": "Eimsbüttel 2040",
+    "zustaendigkeit": "BA-Eimsbüttel",
+    "gebiet": "Gesamter Bezirk Eimsbüttel",
+    "planverfahren": "Leitbildprozess",
+    "beteiligungsformate": "Online-Beteiligung",
+    "status": "abgeschlossen",
+    "start": "18.12.2016",
+    "ende": "22.02.2018",
+    "online___zahl_der_beitraege": "649",
+    "link": "http://www.eimsbuettel2040.de",
+    "verfuegbare_daten": "Ideen aus der Online-Beteiligung, Fotodokumentationen der Infostände, Bezirksentwicklungsplan",
+    "kontaktpersonen": "BA-Eimsbüttel, Arbeitsgruppe Bezirksentwicklungsplanung, Tel: 42801-2515, bep@eimsbuettel.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "15",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        564829.24,
+        5936685.99,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Eimsbüttel",
+    "bezirk": "Eimsbüttel",
+    "bezeichnung": "Stadtraumerneuerung Osterstraße",
+    "zustaendigkeit": "BA-Eimsbüttel (Fachamt Management des Öffentlichen Raumes)",
+    "gebiet": "Osterstraße zwischen Schulweg und Methfesselstraße ",
+    "planverfahren": "Entwurfsplanung, Festsetzung, derzeit im Bau",
+    "beteiligungsformate": "mobiles Baubüro, Informationsveranstaltungen, Zeitung \"Fokus Osterstraße\"",
+    "status": "abgeschlossen",
+    "start": "01.10.2015",
+    "ende": "31.10.2017",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/eimsbuettel/4256588/stadtraumerneuerung-osterstrasse/",
+    "verfuegbare_daten": "Bürgeranregungen, Veranstaltungspräsentationen, Entwürfe",
+    "kontaktpersonen": "BA-Eimsbüttel, Tel.:040 42828-0 bezirksamt@eimsbuettel.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "17",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        563018.17,
+        5936790.23,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Eimsbüttel",
+    "bezirk": "Eimsbüttel",
+    "bezeichnung": "Erneuerung Bismarckstraße/Veloroutenausbau",
+    "zustaendigkeit": "BA-Eimsbüttel",
+    "gebiet": "Erneuerung Bismarckstraße, Weidenstieg und Tornquiststraße",
+    "planverfahren": "Entwurfsplanung, teilweise Baubeginn",
+    "beteiligungsformate": "Auftaktveranstaltung, Entwurfsvorstellungen, Fokusgruppen, Quartierszeitung",
+    "status": "abgeschlossen",
+    "start": "13.09.2016",
+    "ende": "31.03.2018",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/eimsbuettel/eimsbuettel-wohnen-bauen-und-verkehr/6943642/bismarckstrasse-weidenstieg-tornquiststrasse/",
+    "verfuegbare_daten": "Informationen zu Auftaktveranstaltung, Entwürfen, Fokusgruppen",
+    "kontaktpersonen": "BA-Eimsbüttel, Tel.:040 42828-0 bezirksamt@eimsbuettel.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "19",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        563514.08,
+        5936335.89,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "BWFG",
+    "bezirk": "Eimsbüttel",
+    "bezeichnung": "Ausbau und Erneuerung der Universität Hamburg",
+    "zustaendigkeit": "Behörde für Wissenschaft,Forschung und Gleichstellung",
+    "gebiet": "Universitätsstandort Eimsbüttel",
+    "planverfahren": "städtebaulicher und hochbaulicher Wettbewerb, Festsetzung, Baubeginn",
+    "beteiligungsformate": "Auftaktveranstaltung, Fokusgruppen, Ergebnispräsentation",
+    "status": "aktiv",
+    "start": "01.07.2010",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://uni-baut-zukunft.hamburg.de/",
+    "verfuegbare_daten": "Informationen zu Auftaktveranstaltung, Informationsveranstaltungen, Stellungnahme fachschaftsrat Geophysik, ",
+    "kontaktpersonen": "Behörde für Wissenschaft, Forschung und Gleichstellung",
+    "sonstiges": "Bürgeremfpehlungen nicht mehr online",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "21",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        565180.03,
+        5935775.9,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "BUE",
+    "bezirk": "Eimsbüttel",
+    "bezeichnung": "Climate Smart City Lokstedt",
+    "zustaendigkeit": "BA-Eimsbüttel",
+    "gebiet": "gesamter Stadtteil Lokstedt",
+    "planverfahren": "Auftaktveranstaltung",
+    "beteiligungsformate": "Auftaktveranstaltung",
+    "status": "ruht",
+    "start": "15.02.2017",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/smartlokstedt/",
+    "verfuegbare_daten": "Informationen über das Projekt (Flyer, Plakate, Newsletter)",
+    "kontaktpersonen": "BA-Eimsbüttel, Tel.:040 42828-0 bezirksamt@eimsbuettel.hamburg.de",
+    "sonstiges": "im Auge behalten: noch junges Projekt, es sollen noch Fokusgruppen, Bügerbeteiligung etc. folgen!",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "23",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        563270.06,
+        5938839.2,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Eimsbüttel",
+    "bezirk": "Eimsbüttel",
+    "bezeichnung": "Lokstedt 2020",
+    "zustaendigkeit": "BA-Eimsbüttel",
+    "gebiet": "gesamter Stadtteil Lokstedt",
+    "planverfahren": "Ideenwettbewerb",
+    "beteiligungsformate": "Kinder- und Jugendbeteiligung, 2 Workshops, Abschlussveranstaltung",
+    "status": "abgeschlossen",
+    "start": "04.09.2014",
+    "ende": "05.07.2017",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/eimsbuettel/projekte/8333364/lokstedt-2020/",
+    "verfuegbare_daten": "Informationen über Auftaktveranstaltung, Workshops, Abschlussveranstaltung",
+    "kontaktpersonen": "BA-Eimsbüttel, Tel.:040 42828-0 bezirksamt@eimsbuettel.hamburg.de",
+    "sonstiges": "Gute Informationslage",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "25",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        563270.06,
+        5938839.2,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "LSBG",
+    "bezirk": "Eimsbüttel",
+    "bezeichnung": "Umgestaltung des Klostersterns und des Eppendorfer Baums",
+    "zustaendigkeit": "LSBG",
+    "gebiet": "Modernisierung des Kreisels, der Straße Eppendorfer Baum zwischen Klosterstern und Isebekkanal und der Rothenbaumchaussee bis zur Hagedornstraße",
+    "planverfahren": "informelle Beteiligung, Festsetzung, Baubeginn      (Bauende Nov. 2017)",
+    "beteiligungsformate": "zwei Informationsveranstaltungen, Planungsworkshops",
+    "status": "abgeschlossen",
+    "start": "04.06.2015",
+    "ende": "01.12.2015",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://lsbg.hamburg.de/stadtstrassen/4481992/klosterstern-umgestaltung/",
+    "verfuegbare_daten": "Informationen über Infoveranstaltung, Planungsworkshops Protokolle, Lageplan, Informationen zu einzelnen Bauphasen",
+    "kontaktpersonen": "Landesbetrieb Straßen, Brücken und Gewässer:\n\nHans Grote (Projektleiter Planung):\n\nTelefon: +49 40 428 26-22 25\n\nE-Mail: hans.grote@lsbg.hamburg.de\n",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "27",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        565448.97,
+        5937440.09,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "BUE",
+    "bezirk": "Nord",
+    "bezeichnung": "Ohlsdorf 2050",
+    "zustaendigkeit": "BUE",
+    "gebiet": "Ohlsdorfer Friedhof",
+    "planverfahren": "Ideenwettbewerb",
+    "beteiligungsformate": "Online Dialog",
+    "status": "abgeschlossen",
+    "start": "22.03.2015",
+    "ende": "13.06.2015",
+    "online___zahl_der_beitraege": "67",
+    "link": "http://www.hamburg.de/ohlsdorf2050",
+    "verfuegbare_daten": "Dokumentation der Onlinebeteiligung, Zeitplan, Tagungsbericht",
+    "kontaktpersonen": "BUE, Tel: 040 428403928, ohlsdorf2050@bue.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "29",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        569224.44,
+        5942001.23,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Nord",
+    "bezirk": "Nord",
+    "bezeichnung": "Magistrale Nord",
+    "zustaendigkeit": "BA-Nord",
+    "gebiet": "Magistralenraum von der Alster bis zur Bezirksgrenze",
+    "planverfahren": "Leitbildprozess",
+    "beteiligungsformate": "Online- Beteiligung",
+    "status": "abgeschlossen",
+    "start": "06.06.2017",
+    "ende": "10.07.2017",
+    "online___zahl_der_beitraege": "133",
+    "link": "http://www.hamburg.de/magistrale-nord/",
+    "verfuegbare_daten": "Ergebnisse Online-Beteiligung, Gutachten,Vorträge",
+    "kontaktpersonen": "Fachamt Stadt- und Landschaftsplanung Nord",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "31",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        568790.82,
+        5937148.05,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Nord",
+    "bezirk": "Nord",
+    "bezeichnung": "Klein Borstel/ B-Plan Ohlsdorf 30",
+    "zustaendigkeit": "BA-Nord",
+    "gebiet": "Ohlsdorfer Friedhof",
+    "planverfahren": "Auslobung Wettbewerb",
+    "beteiligungsformate": "Online-Beteiligung",
+    "status": "abgeschlossen",
+    "start": "14.07.2017",
+    "ende": "20.02.2018",
+    "online___zahl_der_beitraege": "16",
+    "link": "http://www.hamburg.de/klein-borstel-plant/",
+    "verfuegbare_daten": "Infoportal, Protokolle des Stadtteilbeirates ",
+    "kontaktpersonen": "BA Hamburg-Nord\nFachamt Stadt- und Landschaftsplanung\nMartin Eifler\nKümmellstraße 6\n20249 Hamburg\nTelefon: 040  428 04 - 6024\nE-Mail: martin.eifler@hamburg-nord.hamburg.de\n",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "33",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        569462.92,
+        5942785.69,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Nord",
+    "bezirk": "Nord",
+    "bezeichnung": "Mesterkamp",
+    "zustaendigkeit": "BA-Nord",
+    "gebiet": "Nachnutzung Busbetriebshof Weidestraße (Mesterkamp)",
+    "planverfahren": "informelle Beteiligung, Städtebaulicher-freiraumplanerischerWettbewerb",
+    "beteiligungsformate": "Auftaktveranstaltung, Planwerkstätten",
+    "status": "abgeschlossen",
+    "start": "08.06.2016",
+    "ende": "23.02.2017",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/hamburg-nord/wettbewerbe/6981270/wettbewerb-mesterkamp/",
+    "verfuegbare_daten": "Informationen zu Planungswerkstätten, Auftaktveranstaltung, Nachnutzungspräsentation",
+    "kontaktpersonen": "BA-Nord, Fachamt Stadt- und Landschaftsplanung, Kümmelstraße 6, 20246 Hamburg, Tel.: 040 42804-6008 Stadt-undLandschaftsplanung@hamburg-nord.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "35",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        568652.61,
+        5937196.04,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Nord",
+    "bezirk": "Nord",
+    "bezeichnung": "Pergolenviertel",
+    "zustaendigkeit": "BA-Nord",
+    "gebiet": "Umnutzung einer Kleingartenfläche zum Pergolenviertel",
+    "planverfahren": "informelle Beteiligung, Städtebaulicher-freiraumplanerischerWettbewerb, Festsetzung, ",
+    "beteiligungsformate": "Auftaktveranstaltung, Workshops, Gründung eines Planungsbeirates (Umbenennung in Forum Pergolenviertel), Blog mit Kommentarfunktion",
+    "status": "aktiv",
+    "start": "01.11.2011",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/hamburg-nord/in-planung/3815598/kleingartenplanung-pergolenviertel/",
+    "verfuegbare_daten": "Informationen zu Sitzungsprotokollen, Blogeinträgen, Newsletter, Planungsgrundlagen",
+    "kontaktpersonen": "BA-Nord, Fachamt Stadt- und Landschaftsplanung, Kümmelstraße 6, 20246 Hamburg, Tel.: 040 42804-6008 Stadt-undLandschaftsplanung@hamburg-nord.hamburg.de",
+    "sonstiges": "Umfangreicher Downloadbereich: http://www.forum-pergolenviertel.de/downloads/",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "37",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        568239,
+        5939851.07,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "LSBG",
+    "bezirk": "Nord",
+    "bezeichnung": "Borgweg (Busbeschleunigung)",
+    "zustaendigkeit": "LSBG",
+    "gebiet": "verkehrliche Umnutzung der Verkehrsflächen an der U-Bahn Borgweg",
+    "planverfahren": "vorgelagerte informelle Beteiligung",
+    "beteiligungsformate": "Auftaktgespräche, Info-und Aktionsstand, Autaktveranstaltung, 2 Planungswerkstätten, Abschlussveranstaltung",
+    "status": "abgeschlossen",
+    "start": "15.04.2016",
+    "ende": "31.05.2017",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.via-bus.de/beteiligungsprozess-borgweg/",
+    "verfuegbare_daten": "vielfältige Informationen zu allen Verfahrensschritten der informellen Beteiligung",
+    "kontaktpersonen": "Landesbetrieb Straßen, Brücken und Gewässer\nRoland Hansen\nSachsenfeld 3-5\n20097 Hamburg\nTel.: 040 428 26 2670​​​​​​​, roland.hansen@lsbg.hamburg.de\n\n",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "39",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        567222.19,
+        5938473.64,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "LSBG",
+    "bezirk": "Nord",
+    "bezeichnung": "Eppendorfer Markt (Busbeschleunigung)",
+    "zustaendigkeit": "LSBG",
+    "gebiet": "Umgestaltung des Eppendorfer Marktes",
+    "planverfahren": "vorgelagerte informelle Beteiligung",
+    "beteiligungsformate": "Auftaktgespräche und Auftaktveranstaltung",
+    "status": "ruht",
+    "start": "14.07.2017",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.via-bus.de/beteiligungsprozess-eppendorfer-marktplatz/",
+    "verfuegbare_daten": "Präsentation zur Auftaktveranstaltung, Dokument zu den vor Ort Gesprächen",
+    "kontaktpersonen": "\nLandesbetrieb Straßen, Brücken und Gewässer                                              Roland Hansen\nSachsenfeld 3-5\n20097 Hamburg\nTel.: 040 428 26 2670​​​​​​​, roland.hansen@lsbg.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "41",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        565470.12,
+        5938758.8,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "LSBG",
+    "bezirk": "Nord",
+    "bezeichnung": "Papenhuder Straße/ Hofweg (Busbeschleunigung)",
+    "zustaendigkeit": "LSBG",
+    "gebiet": "Verkehrsoptimierung  an der Papenhuder Straße/Hofweg",
+    "planverfahren": "vorgelagerte informelle Beteiligung",
+    "beteiligungsformate": "Auftaktveranstaltung, Beteiligungsworkshops",
+    "status": "abgeschlossen",
+    "start": "14.04.2015",
+    "ende": "07.10.2015",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.via-bus.de/beteiligungsprozess-papenhuder-strasse/",
+    "verfuegbare_daten": "Präsentationen zu den Beteiligungsworkshops und zur Vorzugsvariante",
+    "kontaktpersonen": "Landesbetrieb Straßen, Brücken und Gewässer                                              Roland Hansen\nSachsenfeld 3-5\n20097 Hamburg\nTel.: 040 428 26 2670​​​​​​​, roland.hansen@lsbg.hamburg.de",
+    "sonstiges": "dürftige Informationsbeschreibung und Bereitstellung",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "43",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        567424.59,
+        5936026.24,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "LSBG",
+    "bezirk": "Nord",
+    "bezeichnung": "Überplanung Straßenzug Krausestraße bis Hammer Straße",
+    "zustaendigkeit": "LSBG",
+    "gebiet": "Überplanung des Straßenzuges Krausestraße, Mühlenstraße, Brauhausstraße, Hammer Straße",
+    "planverfahren": "informelle Beteiligung",
+    "beteiligungsformate": "Auftaktveranstaltung, Planungswerkstatt",
+    "status": "ruht",
+    "start": "27.01.2016",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://lsbg.hamburg.de/projekte/5100484/krausestrasse-bis-hammer-strasse/",
+    "verfuegbare_daten": "Bestandspläne, Protokolle, Vorzugsvariante",
+    "kontaktpersonen": "Landesbetrieb Straßen, Brücken und Gewässer\nSina Wallstabe (Projektingenieurin)\nTelefon: +49 40 428 26-22 19\nE-Mail: sina.wallstabe@lsbg.hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "45",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        570037.33,
+        5937194.3,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Wandsbek",
+    "bezirk": "Wandsbek",
+    "bezeichnung": "Große Heide",
+    "zustaendigkeit": "BA-Wandsbek",
+    "gebiet": "Plangebiet nördlich und südlich der Stapelfelder Straße",
+    "planverfahren": "Ideenwettbewerb",
+    "beteiligungsformate": "Online-Beteiligung",
+    "status": "abgeschlossen",
+    "start": "20.01.2017",
+    "ende": "12.03.2017",
+    "online___zahl_der_beitraege": "35",
+    "link": "http://www.hamburg.de/wandsbek/grosse-heide/",
+    "verfuegbare_daten": "Dokumentation der Auftaktveranstaltung, Workshops, Gutachten",
+    "kontaktpersonen": "TOLLERORT entwickeln & beteiligen, Mone Böcker, Palmaille 96, 22767 HH, Tel: 040 3861 5595, mail@tollerort-hamburg.de",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "47",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        579379.4,
+        5939749.01,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Wandsbek",
+    "bezirk": "Wandsbek",
+    "bezeichnung": "Jenfelder Au",
+    "zustaendigkeit": "BA-Wandsbek",
+    "gebiet": "Neues Wohnquartier jenfelder Au",
+    "planverfahren": "informelle Beteiligunhg, städtebaulich-landschaftsplanerischer Wettbewerb",
+    "beteiligungsformate": "Stadtteilkonferenz",
+    "status": "abgeschlossen",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/projekt-jenfelder-au/",
+    "verfuegbare_daten": "Keine Dokumentation der informellen Beiträge",
+    "kontaktpersonen": "BA-Wandsbek, Fachamt Stadt- und Landschaftsplanung,\nRamona Goebel, Tel.: 040 42881 3032",
+    "sonstiges": "Keine Dokumentation der informellen Beiträge",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "49",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        575030.49,
+        5937539.51,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "IBA",
+    "bezirk": "Mitte",
+    "bezeichnung": "Elbinselquartier (Nord-Süd Achse)",
+    "zustaendigkeit": "IBA, BUE und BA- Mitte",
+    "gebiet": "Projektgebiet in  Wilhelmsburg",
+    "planverfahren": "Auslobung Wettbewerb",
+    "beteiligungsformate": "Online Beteiligung",
+    "status": "abgeschlossen",
+    "start": "09.02.2017",
+    "ende": "01.03.2017",
+    "online___zahl_der_beitraege": "47",
+    "link": "http://www.nordsuedachse.de",
+    "verfuegbare_daten": "Ergebnisse der Online Beteiligung",
+    "kontaktpersonen": "Projektkoordinator Christian Hinz",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "51",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        566182.67,
+        5929573.77,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "BUE",
+    "bezirk": "Mitte",
+    "bezeichnung": "Deine Geest",
+    "zustaendigkeit": "BUE, BA-Mitte",
+    "gebiet": "Landschaftsachse Hornergeest ",
+    "planverfahren": "Ideenwettbewerb",
+    "beteiligungsformate": "Online Ideensammlung",
+    "status": "abgeschlossen",
+    "start": "04.06.2016",
+    "ende": "21.08.2016",
+    "online___zahl_der_beitraege": "334",
+    "link": "http://deinegeest.hamburg/ideen-anschauen/",
+    "verfuegbare_daten": "Ergebnisse der Online Beteiligung: Projektideen+ Bewertung ",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "53",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        565218.89,
+        5934382.14,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "IBA",
+    "bezirk": "Mitte",
+    "bezeichnung": "Spreehafenviertel",
+    "zustaendigkeit": "IBA, Projekt \"Perspektiven\"",
+    "gebiet": "Quartier Spreehavenviertel",
+    "planverfahren": "Auslobung Wettbewerb",
+    "beteiligungsformate": "Online-Beteiligung",
+    "status": "abgeschlossen",
+    "start": "08.06.2017",
+    "ende": "19.12.2017",
+    "online___zahl_der_beitraege": "74",
+    "link": "http://www.iba-hamburg.de/iba-hamburg-gmbh/projekte/spreehafenviertel.html",
+    "verfuegbare_daten": "Ergebnisse der Online-Beteiligung, Dokumentation von Veranstaltungen",
+    "kontaktpersonen": "Projektkoordinator Christian Hinz",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "55",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        565770.7,
+        5930413.7,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Mitte",
+    "bezirk": "Mitte",
+    "bezeichnung": "Billstedt 113 \"Östlich Haferblöcken\"",
+    "zustaendigkeit": "BA-Mitte",
+    "gebiet": "Plangebiet westlich des Öjendorfer Sees",
+    "planverfahren": "Aufstellung, informelle Beteiligung",
+    "beteiligungsformate": "Auftaktveranstaltung, 3 Input-Workshops mit Fokusgruppen, Sonderworkshops, mobile Infostände",
+    "status": "abgeschlossen",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/mitte/bplaene-im-verfahren/6641848/hamburg-mitte-bebauungsplan-entwurf-billstedt-113/",
+    "verfuegbare_daten": "Informationen zu Planentwürfen, Infoveranstaltungen, Beteiligungsarchitektur,Workshop-Protokolle",
+    "kontaktpersonen": "BA-Mitte, Klosterwall 8\n20095 Hamburg, Tel.:+49 40 42828-0, bezirksamt@hamburg-mitte.hamburg.de",
+    "sonstiges": "umfangreiche Materialien und Informationen zur informeller Beteiligung",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "57",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        575214.26,
+        5935683.02,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Mitte",
+    "bezirk": "Mitte",
+    "bezeichnung": "Billstedt-Horn",
+    "zustaendigkeit": "BA-Mitte",
+    "gebiet": "Stadtteile Billstedt und Horn",
+    "planverfahren": "Fortschreibung des Integrierten Entwicklungskonzeptes",
+    "beteiligungsformate": "Fortschreibung des Entwicklungskonzept mittels Strategie Workshops",
+    "status": "abgeschlossen",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/mitte/stadtteilentwicklung/7612938/entwicklungskonzept-billstedt-horns-weg-in-die-zukunft-gestalten/",
+    "verfuegbare_daten": "Ursprungs IEK",
+    "kontaktpersonen": "BA-Mitte, Klosterwall 8\n20095 Hamburg, Tel.:+49 40 42828-0, bezirksamt@hamburg-mitte.hamburg.de",
+    "sonstiges": "keine Materialien zu Beteiligungsverfahren/ergebnissen",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "59",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        573649.78,
+        5934332.93,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "IBA",
+    "bezirk": "Bergedorf",
+    "bezeichnung": "Oberbillwerder",
+    "zustaendigkeit": "IBA, BA-Bergedorf",
+    "gebiet": "Oberbillwerder",
+    "planverfahren": "Masterplan",
+    "beteiligungsformate": "Online-Beteiligung",
+    "status": "ruht",
+    "start": "21.12.2016",
+    "online___zahl_der_beitraege": "577",
+    "link": "http://www.iba-hamburg.de/iba-hamburg-gmbh/projekte/oberbillwerder.html",
+    "verfuegbare_daten": "Dokumentation über Ideenwerkstatt, Beteiligungsphasen und der öffentlichen Beiträge",
+    "kontaktpersonen": "Projektkoordinatorin Gerti Theis",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "61",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        576909.89,
+        5928291.1,
+        0
+      ]
+    }
+  },
+  {
+    "ebene": "1. Verfahren der Bezirke",
+    "absender": "Bezirk Harburg",
+    "bezirk": "Harburg",
+    "bezeichnung": "Bahnhofsvorplatz Neugraben",
+    "zustaendigkeit": "BA-Harburg",
+    "gebiet": "Bahnhofsvorplatz Neugraben",
+    "planverfahren": "informelle Beteiligung, Festsetzung, Einleitung der Ausführungsplanung",
+    "beteiligungsformate": "zwei Workshops mit lokalen Akteuren",
+    "status": "ruht",
+    "online___zahl_der_beitraege": "/",
+    "link": "http://www.hamburg.de/harburg/neugrabener-bahnhof/82508/bahnhofsvorplatz-neugraben/",
+    "verfuegbare_daten": "Bildergalerie (Ist-Zustand, Plangebiet)",
+    "kontaktpersonen": "BA-Harburg, Harburger Rathausplatz 1\n21073 Hamburg\n+49 40 428 28-0, bezirksamt@harburg.hamburg.de",
+    "sonstiges": "Keine Dokumentation der Workshops",
+    "geom": {
+      "disposed_": false,
+      "pendingRemovals_": {},
+      "dispatching_": {},
+      "listeners_": {
+        "change": [
+          null
+        ]
+      },
+      "revision_": 1,
+      "ol_uid": "63",
+      "values_": {},
+      "extent_": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "extentRevision_": -1,
+      "simplifiedGeometryMaxMinSquaredTolerance": 0,
+      "simplifiedGeometryRevision": 0,
+      "layout": "XYZ",
+      "stride": 3,
+      "flatCoordinates": [
+        556781.37,
+        5925423.19,
+        0
+      ]
+    }
+  }
+]

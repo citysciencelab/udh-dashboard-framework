@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import dashboardModule from '../../../src/store/dashboard.module';
-import udpcModule from '../../../src/store/udpc.module';
+import dashboardModule from '../../../../src/store/dashboard.module';
+import udpcModule from '../../../../src/store/udpc.module';
 
 import mock_initial_data from './initial_data.mock.json';
 import mock_filtered_data from './initial_data.mock.json';
