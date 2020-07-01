@@ -27,7 +27,9 @@
 
     /*
     *   Double checks the setting of all $props variables
-    *   If the component gets initiated by
+    *   If the component gets initiated by a Backbone framework:
+    *   https://bitbucket.org/illD/masterportal-vue/src/dev/modules/vue-example/renderer/BackboneVueRenderer.js
+    *   How to use: https://bitbucket.org/illD/masterportal-vue/src/dev/doc/03_tutorial_vue_module_scale_switcher.md
     */
     mounted() {
       for (let obj of Object.keys(this.$props)) {
