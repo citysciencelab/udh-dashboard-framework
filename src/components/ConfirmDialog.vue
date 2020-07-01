@@ -11,6 +11,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
+/*
+*   Component displays a text and two clickable options (e.g. yes and no)
+*   It emits the results to the enclosing component
+*/
+
+
 @Component({})
 export default class ConfirmDialog extends Vue {
     @Prop() active!: boolean;

@@ -13,7 +13,8 @@
         <a :href="linkUrl"
            :title="linkTitle"
            target="_blank"
-           class="layer-tag">
+           class="layer-tag"
+           @click="onClick">
           {{ layerTitle || overlay || mapTitle }}
           <md-icon v-if="linkUrl">launch</md-icon>
         </a>
@@ -38,6 +39,23 @@
     // eslint-disable-next-line no-unused-vars
     import { LocaleMessage } from 'vue-i18n';
 
+    /**
+     * Displays a Masterportal-style map.
+     * Can be initialized with any masterportal-style layer-config.json.
+     * Dynamically reacts to changes in "md_id" property to display any layer from the Hamburg Urban Data Portal, can be adopted for other data repositories
+     * Can be maximized to fullscreen
+     * See https://bitbucket.org/geowerkstatt-hamburg/masterportalapi for further instruction
+     * @property {string} customLayerId
+     * @property {string} mapTitle
+     * @property {string} overlay
+     * @property {{ [key: string]: any }} portal - the portal config, specifiying initial map view, layers and CRS
+     * @property {{ [key: string]: any }} services - the file specifying OGC services (incl. urls) to load the configured data from, defaults to https://geoportal-hamburg.de/lgv-config/services-internet.json
+     * @property {object} mapStyle - the vector-data style specs
+     * @property {FeatureSet} featureData - OpenLayers features to be rendered (TODO: can be parsed from geoJson)
+     * @property {string} md_id - the dataset ID to look up from "services"
+     * @property {string} linkPrefix - the base-url to the meta data catalogue
+     * @property {string} internalNetwork - the tag identifying non public data
+     */
     @Component({
         components: {
             InfoOverlay
@@ -47,12 +65,13 @@
         @Prop({default: "dashboardData"}) customLayerId!: string;
         @Prop({default: "GeoOnline | LGV Hamburg"}) mapTitle!: string;
         @Prop() overlay!: string;
-        @Prop() portal!: { [key: string]: any };
+        @Prop({default: {}}) portal!: { [key: string]: any };
         @Prop() services!: { [key: string]: any };
         @Prop() mapStyle!: object;
         @Prop() featureData!: FeatureSet;
         @Prop() md_id!: string;
         @Prop() linkPrefix!: string;
+        @Prop({default: 'FHHNET'}) internalNetwork!: string
 
         map!: mpapi.MPMap;
         tempLayers!: Layer[];
@@ -80,8 +99,13 @@
             this.createLayerByMdId();
         }
 
+        /**
+         * initialize the map with it's initial/default props
+         * uses MasterportalAPI.createMap
+         * @returns {void}
+         */
         createMap() {
-            const mapElement = document.getElementById(this.portal.target);
+            const mapElement = this.$refs.map;
             if (mapElement) {
                 mapElement.innerHTML = "";
             }
@@ -114,10 +138,17 @@
             }, 2000);
         }
 
+        /**
+         * remove the window.onresize listener if the component is unmounted
+         */
         destroyed() {
             window.removeEventListener('resize', this.onResize.bind(this));
         }
 
+        /**
+         * renders a new layer if dedicated vector features are provided
+         * @returns {void}
+         */
         showFeaturesInMap() {
             const layer = mpapi.wfs.createLayer({id: this.customLayerId}, {}, {}, this.featureData);
 
@@ -125,6 +156,11 @@
             this.map.addLayer(layer);
         }
 
+        /**
+         * reads out the md_id property and triggers the rendering of the resp. layer by
+         * MasterportalAPI.map.createLayer
+         * @returns {void}
+         */
         createLayerByMdId() {
             if (this.md_id) {
                 if (this.tempLayers) {
@@ -139,6 +175,10 @@
             }
         }
 
+        /**
+         * creates a Title for the map overlay, uses default title as fallback
+         * @returns {string}
+         */
         composeLayerTitle (layer: Layer): string | null {
             const title = this.overlay ? this.overlay + ': ' : '',
                 layerName = layer ? layer.get('name') : '';
@@ -154,6 +194,10 @@
             this.createLayerByMdId();
         }
 
+        /**
+         * fired when viewport is resized and manually, resizes the map to it's new container constraints
+         * @returns {void}
+         */
         onResize() {
             if (this.$refs.map) {
                 this.map.setSize([0, 0]);
@@ -163,6 +207,11 @@
             }
         }
 
+        /**
+         * move map to the opened overlay, resize accordingly
+         * @listens onOpenFullscreen Event on Fullscreen Button
+         * @returns {void}
+         */
         onOpenFullscreen () {
             (this.$refs.fullscreen as InfoOverlay).show();
             this.onResize();
@@ -170,11 +219,33 @@
             this.$emit('fullscreenMap', true);
         }
 
+        /**
+         * move map back to original container, resize accordingly
+         * @listens onCloseFullscreen Event on Overlay
+         * @returns {void}
+         */
         onCloseFullscreen () {
             this.$el.append(this.$refs.mapWrapper);
             this.onResize();
             this.isFullscreen = false;
             this.$emit('fullscreenMap', false);
+        }
+
+        /**
+         * click event handler on <a> element click and alerts the app if the link leads to an internal source
+         * @fires tooltip-internal-network Event to the parent component
+         * @returns {void}
+         */
+        onClick(evt: Event) {
+            if (this.layerTitle) {
+                if (this.layerTitle.includes(this.internalNetwork)) {
+                    evt.preventDefault();
+                    this.$emit('tooltip-internal-network', {
+                        label: this.layerTitle,
+                        link: this.linkUrl
+                    });
+                }
+            }
         }
     }
 </script>

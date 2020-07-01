@@ -8,6 +8,18 @@
            src="../assets/images/Hamburg_Bug_NEU_RGB.png"
            alt="Hamburg Bug">
       <span class="navbar-brand">Urban Data Platform Cockpit</span>
+
+      <ul class="navbar-nav ml-auto navbar-lang">
+        <li class="nav-item lang" :class="{ active: $i18n.locale === 'de'}">
+          <span @click="changeLanguage('de')">De</span>
+        </li>
+        <li class="nav-item">
+          <span> | </span>
+        </li>
+        <li class="nav-item lang" :class="{ active: $i18n.locale === 'en'}">
+          <span @click="changeLanguage('en')">En</span>
+        </li>
+      </ul>
     </nav>
 
     <div class="container-fluid">
@@ -152,7 +164,8 @@
               <did-you-know :data="recentDataSets"
                             :interval="10000"
                             :link-prefix="urls.hmdk"
-                            @show-in-map="showDataInMap" />
+                            @show-in-map="showDataInMap"
+                            @tooltip-internal-network="onTooltipInternalNetwork" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -259,7 +272,8 @@
                                  :md_id="mapData.md_id"
                                  :overlay="mapData.overlay"
                                  :link-prefix="urls.hmdk"
-                                 @fullscreenMap="toggleRecentDatasetInterval" />
+                                 @fullscreenMap="toggleRecentDatasetInterval"
+                                 @tooltip-internal-network="onTooltipInternalNetwork" />
             </template>
             <template slot="footer" />
           </dashboard-tile>
@@ -279,7 +293,8 @@
               </div>
             </template>
             <template slot="content">
-              <md-tabs class="dashboard-tabs"
+              <md-tabs ref="top-x-tabs"
+                       class="dashboard-tabs"
                        @md-changed="onSwitchTab">
                 <md-tab id="tab-top10-datasets"
                         :md-label="$t('udpc.tabDatasets')" />
@@ -295,7 +310,17 @@
                                       :link-prefix="activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk" />
               </div>
             </template>
-            <template slot="footer" />
+            <template slot="footer">
+              <div v-if="this.$refs['top-x-tabs'] && this.$refs['top-x-tabs'].activeTab === 'tab-top10-datasets'"
+                   class="notice" style="width: 100%; display: flex">
+                <md-switch
+                  v-model="chartSwitches.accessWithBackgroundMapsTop"
+                  class="dashboard-switch"
+                  @change="onSwitchIncludeMapsTops()">
+                  {{ $t('udpc.includeMapHits') }}
+                </md-switch>
+              </div>
+            </template>
           </dashboard-tile>
         </div>
         <div class="col-xl-3 col-lg-6 py-2">
@@ -371,9 +396,9 @@
               </div>
               <div class="notice" style="width: 100%; display: flex">
                 <md-switch
-                  v-model="chartSwitches.accessWithBackgroundMaps"
+                  v-model="chartSwitches.accessWithBackgroundMapsHits"
                   class="dashboard-switch"
-                  @change="onSwitchIncludeMaps('datasets')">
+                  @change="onSwitchIncludeMapsHits()">
                   {{ $t('udpc.includeMapHits') }}
                 </md-switch>
               </div>
@@ -423,39 +448,37 @@
     <md-bottom-bar class="udpc-bottom-bar">
       <div class="container-fluid">
         <div class="row logo-row">
-          <div class="order-sm-0 order-12 col-lg-6 col-md-6 align-self-end links-bottom-left">
+          <div class="order-md-1 order-sm-2 col-xl-5 col-lg-3 col-md-4 align-self-end links-bottom-left">
             <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Datenschutz.aspx"
                target="_blank">Datenschutz</a>
             <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Impressum.aspx "
                target="_blank">Impressum</a>
           </div>
-          <div class="col-xl-6 col-lg-6 align-self-center images-bottom-right">
+          <div class="order-md-2 order-sm-1 col-xl-7 col-lg-9 col-md-8 align-self-center images-bottom-right">
             <div class="row">
-              <div class="offset-xl-6 col-xl-3 col-6 image-col">
+              <div class="col-xl-3 col-sm-6 col-md-3 col-sm-6 col-6 image-col align-self-start">
                 <a href="www.geoinfo.hamburg.de"
                    target="_blank">
                   <img src="../assets/images/nl-lgv-logo@2x.png"
                        alt="LGV">
                 </a>
               </div>
-              <div class="col-xl-3 col-6 image-col">
+              <div class="col-xl-3 col-sm-6 col-md-3 col-sm-6 col-6 image-col align-self-start">
                 <a href="http://www.urbandataplatform.hamburg/"
                    target="_blank">
                   <img src="../assets/images/UrbanDataPlatform_RGB@2x.png"
                        alt="UDP">
                 </a>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row eu-row justify-content-end">
-          <div class="offset-xl-6 col-xl-6 col-lg-6 eu-legal-notice">
-            <div class="row">
-              <div class="col-xl-7 col-lg-2 eu-image col-3">
-                <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
-              </div>
-              <div class="col-xl-5 col-lg-10 col-9">
-                {{ $t('udpc.legalEU') }}
+              <div class="col-xl-6 col-sm-12 col-md-6 col-12 eu-legal-notice">
+                <div class="row">
+                  <div class="col-xl-3 col-lg-3 image-col eu-image col-3 align-self-start">
+                    <img src="../assets/images/flag_yellow_low.jpg" alt="LGV">
+                  </div>
+                  <div class="col-xl-9 col-lg-9 col-9 image-col align-self-start">
+                    <p>{{ $t('udpc.legalEU') }}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -465,10 +488,10 @@
 
     <info-overlay ref="tooltip-did-you-know"
                   :header="$t('udpc.didYouKnow')"
-                  :html="didYouKnowDataToHtml(didYouKnow, urls.hmdk, $t('udpc.tooltipDidYouKnow'))" />
+                  :html="didYouKnowDataToHtml('tooltip-did-you-know', didYouKnow, urls.hmdk, undefined, $t('udpc.tooltipDidYouKnow'))" />
     <info-overlay ref="tooltip-latest-datasets"
                   :header="$t('udpc.newDatassets')"
-                  :html="didYouKnowDataToHtml(recentDataSets)" />
+                  :html="didYouKnowDataToHtml('tooltip-latest-datasets', recentDataSets, urls.hmdk, $t('udpc.dateTag'))" />
     <info-overlay ref="tooltip-sensors"
                   :header="$t('udpc.sensors')"
                   :text="$t('udpc.tooltipSensors')" />
@@ -477,7 +500,7 @@
                   :text="$t('udpc.tooltipVisitorsToday')" />
     <info-overlay ref="tooltip-background-access"
                   :header="$t('udpc.access_overlay_head')"
-                  :html="didYouKnowDataToHtml(overlayDataMapKpi, urls.hmdk, $t('udpc.tooltipBackgroundAccess'))" />
+                  :html="didYouKnowDataToHtml('tooltip-background-access', overlayDataMapKpi, urls.hmdk, $t('udpc.dateTag'), $t('udpc.tooltipBackgroundAccess'))" />
     <info-overlay ref="tooltip-datasets-by"
                   :header="$t('udpc.countBy')"
                   :text="$t('udpc.tooltipDatasetsBy')" />
@@ -489,7 +512,7 @@
                   :text="$t('udpc.tooltipMap')" />
     <info-overlay ref="tooltip-top-x"
                   :header="$t(`udpc.top10_${activeTabs.tops}`)"
-                  :html="didYouKnowDataToHtml(overlayDataTopX, activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk, $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
+                  :html="didYouKnowDataToHtml('tooltip-top-x', overlayDataTopX, activeTabs.tops === 'downloads' ? urls.daten_hh : urls.hmdk, $t('udpc.dateTag'), $t(`udpc.tooltipTop_${activeTabs.tops}`))" />
     <info-overlay ref="tooltip-downloads"
                   :header="$t('udpc.download')"
                   :text="$t('udpc.tooltipDownloads')" />
@@ -499,6 +522,20 @@
     <info-overlay ref="tooltip-access-apps"
                   :header="$t('udpc.accessApps')"
                   :text="$t('udpc.tooltipAccessApps')" />
+    <info-overlay ref="tooltip-interal-network"
+                  :header="tooltipInternalNetwork.label"
+                  :html="$t('udpc.tooltipInternalNetwork')">
+      <template slot="after-body">
+        <a
+          :href="tooltipInternalNetwork.link"
+          target="_blank"
+        >
+          <md-button class="md-primary md-dense">
+            {{ $t('general.open') }}
+          </md-button>
+        </a>
+      </template>
+    </info-overlay>
   </div>
 </template>
 
@@ -512,8 +549,8 @@ import DidYouKnow from '@/components/DidYouKnow.vue';
 import DidYouKnowDataList from '@/components/DidYouKnowDataList.vue';
 import MultiSelect from '@/components/MultiSelect.vue';
 import ConfirmDialog from '@/components/ConfirmDialog.vue';
-import InfoOverlay from '@/components/InfoOverlay.vue';
 import RangeSlider from '@/components/RangeSlider.vue';
+import InfoOverlay from '@/components/InfoOverlay.vue';
 import BarChart from "@/components/charts/chartjs/BarChart.vue";
 import BarChartHorizontal from "@/components/charts/chartjs/BarChartHorizontal.vue";
 import Color from "color";
@@ -532,19 +569,25 @@ import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
         MultiSelect,
         RangeSlider,
         ConfirmDialog,
-        InfoOverlay,
         BarChart,
         BarChartHorizontal,
-        MasterPortalMap
+        MasterPortalMap,
+        InfoOverlay
     }
 })
 export default class UDPC extends AbstractDashboard {
     agreeDialogActive = false;
     updateMapOnInterval = true;
+
+    tooltipInternalNetwork = {
+      label: '',
+      link: '',
+    };
+
     urls = {
       hmdk: 'https://metaver.de/trefferanzeige?docuuid=',
       daten_hh: 'http://daten-hamburg.de'
-    }
+    };
 
     mapData: MapData = {
         services: servicesConfig,
@@ -585,7 +628,8 @@ export default class UDPC extends AbstractDashboard {
     };
 
     chartSwitches: { [key: string]: boolean } = {
-      accessWithBackgroundMaps: true,
+      accessWithBackgroundMapsHits: true,
+      accessWithBackgroundMapsTop: false,
       countGroupedWithPlans: false,
       countTotalWithPlans: false
     };
@@ -607,6 +651,23 @@ export default class UDPC extends AbstractDashboard {
         totalApps: '',
         tops: ''
     };
+
+    /**
+     *  Standard options for the D3 Treemap
+     */
+    d3ChartOptions: { [key: string]: D3ChartOptions} = {
+      dataSetsByTopic: {
+        dim: '',
+        dim2: '',
+        labelKey: '',
+        metric: 'doc_count',
+        toolTipKey: undefined
+      }
+    };
+
+    /**
+     *  Options for the chartJS diagrams
+     */
 
     barChartConfigDefaults = {
         maintainAspectRatio: false,
@@ -639,16 +700,6 @@ export default class UDPC extends AbstractDashboard {
                 }
             }]
         }
-    };
-
-    d3ChartOptions: { [key: string]: D3ChartOptions} = {
-      dataSetsByTopic: {
-        dim: '',
-        dim2: '',
-        labelKey: '',
-        metric: 'doc_count',
-        toolTipKey: undefined
-      }
     };
 
     chartOptions: { [key: string]: Chart.ChartOptions } = {
@@ -722,6 +773,12 @@ export default class UDPC extends AbstractDashboard {
         totalApps: this.barChartConfigDefaults
     };
 
+
+    /**
+     *  Life cycle hook that mounts the lazy loaded messages and vuex store
+     *  Stars fetching data from the store and subscribe to its mutations.
+     *  When the requests to elastic are finished, these subscriptions will set the data for each chart
+     */
     created() {
         this.$i18n.locale = 'de';
         this.$i18n.mergeLocaleMessage('en', messages.en);
@@ -745,7 +802,8 @@ export default class UDPC extends AbstractDashboard {
                 switch (mutation.payload[0]) {
                     case 'totalTopicDatasets': {
                       mutationData.datasets[0]['key'] = 'doc_count';
-                      if (Object.prototype.hasOwnProperty.call(mutationData.datasets[0].tree[0], 'label_short')) {
+                      if (mutationData.datasets[0].tree.length > 0 &&
+                              Object.prototype.hasOwnProperty.call(mutationData.datasets[0].tree[0], 'label_short')) {
                         this.d3ChartOptions.dataSetsByTopic.labelKey = 'label_short';
                         this.d3ChartOptions.dataSetsByTopic.toolTipKey = 'key';
                         mutationData.datasets[0]['groups'] = ['label_short'];
@@ -867,6 +925,10 @@ export default class UDPC extends AbstractDashboard {
         });
     }
 
+    /**
+     *  Sends new requests to elastic on the change of a tab
+     */
+
     onSwitchTab(tab: string) {
         switch (tab) {
             case 'tab-theme':
@@ -922,12 +984,12 @@ export default class UDPC extends AbstractDashboard {
                 break;
             case 'tab-datasets-year':
                 this.activeTabs.totalDatasets = tab;
-                this.sliderOptions.datasets = { min: '2018', max: currentYear, unit: 'year', isShowMarks: false};
+                this.sliderOptions.datasets = { min: '2017', max: currentYear, unit: 'year', isShowMarks: false};
                 this.fetchDatasetsRange();
                 break;
             case 'tab-datasets-month':
                 this.activeTabs.totalDatasets = tab;
-                this.sliderOptions.datasets = { min: '2018-11', max: currentMonth, unit: 'month', isShowMarks: false};
+                this.sliderOptions.datasets = { min: '2017-01', max: currentMonth, unit: 'month', isShowMarks: false};
                 this.fetchDatasetsRange();
                 break;
             case 'tab-apps-year':
@@ -941,6 +1003,14 @@ export default class UDPC extends AbstractDashboard {
                 this.fetchAppsRange();
         }
     }
+
+
+    /**
+     *  Sends new requests to elastic on the change of a date range slider
+     *  @param {string} chartId name of the chartId the date rang slider belogs to
+     *  @param {string} max, the max date range value of the slider
+     *  @param {string} min the min date range value of the slider
+     */
 
     rangeForChartChanged(chartId: string, [min, max]: [string, string]) {
         this.sliderOptions[chartId].min = min;
@@ -958,10 +1028,17 @@ export default class UDPC extends AbstractDashboard {
         }
     }
 
-    onSwitchIncludeMaps() {
+    onSwitchIncludeMapsHits() {
       this.fetchDatasetsRange();
     }
 
+    onSwitchIncludeMapsTops() {
+      this.fetchTops();
+    }
+
+    /**
+     *  Asynchronous requests via store to elastic
+     */
     async fetchFacts() {
         await this.$store.dispatch('fetchFacts');
     }
@@ -993,22 +1070,29 @@ export default class UDPC extends AbstractDashboard {
 
     async fetchTotalsByType() {
         // Sensordatasets are a subset of datasets filtered by tag
-        const totalsType = this.activeTabs.dataSetsByType === 'sensordatasets' ? 'datasets' : this.activeTabs.dataSetsByType;
-        const theme = this.filters.theme;
-        const org = this.filters.org;
+        const dataSetTypeSelection = this.activeTabs.dataSetsByType;
+        const totalsType = dataSetTypeSelection === 'sensordatasets' ? 'datasets' : dataSetTypeSelection;
         const isIncludeBuildPlans = totalsType === 'datasets' ? this.chartSwitches.countTotalWithPlans : false;
-        const tag = this.activeTabs.dataSetsByType === 'sensordatasets' ? ['sensordata'] : [];
+        const params = {
+          totalsType: totalsType,
+          theme: this.filters.theme,
+          org: this.filters.org,
+          tag: dataSetTypeSelection === 'sensordatasets' ? ['sensordata'] : [],
+          tagNot: dataSetTypeSelection === 'datasets' ? (isIncludeBuildPlans ? [''] : ['bplan']) : [''],
+          status: dataSetTypeSelection === 'datasets' ? (isIncludeBuildPlans ? [''] : ['online']) : ['']
+        };
 
-        await this.$store.dispatch('fetchTotalsByType', { totalsType, theme, org, isIncludeBuildPlans, tag });
+        await this.$store.dispatch('fetchTotalsByType', params);
     }
 
     async fetchTops() {
         const topTopic = this.activeTabs.tops;
         const theme = this.filters.theme;
         const org = this.filters.org;
+        const tag_not = this.chartSwitches.accessWithBackgroundMapsTop ? [''] : ['basemap'];
 
         if (topTopic === 'datasets') {
-            await this.$store.dispatch('fetchTops', { topTopic, theme, org });
+            await this.$store.dispatch('fetchTops', { topTopic, theme, org, tag_not });
         } else {
             await this.$store.dispatch('fetchTops', { topTopic });
         }
@@ -1032,7 +1116,7 @@ export default class UDPC extends AbstractDashboard {
             min: this.sliderOptions.datasets.min,
             max: this.sliderOptions.datasets.max,
             unit: this.sliderOptions.datasets.unit,
-            tag_not: this.chartSwitches.accessWithBackgroundMaps ? [''] : ['basemap'],
+            tag_not: this.chartSwitches.accessWithBackgroundMapsHits ? [''] : ['basemap'],
             theme: this.filters.theme,
             org: this.filters.org
         };
@@ -1060,16 +1144,28 @@ export default class UDPC extends AbstractDashboard {
         return this.$store.getters.distinctPropertyValues('totalTopicDatasets', 'organization');
     }
 
+    /**
+     *  The following methods handle filter actions
+     *  Filters can be fired by selecting and closing a filter or by clicking on the treemap
+     */
     get filters() {
         return this.$store.getters.filters();
     }
 
+    /**
+     *  Sets filters
+     *  @param {Object} filters key value pair of the filters
+     */
     set filters(filters: { [key: string]: string[] }) {
         for (const [k, v] of Object.entries(filters)) {
             this.$store.dispatch('setFilters', [k, v]);
         }
     }
 
+    /**
+     *  Sets filters and fires new data request
+     *  @param {string[]} event containing new filter values
+     */
     applyFilters(event: [string, string[]] ) {
         this.$store.dispatch('setFilters', event);
         this.fetchAllFiltered();
@@ -1093,6 +1189,10 @@ export default class UDPC extends AbstractDashboard {
         this.fetchDatasetsRange();
     }
 
+    /**
+     *  Sets new filters from the treemap chart click
+     *  @param {Datum} event containing new filter values
+     */
     onFilterSelectFromTreeMap(event: Datum) {
         if (!event.data.key) {
             return;
@@ -1120,6 +1220,9 @@ export default class UDPC extends AbstractDashboard {
         this.agreeDialogActive = false;
     }
 
+    /**
+     * shows the currently active dataset in the map, when possible
+     */
     showDataInMap(dataset: {label: string, link: string}) {
       if (this.updateMapOnInterval) {
         this.mapData.md_id = dataset.link;
@@ -1127,27 +1230,42 @@ export default class UDPC extends AbstractDashboard {
       }
     }
 
-    didYouKnowDataToHtml(inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, wrapper?: string): Element {
+    /**
+     * Manipulates the DidyouknowData to display links and dynamic data
+     * @param {DidYouKnowData} inputData - the currently active Data on the respective card
+     * @param {string} linkPrefix - the base-url used for <a> elements' href
+     * @param {string} wrapper - the wrapping text in which the list from inputData is injected
+     * @returns {Element} - the html element to render
+     */
+    didYouKnowDataToHtml(ref: string, inputData: DidYouKnowData, linkPrefix: string = this.urls.hmdk, date: string | undefined = 'Stand: ', wrapper?: string): Element {
       const instance = new DidYouKnowDataList({
         propsData: {
           inputData,
-          linkPrefix
-        }
+          linkPrefix,
+          wrapper,
+          date,
+          langCode: this.$t('udpc.langCode')
+        },
+      });
+      instance.$on('tooltip-internal-network', (el: { label: string, link: string }) => {
+        this.onTooltipInternalNetwork(el, ref)
       });
       instance.$mount();
-
-      if (wrapper) {
-        const el = document.createElement('div');
-        el.innerHTML = wrapper.replace('PLATZHALTER', instance.$el.outerHTML);
-
-        return el;
-      }
 
       return instance.$el;
     }
 
     toggleRecentDatasetInterval(state: boolean) {
       this.updateMapOnInterval = !state;
+    }
+
+    onTooltipInternalNetwork(el: { label: string, link: string }, ref?: string) {
+      this.tooltipInternalNetwork = el;
+
+      if (ref) {
+        (this.$refs[ref] as InfoOverlay).hide();
+      }
+      (this.$refs['tooltip-interal-network'] as InfoOverlay).show();
     }
 }
 </script>
@@ -1187,6 +1305,27 @@ i {
           position: absolute;
           left: 105px;
         }
+    }
+
+    .navbar-lang {
+      color: white;
+      position: relative;
+      top: 60px;
+      flex-direction: row;
+      font-size: 16px;
+
+      span {
+        margin: 0 2px;
+        font-weight: bold;
+      }
+
+      .lang {
+        cursor: pointer;
+      }
+
+      .active {
+        color: $hamburg-red;
+      }
     }
 
     .hh-bug {
@@ -1283,8 +1422,12 @@ i {
         .md-ripple {
             padding: 0 10px;
 
-          @media (max-width: 375px) {
+          @media (max-width: 500px) {
             padding-left: 5px;
+          }
+
+          @media (max-width: 380px) {
+            padding-left: 2px;
           }
         }
 
@@ -1293,6 +1436,10 @@ i {
             font-size: 16px;
             color: $hamburg-blue;
             font-weight: bold;
+
+            @media (max-width: 500px) {
+              font-size: 12px;
+            }
         }
     }
 
@@ -1484,25 +1631,20 @@ i {
         min-height: 122px;
     }
 
-    .eu-row {
-        min-height: 90px;
+    .eu-legal-notice {
+      font-size: 9pt;
+      text-align: left;
 
-        .eu-legal-notice {
-            font-size: 9pt;
-            text-align: left;
+      .eu-image {
+        //padding-right: 0;
 
-            .eu-image {
-                padding-right: 0;
-
-                img {
-                    float: right;
-                    height: 62px;
-                }
-            }
-
-
+        img {
+          float: right;
+          max-height: 62px;
         }
+      }
     }
+
 
 
     .links-bottom-left {
@@ -1524,6 +1666,7 @@ i {
     .images-bottom-right {
         @media (min-width: 459px) {
             .image-col {
+                padding-top: 22px;
                 padding-bottom: 22px;
                 align-self: flex-end;
             }
@@ -1532,6 +1675,11 @@ i {
         @media (max-width: 458px) {
             .image-col {
                 text-align: center;
+                margin-bottom: 20px;
+
+                p {
+                  text-align: left;
+                }
             }
             img {
                 width: 180px;

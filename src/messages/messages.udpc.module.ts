@@ -33,6 +33,8 @@ export const messages = {
             themeFilter: 'Nach Thema filtern',
             orgFilter: 'Nach Organisation filtern',
             clearFilter: 'Filter zurücksetzen',
+            langCode: 'de-DE',
+            dateTag: 'Stand: ',
 
             sliderEarlier: '< früher',
             sliderLater: 'später >',
@@ -41,7 +43,7 @@ export const messages = {
              'PLATZHALTER \n' +
              '<p>Weitere Informationen finden Sie hier: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'Hier zeigen wir die zuletzt veröffentlichten Datensätze, die mit einem produktiven Dienst (WFS/WMS) gekoppelt sind.\n' +
-            'PLATZHALTER' \n' + 
+            'PLATZHALTER \n' +
             '<p>Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)</p>',
             tooltipGeneralLink: 'Link in neuem Tab öffnen',
             tooltipHdmkLink: 'Metadaten in MetaVer ansehen',
@@ -105,7 +107,10 @@ export const messages = {
              'Quelle: Auswertung der awstats',
             privacy: 'Datenschutz',
             legal: 'Impressum',
-            legalEU: 'Dieses Projekt wurde im Rahmen der Finanzhilfevereinbarung Nr. 731297 vom Forschungs- und Innovationsprogramm Horizont 2020 der Europäischen Union teilfinanziert.'
+            legalEU: 'Dieses Projekt wurde im Rahmen der Finanzhilfevereinbarung Nr. 731297 vom Forschungs- und Innovationsprogramm Horizont 2020 der Europäischen Union teilfinanziert.',
+            tooltipInternalNetwork: '<p>Sie haben einen <strong>FHHNet</strong> internen Link angeklickt.<br />' +
+            'Wenn Sie entsprechende Zugriffsberechtigungen haben klicken sie <strong>auf den Button unten</strong> um dem Link zu folgen.' +
+            'Ansonsten schließen Sie dieses Fenster.</p>'
         }
     },
     en: {
@@ -142,6 +147,8 @@ export const messages = {
             themeFilter: 'Filter by topic',
             orgFilter: 'Filter by organization',
             clearFilter: 'Reset filters',
+            langCode: 'en-US',
+            dateTag: 'Updated: ',
 
             sliderEarlier: '< earlier',
             sliderLater: 'later >',
@@ -150,7 +157,7 @@ export const messages = {
              'PLATZHALTER \n' +
              '<p>Find out more: <a href="http://www.urbandataplatform.hamburg" target="_blank">urbandataplatform.hamburg</a></p>',
             tooltipLatestDataSets: 'The most recently published datasets that are linked to a productive service (WFS/WMS).\n' +
-            'PLATZHALTER'
+            'PLATZHALTER \n' +
             '<p>Source: CSW interface of the HMDK (Hamburg Metadata Catalogue)</p>',
             tooltipGeneralLink: 'Open link to new tab',
             tooltipHdmkLink: 'See metadata in MetaVer',
@@ -215,7 +222,10 @@ export const messages = {
              'Source: Analysis of awstats',
             privacy: 'Data privacy',
             legal: 'Legal notice',
-            legalEU: 'This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 731297.'
+            legalEU: 'This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 731297.',
+            tooltipInternalNetwork: '<p>You have clicked on an <strong>FHHNet</strong> internal link.<br />' +
+            'If you have the appropriate access rights click on the <strong>button below</strong> to follow the link.' +
+            'Otherwise close this window.</p>'
         }
     }
 };

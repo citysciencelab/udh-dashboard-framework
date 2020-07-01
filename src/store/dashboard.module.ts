@@ -2,6 +2,15 @@ import { Module } from 'vuex';
 import Chart from 'chart.js';
 import { FeatureSet } from '@/connectors/wfs';
 
+// see the 'Creating a new dashboard' part in the README.md for a short explanation of the store concept
+
+/*
+    Core variables used in dashboards
+    dashboardData as the initial data requested and available in the client
+    filteredData for storing data that is beeing filtered in the client
+    filters for the filters set by the user in the frontend to calculate filteredData
+    loading parameter that indicates a currently running request
+ */
 const initialState: DashboardState = {
     dashboardData: {},
     filteredData: {},
@@ -50,6 +59,13 @@ const chartsModule: Module<DashboardState, RootState> = {
         filters: state => () => {
             return state.filters;
         },
+        /*
+         *  Return the distinct values from a dataset for a given property
+         *  Used to fill the filters with a list of distinct values
+         *  @param {string} dataId name of the dashboardData dataset to get the distinct filter values from
+         *  @param {string} propterty is the name of the distinct filters to retrieve
+         *  @returns unique filters
+         */
         distinctPropertyValues: state => (dataId: string, property: string) => {
             if (!state.dashboardData[dataId]) {
                 return;
@@ -62,6 +78,11 @@ const chartsModule: Module<DashboardState, RootState> = {
                 return [...new Set(notUnique)];
             }
         },
+        /*
+         * Return a recalculated dataset according to the given filters
+         * @param dataId name of the dashboardData dataset to apply filters
+         * @returns filtered data or complete dataset if no filters have been found
+         */
         dataWithAppliedFilters: state => (dataId: string) => {
             const filters = state.filters,
                 initialData = state.dashboardData[dataId];

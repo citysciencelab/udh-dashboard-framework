@@ -2,6 +2,10 @@
   import {Prop, Vue, Watch} from 'vue-property-decorator';
   import $ from 'jquery';
 
+  /*
+  *   This class includes methods, that are meant to be reused/inherited in more than one D§3 Chart Component
+  */
+
   export default abstract class AbstractChartD3 extends Vue {
     @Prop() ds!: Dataset;
     @Prop() options!: D3ChartOptions;
@@ -21,11 +25,13 @@
       }
     }
 
+    /*
+    *   Double checks the setting of all $props variables
+    *   If the component gets initiated by a Backbone framework:
+    *   https://bitbucket.org/illD/masterportal-vue/src/dev/modules/vue-example/renderer/BackboneVueRenderer.js
+    *   How to use: https://bitbucket.org/illD/masterportal-vue/src/dev/doc/03_tutorial_vue_module_scale_switcher.md
+    */
     mounted() {
-      // This double checks the setting of all $props variables
-      // If the component gets initiated by
-
-      //TODO: vielleicht in der componente vue-masterportal attrs gegen props austauschen und das callen ausprobieren!!!
       for (let obj of Object.keys(this.$props)) {
         if (this.$props[obj] === null) {
           if (this.$attrs[obj] !== null) {
@@ -35,6 +41,10 @@
       }
     }
 
+    /*
+    *   Looks for the D3 Chart SVG and returns its width
+    *   @returns number width of chart
+    */
     get svgWidth() {
       const node = this.svg.node();
       if (!node) {
@@ -47,6 +57,10 @@
       return container.clientWidth;
     }
 
+    /*
+     *   Looks for the D3 Chart SVG and returns its height
+     *    @returns number height of chart
+     */
     get svgHeight() {
       const node = this.svg.node();
       if (!node) {
@@ -63,6 +77,10 @@
       return container.clientHeight - heightOtherChildren;
     }
 
+    /*
+     *   Looks for in the parents for the element that has the className this.holderElement
+     *    @returns html element with classname holderElement
+     */
     get parentHolder() {
       const svg = this.svgElement;
       let parent = svg.parentElement;
@@ -72,6 +90,10 @@
       return parent;
     }
 
+    /*
+     *   width and height of the D3 chart
+     *    @returns object width and height as
+     */
     get style() {
       return {
         width: `${this.width}%`,

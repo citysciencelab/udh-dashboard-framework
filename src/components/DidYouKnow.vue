@@ -23,9 +23,10 @@
   @Component({})
   export default class DidYouKnow extends Vue {
     @Prop() data!: DidYouKnowData;
-    @Prop() interval!: number;
+    @Prop({default: 5000}) interval!: number;
     @Prop() prefix!: string;
     @Prop() linkPrefix!: string;
+    @Prop({default: 'FHHNET'}) internalNetwork!: string;
     timer!: number;
     currentIndex = 0;
 
@@ -41,7 +42,7 @@
     get linkUrl(): string | null {
       switch (this.data.action) {
         case 'md_id':
-          return this.linkPrefix + this.data.items[this.currentIndex].link;
+          return (this.linkPrefix || "") + this.data.items[this.currentIndex].link;
         case 'link':
           return this.data.items[this.currentIndex].link;
         default:
@@ -80,6 +81,13 @@
     onClick(evt: Event) {
       switch (this.data.action) {
         case 'md_id':
+          if (this.data.items[this.currentIndex].label.includes(this.internalNetwork)) {
+            evt.preventDefault();
+            this.$emit('tooltip-internal-network', {
+              label: this.data.items[this.currentIndex].label,
+              link: this.data.items[this.currentIndex].link
+            });
+          }
           break;
         default:
           evt.preventDefault();
