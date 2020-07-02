@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const baseUrl = 'https://test-geodienste.hamburg.de/udh_dashboard/_search';
+const baseUrl = 'https://geodienste.hamburg.de/udh_dashboard/_search';
 
 const elastic = {
 
