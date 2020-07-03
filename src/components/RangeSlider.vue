@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%">
+  <div class="range-slider" style="width: 100%">
     <div v-if="!isShowMarks"
          class="range-display">
       {{ currentValues[0] }} - {{ currentValues[1] }}
@@ -19,7 +19,7 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({})
-export default class RangeSlider extends Vue {
+export default class RangeSlider extends Vue implements RangeSliderMethods {
     @Prop() options!: DateRangeSliderOptions;
     minYear!: number;
     minMonth!: number;
@@ -37,6 +37,12 @@ export default class RangeSlider extends Vue {
         this.onOptionsChanged();
     }
 
+    /*
+    *   When new options have been set:
+    *     calculate possible labels
+    *     calculate possible ticks
+    *     calculate possible tooltips
+    */
     @Watch('options') onOptionsChanged() {
         if (!this.options) {
             return;
@@ -90,6 +96,14 @@ export default class RangeSlider extends Vue {
         return this.marks[value];
     }
 
+    public getCurrentValues() {
+        return this.currentValues;
+    }
+
+    /*
+    *   When new values have been set by the user, these are emitted to the enclosing component
+    */
+
     private onAfterChange(values: number[]) {
         let newValues = [this.tipFormat(values[0]), this.tipFormat(values[1])];
         if (newValues[0] !== this.currentValues[0] || newValues[1] !== this.currentValues[1] ) {
@@ -102,7 +116,7 @@ export default class RangeSlider extends Vue {
 </script>
 
 <style scoped lang="scss">
-.ant-slider /deep/ {
+.range-slider >>> .ant-slider {
     width: 100%;
 
     & .ant-slider-mark {

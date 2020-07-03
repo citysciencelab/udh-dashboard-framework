@@ -2,22 +2,17 @@ export const messages = {
     de: {
         general: {
             title: 'Titel',
-            help: 'Hilfe'
+            help: 'Hilfe',
+            open: 'Öffnen',
+            close: 'Schließen',
         }
     },
     en: {
         general: {
             title: 'Title',
-            help: 'Help'
+            help: 'Help',
+            open: 'Open',
+            close: 'Close',
         }
     }
-
-    /*
-    *    TODO: pluralization
-    *     en: {
-            car: 'car | cars'
-            }
-            <p>{{ $tc('car', 1) }}</p>
-            <p>{{ $tc('car', 2) }}</p>
-    */
 };

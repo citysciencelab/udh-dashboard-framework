@@ -18,10 +18,17 @@ interface MapData {
   portal: { [key: string]: any },
   features?: FeatureSet,
   geoJson?: GeoJSON.GeoJSON,
-  md_id?: string
+  md_id?: string,
+  overlay?: string
 }
 
-type ChartOptions = { dim: string, dim2: string };
+type D3ChartOptions = {
+  dim: string,
+  dim2: string
+  labelKey: string,
+  toolTipKey?: string,
+  metric: string
+};
 
 type SVG = d3.Selection<SVGSVGElement, any, HTMLElement, any>;
 
@@ -70,6 +77,9 @@ interface IUtils {
   date: {
     getDateStringFromDate: (date: Date) => string,
     getDateStringFromMillis: (dateMillis: number) => string
+  },
+  string: {
+    parseLinkFromString: (str: string) => string
   }
 }
 
@@ -83,4 +93,8 @@ interface DateRangeSliderOptions {
 interface DidYouKnowData {
   items: { label: string, link: string }[],
   action: string|null
+}
+
+interface RangeSliderMethods {
+  getCurrentValues(): string[]
 }

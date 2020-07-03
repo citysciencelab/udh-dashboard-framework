@@ -1,17 +1,16 @@
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import { Bar } from 'vue-chartjs'
+import AbstractChart from "@/components/charts/chartjs/AbstractChart.vue";
 
 @Component({
     extends: Bar
 })
-export default class BarChart extends Vue {
-    @Prop() chartData!: Chart.ChartData;
-    @Prop() chartOptions!: Chart.ChartOptions;
+export default class BarChart extends AbstractChart {
 
-    @Watch('chartData') onChartDataChanged() {
-        this.renderChart(this.chartData, this.chartOptions);
-    }
+ @Watch('chartData') onChartDataChanged() {
+  this.renderChart(this.chartData, this.chartOptions);
+ }
 
 }
 </script>

@@ -1,7 +1,15 @@
 import WFS from 'ol/format/WFS';
-import {registerProjections} from './projections';
+import {registerProjections} from '@/utils/projections';
 
 export default {
+    /**
+     * Get data from a geodienste.hamburg.de wfs by url
+     *
+     * Stored query params:
+     * @param {string} wfsUrl string of the geoportal service url
+     * @param {string} wfsTypename string name of the feature type to describe
+     * @param {Object[]} options of various further options to be included in the request
+     */
     get: (wfsUrl: string, wfsTypename: string, options: { [key: string]: string|string[]  }) => {
         registerProjections();
         const parser = new WFS();

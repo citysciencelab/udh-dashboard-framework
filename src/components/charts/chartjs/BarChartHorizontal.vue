@@ -1,17 +1,19 @@
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import { HorizontalBar } from 'vue-chartjs'
+import AbstractChart from "@/components/charts/chartjs/AbstractChart.vue";
 
 @Component({
     extends: HorizontalBar
 })
-export default class HorizontalBarChart extends Vue {
-    @Prop() chartData!: Chart.ChartData;
-    @Prop() chartOptions!: Chart.ChartOptions;
+export default class HorizontalBarChart extends AbstractChart {
 
-    @Watch('chartData') onChartDataChanged() {
-        this.renderChart(this.chartData, this.chartOptions);
-    }
-
+ @Watch('chartData') onChartDataChanged() {
+   if (!this.chartData || !this.chartData.datasets || !this.chartData.datasets[0] || !this.chartData.datasets[0].data || this.chartData.datasets[0].data.length === 0) {
+     console.warn('No data for this chart')
+   } else {
+     this.renderChart(this.chartData, this.chartOptions);
+   }
+ }
 }
 </script>

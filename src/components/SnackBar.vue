@@ -25,5 +25,30 @@ export default class SnackBar extends Vue {
             this.snackBar = true;
         }
     }
+
+    /**
+       Example of usage below. Should be copied to AbstractDasboard. Can then be accessed via all Dashboards
+       The snackBar html element is in the App.vue and can be reused by all component
+     **/
+
+    /**
+    testSnackBar() {
+      let options = {
+        message: 'Important bottom message',
+        position: 'center',
+        duration: 10000,
+        showSnackbar: true
+      };
+
+      const snack = document.getElementById('snack');
+      if (!snack) {
+        return;
+      }
+      new Vue({
+        el: snack.querySelector('div') || undefined,
+        render: h => h(SnackBar, { props: options })
+      });
+    }
+     **/
 }
 </script>

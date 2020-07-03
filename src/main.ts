@@ -13,13 +13,14 @@ import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
 import { messages } from './messages/messages.module';
-import utils from './utils/utils';
+import Utils from './utils/utils';
 
 // Module augmentations for Vue
 declare module 'vue/types/vue' {
     interface Vue {
       $utils: IUtils
       renderChart(chartData: Chart.ChartData, options?: Chart.ChartOptions): void
+      addPlugin (plugin?: object): void
     }
   }
 
@@ -40,7 +41,7 @@ Vue.use(VueMaterial);
 
 Vue.config.productionTip = false;
 
-Vue.use(new utils);
+Vue.use(new Utils);
 
 Vue.component('country-flag', CountryFlag);
 
@@ -48,6 +49,7 @@ Vue.component('country-flag', CountryFlag);
 const i18n = new VueI18n({
     locale: 'en', // set locale
     fallbackLocale: 'de',
+    silentTranslationWarn: true,
     messages, // set locale messages
 });
 
