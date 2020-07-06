@@ -21,6 +21,7 @@
 
     changeLanguage(lang: string) {
       this.$i18n.locale = lang
+      this.$store.commit('SET_LOCALE', lang)
     }
   }
 </script>

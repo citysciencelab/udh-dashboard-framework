@@ -79,6 +79,14 @@ export default class Utils implements IUtils {
             }
 
             return res;
+        },
+        locales: {
+            'de': 'de-DE',
+            'en': 'en-US'
+        },
+        languages: {
+            'de': 'german',
+            'en': 'english'
         }
     };
 

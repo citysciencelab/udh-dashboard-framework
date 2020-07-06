@@ -559,6 +559,7 @@ import portalConfig from "@/assets/map-config/portal.json";
 import servicesConfig from "@/assets/map-config/services.json";
 import Utils from "@/utils/utils";
 import TreeMapChartD3 from "@/components/charts/d3/TreeMapChartD3.vue";
+import { IVueI18n } from 'vue-i18n';
 
 @Component({
     components: {
@@ -780,7 +781,7 @@ export default class UDPC extends AbstractDashboard {
      *  When the requests to elastic are finished, these subscriptions will set the data for each chart
      */
     created() {
-        this.$i18n.locale = 'de';
+        this.changeLanguage('de');
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
         this.$store.registerModule('udpc', udpcStore);
@@ -901,6 +902,7 @@ export default class UDPC extends AbstractDashboard {
                     }
                     case 'didYouKnowFacts': {
                       this.didYouKnow.items = mutationData;
+                      console.log(this.didYouKnow)
                       break;
                     }
                     case 'sensorsKPI': {

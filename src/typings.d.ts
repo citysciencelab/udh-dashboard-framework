@@ -44,6 +44,7 @@ interface DashboardState {
   filteredData: { [key: string]: Chart.ChartData };
   filters: { [key: string]: any };
   loading: boolean;
+  locale?: 'de' | 'en'
 }
 
 interface UDPCState extends DashboardState {

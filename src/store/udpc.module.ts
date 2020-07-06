@@ -189,12 +189,16 @@ const udpcModule: Module<UDPCState, RootState> = {
             Fetches facts from the given elastic endpoint
          */
         fetchFacts: async (context) => {
+            const utils =  new Utils();
             const chartId = 'didYouKnowFacts';
-            const month = new Utils().date.getCurrentMonth();
+            const lang = utils.string.languages[context.state.locale || 'de']
+            const month = utils.date.getCurrentMonth();
 
-            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [], [], 'info', undefined, 10);
+            const elasticResponse = await elastic.udpcQuery(month, month, [], [], [lang], [], 'info', undefined, 10);
             const topX = elasticResponse.aggregations.top_x.buckets;
             let items: object[] = [];
+
+            console.log(elasticResponse);
             
             topX.map((item: any) => items.push({label: item.key}))
             context.commit('SET_FILTERED_DATA', [chartId, items]);
