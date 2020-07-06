@@ -1037,8 +1037,10 @@ export default class UDPC extends AbstractDashboard {
     }
 
     changeLanguage(lang: string) {
-      super.changeLanguage(lang)
-      this.fetchFacts()
+      if (this.$i18n.locale !== lang) {
+        super.changeLanguage(lang);
+        this.fetchFacts();
+      }
     }
 
     /**
