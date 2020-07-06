@@ -1,7 +1,6 @@
 import { Module } from 'vuex';
 import Chart from 'chart.js';
 import { FeatureSet } from '@/connectors/wfs';
-import { local } from 'd3';
 
 // see the 'Creating a new dashboard' part in the README.md for a short explanation of the store concept
 
