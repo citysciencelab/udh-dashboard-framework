@@ -9,14 +9,15 @@
       {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
       <md-icon v-if="linkUrl">launch</md-icon>
     </a>
-    <p v-if="!data.items[currentIndex].link">
-      {{ data.items[currentIndex].label }}
-    </p>
+    <!-- eslint-disable vue/no-v-html */ -->
+    <p v-if="!data.items[currentIndex].link"
+       v-html="utils.string.parseLinkFromString(data.items[currentIndex].label)" />
   </span>
 </template>
 
 <script lang="ts">
   import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+  import Utils from '@/utils/utils'
   // eslint-disable-next-line no-unused-vars
   import {LocaleMessage} from 'vue-i18n';
 
@@ -29,6 +30,7 @@
     @Prop({default: 'FHHNET'}) internalNetwork!: string;
     timer!: number;
     currentIndex = 0;
+    utils = new Utils();
 
     get linkTitle(): LocaleMessage | string {
       switch (this.data.action) {
@@ -56,6 +58,7 @@
 
     updateInterval() {
       if (this.data) {
+        console.log(this.data)
         clearInterval(this.timer);
         this.timer = setInterval(() => {
           if (this.currentIndex < this.data.items.length - 1) {
