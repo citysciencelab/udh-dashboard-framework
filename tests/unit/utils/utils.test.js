@@ -8,7 +8,6 @@ describe("Utils.vue", () => {
 
     it("test date", () => {
         const dateee = '2020-06-23T09:50:30.232Z';
-        console.log(dateee)
         const lastMonth = new Utils().date.getDateStringFromMillis(dateee);
         expect(lastMonth).to.contain('23.5.');
     });

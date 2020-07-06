@@ -781,10 +781,10 @@ export default class UDPC extends AbstractDashboard {
      *  When the requests to elastic are finished, these subscriptions will set the data for each chart
      */
     created() {
+        this.$store.registerModule('udpc', udpcStore);
         this.changeLanguage('de');
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
-        this.$store.registerModule('udpc', udpcStore);
 
         this.fetchFacts();
         this.fetchBaseMapKPI();
@@ -902,7 +902,6 @@ export default class UDPC extends AbstractDashboard {
                     }
                     case 'didYouKnowFacts': {
                       this.didYouKnow.items = mutationData;
-                      console.log(this.didYouKnow)
                       break;
                     }
                     case 'sensorsKPI': {
@@ -1036,6 +1035,12 @@ export default class UDPC extends AbstractDashboard {
 
     onSwitchIncludeMapsTops() {
       this.fetchTops();
+    }
+
+    changeLanguage(lang: string) {
+      this.$i18n.locale = lang
+      this.$store.commit('SET_LOCALE', lang)
+      this.fetchFacts()
     }
 
     /**

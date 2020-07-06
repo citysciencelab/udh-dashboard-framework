@@ -33,7 +33,6 @@ const elastic = {
         status = elastic.validateArray(status);
 
         const params = { from, to, theme, org, tag, tag_not, category, interval, limit, sortBy, status };
-        console.log(params);
         const source = JSON.stringify({ id: 'udpc_query', params: params });
         const url = encodeURI(`${baseUrl}/template?source=${source}&source_content_type=application/json`);
         const response = await Axios.get(url);
