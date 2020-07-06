@@ -786,7 +786,6 @@ export default class UDPC extends AbstractDashboard {
         this.$i18n.mergeLocaleMessage('en', messages.en);
         this.$i18n.mergeLocaleMessage('de', messages.de);
 
-        this.fetchFacts();
         this.fetchBaseMapKPI();
         this.fetchVisitorsKPI();
         this.fetchSensorsKPI();
@@ -1038,8 +1037,7 @@ export default class UDPC extends AbstractDashboard {
     }
 
     changeLanguage(lang: string) {
-      this.$i18n.locale = lang
-      this.$store.commit('SET_LOCALE', lang)
+      super.changeLanguage(lang)
       this.fetchFacts()
     }
 
