@@ -58,7 +58,6 @@
 
     updateInterval() {
       if (this.data) {
-        console.log(this.data)
         clearInterval(this.timer);
         this.timer = setInterval(() => {
           if (this.currentIndex < this.data.items.length - 1) {
