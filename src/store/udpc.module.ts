@@ -195,10 +195,11 @@ const udpcModule: Module<UDPCState, RootState> = {
             const month = utils.date.getCurrentMonth();
             const elasticResponse = await elastic.udpcQuery(month, month, [], [], [lang], [], 'info', undefined, 10);
             const topX = elasticResponse.aggregations.top_x.buckets;
-            let items: object[] = [];
             
-            topX.map((item: any) => items.push({label: item.key}))
-            context.commit('SET_FILTERED_DATA', [chartId, items]);
+            context.commit('SET_FILTERED_DATA', [chartId, {
+                items: topX.map((item: any) => ({label: item.key, link: item.md_id?.buckets?.[0]?.key})),
+                action: 'link'
+            }]);
         },
         /*
             Requests the total numbers of visitors to the urban data platform for the last month

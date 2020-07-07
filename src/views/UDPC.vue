@@ -900,7 +900,7 @@ export default class UDPC extends AbstractDashboard {
                       break;
                     }
                     case 'didYouKnowFacts': {
-                      this.didYouKnow.items = mutationData;
+                      this.didYouKnow = mutationData;
                       break;
                     }
                     case 'sensorsKPI': {
