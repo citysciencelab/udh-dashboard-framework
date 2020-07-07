@@ -111,9 +111,10 @@ const udpcModule: Module<UDPCState, RootState> = {
                 items: [],
                 action: null
             };
+
             topX.map((item: any) => details.items.push({
                 label: item.key,
-                link: params.topTopic !== 'downloads' ? item.md_id?.buckets?.[0]?.key : item.key
+                link: item.md_id?.buckets?.[0]?.key
             }));
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
