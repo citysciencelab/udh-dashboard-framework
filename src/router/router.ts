@@ -8,6 +8,11 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
+      path: '*',
+      name: 'udpc',
+      component: () => import(/* webpackChunkName: "udpc" */ '@/views/UDPC.vue')
+    },
+    {
       path: '/udpc',
       name: 'udpc',
       component: () => import(/* webpackChunkName: "udpc" */ '@/views/UDPC.vue')
