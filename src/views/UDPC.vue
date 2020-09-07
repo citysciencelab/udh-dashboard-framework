@@ -1067,12 +1067,15 @@ export default class UDPC extends AbstractDashboard {
     }
 
     async fetchTotalsByTopic() {
-        const totalsTopic = this.activeTabs.dataSetsByTopic;
-        const theme = this.filters.theme;
-        const org = this.filters.org;
-        const isIncludeBuildPlans = this.chartSwitches.countGroupedWithPlans;
+        const params = {
+          totalsTopic: this.activeTabs.dataSetsByTopic,
+          theme: this.filters.theme,
+          org: this.filters.org,
+          isIncludeBuildPlans: this.chartSwitches.countGroupedWithPlans,
+          status: ['online']
+        };
 
-        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic, theme, org, isIncludeBuildPlans });
+        await this.$store.dispatch('fetchTotalsByTopic', params);
     }
 
     async fetchTotalsByType() {

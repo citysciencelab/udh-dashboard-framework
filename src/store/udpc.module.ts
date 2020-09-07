@@ -35,7 +35,7 @@ const udpcModule: Module<UDPCState, RootState> = {
             Requests total resource count by topic: 'topics' or 'organizations'
             The requested can be filtered by either of the above
          */
-        fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string[], org: string[], isIncludeBuildPlans: boolean }) => {
+        fetchTotalsByTopic: async (context, params: { totalsTopic: string, theme: string[], org: string[], isIncludeBuildPlans: boolean, status: string[] }) => {
             const chartId = 'totalTopicDatasets';
             const changed = await context.dispatch('paramsChanged', [chartId, params]);
             if (!changed) return;
@@ -44,8 +44,8 @@ const udpcModule: Module<UDPCState, RootState> = {
 
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
             const month = new Utils().date.getLastMonth();
-
-            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], tagNot, 'datasets');
+            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], tagNot, 'datasets',
+             undefined, undefined, undefined, params.status);
             const aggregations = elasticResponse.aggregations;
             let dataSets = [{
                 tree: aggregations[params.totalsTopic].buckets
