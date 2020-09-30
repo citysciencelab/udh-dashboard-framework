@@ -43,15 +43,20 @@ const udpcModule: Module<UDPCState, RootState> = {
             context.commit('SET_LOADING', true);
 
             const tagNot = params.isIncludeBuildPlans ? [''] : ['bplan'];
-            const month = new Utils().date.getLastMonth();
-            const elasticResponse = await elastic.udpcQuery(month, month, params.theme, params.org, [], tagNot, 'datasets',
+            const lastMonth = new Utils().date.getLastMonth();
+            const firstMonth = `${new Date().getFullYear()}-01`;
+            const elasticResponse = await elastic.udpcQuery(firstMonth, lastMonth, params.theme, params.org, [], tagNot, 'datasets',
              undefined, undefined, undefined, params.status);
             const aggregations = elasticResponse.aggregations;
             let dataSets = [{
                 tree: aggregations[params.totalsTopic].buckets
             }];
-            if (params.totalsTopic === 'organization') {
-                for (const dataSet of dataSets[0].tree) {
+
+            for (const dataSet of dataSets[0].tree) {
+                // flatten the object for rendering with D3 Tree map
+                dataSet.entities_unique = dataSet.entities_unique.value;
+
+                if (params.totalsTopic === 'organization') {
                     if (Object.prototype.hasOwnProperty.call(dataSet, 'label_org')) {
                         dataSet.label_short = dataSet.label_org.buckets[0].key;
                     }
@@ -78,6 +83,22 @@ const udpcModule: Module<UDPCState, RootState> = {
             const currentMonth = new Utils().date.getCurrentMonth();
             const elasticResponse = await elastic.udpcQuery('2000-01', currentMonth, params.theme, params.org, params.tag, params.tagNot, params.totalsType, 'year', 100, undefined, params.status);
             const aggregations = elasticResponse.aggregations;
+
+            // Filter Buckets for the largest number of unique_entities per year
+            // replace the monthly buckets with the yearly once
+            // TODO: generalize and move to utils
+            // aggregations.total_entities_and_hits.buckets = aggregations.total_entities_and_hits.buckets.reduce((res: any[], item: any) => {
+            //     const year = item.key_as_string.substr(0, 4);
+            //     const maxItem = res.find((_item: any) => _item.key_as_string.substr(0, 4) === year);
+
+            //     if (maxItem && item.entities_unique.value > maxItem?.entities_unique.value) {
+            //         return [...res.filter(_item => _item !== maxItem), item];
+            //     }
+            //     if (!maxItem) {
+            //         return [...res, item];
+            //     }
+            //     return res;
+            // }, []);
 
             context.commit('SET_INITIAL_DATA', [chartId, aggregations]);
             context.commit('SET_FILTERED_DATA', [chartId, {

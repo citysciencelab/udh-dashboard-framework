@@ -156,7 +156,6 @@ import {Tooltip} from "d3/types/d3";
     }
 
     clickChartElement(d: Datum, i: number) {
-      console.log('clicked index: ' + i);
       this.$emit('click', d);
     }
   }

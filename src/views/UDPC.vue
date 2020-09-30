@@ -661,7 +661,7 @@ export default class UDPC extends AbstractDashboard {
         dim: '',
         dim2: '',
         labelKey: '',
-        metric: 'doc_count',
+        metric: 'entities_unique',
         toolTipKey: undefined
       }
     };
