@@ -449,15 +449,15 @@
       <div class="container-fluid">
         <div class="row logo-row">
           <div class="order-md-1 order-sm-2 col-xl-5 col-lg-3 col-md-4 align-self-end links-bottom-left">
-            <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Datenschutz.aspx"
+            <a href="http://www.urbandataplatform.hamburg/datenschutz-urbandataplatform/"
                target="_blank">Datenschutz</a>
-            <a href="https://gateway.hamburg.de/HamburgGateway/FVP/FV/BasisHilfe/Impressum.aspx "
+            <a href="http://www.urbandataplatform.hamburg/impressum/"
                target="_blank">Impressum</a>
           </div>
           <div class="order-md-2 order-sm-1 col-xl-7 col-lg-9 col-md-8 align-self-center images-bottom-right">
             <div class="row">
               <div class="col-xl-3 col-sm-6 col-md-3 col-sm-6 col-6 image-col align-self-start">
-                <a href="www.geoinfo.hamburg.de"
+                <a href="http://www.geoinfo.hamburg.de"
                    target="_blank">
                   <img src="../assets/images/nl-lgv-logo@2x.png"
                        alt="LGV">
@@ -661,7 +661,7 @@ export default class UDPC extends AbstractDashboard {
         dim: '',
         dim2: '',
         labelKey: '',
-        metric: 'doc_count',
+        metric: 'entities_unique',
         toolTipKey: undefined
       }
     };
@@ -900,7 +900,7 @@ export default class UDPC extends AbstractDashboard {
                       break;
                     }
                     case 'didYouKnowFacts': {
-                      this.didYouKnow.items = mutationData;
+                      this.didYouKnow = mutationData;
                       break;
                     }
                     case 'sensorsKPI': {
@@ -1067,12 +1067,15 @@ export default class UDPC extends AbstractDashboard {
     }
 
     async fetchTotalsByTopic() {
-        const totalsTopic = this.activeTabs.dataSetsByTopic;
-        const theme = this.filters.theme;
-        const org = this.filters.org;
-        const isIncludeBuildPlans = this.chartSwitches.countGroupedWithPlans;
+        const params = {
+          totalsTopic: this.activeTabs.dataSetsByTopic,
+          theme: this.filters.theme,
+          org: this.filters.org,
+          isIncludeBuildPlans: this.chartSwitches.countGroupedWithPlans,
+          status: ['online']
+        };
 
-        await this.$store.dispatch('fetchTotalsByTopic', { totalsTopic, theme, org, isIncludeBuildPlans });
+        await this.$store.dispatch('fetchTotalsByTopic', params);
     }
 
     async fetchTotalsByType() {

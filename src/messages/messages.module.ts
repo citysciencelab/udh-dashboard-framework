@@ -5,6 +5,7 @@ export const messages = {
             help: 'Hilfe',
             open: 'Öffnen',
             close: 'Schließen',
+            link: 'Link öffnen'
         }
     },
     en: {
@@ -13,6 +14,7 @@ export const messages = {
             help: 'Help',
             open: 'Open',
             close: 'Close',
+            link: 'Follow Link'
         }
     }
 };

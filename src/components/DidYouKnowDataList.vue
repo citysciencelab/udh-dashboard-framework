@@ -53,7 +53,7 @@ export default class DidYouKnowDataList extends Vue {
      * @returns {string} - a link to an external source used as href in <a>
      */
     linkUrl(path: string): string | null {
-        return this.linkPrefix ? this.linkPrefix + path : path;
+      return this.linkPrefix ? this.linkPrefix + path : path;
     }
 
     /**

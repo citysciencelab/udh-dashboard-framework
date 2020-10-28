@@ -30,7 +30,7 @@ export default class Utils implements IUtils {
         getCurrentMonth(): string {
             const today = new Date();
             return `${today.getFullYear()}-${today.getMonth() + 1 < 10 ? '0' : ''}${today.getMonth() + 1}`;
-        }
+        },
     };
 
     number = {
@@ -267,7 +267,6 @@ export function aggregateData(ds: Dataset, descriptor: string, metric: string): 
     }, {});
     return <Dataset>Object.values(aggregated);
 }
-
 
 /**
  * Counts values of the dataset, that contain a given key

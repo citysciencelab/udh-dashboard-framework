@@ -15,6 +15,9 @@ npm install
 ```
 npm run serve
 ```
+Plese note that the paths in the built /dist/ folder are all *absolute*!
+The built app cannot be opened on a local system, since it relies on the webserver to define a `root` path to its index.html.
+Further instruction on how to change the assigned root path within the build-config can be found in the [VUE-CLI documentation](https://cli.vuejs.org/config/#publicpath).
 
 ### Compiles and minifies for production
 ```

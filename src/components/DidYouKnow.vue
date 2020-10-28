@@ -9,9 +9,9 @@
       {{ prefix ? $t(prefix, { fact: data.items[currentIndex].label }) : data.items[currentIndex].label }}
       <md-icon v-if="linkUrl">launch</md-icon>
     </a>
-    <!-- eslint-disable vue/no-v-html */ -->
-    <p v-if="!data.items[currentIndex].link"
-       v-html="utils.string.parseLinkFromString(data.items[currentIndex].label)" />
+    <p v-if="!data.items[currentIndex].link">
+      {{ data.items[currentIndex].label }}
+    </p>
   </span>
 </template>
 
@@ -36,6 +36,8 @@
       switch (this.data.action) {
         case 'md_id':
           return this.$t('udpc.tooltipHdmkLink');
+        case 'link':
+          return this.$t('general.link');
         default:
           return "";
       }

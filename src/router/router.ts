@@ -6,7 +6,13 @@ Vue.use(Router);
 // import(/* webpackChunkName: "yourdashboardname" */ '@/views/yourdashboardname.vue') makes sure that components are lazy loaded
 
 export default new Router({
+  mode: 'history',
   routes: [
+    {
+      path: '*',
+      name: 'udpc',
+      component: () => import(/* webpackChunkName: "udpc" */ '@/views/UDPC.vue')
+    },
     {
       path: '/udpc',
       name: 'udpc',
