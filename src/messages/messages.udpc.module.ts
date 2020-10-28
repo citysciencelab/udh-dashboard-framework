@@ -8,7 +8,7 @@ export const messages = {
             access_overlay_head: 'Karten Zugriffe',
             countBy: 'Anzahl Datensätze nach',
             countTotal: 'Anzahl total',
-            includeDevPlan: 'Bebauungsplane u.a. mit einbeziehen',
+            includeDevPlan: 'Bebauungspläne u.a. mit einbeziehen',
             includeMapHits: 'Hintergrundkarte mit einbeziehen',
             map: 'Karte',
             top10: 'Top 10 des Monats',
@@ -56,13 +56,13 @@ export const messages = {
              'PLATZHALTER \n' +
              '<p>Quelle: Auswertung der awstats</p>',
             tooltipDatasetsBy: 'Zeigt die Anzahl der Datensätze nach Thema oder Organisation, die im Hamburger Metadatenkatalog zuletzt beschrieben wurden und mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelt sind. Ein Klick auf ein Thema oder eine Organisation filtert auf die jeweils zugehörigen Datensätze.\n' +
-             'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen. \n' +
+             'Mit dem zusätzlichen Filter "Bebauungspläne u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen. \n' +
              'Die Themen sind die vom Dateneigentümer zugewiesenen Open Data Kategorien eines Datensatzes. Der Name der Organisation entstammt der Herausgeberinformation in den Metadaten des Datensatzes. Die Metadatensatzbeschreibungen von im Internet veröffentlichten Datensätzen finden Sie unter <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)',
             tooltipCountTotal: 'Zeigt die Anzahl der Datensätze, Anwendungen (Apps) oder Sensordatensätze pro Monat oder Jahr in einem historischen Zeitverlauf an.\n' +
              'Im folgenden wird erklärt, was sich hinter Datensätzen, Apps und Sensordatensätzen verbirgt:\n' +
              'Ein <b>Datensatz</b> ist eine, vom Dateneigentümer definierte, inhaltlich und/oder räumlich zusammengehörige Gruppe von Daten in einer Datei. Bei den Datensätzen werden nur die Fachdaten also nur Datensätze, die keine Hintergrundkarten sind, einbezogen.\n' +
-             'Mit dem zusätzlichen Filter "Bebauungsplane u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen.\n' +
+             'Mit dem zusätzlichen Filter "Bebauungspläne u.a. mit einbeziehen" haben Sie die Möglichkeit auch die zahlreichen Bebauungspläne und einige nicht mit produktiven Internet- und Intranet-Diensten (WFS/WMS) gekoppelte Datensätze anzuzeigen.\n' +
              'Unter <b>Apps</b> wird die Gesamtzahl von allen im Internet und Intranet erreichbaren Anwendungen des LGV in einem monatlichen oder jährigen Zeitverlauf aufgeführt.  \n' +
              '<b>Sensordatensätze</b> beschreiben alle Datensätze, die mittels Sensoren in bzw. nahezu in Echtzeit erstellt und aktualisiert werden. Sie sind eine Teilmenge der Datensätze.\n' +
              'Quelle: CSW-Schnittstelle des HMDK (Hamburger Metadatenkatalog)',
