@@ -136,7 +136,7 @@ export const messages = {
             facts: 'Did you know: %{fact}',
             tabTopics: 'Topics',
             tabOrganisations: 'Organisations',
-            tabSensors: 'sensor datasets',
+            tabSensors: 'Sensor datasets',
             tabYear: 'Year',
             tabMonth: 'Month',
             tabDay: 'Day',
