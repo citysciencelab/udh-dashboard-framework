@@ -145,7 +145,7 @@ export const messages = {
             tabDownloads: 'Downloads',
             filter: 'Filter',
             themeFilter: 'Filter by topic',
-            orgFilter: 'Filter by organization',
+            orgFilter: 'Filter by organisation',
             clearFilter: 'Reset filters',
             langCode: 'en-US',
             dateTag: 'Updated: ',
@@ -169,9 +169,9 @@ export const messages = {
              'Base maps are: </p>' +
              'PLATZHALTER \n' +
              '<p>Source: Analysis of awstats</p>',
-            tooltipDatasetsBy: 'This tile shows the number of records by topic or organization that were last described in the Hamburg Metadata Catalogue (HMDK) and are linked to productive internet and intranet services (WFS/WMS). A click on a topic or organization filters the corresponding records.\n' +
+            tooltipDatasetsBy: 'This tile shows the number of records by topic or organisation that were last described in the Hamburg Metadata Catalogue (HMDK) and are linked to productive internet and intranet services (WFS/WMS). A click on a topic or organisation filters the corresponding records.\n' +
              'With the additional filter "Include development plans etc." you can also display the numerous development plans and select datasets that are not linked to productive internet and intranet services (WFS/WMS). \n' +
-             'The topics are open data categories of a dataset assigned by the data owner. The name of the organization is taken from the publisher information in the metadata. Metadata record descriptions of datasets published on the internet can be found at <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
+             'The topics are open data categories of a dataset assigned by the data owner. The name of the organisation is taken from the publisher information in the metadata. Metadata record descriptions of datasets published on the internet can be found at <a href="https://metaver.de/" target="_blank">metaver.de</a>.\n' +
              'Source: CSW-API of HMDK (Hamburg Metadata Catalogue)',
             tooltipCountTotal: 'Shows the number of datasets, applications (apps) or sensor datasets per month or per year over a historical time period.\n' +
              'The following explains datasets, apps and sensor datasets:\n' +
