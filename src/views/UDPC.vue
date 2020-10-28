@@ -1072,7 +1072,7 @@ export default class UDPC extends AbstractDashboard {
           theme: this.filters.theme,
           org: this.filters.org,
           isIncludeBuildPlans: this.chartSwitches.countGroupedWithPlans,
-          status: ['online']
+          status: this.chartSwitches.countGroupedWithPlans ? [''] : ['online']
         };
 
         await this.$store.dispatch('fetchTotalsByTopic', params);
