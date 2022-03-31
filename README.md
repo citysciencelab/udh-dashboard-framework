@@ -2,7 +2,7 @@
 
 The Dashboard Framework is desiged to enable easy data visulization in the context of the [Urban Data Platform](http://www.urbandataplatform.hamburg/).
 
-https://user-images.githubusercontent.com/36763878/160369743-0b91d343-3327-4aa1-9a11-a1bbecc0e4f7.mp4
+https://user-images.githubusercontent.com/36763878/161039699-9ee3f1ec-9b86-46b8-bd79-1d08e2372c26.mp4
 
  This repository currently contains two example implementations:
 - `udpc` - Urban Data Platform Cockpit
